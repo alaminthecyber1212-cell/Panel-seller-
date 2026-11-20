@@ -209,7 +209,7 @@
         <!-- Header (Fixed Top) -->
         <header class="bg-white/95 backdrop-blur border-b border-slate-200 px-4 py-3 flex justify-between items-center shadow-sm shrink-0 z-40">
             <div class="flex items-center space-x-2.5">
-                <div class="relative w-9 h-9 flex items-center justify-center">
+                <div id="headerLogoAdminTrigger" onclick="profileFourTapAdminTrigger()" title="Tap 4 times for Admin" class="relative w-9 h-9 flex items-center justify-center cursor-pointer select-none">
                     <div class="rotating-border-ring"></div>
                     <img id="headerLogoImg" src="https://i.ibb.co/3W9v93z/default.png" class="w-full h-full rounded-full object-cover bg-white relative z-10 shadow-md">
                 </div>
@@ -390,11 +390,14 @@
                             </span>
                         </div>
 
-                        <div class="mt-2 flex justify-center">
+                        <div class="mt-2 flex justify-center items-center gap-1.5 flex-wrap">
                             <span onclick="copyUserUid()" title="Tap to copy UID" class="uid-animated-badge bg-red-50 text-red-600 border border-red-400 px-3 py-1 rounded-full text-[11px] font-mono font-extrabold tracking-wider cursor-pointer select-all shadow-sm">
                                 <i class="fa-solid fa-fingerprint text-red-500"></i>
                                 <span id="accUserUid">UID: 00000000</span>
                             </span>
+                            <button type="button" onclick="copyUidAndPinBackup()" title="Copy UID & Support PIN" class="bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 px-2.5 py-1 rounded-full text-[10px] font-extrabold cursor-pointer shadow-sm">
+                                <i class="fa-solid fa-shield-halved mr-1 text-indigo-600"></i>Save UID & PIN
+                            </button>
                         </div>
 
                         <p id="accProfileBio" class="text-xs text-slate-400 mt-2 font-medium">Manage your account settings, statistics, and security</p>
@@ -407,6 +410,34 @@
                             <button onclick="refreshBalance()" class="text-slate-400 hover:text-slate-700 text-sm cursor-pointer"><i class="fa-solid fa-rotate"></i></button>
                         </div>
                     </div>
+                </div>
+
+                <!-- UID & SUPPORT PIN ACCOUNT RECOVERY / LOGIN DESK -->
+                <div class="bg-white border-2 border-indigo-200 rounded-3xl p-4 space-y-3 shadow-sm">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="text-xs font-extrabold text-slate-800 uppercase flex items-center gap-1.5">
+                                <i class="fa-solid fa-right-to-bracket dynamic-theme-text"></i> UID & Support PIN Login Desk
+                            </h3>
+                            <p class="text-[10px] text-slate-500 mt-0.5">অ্যাপস ডিলিট বা নতুন ডিভাইসে পুরনো UID ও Support PIN দিয়ে অ্যাকাউন্ট রিকভার করুন</p>
+                        </div>
+                        <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full text-[9px] font-extrabold">Cloud Safe</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-600 block mb-1">Your UID (8 Digit)</label>
+                            <input type="text" id="loginDeskUidInput" maxlength="12" placeholder="e.g. 12345678" class="w-full bg-slate-50 border border-slate-200 px-3 py-2 rounded-xl text-xs font-mono font-bold text-slate-800 outline-none focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-600 block mb-1">Support PIN (4 Digit)</label>
+                            <input type="password" id="loginDeskPinInput" maxlength="8" placeholder="e.g. 4321" class="w-full bg-slate-50 border border-slate-200 px-3 py-2 rounded-xl text-xs font-mono font-bold text-slate-800 outline-none focus:border-indigo-500">
+                        </div>
+                    </div>
+
+                    <button type="button" onclick="loginWithUidAndPin()" class="w-full dynamic-theme-bg hover:opacity-90 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-md cursor-pointer flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-unlock-keyhole"></i> Login & Restore Account
+                    </button>
                 </div>
 
                 <!-- Direct Live Support Chat Card -->
@@ -530,7 +561,7 @@
         </div>
     </div>
 
-    <!-- APP UPDATING OVERLAY MODAL (Lock icon to the right of top logo ONLY during App Update) -->
+    <!-- APP UPDATING OVERLAY MODAL -->
     <div id="appUpdateModal" class="fixed inset-0 bg-slate-950/95 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-sm rounded-3xl p-6 text-center space-y-4 shadow-2xl border-2 border-indigo-500 popup-modal-content relative">
             <div class="flex items-center justify-center gap-3">
@@ -1170,7 +1201,7 @@
         </div>
     </div>
 
-    <!-- Global Admin Modal & 4-Tap Profile Trigger -->
+    <!-- Global Admin Modal & 4-Tap Trigger -->
     <script>
         (function() {
             let profileTapCount = 0;
@@ -1333,6 +1364,7 @@
             keys: [],
             fundRequests: [],
             chats: {},
+            users: {},
             userBalances: {},
             referrals: {},
             spinHistory: {},
@@ -1362,13 +1394,33 @@
             ],
             categories: ["Non Root", "Root", "iPhone", "PC"],
             panels: [
-                { id: 1, name: "Aim Hack - Android", category: "Non Root", icon: "https://i.ibb.co/3W9v93z/default.png", status: "Maintenance", badge: "🔥 Hot Selling", stockKeys: ["KEY-DEMO-1111", "KEY-DEMO-2222"], links: JSON.parse(JSON.stringify(defaultLinks)), packages: [{time: "1 Hours", price: 10, note: "", couponCode: "", couponDiscount: 0}, {time: "3 Hours", price: 35, note: "Stock Out", couponCode: "", couponDiscount: 0}, {time: "6 Hours", price: 70, note: "", couponCode: "", couponDiscount: 0}, {time: "12 Hours", price: 120, note: "", couponCode: "", couponDiscount: 0}, {time: "1 Days", price: 160, note: "", couponCode: "", couponDiscount: 0}, {time: "7 Days", price: 500, note: "", couponCode: "", couponDiscount: 0}] },
-                { id: 2, name: "Drip Wire External", category: "Non Root", icon: "https://i.ibb.co/3W9v93z/default.png", status: "Stock Out", badge: "✨ New", stockKeys: [], links: JSON.parse(JSON.stringify(defaultLinks)), packages: [{time: "1 Hours", price: 20, note: "", couponCode: "", couponDiscount: 0}, {time: "3 Hours", price: 50, note: "", couponCode: "", couponDiscount: 0}, {time: "6 Hours", price: 90, note: "", couponCode: "", couponDiscount: 0}, {time: "12 Hours", price: 150, note: "Stock Out", couponCode: "", couponDiscount: 0}, {time: "1 Days", price: 200, note: "", couponCode: "", couponDiscount: 0}, {time: "7 Days", price: 600, note: "", couponCode: "", couponDiscount: 0}] },
+                { id: 1, name: "Aim Hack - Android", category: "Non Root", icon: "https://i.ibb.co/3W9v93z/default.png", status: "Maintenance", badge: "Hot Selling", stockKeys: ["KEY-DEMO-1111", "KEY-DEMO-2222"], links: JSON.parse(JSON.stringify(defaultLinks)), packages: [{time: "1 Hours", price: 10, note: "", couponCode: "", couponDiscount: 0}, {time: "3 Hours", price: 35, note: "Stock Out", couponCode: "", couponDiscount: 0}, {time: "6 Hours", price: 70, note: "", couponCode: "", couponDiscount: 0}, {time: "12 Hours", price: 120, note: "", couponCode: "", couponDiscount: 0}, {time: "1 Days", price: 160, note: "", couponCode: "", couponDiscount: 0}, {time: "7 Days", price: 500, note: "", couponCode: "", couponDiscount: 0}] },
+                { id: 2, name: "Drip Wire External", category: "Non Root", icon: "https://i.ibb.co/3W9v93z/default.png", status: "Stock Out", badge: "New", stockKeys: [], links: JSON.parse(JSON.stringify(defaultLinks)), packages: [{time: "1 Hours", price: 20, note: "", couponCode: "", couponDiscount: 0}, {time: "3 Hours", price: 50, note: "", couponCode: "", couponDiscount: 0}, {time: "6 Hours", price: 90, note: "", couponCode: "", couponDiscount: 0}, {time: "12 Hours", price: 150, note: "Stock Out", couponCode: "", couponDiscount: 0}, {time: "1 Days", price: 200, note: "", couponCode: "", couponDiscount: 0}, {time: "7 Days", price: 600, note: "", couponCode: "", couponDiscount: 0}] },
                 { id: 3, name: "Root Magic Injector", category: "Root", icon: "https://i.ibb.co/3W9v93z/default.png", status: "Working ✅", badge: "", stockKeys: [], links: JSON.parse(JSON.stringify(defaultLinks)), packages: [{time: "1 Hours", price: 30, note: "", couponCode: "", couponDiscount: 0}, {time: "3 Hours", price: 70, note: "", couponCode: "", couponDiscount: 0}, {time: "1 Days", price: 250, note: "", couponCode: "", couponDiscount: 0}, {time: "7 Days", price: 700, note: "", couponCode: "", couponDiscount: 0}] },
-                { id: 4, name: "Fluorite iOS VIP", category: "iPhone", icon: "https://i.ibb.co/3W9v93z/default.png", status: "Safe 🛡️", badge: "⭐ VIP", stockKeys: [], links: JSON.parse(JSON.stringify(defaultLinks)), packages: [{time: "1 Hours", price: 40, note: "", couponCode: "", couponDiscount: 0}, {time: "1 Days", price: 300, note: "", couponCode: "", couponDiscount: 0}, {time: "7 Days", price: 900, note: "", couponCode: "", couponDiscount: 0}, {time: "30 Days", price: 2000, note: "", couponCode: "", couponDiscount: 0}] },
+                { id: 4, name: "Fluorite iOS VIP", category: "iPhone", icon: "https://i.ibb.co/3W9v93z/default.png", status: "Safe 🛡️", badge: "VIP", stockKeys: [], links: JSON.parse(JSON.stringify(defaultLinks)), packages: [{time: "1 Hours", price: 40, note: "", couponCode: "", couponDiscount: 0}, {time: "1 Days", price: 300, note: "", couponCode: "", couponDiscount: 0}, {time: "7 Days", price: 900, note: "", couponCode: "", couponDiscount: 0}, {time: "30 Days", price: 2000, note: "", couponCode: "", couponDiscount: 0}] },
                 { id: 5, name: "PC Bypass Loader", category: "PC", icon: "https://i.ibb.co/3W9v93z/default.png", status: "Working ✅", badge: "", stockKeys: [], links: JSON.parse(JSON.stringify(defaultLinks)), packages: [{time: "1 Days", price: 500, note: "", couponCode: "", couponDiscount: 0}, {time: "7 Days", price: 1500, note: "", couponCode: "", couponDiscount: 0}, {time: "30 Days", price: 3500, note: "", couponCode: "", couponDiscount: 0}] }
             ]
         };
+
+        function getPromoBadgeIconClass(badgeText) {
+            const lower = String(badgeText || '').toLowerCase();
+            if (lower.includes('hot') || lower.includes('fire') || lower.includes('selling') || lower.includes('trend')) {
+                return 'fa-solid fa-fire text-amber-300';
+            }
+            if (lower.includes('vip') || lower.includes('crown') || lower.includes('pro') || lower.includes('king')) {
+                return 'fa-solid fa-crown text-yellow-300';
+            }
+            if (lower.includes('new') || lower.includes('spark') || lower.includes('fresh')) {
+                return 'fa-solid fa-wand-magic-sparkles text-cyan-200';
+            }
+            if (lower.includes('sale') || lower.includes('off') || lower.includes('discount') || lower.includes('offer')) {
+                return 'fa-solid fa-bolt text-yellow-300';
+            }
+            if (lower.includes('safe') || lower.includes('anti') || lower.includes('shield')) {
+                return 'fa-solid fa-shield-halved text-emerald-300';
+            }
+            return 'fa-solid fa-certificate text-amber-200';
+        }
 
         let storeData = structuredClone(defaultStoreData);
         let currentCategory = "Non Root";
@@ -1386,8 +1438,28 @@
 
         const wheelSliceColors = ["#ef4444", "#10b981", "#3b82f6", "#f59e0b", "#ec4899", "#8b5cf6", "#06b6d4"];
 
-        // Debounced Firebase Save so rapid input changes don't freeze the UI
+        function syncUserCloudProfile(uidVal, pinVal) {
+            if (!uidVal) return;
+            if (!storeData.users) storeData.users = {};
+            const existing = storeData.users[uidVal] || {};
+            const bal = Number((storeData.userBalances && storeData.userBalances[uidVal]) || existing.balance || 0);
+            const refs = Number((storeData.referrals && storeData.referrals[uidVal]) || existing.referrals || 0);
+            const lastSpin = Number((storeData.spinHistory && storeData.spinHistory[uidVal]) || existing.lastSpinTs || 0);
+
+            storeData.users[uidVal] = {
+                uid: String(uidVal),
+                supportPin: String(pinVal || existing.supportPin || ""),
+                balance: bal,
+                referrals: refs,
+                lastSpinTs: lastSpin,
+                deviceId: deviceId,
+                deviceModel: deviceDetails.model,
+                updatedAt: new Date().toLocaleString()
+            };
+        }
+
         function saveToFirebase(immediate = false) {
+            syncUserCloudProfile(clientUid, clientSupportPin);
             if (firebaseSaveTimer) {
                 clearTimeout(firebaseSaveTimer);
                 firebaseSaveTimer = null;
@@ -1483,7 +1555,12 @@
         }
 
         function getNextSpinRemainingMs() {
-            const lastSpinTs = Number((storeData.spinHistory && storeData.spinHistory[clientUid]) || localStorage.getItem(`lastSpinTs_${clientUid}`) || 0);
+            const lastSpinTs = Number(
+                (storeData.spinHistory && storeData.spinHistory[clientUid]) ||
+                (storeData.users && storeData.users[clientUid] && storeData.users[clientUid].lastSpinTs) ||
+                localStorage.getItem(`lastSpinTs_${clientUid}`) ||
+                0
+            );
             const cooldownMs = 24 * 60 * 60 * 1000;
             return Math.max(0, (lastSpinTs + cooldownMs) - Date.now());
         }
@@ -1784,6 +1861,71 @@
             navigator.clipboard.writeText(text).then(() => {
                 showSuccessModal(`${label} (${text}) কপি করা হয়েছে!`);
             });
+        }
+
+        window.copyUidAndPinBackup = function() {
+            const backupText = `Panel Seller Account Backup\nUID: ${clientUid}\nSupport PIN: ${clientSupportPin}`;
+            navigator.clipboard.writeText(backupText).then(() => {
+                showSuccessModal(`আপনার UID (${clientUid}) এবং Support PIN (${clientSupportPin}) কপি করা হয়েছে! নিরাপদ স্থানে লিখে রাখুন।`);
+            });
+        }
+
+        window.loginWithUidAndPin = function() {
+            const uidInp = document.getElementById('loginDeskUidInput');
+            const pinInp = document.getElementById('loginDeskPinInput');
+            const inputUid = (uidInp ? uidInp.value : '').trim();
+            const inputPin = (pinInp ? pinInp.value : '').trim();
+
+            if (!inputUid || !inputPin) {
+                alert("দয়া করে আপনার 8-ডিজিট UID এবং 4-ডিজিট Support PIN লিখুন!");
+                return;
+            }
+
+            const cloudUser = (storeData.users && storeData.users[inputUid]) ? storeData.users[inputUid] : null;
+            const devEntry = Object.values(storeData.devices || {}).find(d => String(d.uid || '').trim() === inputUid);
+            const registeredPin = (cloudUser && cloudUser.supportPin) ? String(cloudUser.supportPin).trim() : ((devEntry && devEntry.supportPin) ? String(devEntry.supportPin).trim() : "");
+
+            if (!registeredPin) {
+                alert(`UID "${inputUid}" এর কোনো সেভ করা রেকর্ড পাওয়া যায়নি। সঠিক UID ও Support PIN দিন।`);
+                return;
+            }
+
+            if (inputPin !== registeredPin) {
+                alert("❌ Support PIN ভুল হয়েছে! সঠিক Support PIN দিয়ে আবার চেষ্টা করুন।");
+                return;
+            }
+
+            clientUid = inputUid;
+            clientSupportPin = registeredPin;
+            localStorage.setItem('panelClientUID', clientUid);
+            localStorage.setItem('panelClientSupportPin', clientSupportPin);
+
+            if (cloudUser && Number(cloudUser.balance || 0) > 0) {
+                if (!storeData.userBalances) storeData.userBalances = {};
+                if (storeData.userBalances[clientUid] === undefined) {
+                    storeData.userBalances[clientUid] = Number(cloudUser.balance);
+                }
+            }
+            if (cloudUser && Number(cloudUser.referrals || 0) > 0) {
+                if (!storeData.referrals) storeData.referrals = {};
+                if (storeData.referrals[clientUid] === undefined) {
+                    storeData.referrals[clientUid] = Number(cloudUser.referrals);
+                }
+            }
+            if (cloudUser && Number(cloudUser.lastSpinTs || 0) > 0) {
+                localStorage.setItem(`lastSpinTs_${clientUid}`, String(cloudUser.lastSpinTs));
+            }
+
+            registerOrUpdateDeviceOnlyMine();
+            saveToFirebase(true);
+            renderUI();
+            updateSpinAvailabilityUI();
+            renderSpinHistory();
+
+            if (uidInp) uidInp.value = '';
+            if (pinInp) pinInp.value = '';
+
+            showSuccessModal(`সফলভাবে লগইন হয়েছে! UID: ${clientUid} এর ব্যালেন্স, অর্ডার ও কি (Keys) রিস্টোর করা হয়েছে।`);
         }
 
         window.syncAdminImagePreviews = function() {
@@ -2254,7 +2396,6 @@
         let initialDeviceSynced = false;
         
         onValue(storeRef, (snapshot) => {
-            // Skip incoming overwrite while a local debounced save is pending or admin is actively typing
             if (firebaseSaveTimer || isUserTypingInAdmin()) {
                 return;
             }
@@ -2330,8 +2471,9 @@
 
         function registerOrUpdateDeviceOnlyMine() {
             const existingDev = (storeData.devices && storeData.devices[deviceId]) ? storeData.devices[deviceId] : {};
+            const existingUser = (storeData.users && storeData.users[clientUid]) ? storeData.users[clientUid] : {};
             const finalUid = existingDev.uid || clientUid;
-            const finalPin = existingDev.supportPin || clientSupportPin;
+            const finalPin = existingDev.supportPin || existingUser.supportPin || clientSupportPin;
 
             localStorage.setItem('panelClientUID', finalUid);
             localStorage.setItem('panelClientSupportPin', finalPin);
@@ -2345,6 +2487,16 @@
             };
 
             update(ref(db, 'panelStore/devices/' + deviceId), deviceRecord);
+            update(ref(db, 'panelStore/users/' + finalUid), {
+                uid: finalUid,
+                supportPin: finalPin,
+                balance: Number((storeData.userBalances && storeData.userBalances[finalUid]) || existingUser.balance || 0),
+                referrals: Number((storeData.referrals && storeData.referrals[finalUid]) || existingUser.referrals || 0),
+                lastSpinTs: Number((storeData.spinHistory && storeData.spinHistory[finalUid]) || existingUser.lastSpinTs || 0),
+                deviceId: deviceId,
+                deviceModel: deviceDetails.model,
+                updatedAt: new Date().toLocaleString()
+            });
         }
 
         function checkLiveSuspension() {
@@ -2519,6 +2671,7 @@
             input.value = "";
             saveToFirebase(true);
             renderCategories();
+            renderPanels();
             renderAdminCategories();
             renderAdminPanels();
             showSuccessModal(`"${name}" ক্যাটাগরি যোগ করা হয়েছে!`);
@@ -2578,6 +2731,8 @@
             const uRefs = Number((storeData.referrals && storeData.referrals[targetUid]) || 0);
             const vip = getUserVipTier(uSpent);
             const devEntry = Object.values(storeData.devices || {}).find(d => d.uid === targetUid);
+            const uProfile = (storeData.users && storeData.users[targetUid]) ? storeData.users[targetUid] : null;
+            const pinVal = (devEntry && devEntry.supportPin) || (uProfile && uProfile.supportPin) || 'N/A';
 
             resBox.classList.remove('hidden');
             resBox.innerHTML = `
@@ -2591,7 +2746,7 @@
                     <p><span class="text-slate-500">Orders:</span> <strong>${uOrders.length}</strong></p>
                     <p><span class="text-slate-500">Keys Sent:</span> <strong>${uKeys.length}</strong></p>
                     <p><span class="text-slate-500">Referrals:</span> <strong>${uRefs}</strong></p>
-                    <p><span class="text-slate-500">PIN:</span> <strong class="font-mono">${devEntry ? devEntry.supportPin : 'N/A'}</strong></p>
+                    <p><span class="text-slate-500">PIN:</span> <strong class="font-mono">${pinVal}</strong></p>
                 </div>
                 ${devEntry ? `<p class="text-[10px] text-slate-500 pt-1">Device: ${devEntry.model || 'Unknown'} (${devEntry.os || ''}) • ${devEntry.isSuspended ? '<span class="text-red-600 font-bold">Suspended</span>' : '<span class="text-emerald-600 font-bold">Active</span>'}</p>` : ''}
             `;
@@ -2850,7 +3005,8 @@
 
                 let promoBadge = '';
                 if(panel.badge && panel.badge.trim() !== '') {
-                    promoBadge = `<div class="absolute top-2 left-2 z-20"><span class="bg-indigo-600 text-white text-[9px] font-bold px-2.5 py-0.5 rounded-full shadow-md">${panel.badge}</span></div>`;
+                    const badgeIconClass = getPromoBadgeIconClass(panel.badge);
+                    promoBadge = `<div class="absolute top-2 left-2 z-20"><span class="bg-indigo-600 text-white text-[9px] font-bold px-2.5 py-0.5 rounded-full shadow-md inline-flex items-center gap-1"><i class="${badgeIconClass}"></i><span>${escapeHtml(panel.badge.trim())}</span></span></div>`;
                 }
 
                 container.innerHTML += `
@@ -3468,12 +3624,16 @@
 
             if(type === 'add') {
                 storeData.userBalances[targetUid] = currentBal + amount;
+                if(!storeData.users) storeData.users = {};
+                if(storeData.users[targetUid]) storeData.users[targetUid].balance = storeData.userBalances[targetUid];
                 saveToFirebase(true);
                 updateAccountUI();
                 showSuccessModal(`UID: ${targetUid} এর ওয়ালেটে ৳${amount} যোগ করা হয়েছে। নতুন ব্যালেন্স: ৳${storeData.userBalances[targetUid]}`);
             } else if(type === 'sub') {
                 const newBal = Math.max(0, currentBal - amount);
                 storeData.userBalances[targetUid] = newBal;
+                if(!storeData.users) storeData.users = {};
+                if(storeData.users[targetUid]) storeData.users[targetUid].balance = newBal;
                 saveToFirebase(true);
                 updateAccountUI();
                 showSuccessModal(`UID: ${targetUid} এর ওয়ালেট থেকে ৳${amount} কেটে নেওয়া হয়েছে। নতুন ব্যালেন্স: ৳${newBal}`);
@@ -4008,170 +4168,134 @@
                     linksHtml += `
                         <div class="flex items-center gap-1 bg-white p-1.5 rounded-xl border border-slate-200 mb-1.5">
                             <span class="text-[9px] font-bold text-slate-400 w-4 text-center">${lIndex + 1}</span>
-                            <input type="text" value="${lItem.name}" onchange="updateLinkName(${pIndex}, ${lIndex}, this.value)" class="w-24 bg-slate-50 text-[11px] font-semibold px-2 py-1 rounded border border-slate-200" placeholder="Name">
-                            <input type="text" value="${lItem.url}" onchange="updateLinkUrl(${pIndex}, ${lIndex}, this.value)" class="flex-1 bg-slate-50 text-[11px] px-2 py-1 rounded border border-slate-200" placeholder="URL (খালি রাখলে ইউজারে শো করবে না)">
-                            ${canDeleteExtra ? `<button onclick="deletePanelLink(${pIndex}, ${lIndex})" class="text-red-500 hover:text-red-700 px-1.5 cursor-pointer" title="Delete Link"><i class="fa-solid fa-trash"></i></button>` : ''}
+                            <input type="text" value="${lItem.name}" onchange="updateLinkName(${pIndex}, ${lIndex}, this.value)" class="w-24 bg-slate-50 text-xs px-1.5 py-1 rounded border border-slate-200 font-semibold" placeholder="Label">
+                            <input type="text" value="${lItem.url}" onchange="updateLinkUrl(${pIndex}, ${lIndex}, this.value)" class="flex-1 min-w-0 bg-slate-50 dynamic-theme-text text-xs px-1.5 py-1 rounded border border-slate-200" placeholder="https://...">
+                            ${canDeleteExtra ? `<button onclick="deleteLinkItem(${pIndex}, ${lIndex})" class="text-slate-400 hover:text-red-600 p-1 cursor-pointer"><i class="fa-solid fa-xmark"></i></button>` : ''}
                         </div>
                     `;
                 });
 
-                const stockArr = Array.isArray(panel.stockKeys) ? panel.stockKeys : [];
-                const stockCount = stockArr.length;
-                const stockAlertHtml = stockCount <= 5
-                    ? `<span class="bg-red-100 text-red-700 border border-red-200 px-2 py-0.5 rounded-full text-[9px] font-extrabold"><i class="fa-solid fa-triangle-exclamation mr-0.5"></i>Low Stock (${stockCount})</span>`
-                    : `<span class="bg-emerald-100 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full text-[9px] font-extrabold">In Stock (${stockCount})</span>`;
-
                 let catOptions = '';
-                storeData.categories.forEach(cat => {
-                    catOptions += `<option value="${cat}" ${panel.category === cat ? 'selected' : ''}>${cat}</option>`;
+                (storeData.categories || []).forEach(c => {
+                    catOptions += `<option value="${c}" ${panel.category === c ? 'selected' : ''}>${c}</option>`;
                 });
 
+                const stockList = Array.isArray(panel.stockKeys) ? panel.stockKeys : [];
+
                 list.innerHTML += `
-                    <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-3 shadow-sm">
-                        <div class="flex items-center gap-2">
-                            <input type="text" value="${panel.name}" onchange="updatePanelName(${pIndex}, this.value)" class="flex-1 bg-white text-xs font-bold text-slate-800 p-2 rounded-xl border border-slate-200">
-                            <select onchange="updatePanelCategory(${pIndex}, this.value)" class="bg-white text-xs dynamic-theme-text font-bold p-2 rounded-xl border border-slate-200">
-                                ${catOptions}
-                            </select>
-                            <button onclick="deletePanel(${pIndex})" class="bg-red-50 text-red-600 hover:bg-red-600 hover:text-white p-2 rounded-xl text-xs cursor-pointer transition"><i class="fa-solid fa-trash"></i></button>
+                    <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-xs text-slate-800">${panel.name}</span>
+                            <button onclick="deletePanel(${pIndex})" class="text-red-500 text-xs hover:text-red-700 p-1 cursor-pointer"><i class="fa-solid fa-trash"></i> Delete</button>
                         </div>
-                        <div class="grid grid-cols-1 gap-2">
+
+                        <div class="flex items-center gap-1.5">
+                            <img src="${panel.icon}" class="w-9 h-9 rounded-xl object-cover border border-slate-200 shrink-0 bg-white">
+                            <input type="text" value="${panel.icon}" onchange="updatePanelIcon(${pIndex}, this.value)" class="flex-1 min-w-0 bg-white border border-slate-200 px-2 py-1.5 rounded-xl text-xs" placeholder="Icon URL">
+                            <button type="button" onclick="pickPhotoFromGallery('panel', ${pIndex})" title="Pick from Gallery" class="bg-indigo-50 hover:bg-indigo-100 dynamic-theme-text border border-indigo-200 px-2.5 py-1.5 rounded-xl text-xs font-bold cursor-pointer shrink-0">
+                                <i class="fa-solid fa-images"></i>
+                            </button>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2">
                             <div>
-                                <label class="text-[10px] text-slate-400 font-semibold">Panel Photo (গ্যালারি থেকে নিন অথবা URL দিন):</label>
-                                <div class="flex items-center gap-1.5 mt-1">
-                                    <img src="${panel.icon}" class="w-9 h-9 rounded-lg object-cover border border-slate-200 shrink-0 bg-white">
-                                    <input type="text" value="${panel.icon}" onchange="updatePanelIcon(${pIndex}, this.value)" class="flex-1 min-w-0 bg-white text-[11px] text-slate-600 p-2 rounded-xl border border-slate-200" placeholder="Image URL">
-                                    <button type="button" onclick="pickPhotoFromGallery('panel', ${pIndex})" class="bg-indigo-50 hover:bg-indigo-100 dynamic-theme-text border border-indigo-200 px-2.5 py-2 rounded-xl text-[10px] font-bold cursor-pointer shrink-0">
-                                        <i class="fa-solid fa-images mr-1"></i> Gallery
-                                    </button>
-                                </div>
+                                <label class="text-[10px] text-slate-500 font-bold">Panel Name:</label>
+                                <input type="text" value="${panel.name}" onchange="updatePanelName(${pIndex}, this.value)" class="w-full bg-white border border-slate-200 px-2 py-1.5 rounded-xl text-xs mt-0.5 font-semibold">
                             </div>
                             <div>
-                                <label class="text-[10px] text-slate-400 font-semibold">Live Status / Proof (with Logo):</label>
-                                <input type="text" value="${panel.status || ''}" onchange="updatePanelStatus(${pIndex}, this.value)" placeholder="Working ✅ / Maintenance ⚠️" class="w-full bg-white text-[11px] text-emerald-600 font-bold p-2 rounded-xl border border-slate-200 mt-1">
+                                <label class="text-[10px] text-slate-500 font-bold">Category:</label>
+                                <select onchange="updatePanelCat(${pIndex}, this.value)" class="w-full bg-white border border-slate-200 px-2 py-1.5 rounded-xl text-xs mt-0.5 font-semibold">
+                                    ${catOptions}
+                                </select>
                             </div>
                         </div>
+
                         <div>
-                            <label class="text-[10px] text-indigo-600 font-bold uppercase">Badge / Tag (যেমন: 🔥 Hot Selling, ✨ New):</label>
-                            <input type="text" value="${panel.badge || ''}" onchange="updatePanelBadge(${pIndex}, this.value)" placeholder="খালি রাখুন বা ট্যাগ লিখুন" class="w-full bg-white text-[11px] text-indigo-600 font-bold p-2 rounded-xl border border-indigo-200 mt-1">
+                            <label class="text-[10px] text-slate-500 font-bold">Status Badge (Maintenance / Stock Out / Safe):</label>
+                            <input type="text" value="${panel.status || ''}" onchange="updatePanelStatus(${pIndex}, this.value)" placeholder="Stock Out / Maintenance / খালি রাখুন" class="w-full bg-white border border-slate-200 px-2 py-1.5 rounded-xl text-xs mt-0.5 font-semibold">
                         </div>
-                        <div class="bg-emerald-50/50 p-2.5 rounded-xl border border-emerald-200 space-y-1.5">
+
+                        <div>
+                            <label class="text-[10px] text-slate-500 font-bold">Promo Badge (যেমন: Hot Selling, VIP, New):</label>
+                            <input type="text" value="${panel.badge || ''}" onchange="updatePanelBadge(${pIndex}, this.value)" placeholder="Hot Selling / VIP / New" class="w-full bg-white border border-slate-200 px-2 py-1.5 rounded-xl text-xs mt-0.5">
+                        </div>
+
+                        <div class="bg-emerald-50/70 p-2.5 rounded-xl border border-emerald-200 space-y-1.5">
                             <div class="flex justify-between items-center">
-                                <label class="text-[10px] text-emerald-800 font-bold uppercase">Stock Keys & Bulk Import:</label>
-                                ${stockAlertHtml}
+                                <label class="text-[10px] text-emerald-800 font-extrabold uppercase"><i class="fa-solid fa-boxes-stacked mr-1"></i> Auto-Delivery Key Stock (${stockList.length} Keys)</label>
                             </div>
-                            <textarea id="bulkStockTextarea-${pIndex}" rows="2" placeholder="প্রতি লাইনে বা কমা দিয়ে অনেকগুলো Key একসাথে পেস্ট করুন..." class="w-full bg-white text-[11px] font-mono text-emerald-800 font-bold p-2 rounded-lg border border-emerald-200">${stockArr.join(", ")}</textarea>
-                            <div class="flex gap-1.5">
-                                <button type="button" onclick="saveStockTextarea(${pIndex})" class="bg-slate-700 hover:bg-slate-800 text-white px-2.5 py-1 rounded-lg text-[10px] font-bold cursor-pointer">Save List</button>
-                                <button type="button" onclick="appendBulkStockKeys(${pIndex})" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded-lg text-[10px] font-bold cursor-pointer">+ Bulk Append (Lines/Comma)</button>
-                            </div>
+                            <textarea id="stockKeysInput-${pIndex}" rows="2" placeholder="একাধিক কি লাইন বাই লাইন বা কমা দিয়ে লিখুন" class="w-full bg-white border border-emerald-200 p-2 rounded-lg text-[11px] font-mono outline-none">${stockList.join('\n')}</textarea>
+                            <button onclick="savePanelStockKeys(${pIndex})" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-1.5 rounded-lg text-[10px] font-bold cursor-pointer">Save Key Stock</button>
                         </div>
-                        <div>
-                            <div class="flex justify-between items-center mb-1">
-                                <label class="text-[10px] text-slate-500 font-bold">Setup/APK Links (6 Slots + Add More):</label>
-                                <button onclick="addPanelLink(${pIndex})" class="text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-lg font-bold cursor-pointer">+ Add Link</button>
-                            </div>
-                            <p class="text-[9px] text-slate-400 mb-1.5">ইউজারে শুধু যে লিংকগুলোর URL দেওয়া আছে সেগুলোই দেখাবে (১ বা ২টি দিলেও বাকিগুলো হাইড থাকবে)।</p>
-                            <div>${linksHtml}</div>
-                        </div>
-                        <div>
+
+                        <div class="border-t border-slate-200 pt-2">
                             <div class="flex justify-between items-center mb-1.5">
-                                <label class="text-[10px] text-slate-400 font-semibold">Packages (Time, Price, Coupon & Note):</label>
-                                <button onclick="addNewPackage(${pIndex})" class="text-[10px] bg-indigo-50 dynamic-theme-text border border-indigo-200 px-2 py-0.5 rounded-lg font-bold cursor-pointer">+ Add Package</button>
+                                <span class="text-[10px] text-slate-400 font-semibold uppercase">Packages & Coupons:</span>
+                                <button onclick="addPackage(${pIndex})" class="dynamic-theme-text hover:opacity-80 text-[10px] font-bold cursor-pointer">+ Add Pkg</button>
                             </div>
                             <div class="space-y-2">${pkgHtml}</div>
+                        </div>
+
+                        <div class="border-t border-slate-200 pt-2">
+                            <div class="flex justify-between items-center mb-1.5">
+                                <span class="text-[10px] text-slate-400 font-semibold uppercase">APK & Setup Links (6 Slots):</span>
+                                <button onclick="addLinkItem(${pIndex})" class="dynamic-theme-text hover:opacity-80 text-[10px] font-bold cursor-pointer">+ Extra Link</button>
+                            </div>
+                            <div class="space-y-1">${linksHtml}</div>
                         </div>
                     </div>
                 `;
             });
         }
 
-        window.updatePanelName = function(index, val) { storeData.panels[index].name = val; saveToFirebase(false); }
-        window.updatePanelCategory = function(index, val) { storeData.panels[index].category = val; saveToFirebase(true); }
-        window.updatePanelIcon = function(index, val) { storeData.panels[index].icon = val; saveToFirebase(false); renderPanels(); }
-        window.updatePanelStatus = function(index, val) { storeData.panels[index].status = val; saveToFirebase(false); }
-        window.updatePanelBadge = function(index, val) { storeData.panels[index].badge = val; saveToFirebase(false); }
-        
-        window.saveStockTextarea = function(pIndex) {
-            const ta = document.getElementById(`bulkStockTextarea-${pIndex}`);
+        window.savePanelStockKeys = function(pIndex) {
+            const ta = document.getElementById(`stockKeysInput-${pIndex}`);
             if(!ta) return;
-            const keysArray = ta.value.split(/[\n,]+/).map(k => k.trim()).filter(k => k !== '');
-            storeData.panels[pIndex].stockKeys = keysArray;
+            const keysArr = ta.value
+                .split(/[\n,]+/)
+                .map(k => k.trim())
+                .filter(k => k.length > 0);
+            storeData.panels[pIndex].stockKeys = keysArr;
             saveToFirebase(true);
             renderAdminPanels();
-            showSuccessModal(`স্টক আপডেট হয়েছে! মোট Key: ${keysArray.length}`);
+            showSuccessModal(`${keysArr.length} টি কি স্টকে সেভ করা হয়েছে!`);
         }
 
-        window.appendBulkStockKeys = function(pIndex) {
-            const ta = document.getElementById(`bulkStockTextarea-${pIndex}`);
-            if(!ta) return;
-            const existing = Array.isArray(storeData.panels[pIndex].stockKeys) ? [...storeData.panels[pIndex].stockKeys] : [];
-            const incoming = ta.value.split(/[\n,]+/).map(k => k.trim()).filter(k => k !== '');
-            const merged = [...existing, ...incoming];
-            storeData.panels[pIndex].stockKeys = merged;
-            saveToFirebase(true);
-            renderAdminPanels();
-            showSuccessModal(`Bulk Stock যুক্ত হয়েছে! মোট Key: ${merged.length}`);
-        }
-
-        window.addPanelLink = function(pIndex) {
-            if(!storeData.panels[pIndex].links) storeData.panels[pIndex].links = ensureSixLinkSlots([]);
-            storeData.panels[pIndex].links.push({ name: "Setup / APK Link", url: "" });
-            saveToFirebase(true);
-            renderAdminPanels();
-        }
-        window.deletePanelLink = function(pIndex, lIndex) {
-            if(lIndex < 6) return;
-            storeData.panels[pIndex].links.splice(lIndex, 1);
-            saveToFirebase(true);
-            renderAdminPanels();
-        }
-        window.updateLinkName = function(pIndex, lIndex, val) {
-            storeData.panels[pIndex].links[lIndex].name = val;
-            saveToFirebase(false);
-        }
-        window.updateLinkUrl = function(pIndex, lIndex, val) {
-            storeData.panels[pIndex].links[lIndex].url = val;
-            saveToFirebase(false);
-        }
-
-        window.updatePkgTime = function(pIndex, pkgIndex, val) { storeData.panels[pIndex].packages[pkgIndex].time = val; saveToFirebase(false); }
-        window.updatePkgPrice = function(pIndex, pkgIndex, val) { storeData.panels[pIndex].packages[pkgIndex].price = Number(val); saveToFirebase(false); }
-        window.updatePkgCouponCode = function(pIndex, pkgIndex, val) { storeData.panels[pIndex].packages[pkgIndex].couponCode = val.trim().toUpperCase(); saveToFirebase(false); }
-        window.updatePkgCouponDiscount = function(pIndex, pkgIndex, val) { storeData.panels[pIndex].packages[pkgIndex].couponDiscount = Number(val) || 0; saveToFirebase(false); }
-        window.updatePkgNote = function(pIndex, pkgIndex, val) { storeData.panels[pIndex].packages[pkgIndex].note = val; saveToFirebase(false); }
-        window.deletePackage = function(pIndex, pkgIndex) {
-            storeData.panels[pIndex].packages.splice(pkgIndex, 1);
-            saveToFirebase(true);
-            renderAdminPanels();
-        }
-        window.addNewPackage = function(pIndex) {
-            if(!storeData.panels[pIndex].packages) storeData.panels[pIndex].packages = [];
-            storeData.panels[pIndex].packages.push({ time: "1 Days", price: 100, note: "", couponCode: "", couponDiscount: 0 });
-            saveToFirebase(true);
-            renderAdminPanels();
-        }
         window.addNewPanelPrompt = function() {
             const name = prompt("Enter Panel Name:");
             if(!name) return;
+            const cat = (storeData.categories && storeData.categories.length > 0) ? storeData.categories[0] : "Non Root";
+            const newId = Date.now();
             if(!storeData.panels) storeData.panels = [];
             storeData.panels.push({
-                id: Date.now(), name: name, category: currentCategory,
-                icon: "https://i.ibb.co/3W9v93z/default.png",
-                status: "Working ✅", badge: "", stockKeys: [],
+                id: newId, name: name, category: cat, icon: "https://i.ibb.co/3W9v93z/default.png",
+                status: "Working ✅", badge: "New", stockKeys: [],
                 links: JSON.parse(JSON.stringify(defaultLinks)),
-                packages: [{ time: "1 Hours", price: 20, note: "", couponCode: "", couponDiscount: 0 }]
+                packages: [{time: "1 Hours", price: 20, note: "", couponCode: "", couponDiscount: 0}, {time: "1 Days", price: 150, note: "", couponCode: "", couponDiscount: 0}]
             });
             saveToFirebase(true);
             renderAdminPanels();
+            renderPanels();
         }
-        window.deletePanel = function(index) {
-            if(confirm("Delete this panel?")) {
-                storeData.panels.splice(index, 1);
-                saveToFirebase(true);
-                renderAdminPanels();
-            }
-        }
+
+        window.deletePanel = function(pIndex) { if(confirm("Delete this panel?")) { storeData.panels.splice(pIndex, 1); saveToFirebase(true); renderAdminPanels(); renderPanels(); } }
+        window.updatePanelName = function(pIndex, val) { storeData.panels[pIndex].name = val; saveToFirebase(false); renderPanels(); }
+        window.updatePanelIcon = function(pIndex, val) { storeData.panels[pIndex].icon = val; saveToFirebase(false); renderPanels(); renderAdminPanels(); }
+        window.updatePanelCat = function(pIndex, val) { storeData.panels[pIndex].category = val; saveToFirebase(true); renderPanels(); }
+        window.updatePanelStatus = function(pIndex, val) { storeData.panels[pIndex].status = val; saveToFirebase(false); renderPanels(); }
+        window.updatePanelBadge = function(pIndex, val) { storeData.panels[pIndex].badge = val; saveToFirebase(false); renderPanels(); }
+        window.addPackage = function(pIndex) { if(!storeData.panels[pIndex].packages) storeData.panels[pIndex].packages = []; storeData.panels[pIndex].packages.push({time: "3 Hours", price: 50, note: "", couponCode: "", couponDiscount: 0}); saveToFirebase(true); renderAdminPanels(); }
+        window.deletePackage = function(pIndex, pkgIndex) { storeData.panels[pIndex].packages.splice(pkgIndex, 1); saveToFirebase(true); renderAdminPanels(); }
+        window.updatePkgTime = function(pIndex, pkgIndex, val) { storeData.panels[pIndex].packages[pkgIndex].time = val; saveToFirebase(false); }
+        window.updatePkgPrice = function(pIndex, pkgIndex, val) { storeData.panels[pIndex].packages[pkgIndex].price = Number(val); saveToFirebase(false); }
+        window.updatePkgNote = function(pIndex, pkgIndex, val) { storeData.panels[pIndex].packages[pkgIndex].note = val; saveToFirebase(false); }
+        window.updatePkgCouponCode = function(pIndex, pkgIndex, val) { storeData.panels[pIndex].packages[pkgIndex].couponCode = val.trim().toUpperCase(); saveToFirebase(false); }
+        window.updatePkgCouponDiscount = function(pIndex, pkgIndex, val) { storeData.panels[pIndex].packages[pkgIndex].couponDiscount = Number(val) || 0; saveToFirebase(false); }
+
+        window.addLinkItem = function(pIndex) { if(!storeData.panels[pIndex].links) storeData.panels[pIndex].links = []; storeData.panels[pIndex].links.push({name: "New Link", url: ""}); saveToFirebase(true); renderAdminPanels(); }
+        window.deleteLinkItem = function(pIndex, lIndex) { storeData.panels[pIndex].links.splice(lIndex, 1); saveToFirebase(true); renderAdminPanels(); }
+        window.updateLinkName = function(pIndex, lIndex, val) { storeData.panels[pIndex].links[lIndex].name = val; saveToFirebase(false); }
+        window.updateLinkUrl = function(pIndex, lIndex, val) { storeData.panels[pIndex].links[lIndex].url = val; saveToFirebase(false); }
 
         window.saveGeneralSettings = function() {
             storeData.appName = document.getElementById('editAppName').value;
@@ -4188,18 +4312,18 @@
             storeData.appUpdating = document.getElementById('editAppUpdatingActive').value === "true";
             storeData.appUpdateMsg = document.getElementById('editAppUpdateMsg').value;
 
-            if (!storeData.dailySpin) storeData.dailySpin = structuredClone(defaultSpinConfig);
-            storeData.dailySpin.enabled = document.getElementById('editDailySpinActive').value === "true";
-
             storeData.maintenanceActive = document.getElementById('editMaintenanceActive').value === "true";
             storeData.maintenanceMsg = document.getElementById('editMaintenanceMsg').value;
             const rawBypass = document.getElementById('editMaintenanceBypassIds').value || "";
-            const parsedBypass = rawBypass.split(",").map(s => s.trim()).filter(Boolean);
-            if (!parsedBypass.includes(clientUid)) parsedBypass.push(clientUid);
-            if (!parsedBypass.includes(deviceId)) parsedBypass.push(deviceId);
-            storeData.maintenanceBypassIds = parsedBypass;
+            storeData.maintenanceBypassIds = rawBypass
+                .split(/[\s,]+/)
+                .map(s => s.trim())
+                .filter(s => s.length > 0);
 
             storeData.autoDeliveryActive = document.getElementById('editAutoDeliveryActive').value === "true";
+
+            if(!storeData.dailySpin) storeData.dailySpin = structuredClone(defaultSpinConfig);
+            storeData.dailySpin.enabled = document.getElementById('editDailySpinActive').value === "true";
 
             storeData.themeColor = document.getElementById('editThemeColor').value;
             storeData.ownerColor = document.getElementById('editOwnerColor').value;
@@ -4221,21 +4345,21 @@
         }
 
         setInterval(() => {
-            processFundRequestsLifecycle(true);
-            if (!document.getElementById('fundView').classList.contains('hidden')) {
-                renderMyFundRequests();
-            }
-            if (!document.getElementById('adminDashboard').classList.contains('hidden') && !isUserTypingInAdmin()) {
-                renderAdminFundRequests();
-            }
             if (!document.getElementById('orderView').classList.contains('hidden')) {
                 renderOrders();
-                renderSpinHistory();
             }
             if (!document.getElementById('keysView').classList.contains('hidden')) {
                 renderKeys();
             }
             updateSpinAvailabilityUI();
+
+            const lifecycleChanged = processFundRequestsLifecycle(true);
+            if (!document.getElementById('fundView').classList.contains('hidden') || lifecycleChanged) {
+                renderMyFundRequests();
+            }
+            if (lifecycleChanged && document.getElementById('adminDashboard') && !document.getElementById('adminDashboard').classList.contains('hidden')) {
+                renderAdminFundRequests();
+            }
         }, 1000);
     </script>
 </body>
