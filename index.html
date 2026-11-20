@@ -67,7 +67,7 @@
         }
 
         .pkg-card, .home-list-item, .cat-btn, button:not(.nav-btn), input, select {
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
             transform-style: preserve-3d;
         }
 
@@ -101,7 +101,7 @@
             background: linear-gradient(145deg, #ffffff, #f8fafc);
             border: 1.5px solid #e2e8f0;
             box-shadow: 0 10px 25px -5px rgba(0,0,0,0.06);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
             transform: perspective(1000px) translateZ(0);
         }
 
@@ -533,7 +533,6 @@
     <!-- APP UPDATING OVERLAY MODAL (Lock icon to the right of top logo ONLY during App Update) -->
     <div id="appUpdateModal" class="fixed inset-0 bg-slate-950/95 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-sm rounded-3xl p-6 text-center space-y-4 shadow-2xl border-2 border-indigo-500 popup-modal-content relative">
-            <!-- Top Logo + Lock Icon on its right (visible ONLY while App Update is active) -->
             <div class="flex items-center justify-center gap-3">
                 <div class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-3xl shadow-inner">
                     <i class="fa-solid fa-arrows-rotate fa-spin" style="animation-duration: 2.2s;"></i>
@@ -1194,7 +1193,6 @@
                 if (modal) modal.classList.add('hidden');
             };
 
-            // 4 consecutive taps on Profile when App Update screen is NOT active
             window.profileFourTapAdminTrigger = function() {
                 const updateModal = document.getElementById('appUpdateModal');
                 const isUpdateScreenOpen = updateModal && !updateModal.classList.contains('hidden');
@@ -1302,7 +1300,6 @@
             ]
         };
 
-        // App Update Mode is OFF by default as requested
         let defaultStoreData = {
             appName: "PANEL SELLER",
             appSub: "Trusted Gaming Injector Store",
@@ -1382,11 +1379,37 @@
         let adminUnlockedSession = false;
         let isSpinAnimating = false;
         let currentWheelRotation = 0;
+        let firebaseSaveTimer = null;
 
         let galleryTarget = null;
         const galleryInputEl = document.getElementById('galleryPhotoInput');
 
         const wheelSliceColors = ["#ef4444", "#10b981", "#3b82f6", "#f59e0b", "#ec4899", "#8b5cf6", "#06b6d4"];
+
+        // Debounced Firebase Save so rapid input changes don't freeze the UI
+        function saveToFirebase(immediate = false) {
+            if (firebaseSaveTimer) {
+                clearTimeout(firebaseSaveTimer);
+                firebaseSaveTimer = null;
+            }
+            if (immediate) {
+                set(storeRef, storeData);
+                return;
+            }
+            firebaseSaveTimer = setTimeout(() => {
+                set(storeRef, storeData);
+                firebaseSaveTimer = null;
+            }, 350);
+        }
+
+        function isUserTypingInAdmin() {
+            const dash = document.getElementById('adminDashboard');
+            if (!dash || dash.classList.contains('hidden')) return false;
+            const active = document.activeElement;
+            if (!active) return false;
+            const tag = active.tagName;
+            return dash.contains(active) && (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT');
+        }
 
         function getFundRemainingMs(req) {
             const ts = Number(req && req.timestamp ? req.timestamp : 0);
@@ -1447,7 +1470,7 @@
 
             storeData.fundRequests = capped;
             if (changed && shouldPersist) {
-                saveToFirebase();
+                saveToFirebase(false);
             }
             return changed;
         }
@@ -1657,7 +1680,7 @@
                     storeData.spinLogs = storeData.spinLogs.slice(0, 50);
                 }
 
-                saveToFirebase();
+                saveToFirebase(true);
                 updateAccountUI();
                 updateSpinAvailabilityUI();
                 renderSpinHistory();
@@ -1735,7 +1758,7 @@
                 cfg.items[idx].weight = w;
             }
             storeData.dailySpin = cfg;
-            saveToFirebase();
+            saveToFirebase(false);
             renderSpinWheelWithLabels();
         }
 
@@ -1783,12 +1806,12 @@
                 storeData.bannerImg = defBanner;
             }
             syncAdminImagePreviews();
-            saveToFirebase();
+            saveToFirebase(true);
             renderUI();
             showSuccessModal('ডিফল্ট ছবি রিসেট করা হয়েছে!');
         }
 
-        function compressImageFileToDataUrl(file, maxWidth = 600, quality = 0.72) {
+        function compressImageFileToDataUrl(file, maxWidth = 480, quality = 0.65) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.onload = (e) => {
@@ -1827,12 +1850,12 @@
             if (!file || !galleryTarget) return;
 
             try {
-                const dataUrl = await compressImageFileToDataUrl(file, 600, 0.72);
+                const dataUrl = await compressImageFileToDataUrl(file, 480, 0.65);
                 if (galleryTarget.type === 'panel') {
                     const idx = galleryTarget.index;
                     if (storeData.panels && storeData.panels[idx]) {
                         storeData.panels[idx].icon = dataUrl;
-                        saveToFirebase();
+                        saveToFirebase(true);
                         renderAdminPanels();
                         renderPanels();
                         showSuccessModal('প্যানেলের ছবি গ্যালারি থেকে সেট করা হয়েছে!');
@@ -1841,14 +1864,14 @@
                     storeData.logoUrl = dataUrl;
                     document.getElementById('editLogoUrl').value = dataUrl;
                     syncAdminImagePreviews();
-                    saveToFirebase();
+                    saveToFirebase(true);
                     renderUI();
                     showSuccessModal('লোগো / অ্যাভাটার গ্যালারি থেকে সেট করা হয়েছে!');
                 } else if (galleryTarget.type === 'banner') {
                     storeData.bannerImg = dataUrl;
                     document.getElementById('editBannerImg').value = dataUrl;
                     syncAdminImagePreviews();
-                    saveToFirebase();
+                    saveToFirebase(true);
                     renderUI();
                     showSuccessModal('ব্যানার ছবি গ্যালারি থেকে সেট করা হয়েছে!');
                 }
@@ -2175,7 +2198,7 @@
                         if(storeData) {
                             if(!storeData.referrals) storeData.referrals = {};
                             storeData.referrals[targetRefKey] = (storeData.referrals[targetRefKey] || 0) + 1;
-                            saveToFirebase();
+                            saveToFirebase(false);
                         }
                     }, 1500);
                 }
@@ -2231,6 +2254,11 @@
         let initialDeviceSynced = false;
         
         onValue(storeRef, (snapshot) => {
+            // Skip incoming overwrite while a local debounced save is pending or admin is actively typing
+            if (firebaseSaveTimer || isUserTypingInAdmin()) {
+                return;
+            }
+
             const serverData = snapshot.val();
             if (serverData) {
                 storeData = { ...structuredClone(defaultStoreData), ...serverData };
@@ -2259,7 +2287,7 @@
             checkAppUpdateState();
             checkMaintenanceState();
             checkLiveSuspension();
-            processFundRequestsLifecycle(true);
+            processFundRequestsLifecycle(false);
             updateUserChatUnreadBadge();
             updateSpinAvailabilityUI();
             renderSpinWheelWithLabels();
@@ -2489,7 +2517,7 @@
             }
             storeData.categories.push(name);
             input.value = "";
-            saveToFirebase();
+            saveToFirebase(true);
             renderCategories();
             renderAdminCategories();
             renderAdminPanels();
@@ -2511,7 +2539,7 @@
             });
             if(currentCategory === removed) currentCategory = fallbackCat;
 
-            saveToFirebase();
+            saveToFirebase(true);
             renderCategories();
             renderPanels();
             renderAdminCategories();
@@ -2704,7 +2732,7 @@
             } else if(tab === 'fund') {
                 document.getElementById('fundView').classList.remove('hidden');
                 startFundTimer();
-                processFundRequestsLifecycle(true);
+                processFundRequestsLifecycle(false);
                 renderMyFundRequests();
             } else if(tab === 'keys') {
                 document.getElementById('keysView').classList.remove('hidden');
@@ -3149,7 +3177,7 @@
                     });
                 }
 
-                saveToFirebase();
+                saveToFirebase(true);
 
                 sendTelegramAlert(`🛒 <b>নতুন Key অর্ডার (Wallet Pay)!</b>\n\n👤 <b>UID:</b> <code>${clientUid}</code>\n👑 <b>VIP:</b> ${vipInfo.tierName}\n📦 <b>প্যানেল:</b> ${selectedPanel.name}\n⏳ <b>মেয়াদ:</b> ${selectedPackage.time}\n💵 <b>মূল্য:</b> ৳${finalPrice}${vipNote}${couponInfo}\n⚙️ <b>মোড:</b> ${orderStatus === 'Completed' ? 'অটো ডেলিভারি সফল' : 'পেন্ডিং (ম্যানুয়াল)'}\n📅 <b>তারিখ:</b> ${new Date().toLocaleString()}`);
 
@@ -3187,7 +3215,7 @@
                     "Pending"
                 );
 
-                saveToFirebase();
+                saveToFirebase(true);
                 renderHomeTabContent();
 
                 sendTelegramAlert(`🛒 <b>নতুন Key অর্ডার (Instant Pay)!</b>\n\n👤 <b>UID:</b> <code>${clientUid}</code>\n👑 <b>VIP:</b> ${vipInfo.tierName}\n📦 <b>প্যানেল:</b> ${selectedPanel.name}\n⏳ <b>মেয়াদ:</b> ${selectedPackage.time}\n💵 <b>মূল্য:</b> ৳${finalPrice}${vipNote}${couponInfo}\n📅 <b>তারিখ:</b> ${new Date().toLocaleString()}`);
@@ -3252,7 +3280,7 @@
             storeData.fundRequests.unshift(requestObj);
             storeData.fundRequests = enforceMaxFiveFundRequests(storeData.fundRequests);
 
-            saveToFirebase();
+            saveToFirebase(true);
 
             sendTelegramAlert(`💰 <b>নতুন Add Fund রিকোয়েস্ট!</b>\n\n👤 <b>UID:</b> <code>${clientUid}</code>\n💵 <b>পরিমাণ:</b> ৳${amt}\n🧾 <b>TrxID:</b> <code>${trx}</code>\n📅 <b>সময়:</b> ${requestObj.date}`);
 
@@ -3365,10 +3393,6 @@
             });
         }
 
-        function saveToFirebase() {
-            set(storeRef, storeData);
-        }
-
         window.verifyAdmin = async function() {
             const pin = document.getElementById('adminPinInput').value;
             const hashedInput = await sha256(pin);
@@ -3422,7 +3446,7 @@
                 renderAdminUserOrders();
                 document.getElementById('adminDashboard').classList.remove('hidden');
                 
-                setTimeout(() => { renderSalesAnalyticsChart(); }, 200);
+                setTimeout(() => { renderSalesAnalyticsChart(); }, 150);
             } else {
                 alert('Wrong PIN!');
             }
@@ -3444,13 +3468,13 @@
 
             if(type === 'add') {
                 storeData.userBalances[targetUid] = currentBal + amount;
-                saveToFirebase();
+                saveToFirebase(true);
                 updateAccountUI();
                 showSuccessModal(`UID: ${targetUid} এর ওয়ালেটে ৳${amount} যোগ করা হয়েছে। নতুন ব্যালেন্স: ৳${storeData.userBalances[targetUid]}`);
             } else if(type === 'sub') {
                 const newBal = Math.max(0, currentBal - amount);
                 storeData.userBalances[targetUid] = newBal;
-                saveToFirebase();
+                saveToFirebase(true);
                 updateAccountUI();
                 showSuccessModal(`UID: ${targetUid} এর ওয়ালেট থেকে ৳${amount} কেটে নেওয়া হয়েছে। নতুন ব্যালেন্স: ৳${newBal}`);
             }
@@ -3464,13 +3488,17 @@
             if(!ctx) return;
 
             const orders = storeData.orders || [];
-            let totalRevenue = orders.reduce((sum, o) => sum + Number(o.price || 0), 0);
-            let totalOrdersCount = orders.length;
-            let pendingCount = orders.filter(o => o.status !== 'Completed').length;
-            let completedCount = orders.filter(o => o.status === 'Completed').length;
+            const chartValues = [
+                orders.reduce((sum, o) => sum + Number(o.price || 0), 0),
+                orders.length,
+                orders.filter(o => o.status === 'Completed').length,
+                orders.filter(o => o.status !== 'Completed').length
+            ];
 
             if(salesChartInstance) {
-                salesChartInstance.destroy();
+                salesChartInstance.data.datasets[0].data = chartValues;
+                salesChartInstance.update('none');
+                return;
             }
 
             salesChartInstance = new Chart(ctx, {
@@ -3479,7 +3507,7 @@
                     labels: ['Total Revenue (৳)', 'Total Orders', 'Completed', 'Pending'],
                     datasets: [{
                         label: 'Store Performance',
-                        data: [totalRevenue, totalOrdersCount, completedCount, pendingCount],
+                        data: chartValues,
                         backgroundColor: ['#4f46e5', '#10b981', '#06b6d4', '#f59e0b'],
                         borderRadius: 8
                     }]
@@ -3487,6 +3515,7 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    animation: false,
                     plugins: {
                         legend: { display: false }
                     },
@@ -3557,7 +3586,7 @@
             if(!Array.isArray(storeData.orders) || storeData.orders.length === 0) return;
             if(!confirm("সব Completed অর্ডার লিস্ট থেকে ক্লিয়ার করতে চান?")) return;
             storeData.orders = storeData.orders.filter(o => o.status !== 'Completed');
-            saveToFirebase();
+            saveToFirebase(true);
             renderAdminUserOrders();
             renderSalesAnalyticsChart();
             showSuccessModal("Completed অর্ডারগুলো ক্লিয়ার করা হয়েছে!");
@@ -3585,7 +3614,7 @@
                 expiryTimestamp: ord.expiryTimestamp
             });
 
-            saveToFirebase();
+            saveToFirebase(true);
             renderAdminUserOrders();
             renderSalesAnalyticsChart();
             showSuccessModal(`Key sent successfully to UID: ${ord.uid}`);
@@ -3594,7 +3623,7 @@
         window.deleteUserOrder = function(orderIndex) {
             if(confirm('Delete this order?')) {
                 storeData.orders.splice(orderIndex, 1);
-                saveToFirebase();
+                saveToFirebase(true);
                 renderAdminUserOrders();
                 renderSalesAnalyticsChart();
             }
@@ -3623,7 +3652,7 @@
                 expiryTimestamp: expiryTs
             });
 
-            saveToFirebase();
+            saveToFirebase(true);
             document.getElementById('directKeyUid').value = '';
             document.getElementById('directKeyPanel').value = '';
             document.getElementById('directKeyTime').value = '';
@@ -3638,7 +3667,7 @@
                 return;
             }
             storeData.adminHash = await sha256(newPin);
-            saveToFirebase();
+            saveToFirebase(true);
             showSuccessModal('Admin PIN updated successfully!');
             document.getElementById('newAdminPin').value = '';
         }
@@ -3704,57 +3733,57 @@
 
         window.addAdminRecentOrder = function() {
             pushAutoRollingRecentOrder("New User", "Panel Android", "20৳", "Completed");
-            saveToFirebase();
+            saveToFirebase(true);
             renderAdminHomeLists();
             renderHomeTabContent();
         }
         window.deleteRecentOrder = function(idx) {
             storeData.homeRecentOrders.splice(idx, 1);
-            saveToFirebase();
+            saveToFirebase(true);
             renderAdminHomeLists();
             renderHomeTabContent();
         }
         window.updateRecentOrder = function(idx, field, val) {
             storeData.homeRecentOrders[idx][field] = val;
-            saveToFirebase();
+            saveToFirebase(false);
             renderHomeTabContent();
         }
 
         window.addAdminTopBuyer = function() {
             if(!storeData.homeTopBuyers) storeData.homeTopBuyers = [];
             storeData.homeTopBuyers.push({ name: "New Buyer", badge: "Top Member • #6", spent: "100৳", avatarBg: "bg-indigo-100 text-indigo-700" });
-            saveToFirebase();
+            saveToFirebase(true);
             renderAdminHomeLists();
             renderHomeTabContent();
         }
         window.deleteTopBuyer = function(idx) {
             storeData.homeTopBuyers.splice(idx, 1);
-            saveToFirebase();
+            saveToFirebase(true);
             renderAdminHomeLists();
             renderHomeTabContent();
         }
         window.updateTopBuyer = function(idx, field, val) {
             storeData.homeTopBuyers[idx][field] = val;
-            saveToFirebase();
+            saveToFirebase(false);
             renderHomeTabContent();
         }
 
         window.addAdminFeedback = function() {
             if(!storeData.homeFeedbacks) storeData.homeFeedbacks = [];
             storeData.homeFeedbacks.push({ name: "New Reviewer", status: "Verified Buyer", stars: 5, comment: "Good service!" });
-            saveToFirebase();
+            saveToFirebase(true);
             renderAdminHomeLists();
             renderHomeTabContent();
         }
         window.deleteFeedback = function(idx) {
             storeData.homeFeedbacks.splice(idx, 1);
-            saveToFirebase();
+            saveToFirebase(true);
             renderAdminHomeLists();
             renderHomeTabContent();
         }
         window.updateFeedback = function(idx, field, val) {
             storeData.homeFeedbacks[idx][field] = field === 'stars' ? Number(val) : val;
-            saveToFirebase();
+            saveToFirebase(false);
             renderHomeTabContent();
         }
 
@@ -3809,7 +3838,7 @@
             if(!Array.isArray(storeData.fundRequests) || storeData.fundRequests.length === 0) return;
             if(!confirm("সব Approved, Rejected ও Expired ফান্ড রিকোয়েস্ট ক্লিয়ার করতে চান?")) return;
             storeData.fundRequests = storeData.fundRequests.filter(r => r.status === 'Pending');
-            saveToFirebase();
+            saveToFirebase(true);
             renderAdminFundRequests();
             renderMyFundRequests();
             showSuccessModal("পুরনো ফান্ড রিকোয়েস্টগুলো ক্লিয়ার করা হয়েছে!");
@@ -3823,7 +3852,7 @@
             if(!storeData.userBalances) storeData.userBalances = {};
             storeData.userBalances[req.uid] = Number(storeData.userBalances[req.uid] || 0) + Number(req.amount);
 
-            saveToFirebase();
+            saveToFirebase(true);
             renderAdminFundRequests();
             renderMyFundRequests();
             updateAccountUI();
@@ -3833,7 +3862,7 @@
         window.rejectFundRequest = function(index) {
             if(!storeData.fundRequests[index]) return;
             storeData.fundRequests[index].status = 'Rejected';
-            saveToFirebase();
+            saveToFirebase(true);
             renderAdminFundRequests();
             renderMyFundRequests();
             showSuccessModal('Fund request rejected.');
@@ -4057,18 +4086,18 @@
             });
         }
 
-        window.updatePanelName = function(index, val) { storeData.panels[index].name = val; saveToFirebase(); }
-        window.updatePanelCategory = function(index, val) { storeData.panels[index].category = val; saveToFirebase(); }
-        window.updatePanelIcon = function(index, val) { storeData.panels[index].icon = val; saveToFirebase(); renderPanels(); }
-        window.updatePanelStatus = function(index, val) { storeData.panels[index].status = val; saveToFirebase(); }
-        window.updatePanelBadge = function(index, val) { storeData.panels[index].badge = val; saveToFirebase(); }
+        window.updatePanelName = function(index, val) { storeData.panels[index].name = val; saveToFirebase(false); }
+        window.updatePanelCategory = function(index, val) { storeData.panels[index].category = val; saveToFirebase(true); }
+        window.updatePanelIcon = function(index, val) { storeData.panels[index].icon = val; saveToFirebase(false); renderPanels(); }
+        window.updatePanelStatus = function(index, val) { storeData.panels[index].status = val; saveToFirebase(false); }
+        window.updatePanelBadge = function(index, val) { storeData.panels[index].badge = val; saveToFirebase(false); }
         
         window.saveStockTextarea = function(pIndex) {
             const ta = document.getElementById(`bulkStockTextarea-${pIndex}`);
             if(!ta) return;
             const keysArray = ta.value.split(/[\n,]+/).map(k => k.trim()).filter(k => k !== '');
             storeData.panels[pIndex].stockKeys = keysArray;
-            saveToFirebase();
+            saveToFirebase(true);
             renderAdminPanels();
             showSuccessModal(`স্টক আপডেট হয়েছে! মোট Key: ${keysArray.length}`);
         }
@@ -4080,54 +4109,66 @@
             const incoming = ta.value.split(/[\n,]+/).map(k => k.trim()).filter(k => k !== '');
             const merged = [...existing, ...incoming];
             storeData.panels[pIndex].stockKeys = merged;
-            saveToFirebase();
+            saveToFirebase(true);
             renderAdminPanels();
-            showSuccessModal(`${incoming.length}টি নতুন Key যুক্ত হয়েছে! মোট স্টক: ${merged.length}`);
-        }
-
-        window.updateLinkName = function(pIndex, lIndex, val) {
-            storeData.panels[pIndex].links = ensureSixLinkSlots(storeData.panels[pIndex].links);
-            storeData.panels[pIndex].links[lIndex].name = val;
-            saveToFirebase();
-        }
-
-        window.updateLinkUrl = function(pIndex, lIndex, val) {
-            storeData.panels[pIndex].links = ensureSixLinkSlots(storeData.panels[pIndex].links);
-            storeData.panels[pIndex].links[lIndex].url = val;
-            saveToFirebase();
+            showSuccessModal(`Bulk Stock যুক্ত হয়েছে! মোট Key: ${merged.length}`);
         }
 
         window.addPanelLink = function(pIndex) {
-            storeData.panels[pIndex].links = ensureSixLinkSlots(storeData.panels[pIndex].links);
-            const nextNum = storeData.panels[pIndex].links.length + 1;
-            storeData.panels[pIndex].links.push({ name: `Extra Link ${nextNum}`, url: "" });
-            saveToFirebase();
+            if(!storeData.panels[pIndex].links) storeData.panels[pIndex].links = ensureSixLinkSlots([]);
+            storeData.panels[pIndex].links.push({ name: "Setup / APK Link", url: "" });
+            saveToFirebase(true);
             renderAdminPanels();
         }
-
         window.deletePanelLink = function(pIndex, lIndex) {
-            storeData.panels[pIndex].links = ensureSixLinkSlots(storeData.panels[pIndex].links);
+            if(lIndex < 6) return;
             storeData.panels[pIndex].links.splice(lIndex, 1);
-            saveToFirebase();
+            saveToFirebase(true);
             renderAdminPanels();
         }
+        window.updateLinkName = function(pIndex, lIndex, val) {
+            storeData.panels[pIndex].links[lIndex].name = val;
+            saveToFirebase(false);
+        }
+        window.updateLinkUrl = function(pIndex, lIndex, val) {
+            storeData.panels[pIndex].links[lIndex].url = val;
+            saveToFirebase(false);
+        }
 
-        window.updatePkgTime = function(pIndex, pkgIndex, val) { storeData.panels[pIndex].packages[pkgIndex].time = val; saveToFirebase(); }
-        window.updatePkgPrice = function(pIndex, pkgIndex, val) { storeData.panels[pIndex].packages[pkgIndex].price = Number(val); saveToFirebase(); }
-        window.updatePkgCouponCode = function(pIndex, pkgIndex, val) { storeData.panels[pIndex].packages[pkgIndex].couponCode = val.trim().toUpperCase(); saveToFirebase(); }
-        window.updatePkgCouponDiscount = function(pIndex, pkgIndex, val) { storeData.panels[pIndex].packages[pkgIndex].couponDiscount = Number(val) || 0; saveToFirebase(); }
-        window.updatePkgNote = function(pIndex, pkgIndex, val) { storeData.panels[pIndex].packages[pkgIndex].note = val; saveToFirebase(); }
-        window.addNewPackage = function(pIndex) { storeData.panels[pIndex].packages.push({time: "1 Days", price: 100, note: "", couponCode: "", couponDiscount: 0}); saveToFirebase(); renderAdminPanels(); }
-        window.deletePackage = function(pIndex, pkgIndex) { storeData.panels[pIndex].packages.splice(pkgIndex, 1); saveToFirebase(); renderAdminPanels(); }
-        window.deletePanel = function(pIndex) { if(confirm('Delete panel?')) { storeData.panels.splice(pIndex, 1); saveToFirebase(); renderAdminPanels(); } }
-        
+        window.updatePkgTime = function(pIndex, pkgIndex, val) { storeData.panels[pIndex].packages[pkgIndex].time = val; saveToFirebase(false); }
+        window.updatePkgPrice = function(pIndex, pkgIndex, val) { storeData.panels[pIndex].packages[pkgIndex].price = Number(val); saveToFirebase(false); }
+        window.updatePkgCouponCode = function(pIndex, pkgIndex, val) { storeData.panels[pIndex].packages[pkgIndex].couponCode = val.trim().toUpperCase(); saveToFirebase(false); }
+        window.updatePkgCouponDiscount = function(pIndex, pkgIndex, val) { storeData.panels[pIndex].packages[pkgIndex].couponDiscount = Number(val) || 0; saveToFirebase(false); }
+        window.updatePkgNote = function(pIndex, pkgIndex, val) { storeData.panels[pIndex].packages[pkgIndex].note = val; saveToFirebase(false); }
+        window.deletePackage = function(pIndex, pkgIndex) {
+            storeData.panels[pIndex].packages.splice(pkgIndex, 1);
+            saveToFirebase(true);
+            renderAdminPanels();
+        }
+        window.addNewPackage = function(pIndex) {
+            if(!storeData.panels[pIndex].packages) storeData.panels[pIndex].packages = [];
+            storeData.panels[pIndex].packages.push({ time: "1 Days", price: 100, note: "", couponCode: "", couponDiscount: 0 });
+            saveToFirebase(true);
+            renderAdminPanels();
+        }
         window.addNewPanelPrompt = function() {
             const name = prompt("Enter Panel Name:");
-            if(name) {
-                const defaultCat = (storeData.categories && storeData.categories[0]) || "Non Root";
-                const newId = Date.now();
-                storeData.panels.push({ id: newId, name: name, category: defaultCat, icon: "https://i.ibb.co/3W9v93z/default.png", status: "Working ✅", badge: "", stockKeys: [], links: JSON.parse(JSON.stringify(defaultLinks)), packages: [{time: "1 Hours", price: 20, note: "", couponCode: "", couponDiscount: 0}] });
-                saveToFirebase();
+            if(!name) return;
+            if(!storeData.panels) storeData.panels = [];
+            storeData.panels.push({
+                id: Date.now(), name: name, category: currentCategory,
+                icon: "https://i.ibb.co/3W9v93z/default.png",
+                status: "Working ✅", badge: "", stockKeys: [],
+                links: JSON.parse(JSON.stringify(defaultLinks)),
+                packages: [{ time: "1 Hours", price: 20, note: "", couponCode: "", couponDiscount: 0 }]
+            });
+            saveToFirebase(true);
+            renderAdminPanels();
+        }
+        window.deletePanel = function(index) {
+            if(confirm("Delete this panel?")) {
+                storeData.panels.splice(index, 1);
+                saveToFirebase(true);
                 renderAdminPanels();
             }
         }
@@ -4144,19 +4185,21 @@
             storeData.bkash = document.getElementById('editBkash').value;
             storeData.nagad = document.getElementById('editNagad').value;
 
-            storeData.appUpdating = document.getElementById('editAppUpdatingActive').value === 'true';
+            storeData.appUpdating = document.getElementById('editAppUpdatingActive').value === "true";
             storeData.appUpdateMsg = document.getElementById('editAppUpdateMsg').value;
 
-            storeData.maintenanceActive = document.getElementById('editMaintenanceActive').value === 'true';
-            storeData.maintenanceMsg = document.getElementById('editMaintenanceMsg').value;
-
-            const bypassRaw = document.getElementById('editMaintenanceBypassIds').value || "";
-            storeData.maintenanceBypassIds = bypassRaw.split(/[\n,]+/).map(x => x.trim()).filter(Boolean);
-
-            storeData.autoDeliveryActive = document.getElementById('editAutoDeliveryActive').value === 'true';
-
             if (!storeData.dailySpin) storeData.dailySpin = structuredClone(defaultSpinConfig);
-            storeData.dailySpin.enabled = document.getElementById('editDailySpinActive').value === 'true';
+            storeData.dailySpin.enabled = document.getElementById('editDailySpinActive').value === "true";
+
+            storeData.maintenanceActive = document.getElementById('editMaintenanceActive').value === "true";
+            storeData.maintenanceMsg = document.getElementById('editMaintenanceMsg').value;
+            const rawBypass = document.getElementById('editMaintenanceBypassIds').value || "";
+            const parsedBypass = rawBypass.split(",").map(s => s.trim()).filter(Boolean);
+            if (!parsedBypass.includes(clientUid)) parsedBypass.push(clientUid);
+            if (!parsedBypass.includes(deviceId)) parsedBypass.push(deviceId);
+            storeData.maintenanceBypassIds = parsedBypass;
+
+            storeData.autoDeliveryActive = document.getElementById('editAutoDeliveryActive').value === "true";
 
             storeData.themeColor = document.getElementById('editThemeColor').value;
             storeData.ownerColor = document.getElementById('editOwnerColor').value;
@@ -4164,33 +4207,35 @@
 
             storeData.bannerImg = document.getElementById('editBannerImg').value;
             storeData.bannerLink = document.getElementById('editBannerLink').value;
-            storeData.popupActive = document.getElementById('editPopupActive').value === 'true';
+            storeData.popupActive = document.getElementById('editPopupActive').value === "true";
             storeData.popupTitle = document.getElementById('editPopupTitle').value;
             storeData.popupMsg = document.getElementById('editPopupMsg').value;
 
-            saveToFirebase();
+            saveToFirebase(true);
             checkAppUpdateState();
             checkMaintenanceState();
             updateSpinAvailabilityUI();
+            renderSpinWheelWithLabels();
             renderUI();
-            showSuccessModal('All settings saved & updated!');
+            showSuccessModal('All settings saved to cloud!');
         }
 
         setInterval(() => {
+            processFundRequestsLifecycle(true);
+            if (!document.getElementById('fundView').classList.contains('hidden')) {
+                renderMyFundRequests();
+            }
+            if (!document.getElementById('adminDashboard').classList.contains('hidden') && !isUserTypingInAdmin()) {
+                renderAdminFundRequests();
+            }
             if (!document.getElementById('orderView').classList.contains('hidden')) {
                 renderOrders();
+                renderSpinHistory();
             }
             if (!document.getElementById('keysView').classList.contains('hidden')) {
                 renderKeys();
             }
             updateSpinAvailabilityUI();
-            const lifecycleChanged = processFundRequestsLifecycle(true);
-            if (!document.getElementById('fundView').classList.contains('hidden') || lifecycleChanged) {
-                renderMyFundRequests();
-            }
-            if (!document.getElementById('adminDashboard').classList.contains('hidden') && lifecycleChanged) {
-                renderAdminFundRequests();
-            }
         }, 1000);
     </script>
 </body>
