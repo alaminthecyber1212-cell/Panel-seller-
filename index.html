@@ -16,7 +16,6 @@
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            perspective: 1200px;
             background-color: #f1f5f9;
             margin: 0;
             padding: 0;
@@ -26,20 +25,21 @@
 
         @keyframes iconBounceJump {
             0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-5px) scale(1.15); filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2)); }
+            50% { transform: translateY(-4px) scale(1.1); }
         }
 
         @keyframes fullCircleBounce {
-            0%, 100% { transform: translateY(0) scale(1); box-shadow: 0 10px 20px -5px rgba(239, 68, 68, 0.4); }
-            50% { transform: translateY(-7px) scale(1.08); box-shadow: 0 16px 25px -5px rgba(239, 68, 68, 0.6); }
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-5px) scale(1.05); }
         }
 
         .add-fund-circle-jump {
-            animation: fullCircleBounce 1.5s ease-in-out infinite;
+            animation: fullCircleBounce 1.8s ease-in-out infinite;
+            will-change: transform;
         }
 
         @keyframes popupScale {
-            0% { transform: scale(0.8); opacity: 0; }
+            0% { transform: scale(0.92); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
 
@@ -54,8 +54,9 @@
             border-radius: 9999px;
             background: linear-gradient(45deg, #ff0000, #ff7300, #ff00c8, #002bff, #ff0000);
             background-size: 400% 400%;
-            animation: spinRingOnly 3s linear infinite;
+            animation: spinRingOnly 4s linear infinite;
             z-index: 1;
+            will-change: transform;
         }
 
         .owner-static-premium {
@@ -63,108 +64,87 @@
             font-weight: 800;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            filter: drop-shadow(0 2px 4px rgba(239, 68, 68, 0.25));
         }
 
         .pkg-card, .home-list-item, .cat-btn, button:not(.nav-btn), input, select {
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
-            transform-style: preserve-3d;
+            transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
         }
 
         .pkg-card {
-            background: linear-gradient(145deg, #ffffff, #f8fafc) !important;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04), inset 0 2px 4px rgba(255, 255, 255, 0.9);
+            background: #ffffff !important;
+            box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.06);
             border: 1.5px solid #e2e8f0;
-            transform: perspective(1000px) translateZ(0);
         }
 
         .pkg-card:hover {
-            transform: perspective(1000px) translateY(-5px) translateZ(10px) scale(1.02);
-            box-shadow: 0 20px 35px -8px rgba(79, 70, 229, 0.2), 0 10px 15px -5px rgba(0, 0, 0, 0.1), inset 0 2px 8px rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
             border-color: var(--theme-color);
         }
 
         .home-list-item {
-            background: linear-gradient(145deg, #ffffff, #f9fafb);
+            background: #ffffff;
             border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.05), inset 0 1px 3px rgba(255, 255, 255, 0.8);
-            transform: perspective(1000px) translateZ(0);
+            box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.05);
         }
 
         .home-list-item:hover {
-            transform: perspective(1000px) translateY(-3px) translateZ(6px) scale(1.015);
+            transform: translateY(-1px);
             border-color: var(--theme-color);
-            box-shadow: 0 12px 28px -5px rgba(79, 70, 229, 0.15), inset 0 1px 5px rgba(255, 255, 255, 1);
         }
 
         .panel-3d-card {
-            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            background: #ffffff;
             border: 1.5px solid #e2e8f0;
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.06);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            transform: perspective(1000px) translateZ(0);
+            box-shadow: 0 4px 12px -2px rgba(0,0,0,0.06);
+            transition: transform 0.2s ease, border-color 0.2s ease;
         }
 
         .panel-3d-card:hover {
-            transform: perspective(1000px) translateY(-6px) translateZ(12px) scale(1.02);
+            transform: translateY(-3px);
             border-color: var(--theme-color);
-            box-shadow: 0 22px 40px -10px rgba(79, 70, 229, 0.22), 0 10px 15px -5px rgba(0,0,0,0.08);
         }
 
         button:active, .cursor-pointer:active {
-            transform: perspective(1000px) scale(0.96) translateZ(-5px) !important;
+            transform: scale(0.97) !important;
         }
 
         @keyframes redPulseSmooth {
             0%, 100% { transform: scale(1); opacity: 0.95; }
-            50% { transform: scale(1.02); opacity: 1; box-shadow: 0 0 8px rgba(239, 68, 68, 0.4); }
+            50% { transform: scale(1.02); opacity: 1; }
         }
 
         .stock-out-badge {
-            animation: redPulseSmooth 2s ease-in-out infinite;
+            animation: redPulseSmooth 2.4s ease-in-out infinite;
             display: inline-block;
         }
 
         .animated-jump-icon {
             display: inline-block;
-            animation: iconBounceJump 1.4s ease-in-out infinite;
+            animation: iconBounceJump 1.6s ease-in-out infinite;
         }
 
         .popup-modal-content {
-            animation: popupScale 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: popupScale 0.22s ease-out forwards;
         }
 
         @keyframes checkmarkScale {
-            0% { transform: scale(0); opacity: 0; }
-            50% { transform: scale(1.2); opacity: 1; }
+            0% { transform: scale(0.5); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
         .success-icon-anim {
-            animation: checkmarkScale 0.4s ease-in-out forwards;
-        }
-
-        @keyframes uidSmoothGlow {
-            0%, 100% {
-                transform: scale(1) translateZ(0);
-                box-shadow: 0 0 6px rgba(239, 68, 68, 0.25);
-                border-color: rgba(239, 68, 68, 0.4);
-            }
-            50% {
-                transform: scale(1.03) translateZ(5px);
-                box-shadow: 0 0 14px rgba(239, 68, 68, 0.6);
-                border-color: rgba(220, 38, 38, 0.9);
-            }
+            animation: checkmarkScale 0.25s ease-out forwards;
         }
 
         .uid-animated-badge {
             display: inline-flex;
             align-items: center;
             gap: 5px;
-            animation: uidSmoothGlow 2.5s ease-in-out infinite;
+            box-shadow: 0 0 8px rgba(239, 68, 68, 0.2);
         }
 
         .spin-wheel-disc {
             transition: transform 4.2s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+            will-change: transform;
         }
 
         .quick-amt-chip {
@@ -175,7 +155,6 @@
             background-color: var(--theme-color) !important;
             color: #ffffff !important;
             border-color: var(--theme-color) !important;
-            box-shadow: 0 4px 10px -2px rgba(79, 70, 229, 0.35);
         }
 
         .dynamic-theme-bg { background-color: var(--theme-color) !important; }
@@ -190,7 +169,7 @@
             flex-direction: column;
             position: relative;
             background-color: #f8fafc;
-            box-shadow: 0 0 25px rgba(0,0,0,0.1);
+            box-shadow: 0 0 25px rgba(0,0,0,0.08);
         }
 
         .scrollable-body {
@@ -207,11 +186,11 @@
 
     <div class="app-shell">
         <!-- Header (Fixed Top) -->
-        <header class="bg-white/95 backdrop-blur border-b border-slate-200 px-4 py-3 flex justify-between items-center shadow-sm shrink-0 z-40">
-            <div class="flex items-center space-x-2.5 cursor-pointer" onclick="secretAdminTrigger()">
+        <header class="bg-white border-b border-slate-200 px-4 py-3 flex justify-between items-center shadow-sm shrink-0 z-40">
+            <div class="flex items-center space-x-2.5 cursor-pointer select-none" onclick="secretAdminTrigger()" title="Tap 4 times for Admin Panel">
                 <div class="relative w-9 h-9 flex items-center justify-center">
                     <div class="rotating-border-ring"></div>
-                    <img id="headerLogoImg" src="https://i.ibb.co/3W9v93z/default.png" class="w-full h-full rounded-full object-cover bg-white relative z-10 shadow-md">
+                    <img id="headerLogoImg" src="https://i.ibb.co/3W9v93z/default.png" class="w-full h-full rounded-full object-cover bg-white relative z-10 shadow-sm">
                 </div>
                 <div>
                     <h1 id="headerAppName" class="font-black text-sm tracking-wider dynamic-theme-text">PANEL SELLER</h1>
@@ -221,11 +200,11 @@
 
             <div class="flex items-center gap-2">
                 <button onclick="openDailySpinModal()" class="bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-300 px-2.5 py-1.5 rounded-full flex items-center gap-1 shadow-sm cursor-pointer text-[11px] font-extrabold">
-                    <i class="fa-solid fa-dharmachakra fa-spin text-amber-600" style="animation-duration: 6s;"></i>
+                    <i class="fa-solid fa-dharmachakra text-amber-600"></i>
                     <span>Spin</span>
                 </button>
-                <div onclick="switchTab('fund')" class="bg-indigo-50 border border-indigo-200 px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm cursor-pointer transition transform hover:scale-105" title="Tap to Add Fund">
-                    <i class="fa-solid fa-wallet dynamic-theme-text text-xs animated-jump-icon"></i>
+                <div onclick="switchTab('fund')" class="bg-indigo-50 border border-indigo-200 px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm cursor-pointer transition" title="Tap to Add Fund">
+                    <i class="fa-solid fa-wallet dynamic-theme-text text-xs"></i>
                     <span id="headerBalance" class="text-xs font-black dynamic-theme-text">৳0</span>
                 </div>
             </div>
@@ -242,15 +221,15 @@
             
             <!-- HOME VIEW -->
             <div id="homeView" class="view-section p-4 space-y-4">
-                <div id="bannerSection" class="rounded-2xl overflow-hidden shadow-md border border-slate-200 cursor-pointer transition transform hover:scale-[1.01]" onclick="handleBannerClick()">
-                    <img id="homeBannerImg" src="https://i.ibb.co/2kQ4Q1L/1000015879.jpg" class="w-full h-44 object-cover">
+                <div id="bannerSection" class="rounded-2xl overflow-hidden shadow-sm border border-slate-200 cursor-pointer transition" onclick="handleBannerClick()">
+                    <img id="homeBannerImg" src="https://i.ibb.co/2kQ4Q1L/1000015879.jpg" onerror="this.onerror=null;this.src='https://i.ibb.co/3W9v93z/default.png';" class="w-full h-44 object-cover">
                 </div>
 
                 <!-- Daily Spin Banner Card -->
-                <div onclick="openDailySpinModal()" class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white rounded-2xl p-3.5 flex items-center justify-between shadow-md cursor-pointer transform hover:scale-[1.01]">
+                <div onclick="openDailySpinModal()" class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white rounded-2xl p-3.5 flex items-center justify-between shadow-sm cursor-pointer transition">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-2xl bg-white/20 flex items-center justify-center text-xl">
-                            <i class="fa-solid fa-dharmachakra fa-spin" style="animation-duration: 5s;"></i>
+                            <i class="fa-solid fa-dharmachakra"></i>
                         </div>
                         <div>
                             <h3 class="text-xs font-black tracking-wide">Daily Spin & Win Bonus</h3>
@@ -261,7 +240,7 @@
                 </div>
 
                 <!-- Category Tabs -->
-                <div class="sticky top-0 z-30 bg-[#f8fafc]/95 backdrop-blur py-1">
+                <div class="sticky top-0 z-30 bg-[#f8fafc] py-1">
                     <div id="categoryTabs" class="grid grid-cols-4 gap-1.5 bg-white p-1.5 rounded-2xl border border-slate-200 text-center text-xs font-semibold shadow-sm"></div>
                 </div>
 
@@ -273,13 +252,13 @@
                 <!-- Home Bottom Lists -->
                 <div class="mt-6 space-y-3 pt-2">
                     <div class="bg-white p-1.5 rounded-2xl border border-slate-200 flex justify-between shadow-sm">
-                        <button onclick="switchHomeTab('recent')" id="hTab-recent" class="flex-1 py-2 text-xs font-bold rounded-xl bg-emerald-600 text-white transition-all duration-300 cursor-pointer flex items-center justify-center gap-1.5 shadow-md transform hover:scale-[1.02]">
+                        <button onclick="switchHomeTab('recent')" id="hTab-recent" class="flex-1 py-2 text-xs font-bold rounded-xl bg-emerald-600 text-white transition cursor-pointer flex items-center justify-center gap-1.5 shadow-sm">
                             <i class="fa-solid fa-rocket"></i> Recent Order
                         </button>
-                        <button onclick="switchHomeTab('topbuyer')" id="hTab-topbuyer" class="flex-1 py-2 text-xs font-bold rounded-xl text-slate-500 hover:text-slate-900 transition-all duration-300 cursor-pointer flex items-center justify-center gap-1.5 transform hover:scale-[1.02]">
+                        <button onclick="switchHomeTab('topbuyer')" id="hTab-topbuyer" class="flex-1 py-2 text-xs font-bold rounded-xl text-slate-500 hover:text-slate-900 transition cursor-pointer flex items-center justify-center gap-1.5">
                             <i class="fa-solid fa-trophy"></i> Top Buyer
                         </button>
-                        <button onclick="switchHomeTab('feedback')" id="hTab-feedback" class="flex-1 py-2 text-xs font-bold rounded-xl text-slate-500 hover:text-slate-900 transition-all duration-300 cursor-pointer flex items-center justify-center gap-1.5 transform hover:scale-[1.02]">
+                        <button onclick="switchHomeTab('feedback')" id="hTab-feedback" class="flex-1 py-2 text-xs font-bold rounded-xl text-slate-500 hover:text-slate-900 transition cursor-pointer flex items-center justify-center gap-1.5">
                             <i class="fa-solid fa-comments"></i> Feedback
                         </button>
                     </div>
@@ -305,10 +284,10 @@
 
             <!-- ADD FUND VIEW -->
             <div id="fundView" class="view-section p-4 space-y-4 hidden">
-                <div class="bg-white p-5 rounded-3xl border border-slate-200 space-y-4 shadow-md">
+                <div class="bg-white p-5 rounded-3xl border border-slate-200 space-y-4 shadow-sm">
                     <div class="flex justify-between items-center">
                         <h2 class="text-base font-bold text-slate-800">Add Fund Request</h2>
-                        <div class="bg-red-50 border border-red-200 px-3 py-1 rounded-full flex items-center gap-1.5 shadow-sm">
+                        <div class="bg-red-50 border border-red-200 px-3 py-1 rounded-full flex items-center gap-1.5">
                             <i class="fa-solid fa-clock text-red-600 text-xs"></i>
                             <span id="fundTimerDisplay" class="text-xs font-mono font-black text-red-600">05:00</span>
                         </div>
@@ -348,7 +327,7 @@
                         <label class="text-xs font-semibold text-slate-600">Transaction ID (TrxID)</label>
                         <input type="text" id="addTrxInput" placeholder="Enter TrxID" class="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl text-xs mt-1 text-slate-800 outline-none focus:border-indigo-500 transition">
                     </div>
-                    <button onclick="submitAddFundRequest()" class="w-full dynamic-theme-bg hover:opacity-90 text-white font-bold py-3 rounded-xl text-xs transition shadow-lg cursor-pointer transform hover:scale-[1.01]">Submit Secure Request</button>
+                    <button onclick="submitAddFundRequest()" class="w-full dynamic-theme-bg hover:opacity-90 text-white font-bold py-3 rounded-xl text-xs transition shadow-md cursor-pointer">Submit Secure Request</button>
                 </div>
                 
                 <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-2 shadow-sm">
@@ -380,7 +359,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white border border-slate-200 rounded-3xl p-6 text-center space-y-3 shadow-xl relative">
+                <div class="bg-white border border-slate-200 rounded-3xl p-6 text-center space-y-3 shadow-sm relative">
                     <div class="relative w-20 h-20 mx-auto">
                         <div class="rotating-border-ring"></div>
                         <img id="accProfileAvatar" src="https://i.ibb.co/3W9v93z/default.png" class="w-full h-full rounded-full object-cover bg-white relative z-10 shadow-inner">
@@ -395,7 +374,7 @@
                         </div>
 
                         <div class="mt-2 flex justify-center">
-                            <span onclick="copyUserUid()" title="Tap to copy UID" class="uid-animated-badge bg-red-50 text-red-600 border border-red-400 px-3 py-1 rounded-full text-[11px] font-mono font-extrabold tracking-wider cursor-pointer select-all shadow-sm">
+                            <span onclick="copyUserUid()" title="Tap to copy UID" class="uid-animated-badge bg-red-50 text-red-600 border border-red-400 px-3 py-1 rounded-full text-[11px] font-mono font-extrabold tracking-wider cursor-pointer select-all">
                                 <i class="fa-solid fa-fingerprint text-red-500"></i>
                                 <span id="accUserUid">UID: 00000000</span>
                             </span>
@@ -416,7 +395,7 @@
                 <!-- Direct Live Support Chat Card -->
                 <div class="bg-white border border-indigo-200 rounded-3xl p-4 flex items-center justify-between shadow-sm">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-2xl dynamic-theme-bg text-white flex items-center justify-center text-base shadow-md">
+                        <div class="w-10 h-10 rounded-2xl dynamic-theme-bg text-white flex items-center justify-center text-base shadow-sm">
                             <i class="fa-solid fa-headset"></i>
                         </div>
                         <div>
@@ -430,7 +409,7 @@
                 </div>
 
                 <!-- VIP Membership Progress Card -->
-                <div class="bg-gradient-to-r from-slate-900 to-indigo-950 text-white rounded-3xl p-4 space-y-2.5 shadow-md border border-indigo-800/50">
+                <div class="bg-gradient-to-r from-slate-900 to-indigo-950 text-white rounded-3xl p-4 space-y-2.5 shadow-sm border border-indigo-800/50">
                     <div class="flex justify-between items-center">
                         <span class="text-xs font-extrabold tracking-wide flex items-center gap-1.5 text-amber-300">
                             <i class="fa-solid fa-gem"></i> VIP Membership Tier
@@ -439,7 +418,7 @@
                     </div>
                     <p id="vipNextTierText" class="text-[11px] text-slate-300">Silver VIP (5% ছাড়) পেতে আরও ৳300 খরচ করুন।</p>
                     <div class="w-full bg-white/15 rounded-full h-2 overflow-hidden">
-                        <div id="vipProgressBar" class="bg-gradient-to-r from-amber-400 to-yellow-300 h-full rounded-full transition-all duration-500" style="width: 0%;"></div>
+                        <div id="vipProgressBar" class="bg-gradient-to-r from-amber-400 to-yellow-300 h-full rounded-full transition-all duration-300" style="width: 0%;"></div>
                     </div>
                     <div class="flex justify-between text-[10px] text-slate-400 font-semibold pt-0.5">
                         <span>Standard (৳0)</span>
@@ -496,37 +475,37 @@
 
         <!-- Floating Live Admin Chat & Support Buttons -->
         <div class="absolute bottom-24 right-4 z-30 flex flex-col gap-2.5 items-end">
-            <button onclick="openLiveChatModal()" title="Live Admin Chat" class="relative dynamic-theme-bg hover:opacity-90 text-white w-12 h-12 rounded-full shadow-2xl flex items-center justify-center text-lg cursor-pointer transition transform hover:scale-110">
-                <i class="fa-solid fa-comments animated-jump-icon"></i>
+            <button onclick="openLiveChatModal()" title="Live Admin Chat" class="relative dynamic-theme-bg hover:opacity-90 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center text-lg cursor-pointer transition">
+                <i class="fa-solid fa-comments"></i>
                 <span id="userChatUnreadBadge" class="hidden absolute -top-1 -right-1 bg-red-600 text-white text-[9px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">!</span>
             </button>
-            <button onclick="openSupportWhatsapp()" title="WhatsApp Support" class="bg-emerald-600 hover:bg-emerald-700 text-white w-10 h-10 rounded-full shadow-xl flex items-center justify-center text-base cursor-pointer transition transform hover:scale-110">
+            <button onclick="openSupportWhatsapp()" title="WhatsApp Support" class="bg-emerald-600 hover:bg-emerald-700 text-white w-10 h-10 rounded-full shadow-lg flex items-center justify-center text-base cursor-pointer transition">
                 <i class="fa-brands fa-whatsapp"></i>
             </button>
         </div>
 
         <!-- Bottom Navigation Bar -->
         <div class="absolute bottom-2 left-3 right-3 z-40">
-            <nav class="bg-white/95 backdrop-blur-md border border-slate-200/80 rounded-2xl py-2 px-3 flex justify-around items-center text-center shadow-2xl">
-                <button onclick="switchTab('home')" id="nav-home" class="nav-btn flex flex-col items-center dynamic-theme-text cursor-pointer transition transform hover:scale-110">
+            <nav class="bg-white border border-slate-200 rounded-2xl py-2 px-3 flex justify-around items-center text-center shadow-lg">
+                <button onclick="switchTab('home')" id="nav-home" class="nav-btn flex flex-col items-center dynamic-theme-text cursor-pointer transition">
                     <i class="fa-solid fa-house text-base"></i>
                     <span class="text-[10px] mt-1 font-semibold">Home</span>
                 </button>
-                <button onclick="switchTab('order')" id="nav-order" class="nav-btn flex flex-col items-center text-slate-400 hover:text-slate-800 cursor-pointer transition transform hover:scale-110">
+                <button onclick="switchTab('order')" id="nav-order" class="nav-btn flex flex-col items-center text-slate-400 hover:text-slate-800 cursor-pointer transition">
                     <i class="fa-solid fa-box text-base"></i>
                     <span class="text-[10px] mt-1 font-semibold">My Order</span>
                 </button>
                 <button onclick="switchTab('fund')" id="nav-fund" class="flex flex-col items-center -mt-6 cursor-pointer group">
-                    <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center text-white text-lg shadow-xl border-4 border-slate-100 add-fund-circle-jump">
+                    <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center text-white text-lg shadow-lg border-4 border-slate-100 add-fund-circle-jump">
                         <i class="fa-solid fa-plus"></i>
                     </div>
                     <span class="text-[10px] mt-0.5 text-red-600 font-extrabold">Add Fund</span>
                 </button>
-                <button onclick="switchTab('keys')" id="nav-keys" class="nav-btn flex flex-col items-center text-slate-400 hover:text-slate-800 cursor-pointer transition transform hover:scale-110">
+                <button onclick="switchTab('keys')" id="nav-keys" class="nav-btn flex flex-col items-center text-slate-400 hover:text-slate-800 cursor-pointer transition">
                     <i class="fa-solid fa-key text-base"></i>
                     <span class="text-[10px] mt-1 font-semibold">My Keys</span>
                 </button>
-                <button onclick="switchTab('account')" id="nav-account" class="nav-btn flex flex-col items-center text-slate-400 hover:text-slate-800 cursor-pointer transition transform hover:scale-110">
+                <button onclick="switchTab('account')" id="nav-account" class="nav-btn flex flex-col items-center text-slate-400 hover:text-slate-800 cursor-pointer transition">
                     <i class="fa-solid fa-user text-base"></i>
                     <span class="text-[10px] mt-1 font-semibold">Account</span>
                 </button>
@@ -534,11 +513,11 @@
         </div>
     </div>
 
-    <!-- APP UPDATING OVERLAY MODAL -->
-    <div id="appUpdateModal" class="fixed inset-0 bg-slate-950/95 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <!-- APP UPDATING OVERLAY MODAL (NO ADMIN LOGIN BUTTON - TAP 4 TIMES ON ICON/TEXT FOR ADMIN PIN) -->
+    <div id="appUpdateModal" class="fixed inset-0 bg-slate-950/95 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-sm rounded-3xl p-6 text-center space-y-4 shadow-2xl border-2 border-indigo-500 popup-modal-content">
-            <div onclick="secretAdminTrigger()" class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto text-3xl shadow-inner cursor-pointer select-none" title="Tap 4 times for Admin Login">
-                <i class="fa-solid fa-arrows-rotate fa-spin" style="animation-duration: 2.2s;"></i>
+            <div onclick="secretAdminTrigger()" class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto text-3xl shadow-inner cursor-pointer select-none" title="Tap 4 times for Admin PIN">
+                <i class="fa-solid fa-arrows-rotate fa-spin" style="animation-duration: 2.5s;"></i>
             </div>
             <div onclick="secretAdminTrigger()" class="cursor-pointer select-none">
                 <span class="bg-indigo-50 text-indigo-700 border border-indigo-200 px-3 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider">Live Update In Progress</span>
@@ -549,19 +528,16 @@
                 <p id="updateDeviceUidText" class="text-indigo-900 font-bold">Your UID: --------</p>
                 <p class="text-[10px] text-slate-500">দয়া করে অ্যাপটি কেটে দেবেন না বা অপেক্ষা করুন</p>
             </div>
-            <div class="flex gap-2 pt-1">
-                <button onclick="openAdminModal()" class="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 rounded-xl text-xs transition cursor-pointer shadow-md">
-                    <i class="fa-solid fa-lock mr-1"></i> Admin Login
-                </button>
-                <button onclick="openSupportWhatsapp()" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs transition cursor-pointer shadow-md">
+            <div class="pt-1">
+                <button onclick="openSupportWhatsapp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-xs transition cursor-pointer shadow-md">
                     <i class="fa-brands fa-whatsapp mr-1"></i> Support
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- DAILY SPIN MODAL (WITH LABELS DIRECTLY ON WHEEL) -->
-    <div id="dailySpinModal" class="fixed inset-0 bg-slate-950/75 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <!-- DAILY SPIN MODAL -->
+    <div id="dailySpinModal" class="fixed inset-0 bg-slate-950/75 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-sm rounded-3xl p-5 text-center space-y-4 shadow-2xl border border-slate-200 popup-modal-content">
             <div class="flex justify-between items-center border-b border-slate-100 pb-2.5">
                 <h3 class="font-black text-base text-slate-800"><i class="fa-solid fa-dharmachakra text-amber-500 mr-1"></i> Daily Lucky Spin</h3>
@@ -571,12 +547,12 @@
             </div>
 
             <div class="relative w-64 h-64 mx-auto flex items-center justify-center">
-                <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 z-20 text-red-600 text-2xl drop-shadow">
+                <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 z-20 text-red-600 text-2xl">
                     <i class="fa-solid fa-caret-down"></i>
                 </div>
-                <div id="spinWheelDisc" class="spin-wheel-disc w-full h-full rounded-full border-8 border-indigo-700 shadow-xl flex items-center justify-center relative overflow-hidden">
+                <div id="spinWheelDisc" class="spin-wheel-disc w-full h-full rounded-full border-8 border-indigo-700 shadow-lg flex items-center justify-center relative overflow-hidden">
                     <div id="spinWheelLabelsLayer" class="absolute inset-0 pointer-events-none"></div>
-                    <div class="w-14 h-14 rounded-full bg-white border-4 border-slate-900 flex items-center justify-center font-black text-[11px] text-slate-900 shadow-lg z-10">
+                    <div class="w-14 h-14 rounded-full bg-white border-4 border-slate-900 flex items-center justify-center font-black text-[11px] text-slate-900 shadow-md z-10">
                         SPIN
                     </div>
                 </div>
@@ -584,14 +560,14 @@
 
             <p id="spinCooldownInfo" class="text-xs font-bold text-slate-600">২৪ ঘণ্টায় ১ বার স্পিন করতে পারবেন।</p>
 
-            <button id="spinTriggerBtn" onclick="executeDailySpin()" class="w-full dynamic-theme-bg hover:opacity-90 text-white font-black py-3 rounded-xl text-xs transition shadow-lg cursor-pointer">
+            <button id="spinTriggerBtn" onclick="executeDailySpin()" class="w-full dynamic-theme-bg hover:opacity-90 text-white font-black py-3 rounded-xl text-xs transition shadow-md cursor-pointer">
                 <i class="fa-solid fa-play mr-1"></i> Spin Wheel Now
             </button>
         </div>
     </div>
 
     <!-- User Live Admin Chat Modal -->
-    <div id="liveChatModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div id="liveChatModal" class="fixed inset-0 bg-slate-900/70 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
         <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-3xl border border-slate-200 flex flex-col h-[78vh] sm:h-[520px] shadow-2xl overflow-hidden popup-modal-content">
             <div class="dynamic-theme-bg text-white px-4 py-3.5 flex justify-between items-center shrink-0">
                 <div class="flex items-center gap-2.5">
@@ -614,7 +590,7 @@
 
             <div class="p-3 bg-white border-t border-slate-200 flex gap-2 shrink-0">
                 <input type="text" id="userChatInput" onkeydown="if(event.key==='Enter') sendUserLiveMessage()" placeholder="আপনার সমস্যা বা প্রশ্ন লিখুন..." class="flex-1 bg-slate-50 border border-slate-200 px-3.5 py-2.5 rounded-xl text-xs text-slate-800 outline-none focus:border-indigo-500">
-                <button onclick="sendUserLiveMessage()" class="dynamic-theme-bg hover:opacity-90 text-white px-4 py-2.5 rounded-xl text-xs font-bold cursor-pointer shadow-md flex items-center gap-1.5 shrink-0">
+                <button onclick="sendUserLiveMessage()" class="dynamic-theme-bg hover:opacity-90 text-white px-4 py-2.5 rounded-xl text-xs font-bold cursor-pointer shadow-sm flex items-center gap-1.5 shrink-0">
                     <i class="fa-solid fa-paper-plane"></i> Send
                 </button>
             </div>
@@ -622,10 +598,10 @@
     </div>
 
     <!-- Store Maintenance Overlay Modal -->
-    <div id="maintenanceModal" class="fixed inset-0 bg-slate-950/95 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div id="maintenanceModal" class="fixed inset-0 bg-slate-950/95 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-sm rounded-3xl p-6 text-center space-y-4 shadow-2xl border-2 border-amber-400 popup-modal-content">
-            <div onclick="secretAdminTrigger()" class="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto text-3xl shadow-inner cursor-pointer select-none" title="Tap 4 times for Admin Login">
-                <i class="fa-solid fa-screwdriver-wrench animate-bounce"></i>
+            <div onclick="secretAdminTrigger()" class="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto text-3xl shadow-inner cursor-pointer select-none" title="Tap 4 times for Admin PIN">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
             </div>
             <div onclick="secretAdminTrigger()" class="cursor-pointer select-none">
                 <span class="bg-amber-50 text-amber-700 border border-amber-200 px-3 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider">Maintenance Mode Active</span>
@@ -636,11 +612,8 @@
                 <p id="maintDeviceUidText" class="text-slate-700 font-bold">Your UID: --------</p>
                 <p id="maintDeviceIdText" class="text-[10px] text-slate-400">Device: --------</p>
             </div>
-            <div class="flex gap-2 pt-1">
-                <button onclick="openAdminModal()" class="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 rounded-xl text-xs transition cursor-pointer shadow-md">
-                    <i class="fa-solid fa-lock mr-1"></i> Admin Login
-                </button>
-                <button onclick="openSupportWhatsapp()" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs transition cursor-pointer shadow-md">
+            <div class="pt-1">
+                <button onclick="openSupportWhatsapp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-xs transition cursor-pointer shadow-md">
                     <i class="fa-brands fa-whatsapp mr-1"></i> Support
                 </button>
             </div>
@@ -648,7 +621,7 @@
     </div>
 
     <!-- Success Modal -->
-    <div id="successModal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div id="successModal" class="fixed inset-0 bg-slate-950/60 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-xs rounded-3xl p-6 text-center space-y-4 shadow-2xl popup-modal-content border border-slate-200">
             <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-3xl shadow-inner success-icon-anim">
                 <i class="fa-solid fa-check"></i>
@@ -657,12 +630,12 @@
                 <h3 class="font-black text-lg text-slate-900">Success!</h3>
                 <p id="successModalText" class="text-xs text-slate-600 mt-1 font-medium">Operation completed successfully.</p>
             </div>
-            <button onclick="closeSuccessModal()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-lg cursor-pointer">OK</button>
+            <button onclick="closeSuccessModal()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-md cursor-pointer">OK</button>
         </div>
     </div>
 
     <!-- Popup Modal -->
-    <div id="popupModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div id="popupModal" class="fixed inset-0 bg-slate-950/70 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-sm rounded-3xl p-6 text-center space-y-4 shadow-2xl popup-modal-content border border-slate-200">
             <div class="w-14 h-14 dynamic-theme-text bg-indigo-50 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner">
                 <i class="fa-solid fa-bell"></i>
@@ -671,12 +644,12 @@
                 <h3 id="popupTitle" class="font-black text-lg text-slate-900">Notice</h3>
                 <p id="popupMessage" class="text-xs text-slate-600 mt-2 leading-relaxed">Welcome to Panel Seller!</p>
             </div>
-            <button onclick="closePopupModal()" class="w-full dynamic-theme-bg hover:opacity-90 text-white font-bold py-3 rounded-xl text-xs transition shadow-lg cursor-pointer">Got It / Close</button>
+            <button onclick="closePopupModal()" class="w-full dynamic-theme-bg hover:opacity-90 text-white font-bold py-3 rounded-xl text-xs transition shadow-md cursor-pointer">Got It / Close</button>
         </div>
     </div>
 
     <!-- Video Modal -->
-    <div id="videoModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div id="videoModal" class="fixed inset-0 bg-slate-900/60 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-sm rounded-3xl border border-slate-200 p-5 space-y-4 shadow-2xl">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
                 <h3 id="videoModalTitle" class="font-bold text-base text-slate-800">APK & Setup Links</h3>
@@ -687,7 +660,7 @@
     </div>
 
     <!-- Package Modal -->
-    <div id="packageModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div id="packageModal" class="fixed inset-0 bg-slate-900/60 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
         <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-3xl border border-slate-200 p-5 space-y-4 max-h-[90vh] overflow-y-auto shadow-2xl">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
                 <div class="flex items-center gap-3">
@@ -725,12 +698,11 @@
 
                 <div class="grid grid-cols-2 gap-3">
                     <div onclick="selectPaymentMethod('wallet')" id="payCard-wallet" class="pkg-card p-3 rounded-2xl flex flex-col justify-between cursor-pointer border-2 border-red-500 relative overflow-hidden">
-                        <div class="absolute -top-2 -right-2 w-5 h-5 bg-red-500 rounded-bl-xl"></div>
                         <div class="text-center py-1">
                             <i class="fa-solid fa-wallet text-2xl text-amber-500 mb-1"></i>
                             <h4 class="font-bold text-xs text-slate-800">ACCOUNT ওয়ালেট</h4>
                         </div>
-                        <div id="walletPayBtnText" class="mt-2 bg-red-600 text-white text-center py-2 rounded-xl text-[11px] font-bold shadow-md">
+                        <div id="walletPayBtnText" class="mt-2 bg-red-600 text-white text-center py-2 rounded-xl text-[11px] font-bold shadow-sm">
                             WALLET PAY (৳0)
                         </div>
                     </div>
@@ -750,7 +722,7 @@
                     </div>
                 </div>
 
-                <div id="instantPayDetails" class="hidden bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-2.5 animate-fadeIn">
+                <div id="instantPayDetails" class="hidden bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-2.5">
                     <p class="text-xs font-semibold text-slate-600">পেমেন্ট মাধ্যম (সেন্ড মানি করুন):</p>
                     <div class="grid grid-cols-2 gap-2 text-xs">
                         <div class="bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm">
@@ -764,7 +736,7 @@
                     </div>
                 </div>
 
-                <button onclick="checkout()" id="checkoutActionBtn" class="w-full dynamic-theme-bg hover:opacity-95 text-white font-bold py-3 rounded-xl transition shadow-lg flex items-center justify-center gap-2 mt-2 cursor-pointer transform hover:scale-[1.01]">
+                <button onclick="checkout()" id="checkoutActionBtn" class="w-full dynamic-theme-bg hover:opacity-95 text-white font-bold py-3 rounded-xl transition shadow-md flex items-center justify-center gap-2 mt-2 cursor-pointer">
                     <i class="fa-solid fa-wallet text-lg"></i> Pay from Wallet & Order
                 </button>
             </div>
@@ -772,10 +744,10 @@
     </div>
 
     <!-- Admin Login Modal -->
-    <div id="adminModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div id="adminModal" class="fixed inset-0 bg-slate-900/60 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-xs rounded-3xl border border-slate-200 p-5 space-y-4 shadow-2xl">
-            <h3 class="font-bold text-center dynamic-theme-text text-base">Admin Login</h3>
-            <input type="password" id="adminPinInput" placeholder="Enter PIN" class="w-full bg-slate-50 border border-slate-200 px-3 py-2.5 rounded-xl text-sm text-center tracking-widest text-slate-800 outline-none focus:border-indigo-500">
+            <h3 class="font-bold text-center dynamic-theme-text text-base">Admin Panel Password</h3>
+            <input type="password" id="adminPinInput" onkeydown="if(event.key==='Enter') verifyAdmin()" placeholder="Enter PIN" class="w-full bg-slate-50 border border-slate-200 px-3 py-2.5 rounded-xl text-sm text-center tracking-widest text-slate-800 outline-none focus:border-indigo-500">
             <div class="flex gap-2">
                 <button onclick="closeAdminModal()" class="flex-1 bg-slate-100 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-200 cursor-pointer">Cancel</button>
                 <button onclick="verifyAdmin()" class="flex-1 dynamic-theme-bg py-2.5 rounded-xl text-xs font-semibold text-white hover:opacity-90 cursor-pointer shadow-md">Login</button>
@@ -792,7 +764,7 @@
             </div>
 
             <!-- APP UPDATE MODE CONTROL BOX -->
-            <div class="bg-white p-4 rounded-2xl border-2 border-indigo-500 space-y-3 shadow-md">
+            <div class="bg-white p-4 rounded-2xl border-2 border-indigo-500 space-y-3 shadow-sm">
                 <div class="flex justify-between items-center gap-2">
                     <div>
                         <h4 class="text-xs font-extrabold dynamic-theme-text uppercase"><i class="fa-solid fa-arrows-rotate mr-1"></i> App Update Mode (অ্যাপস আপডেট চলছে)</h4>
@@ -810,7 +782,7 @@
             </div>
 
             <!-- DAILY SPIN SETTINGS -->
-            <div class="bg-white p-4 rounded-2xl border-2 border-amber-400 space-y-3 shadow-md">
+            <div class="bg-white p-4 rounded-2xl border-2 border-amber-400 space-y-3 shadow-sm">
                 <div class="flex justify-between items-center">
                     <div>
                         <h4 class="text-xs font-extrabold text-amber-700 uppercase"><i class="fa-solid fa-dharmachakra mr-1"></i> Daily Spin Control</h4>
@@ -825,7 +797,7 @@
             </div>
 
             <!-- LIVE ADMIN CHAT INBOX & MANUAL CLEAR -->
-            <div class="bg-white p-4 rounded-2xl border-2 border-indigo-500 space-y-3 shadow-md">
+            <div class="bg-white p-4 rounded-2xl border-2 border-indigo-500 space-y-3 shadow-sm">
                 <div class="flex justify-between items-center">
                     <h4 class="text-xs font-extrabold dynamic-theme-text uppercase"><i class="fa-solid fa-comments mr-1"></i> Live Admin Chat Inbox</h4>
                     <span id="adminChatThreadCount" class="bg-indigo-50 dynamic-theme-text text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-indigo-200">0 Active Chats</span>
@@ -837,7 +809,7 @@
             </div>
 
             <!-- USER LOOKUP (UID SEARCH) -->
-            <div class="bg-white p-4 rounded-2xl border-2 border-sky-400 space-y-3 shadow-md">
+            <div class="bg-white p-4 rounded-2xl border-2 border-sky-400 space-y-3 shadow-sm">
                 <h4 class="text-xs font-extrabold text-sky-700 uppercase"><i class="fa-solid fa-magnifying-glass mr-1"></i> User Lookup (Search by UID)</h4>
                 <div class="flex gap-2">
                     <input type="text" id="lookupUidInput" placeholder="Enter 8-digit User UID" class="flex-1 bg-slate-50 border border-slate-200 px-3 py-2 rounded-xl text-xs font-mono font-bold outline-none focus:border-sky-500">
@@ -857,7 +829,7 @@
             </div>
 
             <!-- MAINTENANCE MODE & ADMIN BYPASS CONTROL BOX -->
-            <div class="bg-white p-4 rounded-2xl border-2 border-amber-400 space-y-3 shadow-md">
+            <div class="bg-white p-4 rounded-2xl border-2 border-amber-400 space-y-3 shadow-sm">
                 <div class="flex justify-between items-center gap-2">
                     <div>
                         <h4 class="text-xs font-extrabold text-amber-700 uppercase"><i class="fa-solid fa-screwdriver-wrench mr-1"></i> Store Maintenance Mode</h4>
@@ -880,7 +852,7 @@
             </div>
 
             <!-- MASTER AUTO DELIVERY SWITCH BOX -->
-            <div class="bg-white p-4 rounded-2xl border-2 border-emerald-400 flex justify-between items-center shadow-md">
+            <div class="bg-white p-4 rounded-2xl border-2 border-emerald-400 flex justify-between items-center shadow-sm">
                 <div>
                     <h4 class="text-xs font-extrabold text-emerald-700 uppercase"><i class="fa-solid fa-robot mr-1"></i> Auto Key Delivery System</h4>
                     <p class="text-[10px] text-slate-400">অন করলে অটো স্টক থেকে কি যাবে, অফ থাকলে ম্যানুয়াল থাকবে</p>
@@ -892,7 +864,7 @@
             </div>
 
             <!-- ADJUST USER BALANCE MANUALLY -->
-            <div class="bg-white p-4 rounded-2xl border-2 border-indigo-400 space-y-3 shadow-md">
+            <div class="bg-white p-4 rounded-2xl border-2 border-indigo-400 space-y-3 shadow-sm">
                 <h4 class="text-xs font-extrabold dynamic-theme-text uppercase"><i class="fa-solid fa-wallet mr-1"></i> Adjust User Balance (By UID)</h4>
                 <p class="text-[10px] text-slate-400">যেকোনো ইউজারের UID লিখে ব্যালেন্স যোগ (+) বা বিয়োগ (-) করুন</p>
                 <div class="grid grid-cols-2 gap-2">
@@ -906,7 +878,7 @@
             </div>
 
             <!-- SEND KEY TO USER BY UID & ORDER MANAGEMENT -->
-            <div class="bg-white p-4 rounded-2xl border-2 border-emerald-400 space-y-3 shadow-md">
+            <div class="bg-white p-4 rounded-2xl border-2 border-emerald-400 space-y-3 shadow-sm">
                 <div class="flex justify-between items-center gap-2">
                     <h4 class="text-xs font-extrabold text-emerald-700 uppercase"><i class="fa-solid fa-key mr-1"></i> Order & Key Delivery Management</h4>
                     <span id="pendingOrderCount" class="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-emerald-200">0 Pending</span>
@@ -1218,10 +1190,7 @@
                     text: messageText,
                     parse_mode: 'HTML'
                 })
-            })
-            .then(response => response.json())
-            .then(data => console.log("Telegram sent success:", data))
-            .catch(err => console.error("Telegram notification error:", err));
+            }).catch(err => console.error("Telegram notification error:", err));
         }
 
         const firebaseConfig = {
@@ -1282,11 +1251,11 @@
             bannerLink: "https://youtube.com",
             appUpdating: false,
             appUpdateMsg: "নতুন ভার্সন আপডেট চলছে, অনুগ্রহ করে অপেক্ষা করুন। আপডেট শেষ হলে অটোমেটিক নতুন ভার্সন দেখতে পাবেন।",
-            maintenanceActive: true,
+            maintenanceActive: false,
             maintenanceMsg: "সার্ভার ও প্যানেল আপডেটের কাজ চলছে। সাময়িকভাবে স্টোর মেইনটেন্যান্স মোডে আছে।",
             maintenanceBypassIds: [],
             autoDeliveryActive: false,
-            popupActive: true,
+            popupActive: false,
             popupTitle: "বিশেষ ঘোষণা / Notice",
             popupMsg: "স্বাগতম আমাদের প্যানেল স্টোরে! যেকোনো সমস্যায় সাপোর্টে যোগাযোগ করুন।",
             adminHash: "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
@@ -1367,7 +1336,7 @@
             return list.slice(0, MAX_FUND_REQUESTS_DISPLAY);
         }
 
-        function processFundRequestsLifecycle(shouldPersist = true) {
+        function processFundRequestsLifecycle(shouldPersist = false) {
             if (!Array.isArray(storeData.fundRequests)) {
                 storeData.fundRequests = [];
                 return false;
@@ -2068,7 +2037,7 @@
         }
 
         window.adminClearUserChat = function(targetUid) {
-            if (!confirm(`UID: ${targetUid} এর সম্পূর্ণ চ্যাট ক্লিয়ার করতে চান? (ক্লিয়ার করলে ইউজার আবার নতুন করে মেসেজ দিতে পারবে)`)) return;
+            if (!confirm(`UID: ${targetUid} এর সম্পূর্ণ চ্যাট ক্লিয়ার করতে চান?`)) return;
             if (storeData.chats && storeData.chats[targetUid]) {
                 delete storeData.chats[targetUid];
             }
@@ -2152,36 +2121,17 @@
                 const androidMatch = ua.match(/Android\s([0-9\.]+)/);
                 os = androidMatch ? `Android ${androidMatch[1]}` : "Android";
                 const modelMatch = ua.match(/Android[^;]+;\s*([^;)]+)/);
-                if (modelMatch && modelMatch[1]) {
-                    deviceModel = modelMatch[1].replace(/Build\/.*$/, '').trim();
-                } else {
-                    deviceModel = "Android Phone";
-                }
+                deviceModel = (modelMatch && modelMatch[1]) ? modelMatch[1].replace(/Build\/.*$/, '').trim() : "Android Phone";
             } else if (/iPhone/i.test(ua)) {
                 os = "iOS";
                 deviceModel = "Apple iPhone";
-            } else if (/iPad/i.test(ua)) {
-                os = "iPadOS";
-                deviceModel = "Apple iPad";
-            } else if (/Windows NT 10.0/i.test(ua)) {
-                os = "Windows 10/11";
-                deviceModel = "Windows PC";
             } else if (/Windows/i.test(ua)) {
                 os = "Windows";
                 deviceModel = "Windows PC";
-            } else if (/Mac OS X/i.test(ua)) {
-                os = "macOS";
-                deviceModel = "MacBook / Mac";
-            } else if (/Linux/i.test(ua)) {
-                os = "Linux";
-                deviceModel = "Linux PC";
             }
 
-            if (/Edg\//i.test(ua)) browser = "Edge";
-            else if (/OPR\//i.test(ua) || /Opera/i.test(ua)) browser = "Opera";
-            else if (/Chrome\//i.test(ua) && !/Edg\//i.test(ua)) browser = "Chrome";
-            else if (/Safari\//i.test(ua) && !/Chrome\//i.test(ua)) browser = "Safari";
-            else if (/Firefox\//i.test(ua)) browser = "Firefox";
+            if (/Chrome\//i.test(ua)) browser = "Chrome";
+            else if (/Safari\//i.test(ua)) browser = "Safari";
 
             return { model: deviceModel, os: os, browser: browser, screen: `${window.screen.width}x${window.screen.height}` };
         }
@@ -2189,6 +2139,11 @@
         const deviceDetails = getDetailedDeviceInfo();
         const storeRef = ref(db, 'panelStore');
         let initialDeviceSynced = false;
+
+        // Render immediately with default/cached data so there is no blank initial delay
+        renderUI();
+        checkAppUpdateState();
+        checkMaintenanceState();
         
         onValue(storeRef, (snapshot) => {
             const serverData = snapshot.val();
@@ -2216,7 +2171,7 @@
             checkAppUpdateState();
             checkMaintenanceState();
             checkLiveSuspension();
-            processFundRequestsLifecycle(true);
+            processFundRequestsLifecycle(false);
             updateUserChatUnreadBadge();
             updateSpinAvailabilityUI();
             renderSpinWheelWithLabels();
@@ -2241,7 +2196,6 @@
             }
         }, (error) => {
             console.error("Firebase load error:", error);
-            storeData = structuredClone(defaultStoreData);
             checkAppUpdateState();
             checkMaintenanceState();
             renderUI();
@@ -2340,7 +2294,7 @@
                 return;
             }
             if (tapTimer) clearTimeout(tapTimer);
-            tapTimer = setTimeout(() => { tapCount = 0; }, 3000);
+            tapTimer = setTimeout(() => { tapCount = 0; }, 2500);
         }
 
         async function sha256(message) {
@@ -2447,7 +2401,7 @@
                 const isActive = cat === currentCategory;
                 const safeId = cat.replace(/[^a-zA-Z0-9_-]/g, '-');
                 container.innerHTML += `
-                    <button onclick="filterCategory('${cat.replace(/'/g, "\\'")}')" id="cat-${safeId}" class="cat-btn py-2 rounded-xl ${isActive ? 'dynamic-theme-bg text-white shadow-md' : 'text-slate-500 hover:text-slate-900'} transition cursor-pointer">${cat}</button>
+                    <button onclick="filterCategory('${cat.replace(/'/g, "\\'")}')" id="cat-${safeId}" class="cat-btn py-2 rounded-xl ${isActive ? 'dynamic-theme-bg text-white shadow-sm' : 'text-slate-500 hover:text-slate-900'} transition cursor-pointer">${cat}</button>
                 `;
             });
         }
@@ -2553,8 +2507,8 @@
             const btnTop = document.getElementById('hTab-topbuyer');
             const btnFeed = document.getElementById('hTab-feedback');
 
-            const inactiveClass = "flex-1 py-2 text-xs font-bold rounded-xl text-slate-500 hover:text-slate-900 transition-all duration-300 cursor-pointer flex items-center justify-center gap-1.5 transform hover:scale-[1.02]";
-            const activeClass = "flex-1 py-2 text-xs font-bold rounded-xl bg-emerald-600 text-white transition-all duration-300 cursor-pointer flex items-center justify-center gap-1.5 shadow-md transform hover:scale-[1.02]";
+            const inactiveClass = "flex-1 py-2 text-xs font-bold rounded-xl text-slate-500 hover:text-slate-900 transition cursor-pointer flex items-center justify-center gap-1.5";
+            const activeClass = "flex-1 py-2 text-xs font-bold rounded-xl bg-emerald-600 text-white transition cursor-pointer flex items-center justify-center gap-1.5 shadow-sm";
 
             btnRecent.className = tabName === 'recent' ? activeClass : inactiveClass;
             btnTop.className = tabName === 'topbuyer' ? activeClass : inactiveClass;
@@ -2579,13 +2533,13 @@
                     container.innerHTML += `
                         <div class="home-list-item rounded-2xl p-3.5 flex justify-between items-center">
                             <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center text-sm shadow-md">${firstLetter}</div>
+                                <div class="w-10 h-10 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center text-sm shadow-sm">${firstLetter}</div>
                                 <div>
                                     <h4 class="font-bold text-xs text-slate-800">${item.name}</h4>
                                     <p class="text-[11px] text-slate-500 mt-0.5"><span class="text-red-500">•</span> ${item.details} <span class="text-slate-700 font-bold">${item.price}</span></p>
                                 </div>
                             </div>
-                            <div class="bg-emerald-50 border border-emerald-200 text-emerald-700 text-[10px] font-bold px-3 py-1.5 rounded-full flex items-center gap-1 shadow-sm">
+                            <div class="bg-emerald-50 border border-emerald-200 text-emerald-700 text-[10px] font-bold px-3 py-1.5 rounded-full flex items-center gap-1">
                                 ${item.status || 'Completed'} <i class="fa-solid fa-circle-check text-emerald-600"></i>
                             </div>
                         </div>
@@ -2602,7 +2556,7 @@
                     container.innerHTML += `
                         <div class="home-list-item rounded-2xl p-3.5 flex justify-between items-center">
                             <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-full ${item.avatarBg || 'bg-amber-100 text-amber-700'} font-bold flex items-center justify-center text-sm shadow-md">${firstLetter}</div>
+                                <div class="w-10 h-10 rounded-full ${item.avatarBg || 'bg-amber-100 text-amber-700'} font-bold flex items-center justify-center text-sm shadow-sm">${firstLetter}</div>
                                 <div>
                                     <h4 class="font-bold text-xs text-slate-800">${item.name}</h4>
                                     <p class="text-[11px] text-slate-500 mt-0.5"><span class="text-amber-500 font-bold">👑</span> ${item.badge}</p>
@@ -2637,7 +2591,7 @@
                         <div class="home-list-item rounded-2xl p-3.5 space-y-1">
                             <div class="flex justify-between items-center">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-sm shadow-md">${firstLetter}</div>
+                                    <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-sm shadow-sm">${firstLetter}</div>
                                     <div>
                                         <h4 class="font-bold text-xs text-slate-800">${item.name}</h4>
                                         <p class="text-[10px] text-emerald-600 font-semibold flex items-center gap-1 mt-0.5">
@@ -2681,7 +2635,7 @@
             } else if(tab === 'fund') {
                 document.getElementById('fundView').classList.remove('hidden');
                 startFundTimer();
-                processFundRequestsLifecycle(true);
+                processFundRequestsLifecycle(false);
                 renderMyFundRequests();
             } else if(tab === 'keys') {
                 document.getElementById('keysView').classList.remove('hidden');
@@ -2785,7 +2739,7 @@
                     let iconHtml = '<i class="fa-solid fa-circle-check mr-1 text-emerald-400"></i>'; 
                     
                     if(sText.includes('maintenance')) {
-                        iconHtml = '<i class="fa-solid fa-hammer mr-1 animate-bounce text-amber-300"></i>'; 
+                        iconHtml = '<i class="fa-solid fa-hammer mr-1 text-amber-300"></i>'; 
                     } else if(sText.includes('stock out') || sText.includes('stockout')) {
                         iconHtml = '<i class="fa-solid fa-box-open mr-1 text-red-300"></i>'; 
                     } else if(sText.includes('update')) {
@@ -2794,12 +2748,12 @@
                         iconHtml = '<i class="fa-solid fa-shield-halved mr-1 text-emerald-300"></i>';
                     }
 
-                    statusBadge = `<div class="mb-2 text-center"><span class="stock-out-badge bg-gradient-to-r from-slate-900 to-slate-800 text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-md inline-flex items-center border border-slate-700">${iconHtml}${panel.status}</span></div>`;
+                    statusBadge = `<div class="mb-2 text-center"><span class="stock-out-badge bg-slate-900 text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-sm inline-flex items-center">${iconHtml}${panel.status}</span></div>`;
                 }
 
                 let promoBadge = '';
                 if(panel.badge && panel.badge.trim() !== '') {
-                    promoBadge = `<div class="absolute top-2 left-2 z-20"><span class="bg-indigo-600 text-white text-[9px] font-bold px-2.5 py-0.5 rounded-full shadow-md">${panel.badge}</span></div>`;
+                    promoBadge = `<div class="absolute top-2 left-2 z-20"><span class="bg-indigo-600 text-white text-[9px] font-bold px-2.5 py-0.5 rounded-full shadow-sm">${panel.badge}</span></div>`;
                 }
 
                 container.innerHTML += `
@@ -2807,15 +2761,15 @@
                         ${promoBadge}
                         <div class="pt-3">
                             ${statusBadge}
-                            <img src="${panel.icon}" class="w-full h-28 rounded-2xl object-cover mb-3 border border-slate-100 shadow-sm">
+                            <img src="${panel.icon}" onerror="this.onerror=null;this.src='https://i.ibb.co/3W9v93z/default.png';" class="w-full h-28 rounded-2xl object-cover mb-3 border border-slate-100">
                             <h3 class="font-bold text-xs text-slate-800 text-center line-clamp-1">${panel.name}</h3>
                         </div>
                         <div class="mt-3 space-y-2">
-                            <button onclick="openVideoModal(${panel.id})" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-center py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer shadow-sm">
-                                <i class="fa-solid fa-download dynamic-theme-text animated-jump-icon"></i> APK & Setup
+                            <button onclick="openVideoModal(${panel.id})" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-center py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer">
+                                <i class="fa-solid fa-download dynamic-theme-text"></i> APK & Setup
                             </button>
-                            <button onclick="openPackageModal(${panel.id})" class="w-full dynamic-theme-bg hover:opacity-90 text-white text-center py-2.5 rounded-xl text-xs font-bold shadow-md transition flex items-center justify-center gap-1.5 cursor-pointer transform hover:scale-[1.01]">
-                                <i class="fa-solid fa-cart-shopping animated-jump-icon"></i> BUY NOW
+                            <button onclick="openPackageModal(${panel.id})" class="w-full dynamic-theme-bg hover:opacity-90 text-white text-center py-2.5 rounded-xl text-xs font-bold shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer">
+                                <i class="fa-solid fa-cart-shopping"></i> BUY NOW
                             </button>
                         </div>
                     </div>
@@ -2837,8 +2791,8 @@
             } else {
                 activeLinks.forEach(link => {
                     container.innerHTML += `
-                        <a href="${link.url.trim()}" target="_blank" rel="noopener noreferrer" class="block bg-slate-50 hover:bg-indigo-50 border border-slate-200 hover:border-[var(--theme-color)] text-slate-700 hover:text-[var(--theme-color)] p-3 rounded-2xl text-xs font-bold transition text-center shadow-sm transform hover:scale-[1.01]">
-                            <i class="fa-solid fa-link mr-1.5 dynamic-theme-text animated-jump-icon"></i> ${link.name || 'Link'}
+                        <a href="${link.url.trim()}" target="_blank" rel="noopener noreferrer" class="block bg-slate-50 hover:bg-indigo-50 border border-slate-200 hover:border-[var(--theme-color)] text-slate-700 hover:text-[var(--theme-color)] p-3 rounded-2xl text-xs font-bold transition text-center shadow-sm">
+                            <i class="fa-solid fa-link mr-1.5 dynamic-theme-text"></i> ${link.name || 'Link'}
                         </a>
                     `;
                 });
@@ -2979,14 +2933,10 @@
             document.querySelectorAll('[id^="pkg-"]').forEach((el, i) => {
                 if(i === index) {
                     el.style.borderColor = storeData.themeColor || '#4f46e5';
-                    el.style.background = 'linear-gradient(145deg, #ffffff, #e0e7ff)';
-                    el.style.boxShadow = '0 15px 30px -5px rgba(79, 70, 229, 0.25), inset 0 2px 6px rgba(255, 255, 255, 1)';
-                    el.style.transform = 'perspective(1000px) translateY(-4px) translateZ(10px) scale(1.02)';
+                    el.style.background = '#eef2ff';
                 } else {
                     el.style.borderColor = '#e2e8f0';
-                    el.style.background = 'linear-gradient(145deg, #ffffff, #f8fafc)';
-                    el.style.boxShadow = '0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04), inset 0 2px 4px rgba(255, 255, 255, 0.9)';
-                    el.style.transform = 'perspective(1000px) translateY(0) translateZ(0) scale(1)';
+                    el.style.background = '#ffffff';
                 }
             });
         }
@@ -3003,14 +2953,14 @@
                 cardInstant.className = "pkg-card p-3 rounded-2xl flex flex-col justify-between cursor-pointer border border-slate-200";
                 instantDetails.classList.add('hidden');
                 
-                actionBtn.className = "w-full dynamic-theme-bg hover:opacity-95 text-white font-bold py-3 rounded-xl transition shadow-lg flex items-center justify-center gap-2 mt-2 cursor-pointer transform hover:scale-[1.01]";
+                actionBtn.className = "w-full dynamic-theme-bg hover:opacity-95 text-white font-bold py-3 rounded-xl transition shadow-sm flex items-center justify-center gap-2 mt-2 cursor-pointer";
                 actionBtn.innerHTML = `<i class="fa-solid fa-wallet text-lg"></i> Pay from Wallet & Order`;
             } else {
                 cardInstant.className = "pkg-card p-3 rounded-2xl flex flex-col justify-between cursor-pointer border-2 border-red-500 relative overflow-hidden";
                 cardWallet.className = "pkg-card p-3 rounded-2xl flex flex-col justify-between cursor-pointer border border-slate-200";
                 instantDetails.classList.remove('hidden');
 
-                actionBtn.className = "w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition shadow-lg flex items-center justify-center gap-2 mt-2 cursor-pointer transform hover:scale-[1.01]";
+                actionBtn.className = "w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition shadow-sm flex items-center justify-center gap-2 mt-2 cursor-pointer";
                 actionBtn.innerHTML = `<i class="fa-brands fa-whatsapp text-lg"></i> WhatsApp এ অর্ডার কনফার্ম করুন`;
             }
         }
@@ -3044,7 +2994,7 @@
             const diff = expiryTimestamp - now;
 
             if (diff <= 0) {
-                return '<span class="text-red-600 font-extrabold animate-pulse">🔴 Expired</span>';
+                return '<span class="text-red-600 font-extrabold">🔴 Expired</span>';
             }
 
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -3200,16 +3150,6 @@
 
             if (existingReq) {
                 alert(`⚠️ ডুপ্লিকেট TrxID সতর্কতা!\n\n"${trx}" এই Transaction ID দিয়ে আগে থেকেই রিকোয়েস্ট (UID: ${existingReq.uid || 'N/A'}, স্ট্যাটাস: ${existingReq.status || 'N/A'}) করা হয়েছে। একই TrxID পুনরায় ব্যবহার করা যাবে না!`);
-
-                sendTelegramAlert(
-                    `🚨 <b>Duplicate TrxID ব্যবহারের চেষ্টা!</b>\n\n` +
-                    `👤 <b>চেষ্টাকারী UID:</b> <code>${clientUid}</code>\n` +
-                    `📱 <b>ডিভাইস:</b> ${deviceDetails.model} (<code>${deviceId}</code>)\n` +
-                    `🧾 <b>TrxID:</b> <code>${trx}</code>\n` +
-                    `💵 <b>চেষ্টা করা অ্যামাউন্ট:</b> ৳${amt}\n` +
-                    `📌 <b>আগের রিকোয়েস্ট:</b> UID <code>${existingReq.uid || 'N/A'}</code> • ৳${existingReq.amount || 0} • <b>${existingReq.status || 'Unknown'}</b>\n` +
-                    `🕒 <b>সময়:</b> ${new Date().toLocaleString()}`
-                );
                 return;
             }
 
@@ -3467,12 +3407,8 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false }
-                    },
-                    scales: {
-                        y: { beginAtZero: true }
-                    }
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true } }
                 }
             });
         }
@@ -4197,6 +4133,7 @@
             showSuccessModal('All settings saved to Firebase database!');
         }
 
+        // Lightweight interval: only updates visible countdowns/fund timers without heavy re-renders
         setInterval(() => {
             if(!document.getElementById('orderView').classList.contains('hidden')) {
                 renderOrders();
@@ -4204,14 +4141,13 @@
             if(!document.getElementById('keysView').classList.contains('hidden')) {
                 renderKeys();
             }
-            processFundRequestsLifecycle(true);
+            const expiredChanged = processFundRequestsLifecycle(false);
             if(!document.getElementById('fundView').classList.contains('hidden')) {
                 renderMyFundRequests();
             }
-            if(!document.getElementById('adminDashboard').classList.contains('hidden')) {
+            if(expiredChanged && !document.getElementById('adminDashboard').classList.contains('hidden')) {
                 renderAdminFundRequests();
             }
-            updateSpinAvailabilityUI();
         }, 1000);
     </script>
 </body>
