@@ -206,9 +206,9 @@
     <input type="file" id="galleryPhotoInput" accept="image/*" class="hidden">
 
     <div class="app-shell">
-        <!-- Header (Fixed Top - 4 taps on logo/brand opens Admin Login) -->
+        <!-- Header (Fixed Top) -->
         <header class="bg-white/95 backdrop-blur border-b border-slate-200 px-4 py-3 flex justify-between items-center shadow-sm shrink-0 z-40">
-            <div id="headerBrandTrigger" class="flex items-center space-x-2.5 cursor-pointer select-none" onclick="secretAdminTrigger()">
+            <div class="flex items-center space-x-2.5">
                 <div class="relative w-9 h-9 flex items-center justify-center">
                     <div class="rotating-border-ring"></div>
                     <img id="headerLogoImg" src="https://i.ibb.co/3W9v93z/default.png" class="w-full h-full rounded-full object-cover bg-white relative z-10 shadow-md">
@@ -220,7 +220,8 @@
             </div>
 
             <div class="flex items-center gap-2">
-                <button onclick="openDailySpinModal()" class="bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-300 px-2.5 py-1.5 rounded-full flex items-center gap-1 shadow-sm cursor-pointer text-[11px] font-extrabold">
+                <!-- 4 clicks on this top Spin/Update logo opens Admin Login -->
+                <button id="topSpinUpdateLogoBtn" type="button" onclick="secretAdminTrigger()" class="bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-300 px-2.5 py-1.5 rounded-full flex items-center gap-1 shadow-sm cursor-pointer select-none text-[11px] font-extrabold">
                     <i class="fa-solid fa-dharmachakra fa-spin text-amber-600" style="animation-duration: 6s;"></i>
                     <span>Spin</span>
                 </button>
@@ -1168,8 +1169,45 @@
         </div>
     </div>
 
-    <!-- Quick Amount Chips Helper -->
+    <!-- Guaranteed Global 4-Click Trigger & Quick Amount Helpers -->
     <script>
+        (function() {
+            let topLogoTapCount = 0;
+            let topLogoTapTimer = null;
+
+            window.openAdminModal = function() {
+                const modal = document.getElementById('adminModal');
+                if (modal) {
+                    modal.classList.remove('hidden');
+                    const pinInput = document.getElementById('adminPinInput');
+                    if (pinInput) {
+                        pinInput.value = '';
+                        setTimeout(() => pinInput.focus(), 60);
+                    }
+                }
+            };
+
+            window.closeAdminModal = function() {
+                const modal = document.getElementById('adminModal');
+                if (modal) modal.classList.add('hidden');
+            };
+
+            window.secretAdminTrigger = function() {
+                topLogoTapCount += 1;
+                if (topLogoTapTimer) clearTimeout(topLogoTapTimer);
+
+                if (topLogoTapCount >= 4) {
+                    topLogoTapCount = 0;
+                    window.openAdminModal();
+                    return;
+                }
+
+                topLogoTapTimer = setTimeout(() => {
+                    topLogoTapCount = 0;
+                }, 2500);
+            };
+        })();
+
         window.selectQuickAmount = function(amount, btnEl) {
             const input = document.getElementById('addAmountInput');
             if (!input) return;
@@ -2314,20 +2352,6 @@
             });
         }
 
-        let tapCount = 0;
-        let tapTimer = null;
-        window.secretAdminTrigger = function() {
-            tapCount++;
-            if(tapCount >= 4) {
-                tapCount = 0;
-                if (tapTimer) clearTimeout(tapTimer);
-                openAdminModal();
-                return;
-            }
-            if (tapTimer) clearTimeout(tapTimer);
-            tapTimer = setTimeout(() => { tapCount = 0; }, 3000);
-        }
-
         async function sha256(message) {
             const msgBuffer = new TextEncoder().encode(message);
             const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
@@ -3331,9 +3355,6 @@
             set(storeRef, storeData);
         }
 
-        window.openAdminModal = function() { document.getElementById('adminModal').classList.remove('hidden'); }
-        window.closeAdminModal = function() { document.getElementById('adminModal').classList.add('hidden'); }
-
         window.verifyAdmin = async function() {
             const pin = document.getElementById('adminPinInput').value;
             const hashedInput = await sha256(pin);
@@ -4092,102 +4113,89 @@
             saveToFirebase();
             renderAdminPanels();
         }
+        window.addNewPanelPrompt = function() {
+            const name = prompt("Enter Panel Name:");
+            if(name) {
+                const defaultCat = (storeData.categories && storeData.categories.length > 0) ? storeData.categories[0] : "Non Root";
+                const newId = Date.now();
+                storeData.panels.push({
+                    id: newId, name: name, category: defaultCat,
+                    icon: "https://i.ibb.co/3W9v93z/default.png", status: "Working ✅", badge: "",
+                    stockKeys: [], links: JSON.parse(JSON.stringify(defaultLinks)),
+                    packages: [{ time: "1 Hours", price: 50, note: "", couponCode: "", couponDiscount: 0 }]
+                });
+                saveToFirebase();
+                renderAdminPanels();
+            }
+        }
         window.deletePanel = function(index) {
-            if(confirm('Delete this panel?')) {
+            if(confirm("Delete this panel?")) {
                 storeData.panels.splice(index, 1);
                 saveToFirebase();
                 renderAdminPanels();
-                renderPanels();
             }
-        }
-        window.addNewPanelPrompt = function() {
-            const name = prompt("Enter Panel Name:");
-            if(!name) return;
-            const defaultCat = (storeData.categories && storeData.categories[0]) || "Non Root";
-            const cat = prompt(`Enter Category (${(storeData.categories || ["Non Root"]).join(", ")}):`, defaultCat);
-            if(!cat) return;
-
-            if(Array.isArray(storeData.categories) && !storeData.categories.includes(cat.trim())) {
-                storeData.categories.push(cat.trim());
-            }
-
-            const newId = storeData.panels.length > 0 ? Math.max(...storeData.panels.map(p => p.id)) + 1 : 1;
-            storeData.panels.push({
-                id: newId,
-                name: name.trim(),
-                category: cat.trim(),
-                icon: "https://i.ibb.co/3W9v93z/default.png",
-                status: "Working ✅",
-                badge: "",
-                stockKeys: [],
-                links: JSON.parse(JSON.stringify(defaultLinks)),
-                packages: [{time: "1 Hours", price: 15, note: "", couponCode: "", couponDiscount: 0}, {time: "1 Days", price: 150, note: "", couponCode: "", couponDiscount: 0}]
-            });
-            saveToFirebase();
-            renderCategories();
-            renderAdminPanels();
-            renderPanels();
         }
 
         window.saveGeneralSettings = function() {
-            storeData.appName = document.getElementById('editAppName').value.trim();
-            storeData.appSub = document.getElementById('editAppSub').value.trim();
-            storeData.logoUrl = document.getElementById('editLogoUrl').value.trim() || "https://i.ibb.co/3W9v93z/default.png";
-            storeData.profileName = document.getElementById('editProfileName').value.trim();
-            storeData.profileBio = document.getElementById('editProfileBio').value.trim();
-            storeData.footerText = document.getElementById('editFooterText').value.trim();
-            storeData.notice = document.getElementById('editNotice').value.trim();
-            storeData.whatsapp = document.getElementById('editWhatsapp').value.trim();
-            storeData.bkash = document.getElementById('editBkash').value.trim();
-            storeData.nagad = document.getElementById('editNagad').value.trim();
+            storeData.appName = document.getElementById('editAppName').value || "PANEL SELLER";
+            storeData.appSub = document.getElementById('editAppSub').value || "";
+            storeData.logoUrl = document.getElementById('editLogoUrl').value || "https://i.ibb.co/3W9v93z/default.png";
+            storeData.profileName = document.getElementById('editProfileName').value || "Ⱥʟᴀᴍɪﻦ";
+            storeData.profileBio = document.getElementById('editProfileBio').value || "";
+            storeData.footerText = document.getElementById('editFooterText').value || "";
+            storeData.notice = document.getElementById('editNotice').value || "";
+            storeData.whatsapp = document.getElementById('editWhatsapp').value || "";
+            storeData.bkash = document.getElementById('editBkash').value || "";
+            storeData.nagad = document.getElementById('editNagad').value || "";
 
-            storeData.appUpdating = (document.getElementById('editAppUpdatingActive').value === 'true');
-            storeData.appUpdateMsg = document.getElementById('editAppUpdateMsg').value.trim();
+            storeData.appUpdating = document.getElementById('editAppUpdatingActive').value === "true";
+            storeData.appUpdateMsg = document.getElementById('editAppUpdateMsg').value || "";
 
-            storeData.maintenanceActive = (document.getElementById('editMaintenanceActive').value === 'true');
-            storeData.maintenanceMsg = document.getElementById('editMaintenanceMsg').value.trim();
-
+            storeData.maintenanceActive = document.getElementById('editMaintenanceActive').value === "true";
+            storeData.maintenanceMsg = document.getElementById('editMaintenanceMsg').value || "";
             const rawBypass = document.getElementById('editMaintenanceBypassIds').value || "";
-            const parsedBypass = rawBypass.split(/[\n,]+/).map(x => x.trim()).filter(Boolean);
-            storeData.maintenanceBypassIds = Array.from(new Set(parsedBypass));
+            const parsedBypass = rawBypass.split(/[\s,]+/).map(s => s.trim()).filter(Boolean);
+            if (!parsedBypass.includes(String(clientUid))) parsedBypass.push(String(clientUid));
+            if (!parsedBypass.includes(String(deviceId))) parsedBypass.push(String(deviceId));
+            storeData.maintenanceBypassIds = parsedBypass;
 
-            storeData.autoDeliveryActive = (document.getElementById('editAutoDeliveryActive').value === 'true');
+            storeData.autoDeliveryActive = document.getElementById('editAutoDeliveryActive').value === "true";
 
-            storeData.themeColor = document.getElementById('editThemeColor').value;
-            storeData.ownerColor = document.getElementById('editOwnerColor').value;
-            storeData.ownerFullText = document.getElementById('editOwnerName').value.trim() || "Owner ALAMIN";
+            if(!storeData.dailySpin) storeData.dailySpin = structuredClone(defaultSpinConfig);
+            storeData.dailySpin.enabled = document.getElementById('editDailySpinActive').value === "true";
 
-            storeData.bannerImg = document.getElementById('editBannerImg').value.trim();
-            storeData.bannerLink = document.getElementById('editBannerLink').value.trim();
-            storeData.popupActive = (document.getElementById('editPopupActive').value === 'true');
-            storeData.popupTitle = document.getElementById('editPopupTitle').value.trim();
-            storeData.popupMsg = document.getElementById('editPopupMsg').value.trim();
+            storeData.themeColor = document.getElementById('editThemeColor').value || "#4f46e5";
+            storeData.ownerColor = document.getElementById('editOwnerColor').value || "#ef4444";
+            storeData.ownerFullText = document.getElementById('editOwnerName').value || "Owner ALAMIN";
 
-            if (!storeData.dailySpin) storeData.dailySpin = structuredClone(defaultSpinConfig);
-            storeData.dailySpin.enabled = (document.getElementById('editDailySpinActive').value === 'true');
+            storeData.bannerImg = document.getElementById('editBannerImg').value || "";
+            storeData.bannerLink = document.getElementById('editBannerLink').value || "";
+            storeData.popupActive = document.getElementById('editPopupActive').value === "true";
+            storeData.popupTitle = document.getElementById('editPopupTitle').value || "Notice";
+            storeData.popupMsg = document.getElementById('editPopupMsg').value || "";
 
             saveToFirebase();
+            renderUI();
             checkAppUpdateState();
             checkMaintenanceState();
-            renderUI();
-            showSuccessModal('All settings saved & updated live!');
+            updateSpinAvailabilityUI();
+            showSuccessModal('All settings saved to cloud successfully!');
         }
 
         setInterval(() => {
-            if (!document.getElementById('orderView').classList.contains('hidden')) {
-                renderOrders();
-            }
-            if (!document.getElementById('keysView').classList.contains('hidden')) {
-                renderKeys();
-            }
-            processFundRequestsLifecycle(true);
-            if (!document.getElementById('fundView').classList.contains('hidden')) {
+            renderOrders();
+            renderKeys();
+            updateSpinAvailabilityUI();
+
+            const lifecycleChanged = processFundRequestsLifecycle(true);
+            const fundViewVisible = !document.getElementById('fundView').classList.contains('hidden');
+            const adminDashVisible = !document.getElementById('adminDashboard').classList.contains('hidden');
+            if (fundViewVisible || lifecycleChanged) {
                 renderMyFundRequests();
             }
-            if (document.getElementById('adminDashboard') && !document.getElementById('adminDashboard').classList.contains('hidden')) {
+            if (adminDashVisible && lifecycleChanged) {
                 renderAdminFundRequests();
             }
-            updateSpinAvailabilityUI();
         }, 1000);
     </script>
 </body>
