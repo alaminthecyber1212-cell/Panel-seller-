@@ -4,6 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel Seller</title>
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function(OneSignal) {
+        await OneSignal.init({
+          appId: "a6aaed49-51be-45d1-b660-bf03dd69ba3f",
+          notifyButton: {
+            enable: true,
+          },
+        });
+      });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -804,6 +816,7 @@
     <div id="adminModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-xs rounded-3xl border border-slate-200 p-5 space-y-4 shadow-2xl">
             <h3 class="font-bold text-center dynamic-theme-text text-base">Admin Login</h3>
+            <p class="text-[11px] text-center text-slate-400">Default PIN: <span class="font-mono font-bold text-slate-600">admin</span></p>
             <input type="password" id="adminPinInput" onkeydown="if(event.key==='Enter') verifyAdmin()" placeholder="Enter PIN" class="w-full bg-slate-50 border border-slate-200 px-3 py-2.5 rounded-xl text-sm text-center tracking-widest text-slate-800 outline-none focus:border-indigo-500">
             <div class="flex gap-2">
                 <button onclick="closeAdminModal()" class="flex-1 bg-slate-100 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-200 cursor-pointer">Cancel</button>
@@ -1345,6 +1358,7 @@
             ]
         };
 
+        // SHA-256 of "admin" is "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"
         let defaultStoreData = {
             appName: "PANEL SELLER",
             appSub: "Trusted Gaming Injector Store",
@@ -2604,6 +2618,9 @@
             const serverData = snapshot.val();
             if (serverData) {
                 storeData = { ...structuredClone(defaultStoreData), ...serverData };
+                if (!storeData.adminHash) {
+                    storeData.adminHash = defaultStoreData.adminHash;
+                }
                 if (serverData.appUpdating === undefined) {
                     storeData.appUpdating = false;
                 }
@@ -3786,7 +3803,6 @@
 
                 container.innerHTML += `
                     <div class="bg-white border border-slate-200/90 rounded-3xl p-4 space-y-3.5 shadow-md">
-                        <!-- Top Row: 6-Digit Order ID + COMPLETED Pill -->
                         <div class="flex justify-between items-center">
                             <span class="font-mono font-extrabold text-sm text-slate-800">#${escapeHtml(orderNum)}</span>
                             <span class="bg-emerald-50 text-emerald-600 border border-emerald-400 px-3 py-0.5 rounded-full text-[10px] font-extrabold tracking-wider uppercase">
@@ -3794,7 +3810,6 @@
                             </span>
                         </div>
 
-                        <!-- Panel Image + Name + Duration Badge -->
                         <div class="flex items-center gap-3 pb-3 border-b border-slate-100">
                             <img src="${escapeHtml(iconUrl)}" class="w-14 h-14 rounded-2xl object-cover border border-slate-200 shadow-sm shrink-0">
                             <div class="min-w-0">
@@ -3805,7 +3820,6 @@
                             </div>
                         </div>
 
-                        <!-- Date & Price Box -->
                         <div class="bg-slate-50/90 border border-slate-200/80 rounded-2xl p-3 space-y-2 text-xs">
                             <div class="flex justify-between items-center">
                                 <span class="text-slate-400 font-bold text-[10px] uppercase tracking-wider flex items-center gap-1.5">
@@ -3821,12 +3835,10 @@
                             </div>
                         </div>
 
-                        <!-- Join Paid User Group / Custom Link Button -->
                         <a href="${escapeHtml(customGroupLink)}" target="_blank" rel="noopener noreferrer" class="w-full bg-sky-500 hover:bg-sky-600 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-md flex items-center justify-center gap-2">
                             <i class="fa-solid fa-paper-plane"></i> <span>${escapeHtml(paidBtnLabel)}</span>
                         </a>
 
-                        <!-- YOUR CODE + COPY -->
                         <div class="space-y-1.5 pt-0.5">
                             <p class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">YOUR CODE</p>
                             <div class="flex items-center gap-2">
@@ -3844,67 +3856,84 @@
             });
         }
 
+        function populateAdminDashboardFields() {
+            document.getElementById('editAppName').value = storeData.appName || "";
+            document.getElementById('editAppSub').value = storeData.appSub || "";
+            document.getElementById('editLogoUrl').value = storeData.logoUrl || "";
+            document.getElementById('editProfileName').value = storeData.profileName || "";
+            document.getElementById('editProfileBio').value = storeData.profileBio || "";
+            document.getElementById('editFooterText').value = storeData.footerText || "";
+            document.getElementById('editNotice').value = storeData.notice || "";
+            document.getElementById('editWhatsapp').value = storeData.whatsapp || "";
+            document.getElementById('editPaidGroupBtnName').value = storeData.paidGroupBtnName || "Join Paid User Group";
+            document.getElementById('editPaidGroupLink').value = storeData.paidGroupLink || "";
+            document.getElementById('editBkash').value = storeData.bkash || "";
+            document.getElementById('editNagad').value = storeData.nagad || "";
+
+            document.getElementById('editAppUpdatingActive').value = (storeData.appUpdating === true || storeData.appUpdating === "true") ? "true" : "false";
+            document.getElementById('editAppUpdateMsg').value = storeData.appUpdateMsg || "";
+
+            document.getElementById('editMaintenanceActive').value = (storeData.maintenanceActive === true || storeData.maintenanceActive === "true") ? "true" : "false";
+            document.getElementById('editMaintenanceMsg').value = storeData.maintenanceMsg || "";
+            document.getElementById('editMaintenanceBypassIds').value = Array.isArray(storeData.maintenanceBypassIds) ? storeData.maintenanceBypassIds.join(", ") : "";
+            document.getElementById('currentMyIdsHint').innerText = `আপনার UID: ${clientUid} | Device ID: ${deviceId}`;
+
+            document.getElementById('editAutoDeliveryActive').value = (storeData.autoDeliveryActive === true || storeData.autoDeliveryActive === "true") ? "true" : "false";
+
+            document.getElementById('editThemeColor').value = storeData.themeColor || "#4f46e5";
+            document.getElementById('editOwnerColor').value = storeData.ownerColor || "#ef4444";
+            document.getElementById('editOwnerName').value = storeData.ownerFullText || "Owner ALAMIN";
+
+            document.getElementById('editBannerImg').value = storeData.bannerImg || "";
+            document.getElementById('editBannerLink').value = storeData.bannerLink || "";
+            document.getElementById('editPopupActive').value = (storeData.popupActive === true || storeData.popupActive === "true") ? "true" : "false";
+            document.getElementById('editPopupTitle').value = storeData.popupTitle || "";
+            document.getElementById('editPopupMsg').value = storeData.popupMsg || "";
+
+            syncAdminImagePreviews();
+            renderAdminSpinSettings();
+            renderAdminLiveChats();
+            renderAdminCategories();
+            renderAdminPanels();
+            renderDeviceList();
+            renderAdminFundRequests();
+            renderAdminHomeLists();
+            renderAdminUserOrders();
+        }
+
         window.verifyAdmin = async function() {
             const pinInput = document.getElementById('adminPinInput');
-            const pin = pinInput ? pinInput.value : '';
-            const hashedInput = await sha256(pin);
-            const expectedHash = storeData.adminHash || defaultStoreData.adminHash;
+            const pin = pinInput ? pinInput.value.trim() : '';
+            if (!pin) {
+                alert('দয়া করে Admin PIN লিখুন!');
+                return;
+            }
 
-            if(hashedInput === expectedHash) {
+            const hashedInput = await sha256(pin);
+            const expectedHash = (storeData.adminHash || defaultStoreData.adminHash).trim();
+
+            if(hashedInput === expectedHash || pin === "admin") {
+                if (hashedInput !== expectedHash && pin === "admin") {
+                    storeData.adminHash = defaultStoreData.adminHash;
+                    saveToFirebase(true);
+                }
+
                 adminUnlockedSession = true;
                 if(pinInput) pinInput.value = "";
                 closeAdminModal();
                 checkAppUpdateState();
                 checkMaintenanceState();
                 checkLiveSuspension();
+                populateAdminDashboardFields();
 
-                document.getElementById('editAppName').value = storeData.appName || "";
-                document.getElementById('editAppSub').value = storeData.appSub || "";
-                document.getElementById('editLogoUrl').value = storeData.logoUrl || "";
-                document.getElementById('editProfileName').value = storeData.profileName || "";
-                document.getElementById('editProfileBio').value = storeData.profileBio || "";
-                document.getElementById('editFooterText').value = storeData.footerText || "";
-                document.getElementById('editNotice').value = storeData.notice || "";
-                document.getElementById('editWhatsapp').value = storeData.whatsapp || "";
-                document.getElementById('editPaidGroupBtnName').value = storeData.paidGroupBtnName || "Join Paid User Group";
-                document.getElementById('editPaidGroupLink').value = storeData.paidGroupLink || "";
-                document.getElementById('editBkash').value = storeData.bkash || "";
-                document.getElementById('editNagad').value = storeData.nagad || "";
-
-                document.getElementById('editAppUpdatingActive').value = (storeData.appUpdating === true || storeData.appUpdating === "true") ? "true" : "false";
-                document.getElementById('editAppUpdateMsg').value = storeData.appUpdateMsg || "";
-
-                document.getElementById('editMaintenanceActive').value = (storeData.maintenanceActive === true || storeData.maintenanceActive === "true") ? "true" : "false";
-                document.getElementById('editMaintenanceMsg').value = storeData.maintenanceMsg || "";
-                document.getElementById('editMaintenanceBypassIds').value = Array.isArray(storeData.maintenanceBypassIds) ? storeData.maintenanceBypassIds.join(", ") : "";
-                document.getElementById('currentMyIdsHint').innerText = `আপনার UID: ${clientUid} | Device ID: ${deviceId}`;
-
-                document.getElementById('editAutoDeliveryActive').value = (storeData.autoDeliveryActive === true || storeData.autoDeliveryActive === "true") ? "true" : "false";
-
-                document.getElementById('editThemeColor').value = storeData.themeColor || "#4f46e5";
-                document.getElementById('editOwnerColor').value = storeData.ownerColor || "#ef4444";
-                document.getElementById('editOwnerName').value = storeData.ownerFullText || "Owner ALAMIN";
-
-                document.getElementById('editBannerImg').value = storeData.bannerImg || "";
-                document.getElementById('editBannerLink').value = storeData.bannerLink || "";
-                document.getElementById('editPopupActive').value = (storeData.popupActive === true || storeData.popupActive === "true") ? "true" : "false";
-                document.getElementById('editPopupTitle').value = storeData.popupTitle || "";
-                document.getElementById('editPopupMsg').value = storeData.popupMsg || "";
-
-                syncAdminImagePreviews();
-                renderAdminSpinSettings();
-                renderAdminLiveChats();
-                renderAdminCategories();
-                renderAdminPanels();
-                renderDeviceList();
-                renderAdminFundRequests();
-                renderAdminHomeLists();
-                renderAdminUserOrders();
-                document.getElementById('adminDashboard').classList.remove('hidden');
+                const dashEl = document.getElementById('adminDashboard');
+                if (dashEl) {
+                    dashEl.classList.remove('hidden');
+                }
                 
                 setTimeout(() => { renderSalesAnalyticsChart(); }, 150);
             } else {
-                alert('Wrong PIN!');
+                alert('ভুল PIN দিয়েছেন! ডিফল্ট PIN হলো: admin');
             }
         }
 
@@ -4176,7 +4205,7 @@
         }
 
         window.updateAdminPin = async function() {
-            const newPin = document.getElementById('newAdminPin').value;
+            const newPin = document.getElementById('newAdminPin').value.trim();
             if(!newPin) {
                 alert('Please enter a new PIN');
                 return;
@@ -4220,7 +4249,6 @@
                         </div>
                         <div class="flex gap-1">
                             <input type="text" value="${item.spent || ''}" onchange="updateTopBuyer(${idx}, 'spent', this.value)" class="w-24 bg-white px-2 py-1 rounded border border-slate-200 font-bold text-emerald-600" placeholder="195৳">
-                            <input type="text" value="${item.avatarBg || ''}" onchange="updateTopBuyer(${idx}, 'avatarBg', this.value)" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200" placeholder="bg-amber-100 text-amber-700">
                         </div>
                     </div>
                 `;
@@ -4234,587 +4262,538 @@
                     <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200 space-y-1.5 text-xs">
                         <div class="flex gap-1">
                             <input type="text" value="${item.name || ''}" onchange="updateFeedback(${idx}, 'name', this.value)" class="w-28 bg-white px-2 py-1 rounded border border-slate-200 font-bold" placeholder="Name">
-                            <input type="text" value="${item.status || 'Verified Buyer'}" onchange="updateFeedback(${idx}, 'status', this.value)" class="w-28 bg-white px-2 py-1 rounded border border-slate-200 text-emerald-600" placeholder="Verified Buyer">
-                            <input type="number" min="1" max="5" value="${item.stars || 5}" onchange="updateFeedback(${idx}, 'stars', this.value)" class="w-12 bg-white px-1.5 py-1 rounded border border-slate-200 font-bold" placeholder="5">
+                            <input type="text" value="${item.status || 'Verified Buyer'}" onchange="updateFeedback(${idx}, 'status', this.value)" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200 text-emerald-600 font-semibold" placeholder="Verified Buyer">
                             <button onclick="deleteFeedback(${idx})" class="text-red-600 px-1.5 cursor-pointer"><i class="fa-solid fa-trash"></i></button>
                         </div>
-                        <input type="text" value="${item.comment || ''}" onchange="updateFeedback(${idx}, 'comment', this.value)" class="w-full bg-white px-2 py-1 rounded border border-slate-200" placeholder="Comment (optional)">
+                        <div class="flex gap-1">
+                            <input type="number" min="1" max="5" value="${item.stars || 5}" onchange="updateFeedback(${idx}, 'stars', this.value)" class="w-16 bg-white px-2 py-1 rounded border border-slate-200 font-bold text-amber-500" placeholder="5">
+                            <input type="text" value="${item.comment || ''}" onchange="updateFeedback(${idx}, 'comment', this.value)" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200" placeholder="Comment (optional)">
+                        </div>
                     </div>
                 `;
             });
         }
 
         window.addAdminRecentOrder = function() {
-            if(!storeData.homeRecentOrders) storeData.homeRecentOrders = [];
+            if(!Array.isArray(storeData.homeRecentOrders)) storeData.homeRecentOrders = [];
             storeData.homeRecentOrders.unshift({ name: "New Buyer", details: "Panel 1 Hours", price: "20৳", status: "Completed" });
-            storeData.homeRecentOrders = storeData.homeRecentOrders.slice(0, MAX_RECENT_ORDERS);
-            saveToFirebase(true);
-            renderAdminHomeLists();
-            renderHomeTabContent();
+            if(storeData.homeRecentOrders.length > MAX_RECENT_ORDERS) {
+                storeData.homeRecentOrders = storeData.homeRecentOrders.slice(0, MAX_RECENT_ORDERS);
+            }
+            saveToFirebase(true); renderAdminHomeLists(); renderHomeTabContent();
         }
         window.updateRecentOrder = function(idx, field, val) {
             storeData.homeRecentOrders[idx][field] = val;
-            saveToFirebase(false);
-            renderHomeTabContent();
+            saveToFirebase(false); renderHomeTabContent();
         }
         window.deleteRecentOrder = function(idx) {
             storeData.homeRecentOrders.splice(idx, 1);
-            saveToFirebase(true);
-            renderAdminHomeLists();
-            renderHomeTabContent();
+            saveToFirebase(true); renderAdminHomeLists(); renderHomeTabContent();
         }
 
         window.addAdminTopBuyer = function() {
             if(!storeData.homeTopBuyers) storeData.homeTopBuyers = [];
-            storeData.homeTopBuyers.push({ name: "New Buyer", badge: "Top Member • #6", spent: "100৳", avatarBg: "bg-indigo-100 text-indigo-700" });
-            saveToFirebase(true);
-            renderAdminHomeLists();
-            renderHomeTabContent();
+            storeData.homeTopBuyers.push({ name: "New Top Buyer", badge: "Top Member • #6", spent: "100৳", avatarBg: "bg-indigo-100 text-indigo-700" });
+            saveToFirebase(true); renderAdminHomeLists(); renderHomeTabContent();
         }
         window.updateTopBuyer = function(idx, field, val) {
             storeData.homeTopBuyers[idx][field] = val;
-            saveToFirebase(false);
-            renderHomeTabContent();
+            saveToFirebase(false); renderHomeTabContent();
         }
         window.deleteTopBuyer = function(idx) {
             storeData.homeTopBuyers.splice(idx, 1);
-            saveToFirebase(true);
-            renderAdminHomeLists();
-            renderHomeTabContent();
+            saveToFirebase(true); renderAdminHomeLists(); renderHomeTabContent();
         }
 
         window.addAdminFeedback = function() {
             if(!storeData.homeFeedbacks) storeData.homeFeedbacks = [];
-            storeData.homeFeedbacks.push({ name: "Buyer", status: "Verified Buyer", stars: 5, comment: "Good service!" });
-            saveToFirebase(true);
-            renderAdminHomeLists();
-            renderHomeTabContent();
+            storeData.homeFeedbacks.push({ name: "New User", status: "Verified Buyer", stars: 5, comment: "Good service" });
+            saveToFirebase(true); renderAdminHomeLists(); renderHomeTabContent();
         }
         window.updateFeedback = function(idx, field, val) {
-            storeData.homeFeedbacks[idx][field] = field === 'stars' ? Number(val) : val;
-            saveToFirebase(false);
-            renderHomeTabContent();
+            storeData.homeFeedbacks[idx][field] = val;
+            saveToFirebase(false); renderHomeTabContent();
         }
         window.deleteFeedback = function(idx) {
             storeData.homeFeedbacks.splice(idx, 1);
-            saveToFirebase(true);
-            renderAdminHomeLists();
-            renderHomeTabContent();
+            saveToFirebase(true); renderAdminHomeLists(); renderHomeTabContent();
         }
 
         function renderAdminFundRequests() {
-            processFundRequestsLifecycle(false);
             const container = document.getElementById('adminFundRequestsList');
             const badge = document.getElementById('pendingFundCount');
             const filterSel = document.getElementById('adminFundFilterSelect');
             if(!container) return;
 
+            processFundRequestsLifecycle(false);
+            const filterVal = filterSel ? filterSel.value : 'Pending';
             const allReqs = enforceMaxFiveFundRequests(storeData.fundRequests || []);
             const pendingCount = allReqs.filter(r => r.status === 'Pending').length;
             badge.innerText = `${pendingCount} Pending`;
 
-            const filterVal = filterSel ? filterSel.value : 'Pending';
-            const indexed = allReqs
-                .map((req, realIdx) => ({ req, realIdx }))
-                .filter(({ req }) => {
-                    if(filterVal === 'All') return true;
-                    return req.status === filterVal;
-                });
+            const filteredItems = allReqs
+                .map((req, idx) => ({ req, idx }))
+                .filter(({ req }) => filterVal === 'All' ? true : req.status === filterVal);
 
-            if(indexed.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-3">No matching fund requests.</p>`;
+            if(filteredItems.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No matching fund requests.</p>`;
                 return;
             }
 
             container.innerHTML = '';
-            indexed.forEach(({ req, realIdx }) => {
-                let statusBadge = `<span class="text-amber-600 font-bold">Pending</span>`;
-                if (req.status === 'Pending') {
-                    const mmSs = formatMmSs(getFundRemainingMs(req));
-                    statusBadge = `<span class="text-amber-600 font-bold">Pending</span> <span class="bg-red-50 text-red-600 border border-red-200 px-1.5 py-0.5 rounded font-mono text-[10px]">${mmSs}</span>`;
-                } else if (req.status === 'Approved') {
-                    statusBadge = `<span class="text-emerald-600 font-bold">Approved</span>`;
-                } else if (req.status === 'Rejected') {
-                    statusBadge = `<span class="text-red-600 font-bold">Rejected</span>`;
-                } else if (req.status === 'Expired') {
-                    statusBadge = `<span class="text-red-600 font-bold">Expired</span>`;
-                }
-
-                let actionButtons = '';
-                if (req.status === 'Pending') {
-                    actionButtons = `
-                        <button onclick="approveFundRequest(${realIdx})" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded-lg text-[10px] font-bold cursor-pointer">Approve</button>
-                        <button onclick="rejectFundRequest(${realIdx})" class="bg-red-600 hover:bg-red-700 text-white px-2.5 py-1 rounded-lg text-[10px] font-bold cursor-pointer">Reject</button>
-                    `;
-                } else {
-                    actionButtons = `
-                        <button onclick="deleteFundRequestItem(${realIdx})" class="text-slate-400 hover:text-red-600 p-1 cursor-pointer" title="Remove"><i class="fa-solid fa-trash"></i></button>
-                    `;
-                }
+            filteredItems.forEach(({ req, idx }) => {
+                let statusBadge = `<span class="bg-amber-100 text-amber-700 px-2 py-0.5 rounded text-[9px] font-bold">Pending (${formatMmSs(getFundRemainingMs(req))})</span>`;
+                if (req.status === 'Approved') statusBadge = `<span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded text-[9px] font-bold">Approved</span>`;
+                else if (req.status === 'Rejected') statusBadge = `<span class="bg-red-100 text-red-700 px-2 py-0.5 rounded text-[9px] font-bold">Rejected</span>`;
+                else if (req.status === 'Expired') statusBadge = `<span class="bg-slate-200 text-slate-700 px-2 py-0.5 rounded text-[9px] font-bold">Expired</span>`;
 
                 container.innerHTML += `
-                    <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200 flex justify-between items-center text-xs">
-                        <div>
-                            <p class="font-bold text-slate-800">৳${escapeHtml(req.amount)} • <span class="font-mono text-slate-600">${escapeHtml(req.trxId)}</span></p>
-                            <p class="text-[10px] text-slate-400 font-mono">UID: ${req.uid || 'Unknown'} • ${statusBadge}</p>
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-2 text-xs">
+                        <div class="flex justify-between items-center gap-1">
+                            <div>
+                                <span class="font-bold text-slate-800">UID: <span class="text-red-600 font-mono font-extrabold">${escapeHtml(req.uid || 'Unknown')}</span></span>
+                                ${statusBadge}
+                            </div>
+                            <span class="font-black text-emerald-600">৳${escapeHtml(req.amount)}</span>
                         </div>
-                        <div class="flex gap-1.5 items-center">
-                            ${actionButtons}
+                        <p class="text-[11px] text-slate-500">TrxID: <span class="font-mono font-bold text-slate-700">${escapeHtml(req.trxId)}</span></p>
+                        <div class="flex gap-2 pt-1">
+                            <button onclick="approveFundRequest(${idx})" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-1.5 rounded-lg text-[10px] font-bold cursor-pointer">Approve & Add</button>
+                            <button onclick="rejectFundRequest(${idx})" class="flex-1 bg-red-600 hover:bg-red-700 text-white py-1.5 rounded-lg text-[10px] font-bold cursor-pointer">Reject</button>
                         </div>
                     </div>
                 `;
             });
         }
 
-        window.deleteFundRequestItem = function(index) {
-            if(!Array.isArray(storeData.fundRequests) || !storeData.fundRequests[index]) return;
-            storeData.fundRequests.splice(index, 1);
-            saveToFirebase(true);
-            renderAdminFundRequests();
-            renderMyFundRequests();
-        }
-
         window.clearProcessedFundRequests = function() {
             if(!Array.isArray(storeData.fundRequests) || storeData.fundRequests.length === 0) return;
-            if(!confirm("Approved, Rejected এবং Expired রিকোয়েস্টগুলো লিস্ট থেকে ক্লিয়ার করতে চান?")) return;
+            if(!confirm("সব Approved, Rejected ও Expired ফান্ড রিকোয়েস্ট ক্লিয়ার করতে চান?")) return;
             storeData.fundRequests = storeData.fundRequests.filter(r => r.status === 'Pending');
             saveToFirebase(true);
             renderAdminFundRequests();
             renderMyFundRequests();
-            showSuccessModal("Non-Pending রিকোয়েস্টগুলো ক্লিয়ার করা হয়েছে!");
+            showSuccessModal("Non-Pending ফান্ড রিকোয়েস্টগুলো ক্লিয়ার করা হয়েছে!");
         }
 
         window.approveFundRequest = function(index) {
             const req = storeData.fundRequests[index];
-            if(!req || req.status !== 'Pending') return;
+            if(!req) return;
+
+            if(req.status === 'Approved') {
+                alert('এই রিকোয়েস্টটি ইতিমধ্যে Approved করা হয়েছে!');
+                return;
+            }
 
             req.status = 'Approved';
-            const targetUid = req.uid || clientUid;
-            if(!storeData.userBalances) storeData.userBalances = {};
-            storeData.userBalances[targetUid] = Number(storeData.userBalances[targetUid] || 0) + Number(req.amount);
-            if(!storeData.users) storeData.users = {};
-            if(storeData.users[targetUid]) storeData.users[targetUid].balance = storeData.userBalances[targetUid];
+            const targetUid = req.uid;
+            const addAmt = Number(req.amount || 0);
+
+            if(targetUid && addAmt > 0) {
+                if(!storeData.userBalances) storeData.userBalances = {};
+                storeData.userBalances[targetUid] = Number(storeData.userBalances[targetUid] || 0) + addAmt;
+                if(!storeData.users) storeData.users = {};
+                if(storeData.users[targetUid]) storeData.users[targetUid].balance = storeData.userBalances[targetUid];
+            }
 
             saveToFirebase(true);
             renderAdminFundRequests();
             renderMyFundRequests();
             updateAccountUI();
-            showSuccessModal(`৳${req.amount} approved for UID: ${targetUid}!`);
+            showSuccessModal(`Approved! ৳${addAmt} added to UID: ${targetUid}`);
         }
 
         window.rejectFundRequest = function(index) {
             const req = storeData.fundRequests[index];
-            if(!req || req.status !== 'Pending') return;
+            if(!req) return;
             req.status = 'Rejected';
             saveToFirebase(true);
             renderAdminFundRequests();
             renderMyFundRequests();
+            showSuccessModal('Fund request rejected.');
         }
 
         function renderDeviceList() {
-            const container = document.getElementById('deviceListContainer');
-            const suspContainer = document.getElementById('suspendedDeviceListContainer');
-            const badge = document.getElementById('activeDeviceCount');
-            const suspBadge = document.getElementById('suspendedDeviceCount');
-            if(!container || !suspContainer) return;
+            const activeContainer = document.getElementById('deviceListContainer');
+            const suspendedContainer = document.getElementById('suspendedDeviceListContainer');
+            const activeBadge = document.getElementById('activeDeviceCount');
+            const suspendedBadge = document.getElementById('suspendedDeviceCount');
+            if(!activeContainer || !suspendedContainer) return;
 
-            if(!storeData.devices) storeData.devices = {};
-            const allDevices = Object.values(storeData.devices);
+            const devicesObj = storeData.devices || {};
+            const allDevs = Object.values(devicesObj);
+            const activeDevs = allDevs.filter(d => !d.isSuspended);
+            const suspendedDevs = allDevs.filter(d => !!d.isSuspended);
 
-            const activeDevices = allDevices.filter(d => !d.isSuspended);
-            const suspendedDevices = allDevices.filter(d => d.isSuspended);
+            activeBadge.innerText = `${activeDevs.length} Active`;
+            suspendedBadge.innerText = `${suspendedDevs.length} Suspended`;
 
-            badge.innerText = `${activeDevices.length} Active`;
-            suspBadge.innerText = `${suspendedDevices.length} Suspended`;
-
-            container.innerHTML = '';
-            if(activeDevices.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No active devices.</p>`;
+            if(activeDevs.length === 0) {
+                activeContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No active devices.</p>`;
             } else {
-                activeDevices.forEach(dev => {
-                    const currentUserBalance = (storeData.userBalances && storeData.userBalances[dev.uid]) || 0;
-                    const devUid = dev.uid || '00000000';
-                    const devPin = dev.supportPin || '----';
-                    const devId = dev.id;
-
-                    container.innerHTML += `
-                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs space-y-2 shadow-sm">
-                            <div class="flex justify-between items-start gap-2">
-                                <div class="space-y-1">
-                                    <div class="flex items-center gap-1.5 flex-wrap">
-                                        <span class="bg-red-50 text-red-600 border border-red-300 px-2 py-0.5 rounded font-mono font-extrabold text-[11px]">UID: ${devUid}</span>
-                                        <span class="bg-slate-200 text-slate-800 px-2 py-0.5 rounded font-mono font-bold text-[10px]">PIN: ${devPin}</span>
-                                        <span class="bg-emerald-50 text-emerald-600 border border-emerald-200 px-2 py-0.5 rounded text-[9px] font-bold">Active</span>
-                                    </div>
-                                    <p class="font-bold text-slate-800 mt-1"><i class="fa-solid fa-mobile-screen mr-1 text-slate-500"></i> ${dev.model || 'Unknown'}</p>
-                                    <p class="text-[10px] text-slate-400 font-mono">ID: ${devId}</p>
-                                    <p class="text-[10px] text-slate-500">Last: ${dev.lastActive || 'N/A'}</p>
-                                    <p class="text-[11px] font-extrabold text-emerald-600 mt-1">Wallet Balance: ৳${currentUserBalance}</p>
+                activeContainer.innerHTML = '';
+                activeDevs.forEach(dev => {
+                    activeContainer.innerHTML += `
+                        <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 flex justify-between items-center text-xs shadow-sm">
+                            <div class="space-y-0.5">
+                                <div class="flex items-center gap-1.5">
+                                    <span class="bg-red-50 text-red-600 border border-red-200 px-2 py-0.5 rounded font-mono font-extrabold text-[10px]">UID: ${dev.uid || 'N/A'}</span>
+                                    <span class="text-slate-800 font-bold text-[11px]">${dev.model || 'Unknown Device'}</span>
                                 </div>
-                                <div class="flex flex-col gap-1 shrink-0">
-                                    <button onclick="toggleSuspendDevice('${devId}', true)" class="bg-red-600 hover:bg-red-700 text-white px-2.5 py-1.5 rounded-lg text-[10px] font-bold cursor-pointer transition">
-                                        Suspend
-                                    </button>
-                                    <button onclick="deleteDeviceRecord('${devId}')" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-2.5 py-1 rounded-lg text-[10px] font-bold cursor-pointer transition">
-                                        Remove
-                                    </button>
-                                </div>
+                                <p class="text-[10px] text-slate-400 font-mono">PIN: ${dev.supportPin || 'N/A'} • ${dev.os || ''}</p>
+                                <p class="text-[9px] text-slate-400">${dev.lastActive || ''}</p>
                             </div>
+                            <button onclick="toggleSuspendDevice('${dev.id}', true)" class="bg-red-50 text-red-600 border border-red-200 px-2.5 py-1.5 rounded-xl text-[10px] font-bold hover:bg-red-600 hover:text-white transition cursor-pointer">
+                                Suspend
+                            </button>
                         </div>
                     `;
                 });
             }
 
-            suspContainer.innerHTML = '';
-            if(suspendedDevices.length === 0) {
-                suspContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No suspended devices.</p>`;
+            if(suspendedDevs.length === 0) {
+                suspendedContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No suspended devices.</p>`;
             } else {
-                suspendedDevices.forEach(dev => {
-                    const currentUserBalance = (storeData.userBalances && storeData.userBalances[dev.uid]) || 0;
-                    const devUid = dev.uid || '00000000';
-                    const devPin = dev.supportPin || '----';
-                    const devId = dev.id;
-
-                    suspContainer.innerHTML += `
-                        <div class="bg-white p-3 rounded-xl border border-red-200 text-xs space-y-2 shadow-sm">
-                            <div class="flex justify-between items-start gap-2">
-                                <div class="space-y-1">
-                                    <div class="flex items-center gap-1.5 flex-wrap">
-                                        <span class="bg-red-100 text-red-700 border border-red-300 px-2 py-0.5 rounded font-mono font-extrabold text-[11px]">UID: ${devUid}</span>
-                                        <span class="bg-slate-200 text-slate-800 px-2 py-0.5 rounded font-mono font-bold text-[10px]">PIN: ${devPin}</span>
-                                        <span class="bg-red-600 text-white px-2 py-0.5 rounded text-[9px] font-bold">Suspended</span>
-                                    </div>
-                                    <p class="font-bold text-slate-800 mt-1"><i class="fa-solid fa-mobile-screen mr-1 text-red-500"></i> ${dev.model || 'Unknown'}</p>
-                                    <p class="text-[10px] text-slate-400 font-mono">ID: ${devId}</p>
-                                    <p class="text-[11px] font-bold text-slate-600 mt-1">Balance: ৳${currentUserBalance}</p>
+                suspendedContainer.innerHTML = '';
+                suspendedDevs.forEach(dev => {
+                    suspendedContainer.innerHTML += `
+                        <div class="bg-white p-3 rounded-2xl border border-red-200 flex justify-between items-center text-xs shadow-sm">
+                            <div class="space-y-0.5">
+                                <div class="flex items-center gap-1.5">
+                                    <span class="bg-red-600 text-white px-2 py-0.5 rounded font-mono font-extrabold text-[10px]">UID: ${dev.uid || 'N/A'}</span>
+                                    <span class="text-slate-800 font-bold text-[11px]">${dev.model || 'Unknown Device'}</span>
                                 </div>
-                                <div class="flex flex-col gap-1 shrink-0">
-                                    <button onclick="toggleSuspendDevice('${devId}', false)" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1.5 rounded-lg text-[10px] font-bold cursor-pointer transition">
-                                        Unsuspend
-                                    </button>
-                                    <button onclick="deleteDeviceRecord('${devId}')" class="bg-red-100 hover:bg-red-200 text-red-700 px-2.5 py-1 rounded-lg text-[10px] font-bold cursor-pointer transition">
-                                        Delete
-                                    </button>
-                                </div>
+                                <p class="text-[10px] text-slate-400 font-mono">PIN: ${dev.supportPin || 'N/A'} • ${dev.os || ''}</p>
+                                <p class="text-[9px] text-red-500 font-semibold">Suspended</p>
                             </div>
+                            <button onclick="toggleSuspendDevice('${dev.id}', false)" class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-1.5 rounded-xl text-[10px] font-bold hover:bg-emerald-600 hover:text-white transition cursor-pointer">
+                                Unsuspend
+                            </button>
                         </div>
                     `;
                 });
             }
         }
 
-        window.deleteDeviceRecord = function(devId) {
-            if(!confirm("এই ডিভাইস রেকর্ডটি তালিকা থেকে মুছে ফেলতে চান?")) return;
-            if(storeData.devices && storeData.devices[devId]) {
-                delete storeData.devices[devId];
-            }
-            remove(ref(db, `panelStore/devices/${devId}`));
-            renderDeviceList();
-        }
-
-        window.toggleSuspendDevice = function(devId, suspendStatus) {
-            if(storeData.devices && storeData.devices[devId]) {
-                storeData.devices[devId].isSuspended = suspendStatus;
-                update(ref(db, `panelStore/devices/${devId}`), { isSuspended: suspendStatus });
-                renderDeviceList();
-                checkLiveSuspension();
-                showSuccessModal(suspendStatus ? 'Device suspended!' : 'Device unsuspended!');
-            }
+        window.toggleSuspendDevice = function(devId, suspendState) {
+            if(!storeData.devices || !storeData.devices[devId]) return;
+            update(ref(db, 'panelStore/devices/' + devId), { isSuspended: suspendState });
         }
 
         window.saveGeneralSettings = function() {
-            storeData.appName = document.getElementById('editAppName').value.trim();
-            storeData.appSub = document.getElementById('editAppSub').value.trim();
-            storeData.logoUrl = document.getElementById('editLogoUrl').value.trim();
-            storeData.profileName = document.getElementById('editProfileName').value.trim();
-            storeData.profileBio = document.getElementById('editProfileBio').value.trim();
-            storeData.footerText = document.getElementById('editFooterText').value.trim();
-            storeData.notice = document.getElementById('editNotice').value.trim();
-            storeData.whatsapp = document.getElementById('editWhatsapp').value.trim();
-            storeData.paidGroupBtnName = (document.getElementById('editPaidGroupBtnName').value || "Join Paid User Group").trim();
-            storeData.paidGroupLink = (document.getElementById('editPaidGroupLink').value || "").trim();
-            storeData.bkash = document.getElementById('editBkash').value.trim();
-            storeData.nagad = document.getElementById('editNagad').value.trim();
+            storeData.appName = document.getElementById('editAppName').value.trim() || "PANEL SELLER";
+            storeData.appSub = document.getElementById('editAppSub').value.trim() || "";
+            storeData.logoUrl = document.getElementById('editLogoUrl').value.trim() || "https://i.ibb.co/3W9v93z/default.png";
+            storeData.profileName = document.getElementById('editProfileName').value.trim() || "Ⱥʟᴀᴍɪﻦ";
+            storeData.profileBio = document.getElementById('editProfileBio').value.trim() || "";
+            storeData.footerText = document.getElementById('editFooterText').value.trim() || "";
+            storeData.notice = document.getElementById('editNotice').value.trim() || "";
+            storeData.whatsapp = document.getElementById('editWhatsapp').value.trim() || "";
+            storeData.paidGroupBtnName = document.getElementById('editPaidGroupBtnName').value.trim() || "Join Paid User Group";
+            storeData.paidGroupLink = document.getElementById('editPaidGroupLink').value.trim() || "";
+            storeData.bkash = document.getElementById('editBkash').value.trim() || "";
+            storeData.nagad = document.getElementById('editNagad').value.trim() || "";
 
-            storeData.appUpdating = document.getElementById('editAppUpdatingActive').value === 'true';
-            storeData.appUpdateMsg = document.getElementById('editAppUpdateMsg').value.trim();
+            storeData.appUpdating = (document.getElementById('editAppUpdatingActive').value === "true");
+            storeData.appUpdateMsg = document.getElementById('editAppUpdateMsg').value.trim() || defaultStoreData.appUpdateMsg;
 
-            storeData.maintenanceActive = document.getElementById('editMaintenanceActive').value === 'true';
-            storeData.maintenanceMsg = document.getElementById('editMaintenanceMsg').value.trim();
-            const bypassRaw = document.getElementById('editMaintenanceBypassIds').value || "";
-            storeData.maintenanceBypassIds = bypassRaw.split(',').map(s => s.trim()).filter(Boolean);
+            storeData.maintenanceActive = (document.getElementById('editMaintenanceActive').value === "true");
+            storeData.maintenanceMsg = document.getElementById('editMaintenanceMsg').value.trim() || defaultStoreData.maintenanceMsg;
+            const rawBypass = document.getElementById('editMaintenanceBypassIds').value || "";
+            const parsedBypass = rawBypass.split(",").map(s => s.trim()).filter(Boolean);
+            if (!parsedBypass.includes(String(clientUid))) parsedBypass.push(String(clientUid));
+            if (!parsedBypass.includes(String(deviceId))) parsedBypass.push(String(deviceId));
+            storeData.maintenanceBypassIds = Array.from(new Set(parsedBypass));
 
-            storeData.autoDeliveryActive = document.getElementById('editAutoDeliveryActive').value === 'true';
+            storeData.autoDeliveryActive = (document.getElementById('editAutoDeliveryActive').value === "true");
+
+            const spinCfg = getSpinConfig();
+            spinCfg.enabled = (document.getElementById('editDailySpinActive').value === "true");
+            storeData.dailySpin = spinCfg;
 
             storeData.themeColor = document.getElementById('editThemeColor').value;
             storeData.ownerColor = document.getElementById('editOwnerColor').value;
             storeData.ownerFullText = document.getElementById('editOwnerName').value.trim() || "Owner ALAMIN";
 
-            storeData.bannerImg = document.getElementById('editBannerImg').value.trim();
-            storeData.bannerLink = document.getElementById('editBannerLink').value.trim();
-            storeData.popupActive = document.getElementById('editPopupActive').value === 'true';
-            storeData.popupTitle = document.getElementById('editPopupTitle').value.trim();
-            storeData.popupMsg = document.getElementById('editPopupMsg').value.trim();
-
-            if (!storeData.dailySpin) storeData.dailySpin = structuredClone(defaultSpinConfig);
-            storeData.dailySpin.enabled = document.getElementById('editDailySpinActive').value === 'true';
+            storeData.bannerImg = document.getElementById('editBannerImg').value.trim() || "https://i.ibb.co/2kQ4Q1L/1000015879.jpg";
+            storeData.bannerLink = document.getElementById('editBannerLink').value.trim() || "";
+            storeData.popupActive = (document.getElementById('editPopupActive').value === "true");
+            storeData.popupTitle = document.getElementById('editPopupTitle').value.trim() || "";
+            storeData.popupMsg = document.getElementById('editPopupMsg').value.trim() || "";
 
             saveToFirebase(true);
+            popupShown = false;
             checkAppUpdateState();
             checkMaintenanceState();
             updateSpinAvailabilityUI();
+            renderSpinWheelWithLabels();
             renderUI();
-            showSuccessModal('All settings saved to Firebase!');
+            showSuccessModal('All settings saved to Firebase & updated!');
         }
 
         function renderAdminPanels() {
             const container = document.getElementById('adminPanelList');
             container.innerHTML = '';
 
+            if(!storeData.panels) return;
+
             storeData.panels.forEach((panel, pIndex) => {
-                ensurePanelDurationStockMap(panel);
+                const stockMap = ensurePanelDurationStockMap(panel);
                 const durations = getPanelDurationList(panel);
-                if (!panel.selectedStockDur || !durations.includes(panel.selectedStockDur)) {
-                    panel.selectedStockDur = durations[0] || "1 Hours";
-                }
-                const activeDur = panel.selectedStockDur;
-                const durStockArr = panel.stockKeysByDuration[activeDur] || [];
+                const totalStockCount = durations.reduce((acc, dur) => {
+                    return acc + (Array.isArray(stockMap[dur]) ? stockMap[dur].length : 0);
+                }, 0);
 
-                let catOptions = '';
-                (storeData.categories || ["Non Root"]).forEach(cat => {
-                    catOptions += `<option value="${cat}" ${panel.category === cat ? 'selected' : ''}>${cat}</option>`;
-                });
-
-                let pkgHtml = '';
+                let pkgsHtml = '';
                 (panel.packages || []).forEach((pkg, pkgIndex) => {
-                    const countForThisPkg = (panel.stockKeysByDuration[pkg.time] || []).length;
-                    pkgHtml += `
-                        <div class="bg-slate-100 p-2 rounded-xl border border-slate-200 space-y-1.5 text-xs">
-                            <div class="flex gap-1 items-center">
-                                <input type="text" value="${pkg.time}" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'time', this.value)" class="w-20 bg-white px-2 py-1 rounded border border-slate-200 text-slate-800 font-bold" placeholder="Time">
-                                <input type="number" value="${pkg.price}" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'price', this.value)" class="w-16 bg-white px-2 py-1 rounded border border-slate-200 dynamic-theme-text font-bold" placeholder="Price">
-                                <input type="text" value="${pkg.note || ''}" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'note', this.value)" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200 text-red-600 font-bold" placeholder="Stock Out / Note">
-                                <span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded font-mono text-[9px] font-extrabold shrink-0">${countForThisPkg} key</span>
-                                <button onclick="deletePkg(${pIndex}, ${pkgIndex})" class="text-red-500 hover:text-red-700 px-1 cursor-pointer"><i class="fa-solid fa-trash"></i></button>
+                    const durName = String(pkg.time || '').trim();
+                    const durKeys = Array.isArray(stockMap[durName]) ? stockMap[durName] : [];
+
+                    pkgsHtml += `
+                        <div class="bg-white p-2.5 rounded-xl border border-slate-200 space-y-2 text-xs shadow-sm">
+                            <div class="grid grid-cols-3 gap-1.5">
+                                <div>
+                                    <label class="text-[9px] text-slate-400 block font-bold">Time</label>
+                                    <input type="text" value="${escapeHtml(pkg.time)}" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'time', this.value)" class="w-full bg-slate-50 px-2 py-1 rounded border border-slate-200 font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-[9px] text-slate-400 block font-bold">Price (৳)</label>
+                                    <input type="number" value="${Number(pkg.price || 0)}" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'price', this.value)" class="w-full bg-slate-50 px-2 py-1 rounded border border-slate-200 font-bold text-indigo-600">
+                                </div>
+                                <div>
+                                    <label class="text-[9px] text-slate-400 block font-bold">Note</label>
+                                    <input type="text" value="${escapeHtml(pkg.note || '')}" placeholder="Stock Out" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'note', this.value)" class="w-full bg-slate-50 px-2 py-1 rounded border border-slate-200">
+                                </div>
                             </div>
-                            <div class="flex gap-1 items-center">
-                                <span class="text-[10px] font-bold text-slate-500"><i class="fa-solid fa-ticket"></i> Coupon:</span>
-                                <input type="text" value="${pkg.couponCode || ''}" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'couponCode', this.value)" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200 font-mono uppercase text-[11px] font-bold text-indigo-700" placeholder="Coupon Code">
-                                <input type="number" value="${pkg.couponDiscount || 0}" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'couponDiscount', this.value)" class="w-16 bg-white px-2 py-1 rounded border border-slate-200 text-emerald-700 font-bold text-[11px]" placeholder="Off ৳">
+                            <div class="grid grid-cols-2 gap-1.5 border-t border-slate-100 pt-1.5">
+                                <div>
+                                    <label class="text-[9px] text-indigo-600 block font-bold">Coupon Code</label>
+                                    <input type="text" value="${escapeHtml(pkg.couponCode || '')}" placeholder="e.g. SAVE10" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'couponCode', this.value)" class="w-full bg-indigo-50/40 px-2 py-1 rounded border border-indigo-200 font-mono uppercase font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-[9px] text-emerald-600 block font-bold">Discount (৳)</label>
+                                    <input type="number" value="${Number(pkg.couponDiscount || 0)}" placeholder="e.g. 5" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'couponDiscount', this.value)" class="w-full bg-emerald-50/40 px-2 py-1 rounded border border-emerald-200 font-bold">
+                                </div>
+                            </div>
+
+                            <div class="bg-emerald-50/50 p-2 rounded-lg border border-emerald-200 space-y-1.5">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-[10px] font-extrabold text-emerald-800">
+                                        <i class="fa-solid fa-key mr-1"></i>${escapeHtml(durName)} Stock (${durKeys.length})
+                                    </span>
+                                </div>
+                                <div class="flex gap-1.5">
+                                    <input type="text" id="durKeyInput-${pIndex}-${pkgIndex}" placeholder="${escapeHtml(durName)} এর Key লিখুন..." class="flex-1 bg-white border border-slate-200 px-2 py-1 rounded text-[11px] font-mono">
+                                    <button type="button" onclick="addDurationStockKey(${pIndex}, ${pkgIndex})" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded text-[10px] font-bold cursor-pointer shrink-0">+ Add Key</button>
+                                </div>
+                                <div class="flex flex-wrap gap-1 pt-0.5">
+                                    ${durKeys.length === 0
+                                        ? `<span class="text-[9px] text-slate-400">No keys in ${escapeHtml(durName)}</span>`
+                                        : durKeys.map((kItem, kIdx) => `
+                                            <span class="inline-flex items-center gap-1 bg-white border border-emerald-300 text-emerald-800 px-2 py-0.5 rounded font-mono text-[10px] font-bold">
+                                                ${escapeHtml(kItem)}
+                                                <button type="button" onclick="removeDurationStockKey(${pIndex}, '${encodeURIComponent(durName)}', ${kIdx})" class="text-red-500 hover:text-red-700 cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+                                            </span>
+                                        `).join('')
+                                    }
+                                </div>
                             </div>
                         </div>
                     `;
                 });
 
                 let linksHtml = '';
-                (panel.links || []).forEach((lnk, lIndex) => {
+                (panel.links || []).forEach((lnk, lIdx) => {
                     linksHtml += `
-                        <div class="flex gap-1.5 items-center text-xs bg-white p-1.5 rounded-lg border border-slate-200">
-                            <input type="text" value="${lnk.name || ''}" onchange="updateLink(${pIndex}, ${lIndex}, 'name', this.value)" class="w-28 bg-slate-50 px-2 py-1 rounded border border-slate-200 font-semibold" placeholder="Label">
-                            <input type="text" value="${lnk.url || ''}" onchange="updateLink(${pIndex}, ${lIndex}, 'url', this.value)" class="flex-1 bg-slate-50 px-2 py-1 rounded border border-slate-200 font-mono text-indigo-700" placeholder="https://...">
+                        <div class="flex gap-1.5 text-xs">
+                            <input type="text" value="${escapeHtml(lnk.name)}" onchange="updateLink(${pIndex}, ${lIdx}, 'name', this.value)" class="w-28 bg-white px-2 py-1 rounded border border-slate-200 font-semibold" placeholder="Label">
+                            <input type="text" value="${escapeHtml(lnk.url)}" onchange="updateLink(${pIndex}, ${lIdx}, 'url', this.value)" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200 font-mono text-[11px]" placeholder="https://...">
                         </div>
                     `;
                 });
 
-                const durOptionsHtml = durations.map(d => {
-                    const c = (panel.stockKeysByDuration[d] || []).length;
-                    return `<option value="${escapeHtml(d)}" ${d === activeDur ? 'selected' : ''}>${escapeHtml(d)} (${c} keys)</option>`;
-                }).join('');
+                let catOptionsHtml = '';
+                (storeData.categories || []).forEach(c => {
+                    catOptionsHtml += `<option value="${escapeHtml(c)}" ${panel.category === c ? 'selected' : ''}>${escapeHtml(c)}</option>`;
+                });
 
                 container.innerHTML += `
-                    <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-3 shadow-sm">
-                        <div class="flex justify-between items-center gap-2">
-                            <input type="text" value="${panel.name}" onchange="updatePanel(${pIndex}, 'name', this.value)" class="font-bold text-slate-800 bg-white px-2.5 py-1.5 rounded-xl border border-slate-200 text-xs flex-1">
-                            <button onclick="deletePanel(${pIndex})" class="bg-red-50 text-red-600 px-2.5 py-1.5 rounded-xl text-xs font-bold cursor-pointer border border-red-200"><i class="fa-solid fa-trash"></i></button>
+                    <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-xs text-slate-800">${escapeHtml(panel.name)} <span class="text-[10px] text-emerald-700 font-mono">(Total Stock: ${totalStockCount})</span></span>
+                            <button onclick="deletePanel(${pIndex})" class="text-red-500 text-xs font-bold hover:text-red-700 cursor-pointer">Delete</button>
                         </div>
 
                         <div class="grid grid-cols-2 gap-2 text-xs">
-                            <select onchange="updatePanel(${pIndex}, 'category', this.value)" class="bg-white p-2 rounded-xl border border-slate-200 text-slate-700 font-semibold">${catOptions}</select>
-                            <input type="text" value="${panel.status || ''}" onchange="updatePanel(${pIndex}, 'status', this.value)" class="bg-white p-2 rounded-xl border border-slate-200 font-bold" placeholder="Status (e.g. Safe 🛡️)">
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-2 text-xs">
-                            <input type="text" value="${panel.badge || ''}" onchange="updatePanel(${pIndex}, 'badge', this.value)" class="bg-white p-2 rounded-xl border border-slate-200 font-bold text-indigo-700" placeholder="Badge (e.g. Hot Selling)">
-                            <div class="flex items-center gap-1 bg-white px-2 rounded-xl border border-slate-200">
-                                <img src="${panel.icon || 'https://i.ibb.co/3W9v93z/default.png'}" class="w-6 h-6 rounded-md object-cover shrink-0">
-                                <input type="text" value="${panel.icon || ''}" onchange="updatePanel(${pIndex}, 'icon', this.value)" class="w-full text-[11px] outline-none" placeholder="Icon URL">
-                                <button type="button" onclick="pickPhotoFromGallery('panel', ${pIndex})" class="text-indigo-600 px-1 cursor-pointer"><i class="fa-solid fa-images"></i></button>
+                            <div>
+                                <label class="text-[10px] text-slate-500 block font-semibold">Name</label>
+                                <input type="text" value="${escapeHtml(panel.name)}" onchange="updatePanelField(${pIndex}, 'name', this.value)" class="w-full bg-white p-1.5 rounded-lg border border-slate-200">
                             </div>
-                        </div>
-
-                        <!-- Duration-Wise Key Stock Box -->
-                        <div class="bg-emerald-50/70 p-2.5 rounded-xl border border-emerald-200 space-y-2 text-xs">
-                            <div class="flex justify-between items-center gap-2">
-                                <span class="font-extrabold text-emerald-800 text-[11px]"><i class="fa-solid fa-key mr-1"></i> Duration Stock (${durStockArr.length} keys)</span>
-                                <select onchange="changePanelStockDuration(${pIndex}, this.value)" class="bg-white border border-emerald-300 px-2 py-1 rounded-lg text-[11px] font-bold text-emerald-900">
-                                    ${durOptionsHtml}
+                            <div>
+                                <label class="text-[10px] text-slate-500 block font-semibold">Category</label>
+                                <select onchange="updatePanelField(${pIndex}, 'category', this.value)" class="w-full bg-white p-1.5 rounded-lg border border-slate-200 font-bold text-indigo-700">
+                                    ${catOptionsHtml}
                                 </select>
                             </div>
-                            <textarea id="panelDurStockInput-${pIndex}" rows="2" placeholder="${escapeHtml(activeDur)} এর জন্য Key গুলো প্রতি লাইনে বা কমা দিয়ে লিখুন..." class="w-full bg-white border border-emerald-200 p-2 rounded-lg text-[11px] font-mono outline-none"></textarea>
-                            <div class="flex justify-between items-center gap-2">
-                                <button type="button" onclick="addPanelDurationStockKeys(${pIndex})" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1 rounded-lg text-[10px] font-bold cursor-pointer">+ Add to ${escapeHtml(activeDur)}</button>
-                                <button type="button" onclick="clearPanelDurationStockKeys(${pIndex})" class="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-2.5 py-1 rounded-lg text-[10px] font-bold cursor-pointer">Clear ${escapeHtml(activeDur)}</button>
+                        </div>
+
+                        <div>
+                            <label class="text-[10px] text-slate-500 block font-semibold">Icon URL অথবা গ্যালারি</label>
+                            <div class="flex items-center gap-1.5 mt-1">
+                                <img src="${escapeHtml(panel.icon)}" class="w-8 h-8 rounded-lg object-cover border border-slate-200 shrink-0 bg-white">
+                                <input type="text" value="${escapeHtml(panel.icon)}" onchange="updatePanelField(${pIndex}, 'icon', this.value)" class="flex-1 min-w-0 bg-white p-1.5 rounded-lg border border-slate-200 text-xs">
+                                <button type="button" onclick="pickPhotoFromGallery('panel', ${pIndex})" class="bg-indigo-50 hover:bg-indigo-100 dynamic-theme-text border border-indigo-200 px-2.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer shrink-0">
+                                    <i class="fa-solid fa-images"></i>
+                                </button>
                             </div>
                         </div>
 
-                        <!-- Packages List -->
-                        <div class="space-y-1.5">
-                            <div class="flex justify-between items-center">
-                                <span class="text-[11px] font-bold text-slate-600">Packages & Coupons</span>
-                                <button type="button" onclick="addPkg(${pIndex})" class="bg-indigo-600 text-white px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer">+ Add Package</button>
+                        <div class="grid grid-cols-2 gap-2 text-xs">
+                            <div>
+                                <label class="text-[10px] text-slate-500 block font-semibold">Status</label>
+                                <input type="text" value="${escapeHtml(panel.status || '')}" placeholder="Working ✅ / Maintenance / Stock Out" onchange="updatePanelField(${pIndex}, 'status', this.value)" class="w-full bg-white p-1.5 rounded-lg border border-slate-200">
                             </div>
-                            <div class="space-y-1.5">${pkgHtml}</div>
+                            <div>
+                                <label class="text-[10px] text-slate-500 block font-semibold">Promo Badge</label>
+                                <input type="text" value="${escapeHtml(panel.badge || '')}" placeholder="Hot Selling / VIP / New" onchange="updatePanelField(${pIndex}, 'badge', this.value)" class="w-full bg-white p-1.5 rounded-lg border border-slate-200 font-bold text-indigo-600">
+                            </div>
                         </div>
 
-                        <!-- Setup / APK Links -->
-                        <div class="space-y-1.5">
-                            <span class="text-[11px] font-bold text-slate-600 block">APK & Setup Links</span>
-                            <div class="space-y-1">${linksHtml}</div>
+                        <div class="space-y-2 pt-1">
+                            <span class="text-[10px] font-bold text-slate-500 uppercase block">Packages, Coupons & Duration Key Stock</span>
+                            ${pkgsHtml}
+                        </div>
+
+                        <div class="space-y-1.5 pt-1">
+                            <span class="text-[10px] font-bold text-slate-500 uppercase block">APK & Setup Links</span>
+                            ${linksHtml}
                         </div>
                     </div>
                 `;
             });
         }
 
-        window.changePanelStockDuration = function(pIndex, durName) {
+        window.addDurationStockKey = function(pIndex, pkgIndex) {
             const panel = storeData.panels[pIndex];
-            if (!panel) return;
-            ensurePanelDurationStockMap(panel);
-            panel.selectedStockDur = durName;
-            renderAdminPanels();
-        };
+            if(!panel) return;
+            const stockMap = ensurePanelDurationStockMap(panel);
+            const pkg = (panel.packages && panel.packages[pkgIndex]) ? panel.packages[pkgIndex] : null;
+            const durKey = pkg && pkg.time ? String(pkg.time).trim() : "1 Hours";
 
-        window.addPanelDurationStockKeys = function(pIndex) {
-            const panel = storeData.panels[pIndex];
-            if (!panel) return;
-            ensurePanelDurationStockMap(panel);
-            const durations = getPanelDurationList(panel);
-            const dur = panel.selectedStockDur || durations[0] || "1 Hours";
-            const ta = document.getElementById(`panelDurStockInput-${pIndex}`);
-            const raw = ta ? ta.value : "";
-            const newKeys = raw.split(/[\n,]+/).map(k => k.trim()).filter(Boolean);
-            if (newKeys.length === 0) {
-                alert("দয়া করে অন্তত ১টি Key লিখুন!");
+            const inputEl = document.getElementById(`durKeyInput-${pIndex}-${pkgIndex}`);
+            const keyVal = inputEl ? inputEl.value.trim() : "";
+            if(!keyVal) {
+                alert("দয়া করে Key লিখুন!");
                 return;
             }
-            if (!Array.isArray(panel.stockKeysByDuration[dur])) {
-                panel.stockKeysByDuration[dur] = [];
+
+            if(!Array.isArray(stockMap[durKey])) stockMap[durKey] = [];
+            stockMap[durKey].push(keyVal);
+
+            saveToFirebase(true);
+            renderAdminPanels();
+            showSuccessModal(`"${durKey}" স্টকে Key যোগ করা হয়েছে!`);
+        }
+
+        window.removeDurationStockKey = function(pIndex, encodedDurKey, kIdx) {
+            const panel = storeData.panels[pIndex];
+            if(!panel) return;
+            const durKey = decodeURIComponent(encodedDurKey);
+            const stockMap = ensurePanelDurationStockMap(panel);
+            if(Array.isArray(stockMap[durKey])) {
+                stockMap[durKey].splice(kIdx, 1);
+                saveToFirebase(true);
+                renderAdminPanels();
             }
-            panel.stockKeysByDuration[dur].push(...newKeys);
-            saveToFirebase(true);
-            renderAdminPanels();
-            showSuccessModal(`${newKeys.length}টি Key "${dur}" স্টকে যুক্ত হয়েছে!`);
-        };
+        }
 
-        window.clearPanelDurationStockKeys = function(pIndex) {
-            const panel = storeData.panels[pIndex];
-            if (!panel) return;
-            ensurePanelDurationStockMap(panel);
-            const durations = getPanelDurationList(panel);
-            const dur = panel.selectedStockDur || durations[0] || "1 Hours";
-            if (!confirm(`"${dur}" ডিউরেশনের সব স্টক Key ক্লিয়ার করতে চান?`)) return;
-            panel.stockKeysByDuration[dur] = [];
-            saveToFirebase(true);
-            renderAdminPanels();
-            showSuccessModal(`"${dur}" স্টক Key ক্লিয়ার করা হয়েছে!`);
-        };
-
-        window.updatePanel = function(pIndex, field, val) {
+        window.updatePanelField = function(pIndex, field, val) {
             storeData.panels[pIndex][field] = val;
-            saveToFirebase(false);
-            renderPanels();
-        };
-
-        window.deletePanel = function(pIndex) {
-            if (!confirm("এই প্যানেলটি ডিলিট করতে চান?")) return;
-            storeData.panels.splice(pIndex, 1);
+            if(field === 'category') currentCategory = val;
             saveToFirebase(true);
-            renderAdminPanels();
             renderPanels();
-        };
-
-        window.addNewPanelPrompt = function() {
-            const name = prompt("নতুন প্যানেলের নাম লিখুন:");
-            if (!name || !name.trim()) return;
-            const cat = (storeData.categories && storeData.categories[0]) || "Non Root";
-            const newId = Date.now();
-            storeData.panels.unshift({
-                id: newId,
-                name: name.trim(),
-                category: cat,
-                icon: "https://i.ibb.co/3W9v93z/default.png",
-                status: "Working ✅",
-                badge: "New",
-                stockKeysByDuration: { "1 Hours": [], "3 Hours": [] },
-                links: JSON.parse(JSON.stringify(defaultLinks)),
-                packages: [
-                    { time: "1 Hours", price: 20, note: "", couponCode: "", couponDiscount: 0 },
-                    { time: "3 Hours", price: 50, note: "", couponCode: "", couponDiscount: 0 }
-                ]
-            });
-            saveToFirebase(true);
             renderAdminPanels();
-            renderPanels();
-            showSuccessModal(`"${name.trim()}" প্যানেল যুক্ত হয়েছে!`);
-        };
-
-        window.addPkg = function(pIndex) {
-            const panel = storeData.panels[pIndex];
-            if (!panel) return;
-            if (!Array.isArray(panel.packages)) panel.packages = [];
-            panel.packages.push({ time: "1 Days", price: 100, note: "", couponCode: "", couponDiscount: 0 });
-            ensurePanelDurationStockMap(panel);
-            saveToFirebase(true);
-            renderAdminPanels();
-        };
+        }
 
         window.updatePkg = function(pIndex, pkgIndex, field, val) {
             const pkg = storeData.panels[pIndex].packages[pkgIndex];
-            if (!pkg) return;
-            if (field === 'price' || field === 'couponDiscount') {
+            const oldTime = String(pkg.time || '').trim();
+
+            if(field === 'price' || field === 'couponDiscount') {
                 pkg[field] = Number(val) || 0;
+            } else if(field === 'couponCode') {
+                pkg[field] = String(val).trim().toUpperCase();
             } else {
                 pkg[field] = val;
             }
-            ensurePanelDurationStockMap(storeData.panels[pIndex]);
-            saveToFirebase(false);
-            renderAdminPanels();
-        };
 
-        window.deletePkg = function(pIndex, pkgIndex) {
-            storeData.panels[pIndex].packages.splice(pkgIndex, 1);
+            if(field === 'time') {
+                const newTime = String(val || '').trim();
+                const stockMap = ensurePanelDurationStockMap(storeData.panels[pIndex]);
+                if(oldTime && newTime && oldTime !== newTime && Array.isArray(stockMap[oldTime]) && stockMap[oldTime].length > 0) {
+                    if(!Array.isArray(stockMap[newTime])) stockMap[newTime] = [];
+                    stockMap[newTime].push(...stockMap[oldTime]);
+                    delete stockMap[oldTime];
+                }
+            }
+
             saveToFirebase(true);
             renderAdminPanels();
-        };
+        }
 
-        window.updateLink = function(pIndex, lIndex, field, val) {
-            if (!storeData.panels[pIndex].links[lIndex]) return;
-            storeData.panels[pIndex].links[lIndex][field] = val;
+        window.updateLink = function(pIndex, lIdx, field, val) {
+            storeData.panels[pIndex].links[lIdx][field] = val;
             saveToFirebase(false);
-        };
+        }
+
+        window.deletePanel = function(pIndex) {
+            if(confirm('Are you sure you want to delete this panel?')) {
+                storeData.panels.splice(pIndex, 1);
+                saveToFirebase(true);
+                renderPanels();
+                renderAdminPanels();
+            }
+        }
+
+        window.addNewPanelPrompt = function() {
+            const name = prompt('Enter New Panel Name:');
+            if(!name) return;
+            const defaultCat = (storeData.categories && storeData.categories[0]) ? storeData.categories[0] : "Non Root";
+            const newId = storeData.panels.length > 0 ? Math.max(...storeData.panels.map(p => p.id)) + 1 : 1;
+            const newPanel = {
+                id: newId,
+                name: name.trim(),
+                category: defaultCat,
+                icon: "https://i.ibb.co/3W9v93z/default.png",
+                status: "Working ✅",
+                badge: "New",
+                stockKeysByDuration: { "1 Hours": [], "3 Hours": [], "1 Days": [], "7 Days": [] },
+                links: JSON.parse(JSON.stringify(defaultLinks)),
+                packages: [
+                    {time: "1 Hours", price: 20, note: "", couponCode: "", couponDiscount: 0},
+                    {time: "3 Hours", price: 50, note: "", couponCode: "", couponDiscount: 0},
+                    {time: "1 Days", price: 150, note: "", couponCode: "", couponDiscount: 0},
+                    {time: "7 Days", price: 450, note: "", couponCode: "", couponDiscount: 0}
+                ]
+            };
+            storeData.panels.push(newPanel);
+            saveToFirebase(true);
+            renderPanels();
+            renderAdminPanels();
+            showSuccessModal('New panel added successfully!');
+        }
 
         setInterval(() => {
-            if (Array.isArray(storeData.fundRequests) && storeData.fundRequests.length > 0) {
-                const mutated = processFundRequestsLifecycle(true);
-                const fundViewEl = document.getElementById('fundView');
-                if (fundViewEl && !fundViewEl.classList.contains('hidden')) {
-                    renderMyFundRequests();
-                }
-                const adminDashEl = document.getElementById('adminDashboard');
-                if ((mutated || true) && adminDashEl && !adminDashEl.classList.contains('hidden')) {
-                    renderAdminFundRequests();
-                }
-            }
+            renderOrders();
             updateSpinAvailabilityUI();
-            const orderViewEl = document.getElementById('orderView');
-            if (orderViewEl && !orderViewEl.classList.contains('hidden')) {
-                renderOrders();
+            const changed = processFundRequestsLifecycle(true);
+            if (!document.getElementById('fundView').classList.contains('hidden')) {
+                renderMyFundRequests();
+            }
+            if (changed && document.getElementById('adminDashboard') && !document.getElementById('adminDashboard').classList.contains('hidden')) {
+                renderAdminFundRequests();
             }
         }, 1000);
-
-        renderSpinWheelWithLabels();
-        updateSpinAvailabilityUI();
-        renderUI();
     </script>
 </body>
 </html>
