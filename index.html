@@ -205,7 +205,7 @@
 
     <input type="file" id="galleryPhotoInput" accept="image/*" class="hidden">
 
-    <!-- Payment Error Toast (e.g. Transaction ID সঠিক নয়।) -->
+    <!-- Payment Error Toast -->
     <div id="paymentErrorToast" class="fixed top-4 right-4 left-4 max-w-sm mx-auto bg-rose-600 text-white px-4 py-3 rounded-2xl shadow-2xl border border-rose-400 z-[10005] hidden flex items-center justify-between gap-3 popup-modal-content">
         <div class="flex items-center gap-2.5 text-xs font-extrabold">
             <span class="w-5 h-5 rounded-full bg-white text-rose-600 flex items-center justify-center font-black shrink-0">!</span>
@@ -308,7 +308,7 @@
                 </div>
             </div>
 
-            <!-- ADD FUND VIEW (Video + Screenshot Inspired Flow) -->
+            <!-- ADD FUND VIEW -->
             <div id="fundView" class="view-section p-4 space-y-4 hidden">
                 <!-- Top Sub-Tabs: Add Money & Deposit History -->
                 <div class="bg-white p-1.5 rounded-2xl border border-slate-200 grid grid-cols-2 gap-1.5 shadow-sm">
@@ -349,7 +349,7 @@
                         </div>
                     </div>
 
-                    <!-- Payment Gateway Selector (Like Video) -->
+                    <!-- Payment Gateway Selector -->
                     <div class="space-y-2">
                         <label class="text-xs font-bold text-slate-700 block">Payment Method</label>
 
@@ -359,11 +359,11 @@
                                     BD
                                 </div>
                                 <div>
-                                    <h4 class="text-xs font-extrabold text-slate-900">YOURPAY / BD GATEWAY</h4>
-                                    <p class="text-[10px] text-slate-500 font-semibold">bKash • নগদ • রকেট • উপায়</p>
+                                    <h4 class="text-xs font-extrabold text-slate-900">MANUAL / BD WALLET</h4>
+                                    <p id="fundEnabledChannelsHint" class="text-[10px] text-slate-500 font-semibold">bKash • নগদ • রকেট • উপায়</p>
                                 </div>
                             </div>
-                            <span class="bg-emerald-100 text-emerald-700 text-[10px] font-extrabold px-2 py-0.5 rounded-full">Instant</span>
+                            <span class="bg-amber-100 text-amber-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full">Admin Verify</span>
                         </div>
 
                         <div onclick="selectFundGateway('manual_wa')" id="gwCard-manual_wa" class="p-3 rounded-2xl border border-slate-200 bg-slate-50/60 flex items-center justify-between cursor-pointer transition">
@@ -608,7 +608,7 @@
         </div>
     </div>
 
-    <!-- GATEWAY METHOD SELECTOR MODAL (bKash / নগদ / রকেট / উপায় - Like Video) -->
+    <!-- GATEWAY METHOD SELECTOR MODAL (Dynamic Active Channels from Admin) -->
     <div id="gatewayMethodModal" class="fixed inset-0 bg-slate-950/75 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
         <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-3xl p-5 space-y-4 shadow-2xl border border-slate-200 popup-modal-content">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
@@ -622,49 +622,13 @@
             </div>
 
             <div>
-                <p class="text-[11px] font-extrabold text-slate-500 uppercase mb-2">Mobile Banking</p>
-                <div class="grid grid-cols-2 gap-3">
-                    <!-- bKash -->
-                    <button type="button" onclick="openChannelCheckout('bkash')" class="p-3.5 rounded-2xl border-2 border-pink-200 hover:border-pink-500 bg-pink-50/40 text-left space-y-1.5 cursor-pointer transition">
-                        <div class="flex justify-between items-center">
-                            <span class="font-black text-sm text-[#e2136e]">bKash</span>
-                            <span class="bg-pink-600 text-white text-[9px] font-extrabold px-2 py-0.5 rounded-full">PAYMENT</span>
-                        </div>
-                        <p class="text-[10px] text-slate-600 font-semibold">bKash App / *247#</p>
-                    </button>
-
-                    <!-- Nagad -->
-                    <button type="button" onclick="openChannelCheckout('nagad')" class="p-3.5 rounded-2xl border-2 border-orange-200 hover:border-orange-500 bg-orange-50/40 text-left space-y-1.5 cursor-pointer transition">
-                        <div class="flex justify-between items-center">
-                            <span class="font-black text-sm text-[#f36f21]">নগদ</span>
-                            <span class="bg-orange-600 text-white text-[9px] font-extrabold px-2 py-0.5 rounded-full">SEND MONEY</span>
-                        </div>
-                        <p class="text-[10px] text-slate-600 font-semibold">Nagad App / *167#</p>
-                    </button>
-
-                    <!-- Rocket -->
-                    <button type="button" onclick="openChannelCheckout('rocket')" class="p-3.5 rounded-2xl border-2 border-purple-200 hover:border-purple-500 bg-purple-50/40 text-left space-y-1.5 cursor-pointer transition">
-                        <div class="flex justify-between items-center">
-                            <span class="font-black text-sm text-purple-700">রকেট</span>
-                            <span class="bg-purple-600 text-white text-[9px] font-extrabold px-2 py-0.5 rounded-full">SEND MONEY</span>
-                        </div>
-                        <p class="text-[10px] text-slate-600 font-semibold">Rocket App / *322#</p>
-                    </button>
-
-                    <!-- Upay -->
-                    <button type="button" onclick="openChannelCheckout('upay')" class="p-3.5 rounded-2xl border-2 border-sky-200 hover:border-sky-500 bg-sky-50/40 text-left space-y-1.5 cursor-pointer transition">
-                        <div class="flex justify-between items-center">
-                            <span class="font-black text-sm text-sky-700">উপায়</span>
-                            <span class="bg-sky-600 text-white text-[9px] font-extrabold px-2 py-0.5 rounded-full">SEND MONEY</span>
-                        </div>
-                        <p class="text-[10px] text-slate-600 font-semibold">Upay App / *268#</p>
-                    </button>
-                </div>
+                <p class="text-[11px] font-extrabold text-slate-500 uppercase mb-2">Available Mobile Banking</p>
+                <div id="dynamicPaymentChannelsGrid" class="grid grid-cols-2 gap-3"></div>
             </div>
         </div>
     </div>
 
-    <!-- CHANNEL CHECKOUT MODAL (Screenshot 1000017138.png Inspired) -->
+    <!-- CHANNEL CHECKOUT MODAL -->
     <div id="channelCheckoutModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 overflow-y-auto">
         <div class="w-full max-w-sm rounded-3xl overflow-hidden shadow-2xl popup-modal-content bg-white my-auto">
             <!-- Top Brand Bar -->
@@ -673,7 +637,7 @@
                     <img id="checkoutStoreLogo" src="https://i.ibb.co/3W9v93z/default.png" class="w-7 h-7 rounded-full object-cover bg-white border border-white/50">
                     <div>
                         <p id="checkoutChannelTitle" class="font-black text-sm tracking-wide">bKash</p>
-                        <p id="checkoutChannelSub" class="text-[10px] text-white/85 font-semibold">Payment Checkout</p>
+                        <p id="checkoutChannelSub" class="text-[10px] text-white/85 font-semibold">Manual Payment Verification</p>
                     </div>
                 </div>
                 <button type="button" onclick="closeChannelCheckoutModal()" class="text-white/85 hover:text-white p-1 cursor-pointer">
@@ -694,7 +658,7 @@
                     </div>
                 </div>
 
-                <!-- Action Icon Grid (Like Screenshot) -->
+                <!-- Action Icon Grid -->
                 <div class="bg-white text-slate-800 rounded-2xl p-3 grid grid-cols-4 gap-2 text-center shadow">
                     <div class="p-1.5 rounded-xl opacity-60">
                         <i class="fa-solid fa-paper-plane text-base text-pink-600"></i>
@@ -716,8 +680,8 @@
 
                 <!-- Receiver Number & Amount Copy Rows -->
                 <div class="bg-black/15 rounded-2xl p-3 space-y-2.5 text-xs">
-                    <p id="checkoutStepLine1" class="text-[11px] font-semibold">• bKash অ্যাপে যান অথবা *247# ডায়াল করুন।</p>
-                    <p id="checkoutStepLine2" class="text-[11px] font-semibold">• "Payment" অপশন সিলেক্ট করুন।</p>
+                    <p id="checkoutStepLine1" class="text-[11px] font-semibold">• অ্যাপে যান অথবা USSD কোড ডায়াল করুন।</p>
+                    <p id="checkoutStepLine2" class="text-[11px] font-semibold">• নিচের নম্বরে টাকা পাঠিয়ে Transaction ID বসান।</p>
 
                     <div class="flex items-center justify-between bg-black/20 px-3 py-2 rounded-xl">
                         <span class="font-bold text-[11px]">প্রাপক নম্বরঃ <strong id="checkoutReceiverNumber" class="font-mono text-sm">01700000000</strong></span>
@@ -733,10 +697,10 @@
                         </button>
                     </div>
 
-                    <p class="text-[11px] font-semibold">• পিন দিয়ে পেমেন্ট সম্পন্ন করে Transaction ID উপরে বসান।</p>
+                    <p class="text-[11px] font-semibold">• সাবমিট করলে রিকোয়েস্ট অ্যাডমিনের কাছে যাবে ও যাচাই করে ব্যালেন্স যুক্ত হবে।</p>
                 </div>
 
-                <!-- Verify Payment Button -->
+                <!-- Verify / Submit Payment Button -->
                 <button type="button" id="verifyPaymentSubmitBtn" onclick="verifyAndSubmitChannelPayment()" class="w-full bg-white text-slate-900 hover:bg-slate-100 font-black py-3 rounded-2xl text-xs transition shadow-lg cursor-pointer flex items-center justify-center gap-2">
                     <i class="fa-regular fa-circle-check"></i>
                     <span>VERIFY PAYMENT</span>
@@ -1012,6 +976,41 @@
                 <button type="button" onclick="closeAdminDashboard()" class="text-slate-600 text-xs bg-white border border-slate-200 px-3 py-1.5 rounded-xl font-semibold cursor-pointer">Close</button>
             </div>
 
+            <!-- FUND REQUESTS APPROVAL & FILTER SECTION (Top Priority for Manual Verification) -->
+            <div class="bg-white p-4 rounded-2xl border-2 border-emerald-500 space-y-3 shadow-md">
+                <div class="flex justify-between items-center">
+                    <h4 class="text-xs font-extrabold text-emerald-700 uppercase"><i class="fa-solid fa-money-check-dollar mr-1"></i> Fund Requests Approval (Manual)</h4>
+                    <span id="pendingFundCount" class="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-emerald-200">0 Pending</span>
+                </div>
+                <p class="text-[10px] text-slate-500">অটো পেমেন্ট না থাকায় ইউজারের TrxID রিকোয়েস্ট এখানে আসবে। স্টেটমেন্ট মিলিয়ে Approve চাপলে ব্যালেন্স যোগ হবে।</p>
+                <div class="flex items-center justify-between gap-2">
+                    <select id="adminFundFilterSelect" onchange="renderAdminFundRequests()" class="bg-slate-50 border border-slate-200 px-2.5 py-1.5 rounded-xl text-[11px] font-bold text-slate-700">
+                        <option value="Pending">Pending Only</option>
+                        <option value="Approved">Approved</option>
+                        <option value="Rejected">Rejected</option>
+                        <option value="Expired">Expired</option>
+                        <option value="All">All Requests</option>
+                    </select>
+                    <button type="button" onclick="clearProcessedFundRequests()" class="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-2.5 py-1.5 rounded-xl text-[10px] font-bold cursor-pointer">
+                        Clear Non-Pending
+                    </button>
+                </div>
+                <div id="adminFundRequestsList" class="space-y-2 max-h-64 overflow-y-auto">
+                    <p class="text-xs text-slate-400 text-center py-4">No pending fund requests.</p>
+                </div>
+            </div>
+
+            <!-- PAYMENT CHANNELS MANAGER (bKash / নগদ / রকেট / উপায় - ON/OFF & Custom Number) -->
+            <div class="bg-white p-4 rounded-2xl border-2 border-pink-400 space-y-3 shadow-md">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h4 class="text-xs font-extrabold text-pink-700 uppercase"><i class="fa-solid fa-mobile-screen-button mr-1"></i> Payment Channels (bKash / নগদ / রকেট / উপায়)</h4>
+                        <p class="text-[10px] text-slate-500">যেকোনো চ্যানেল ON/OFF করুন এবং নিজের নম্বর ও নির্দেশনা সেট করুন</p>
+                    </div>
+                </div>
+                <div id="adminPaymentChannelsList" class="space-y-2.5"></div>
+            </div>
+
             <!-- AI LIVE CHAT SYSTEM CONTROL BOX -->
             <div class="bg-white p-4 rounded-2xl border-2 border-indigo-500 space-y-3 shadow-md">
                 <div class="flex justify-between items-center gap-2">
@@ -1277,29 +1276,6 @@
                 </div>
             </div>
 
-            <!-- Fund Requests Approval & Filter Section -->
-            <div class="bg-white p-4 rounded-2xl border border-indigo-200 space-y-3 shadow-sm">
-                <div class="flex justify-between items-center">
-                    <h4 class="text-xs font-bold dynamic-theme-text uppercase">Fund Requests Management</h4>
-                    <span id="pendingFundCount" class="bg-indigo-50 dynamic-theme-text text-[10px] font-bold px-2 py-0.5 rounded-full">0 Pending</span>
-                </div>
-                <div class="flex items-center justify-between gap-2">
-                    <select id="adminFundFilterSelect" onchange="renderAdminFundRequests()" class="bg-slate-50 border border-slate-200 px-2.5 py-1.5 rounded-xl text-[11px] font-bold text-slate-700">
-                        <option value="Pending">Pending Only</option>
-                        <option value="Approved">Approved</option>
-                        <option value="Rejected">Rejected</option>
-                        <option value="Expired">Expired</option>
-                        <option value="All">All Requests</option>
-                    </select>
-                    <button type="button" onclick="clearProcessedFundRequests()" class="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-2.5 py-1.5 rounded-xl text-[10px] font-bold cursor-pointer">
-                        Clear Non-Pending
-                    </button>
-                </div>
-                <div id="adminFundRequestsList" class="space-y-2 max-h-56 overflow-y-auto">
-                    <p class="text-xs text-slate-400 text-center py-4">No pending fund requests.</p>
-                </div>
-            </div>
-
             <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-3 shadow-sm">
                 <h4 class="text-xs font-bold text-slate-400 uppercase">App Identity & Profile Settings</h4>
                 <div>
@@ -1360,11 +1336,11 @@
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="text-xs text-slate-600 font-medium">Bkash Number</label>
+                        <label class="text-xs text-slate-600 font-medium">Bkash Number (Quick Sync)</label>
                         <input type="text" id="editBkash" class="w-full bg-slate-50 border border-slate-200 p-2 rounded-xl text-xs mt-1 text-slate-800">
                     </div>
                     <div>
-                        <label class="text-xs text-slate-600 font-medium">Nagad Number</label>
+                        <label class="text-xs text-slate-600 font-medium">Nagad Number (Quick Sync)</label>
                         <input type="text" id="editNagad" class="w-full bg-slate-50 border border-slate-200 p-2 rounded-xl text-xs mt-1 text-slate-800">
                     </div>
                 </div>
@@ -1425,8 +1401,137 @@
         </div>
     </div>
 
-    <!-- Global Admin Modal, Quick Chips & Payment Gateway Flow -->
+    <!-- Global Payment Flow & Admin Helper Script -->
     <script>
+        const DEFAULT_PAYMENT_CHANNELS = [
+            {
+                id: 'bkash',
+                name: 'bKash',
+                enabled: true,
+                number: '01700000000',
+                badge: 'PAYMENT',
+                actionLabel: 'পেমেন্ট',
+                subText: 'Manual Payment Verification',
+                step1: '• bKash অ্যাপে যান অথবা *247# ডায়াল করুন।',
+                step2: '• নিচের নম্বরে টাকা পাঠিয়ে Transaction ID বসান।',
+                themeBg: '#e2136e',
+                textClass: 'text-[#e2136e]',
+                borderClass: 'border-pink-200 hover:border-pink-500 bg-pink-50/40',
+                pillClass: 'bg-pink-600 text-white'
+            },
+            {
+                id: 'nagad',
+                name: 'নগদ',
+                enabled: true,
+                number: '01800000000',
+                badge: 'SEND MONEY',
+                actionLabel: 'সেন্ড মানি',
+                subText: 'Manual Send Money Verification',
+                step1: '• নগদ অ্যাপে যান অথবা *167# ডায়াল করুন।',
+                step2: '• "Send Money" অপশন দিয়ে নিচের নম্বরে টাকা পাঠান।',
+                themeBg: '#f36f21',
+                textClass: 'text-[#f36f21]',
+                borderClass: 'border-orange-200 hover:border-orange-500 bg-orange-50/40',
+                pillClass: 'bg-orange-600 text-white'
+            },
+            {
+                id: 'rocket',
+                name: 'রকেট',
+                enabled: true,
+                number: '01700000000',
+                badge: 'SEND MONEY',
+                actionLabel: 'সেন্ড মানি',
+                subText: 'Manual Rocket Verification',
+                step1: '• রকেট অ্যাপে যান অথবা *322# ডায়াল করুন।',
+                step2: '• নিচের নম্বরে টাকা পাঠিয়ে Transaction ID বসান।',
+                themeBg: '#6d28d9',
+                textClass: 'text-purple-700',
+                borderClass: 'border-purple-200 hover:border-purple-500 bg-purple-50/40',
+                pillClass: 'bg-purple-600 text-white'
+            },
+            {
+                id: 'upay',
+                name: 'উপায়',
+                enabled: false,
+                number: '01800000000',
+                badge: 'SEND MONEY',
+                actionLabel: 'সেন্ড মানি',
+                subText: 'Manual Upay Verification',
+                step1: '• উপায় অ্যাপে যান অথবা *268# ডায়াল করুন।',
+                step2: '• নিচের নম্বরে টাকা পাঠিয়ে Transaction ID বসান।',
+                themeBg: '#0369a1',
+                textClass: 'text-sky-700',
+                borderClass: 'border-sky-200 hover:border-sky-500 bg-sky-50/40',
+                pillClass: 'bg-sky-600 text-white'
+            }
+        ];
+
+        window.getNormalizedPaymentChannels = function() {
+            const storeObj = window.__storeDataRef || {};
+            const raw = Array.isArray(storeObj.paymentChannels) && storeObj.paymentChannels.length > 0
+                ? storeObj.paymentChannels
+                : DEFAULT_PAYMENT_CHANNELS;
+
+            return DEFAULT_PAYMENT_CHANNELS.map(defCh => {
+                const found = raw.find(c => c && c.id === defCh.id) || {};
+                let fallbackNum = defCh.number;
+                if (defCh.id === 'bkash' && storeObj.bkash) fallbackNum = storeObj.bkash;
+                if (defCh.id === 'nagad' && storeObj.nagad) fallbackNum = storeObj.nagad;
+
+                return {
+                    ...defCh,
+                    ...found,
+                    name: (found.name && String(found.name).trim()) ? String(found.name).trim() : defCh.name,
+                    number: (found.number !== undefined && String(found.number).trim() !== '') ? String(found.number).trim() : fallbackNum,
+                    badge: (found.badge && String(found.badge).trim()) ? String(found.badge).trim() : defCh.badge,
+                    actionLabel: (found.actionLabel && String(found.actionLabel).trim()) ? String(found.actionLabel).trim() : defCh.actionLabel,
+                    step1: (found.step1 && String(found.step1).trim()) ? String(found.step1).trim() : defCh.step1,
+                    step2: (found.step2 && String(found.step2).trim()) ? String(found.step2).trim() : defCh.step2,
+                    enabled: found.enabled === undefined ? defCh.enabled : (found.enabled === true || found.enabled === 'true')
+                };
+            });
+        };
+
+        window.renderDynamicPaymentChannelsUI = function() {
+            const channels = window.getNormalizedPaymentChannels();
+            const enabledList = channels.filter(c => c.enabled);
+
+            const hintEl = document.getElementById('fundEnabledChannelsHint');
+            if (hintEl) {
+                hintEl.innerText = enabledList.length > 0
+                    ? enabledList.map(c => c.name).join(' • ')
+                    : 'কোনো চ্যানেল চালু নেই';
+            }
+
+            const gridEl = document.getElementById('dynamicPaymentChannelsGrid');
+            if (gridEl) {
+                if (enabledList.length === 0) {
+                    gridEl.innerHTML = `<p class="col-span-2 text-xs text-rose-600 font-bold text-center py-4 bg-rose-50 rounded-2xl border border-rose-200">বর্তমানে কোনো মোবাইল ব্যাংকিং চ্যানেল সক্রিয় নেই।</p>`;
+                } else {
+                    gridEl.innerHTML = '';
+                    enabledList.forEach(ch => {
+                        gridEl.innerHTML += `
+                            <button type="button" onclick="openChannelCheckout('${ch.id}')" class="p-3.5 rounded-2xl border-2 ${ch.borderClass} text-left space-y-1.5 cursor-pointer transition">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-black text-sm ${ch.textClass}">${escapeBasicHtml(ch.name)}</span>
+                                    <span class="${ch.pillClass} text-[9px] font-extrabold px-2 py-0.5 rounded-full">${escapeBasicHtml(ch.badge)}</span>
+                                </div>
+                                <p class="text-[10px] text-slate-700 font-mono font-bold truncate">${escapeBasicHtml(ch.number)}</p>
+                            </button>
+                        `;
+                    });
+                }
+            }
+        };
+
+        function escapeBasicHtml(str) {
+            return String(str || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
         (function() {
             let profileTapCount = 0;
             let profileTapTimer = null;
@@ -1461,38 +1566,6 @@
 
                 profileTapCount = 0;
                 window.openAdminModal();
-            };
-
-            window.verifyAdminFallback = async function() {
-                const pinInput = document.getElementById('adminPinInput');
-                const pin = (pinInput ? pinInput.value : '').trim();
-                if (!pin) {
-                    alert('PIN লিখুন!');
-                    return false;
-                }
-                const msgBuffer = new TextEncoder().encode(pin);
-                const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-                const hashHex = Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
-
-                const defaultAdminHash = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
-                const storedHash = (window.__currentAdminHash || defaultAdminHash);
-
-                if (hashHex === storedHash || hashHex === defaultAdminHash) {
-                    window.__adminUnlockedSession = true;
-                    if (pinInput) pinInput.value = '';
-                    window.closeAdminModal();
-                    const updModal = document.getElementById('appUpdateModal');
-                    const mntModal = document.getElementById('maintenanceModal');
-                    const suspModal = document.getElementById('suspendedModal');
-                    if (updModal) updModal.classList.add('hidden');
-                    if (mntModal) mntModal.classList.add('hidden');
-                    if (suspModal) suspModal.classList.add('hidden');
-
-                    const dash = document.getElementById('adminDashboard');
-                    if (dash) dash.classList.remove('hidden');
-                    return true;
-                }
-                return false;
             };
         })();
 
@@ -1569,6 +1642,7 @@
                 return;
             }
 
+            window.renderDynamicPaymentChannelsUI();
             const labelEl = document.getElementById('gatewayModalAmountLabel');
             if (labelEl) labelEl.innerText = `Amount: ৳${amt.toFixed(2)}`;
             document.getElementById('gatewayMethodModal').classList.remove('hidden');
@@ -1581,15 +1655,20 @@
         let activeCheckoutChannel = 'bkash';
         let activeCheckoutAmount = 100;
 
-        window.openChannelCheckout = function(channel) {
-            activeCheckoutChannel = channel;
+        window.openChannelCheckout = function(channelId) {
+            activeCheckoutChannel = channelId;
             activeCheckoutAmount = Number(document.getElementById('addAmountInput').value || 100);
             window.closeGatewayMethodModal();
 
+            const allChannels = window.getNormalizedPaymentChannels();
+            const ch = allChannels.find(item => item.id === channelId) || allChannels[0];
+            if (!ch || !ch.enabled) {
+                window.showPaymentErrorToast('এই পেমেন্ট মেথডটি বর্তমানে বন্ধ আছে।');
+                return;
+            }
+
             const storeDataRef = window.__storeDataRef || {};
             const logoSrc = storeDataRef.logoUrl || "https://i.ibb.co/3W9v93z/default.png";
-            const bkashNum = storeDataRef.bkash || "01700000000";
-            const nagadNum = storeDataRef.nagad || "01800000000";
 
             const topHeader = document.getElementById('checkoutTopHeader');
             const bodyBox = document.getElementById('checkoutBodyBox');
@@ -1609,55 +1688,21 @@
             if (trxInp) trxInp.value = '';
             if (amtEl) amtEl.innerText = `৳${activeCheckoutAmount.toFixed(2)}`;
 
-            if (channel === 'nagad') {
-                topHeader.className = "px-4 py-3 flex items-center justify-between text-white bg-[#f36f21]";
-                bodyBox.className = "p-4 space-y-3.5 text-white bg-[#f36f21]";
-                titleEl.innerText = "নগদ";
-                subEl.innerText = "Nagad Personal Checkout";
-                step1.innerText = "• নগদ অ্যাপে যান অথবা *167# ডায়াল করুন।";
-                step2.innerText = "• 'Send Money' অপশন সিলেক্ট করুন।";
-                recvEl.innerText = nagadNum;
-                actionTag.innerText = "সেন্ড মানি";
-                actionGridLabel.innerText = "সেন্ড মানি";
-                actionGridLabel.className = "text-[9px] font-extrabold text-orange-700";
-                highlightBox.className = "p-1.5 rounded-xl border-2 border-orange-600 bg-orange-50 relative";
-            } else if (channel === 'rocket') {
-                topHeader.className = "px-4 py-3 flex items-center justify-between text-white bg-purple-700";
-                bodyBox.className = "p-4 space-y-3.5 text-white bg-purple-700";
-                titleEl.innerText = "রকেট";
-                subEl.innerText = "Rocket Personal Checkout";
-                step1.innerText = "• রকেট অ্যাপে যান অথবা *322# ডায়াল করুন।";
-                step2.innerText = "• 'Send Money' অপশন সিলেক্ট করুন।";
-                recvEl.innerText = bkashNum;
-                actionTag.innerText = "সেন্ড মানি";
-                actionGridLabel.innerText = "সেন্ড মানি";
-                actionGridLabel.className = "text-[9px] font-extrabold text-purple-700";
-                highlightBox.className = "p-1.5 rounded-xl border-2 border-purple-600 bg-purple-50 relative";
-            } else if (channel === 'upay') {
-                topHeader.className = "px-4 py-3 flex items-center justify-between text-white bg-sky-700";
-                bodyBox.className = "p-4 space-y-3.5 text-white bg-sky-700";
-                titleEl.innerText = "উপায়";
-                subEl.innerText = "Upay Personal Checkout";
-                step1.innerText = "• উপায় অ্যাপে যান অথবা *268# ডায়াল করুন।";
-                step2.innerText = "• 'Send Money' অপশন সিলেক্ট করুন।";
-                recvEl.innerText = nagadNum;
-                actionTag.innerText = "সেন্ড মানি";
-                actionGridLabel.innerText = "সেন্ড মানি";
-                actionGridLabel.className = "text-[9px] font-extrabold text-sky-700";
-                highlightBox.className = "p-1.5 rounded-xl border-2 border-sky-600 bg-sky-50 relative";
-            } else {
-                topHeader.className = "px-4 py-3 flex items-center justify-between text-white bg-[#e2136e]";
-                bodyBox.className = "p-4 space-y-3.5 text-white bg-[#e2136e]";
-                titleEl.innerText = "bKash";
-                subEl.innerText = "bKash Payment Checkout";
-                step1.innerText = "• bKash অ্যাপে যান অথবা *247# ডায়াল করুন।";
-                step2.innerText = "• 'Payment' অপশন সিলেক্ট করুন।";
-                recvEl.innerText = bkashNum;
-                actionTag.innerText = "পেমেন্ট";
-                actionGridLabel.innerText = "পেমেন্ট";
-                actionGridLabel.className = "text-[9px] font-extrabold text-pink-700";
-                highlightBox.className = "p-1.5 rounded-xl border-2 border-pink-600 bg-pink-50 relative";
-            }
+            const bgHex = ch.themeBg || '#e2136e';
+            topHeader.style.backgroundColor = bgHex;
+            bodyBox.style.backgroundColor = bgHex;
+            topHeader.className = "px-4 py-3 flex items-center justify-between text-white";
+            bodyBox.className = "p-4 space-y-3.5 text-white";
+
+            titleEl.innerText = ch.name;
+            subEl.innerText = ch.subText || `${ch.name} Manual Verification`;
+            step1.innerText = ch.step1;
+            step2.innerText = ch.step2;
+            recvEl.innerText = ch.number;
+            actionTag.innerText = ch.actionLabel || ch.badge;
+            actionGridLabel.innerText = ch.actionLabel || ch.badge;
+            actionGridLabel.className = `text-[9px] font-extrabold ${ch.textClass || 'text-pink-700'}`;
+            highlightBox.className = "p-1.5 rounded-xl border-2 border-slate-800 bg-slate-50 relative";
 
             document.getElementById('channelCheckoutModal').classList.remove('hidden');
             setTimeout(() => {
@@ -1697,20 +1742,18 @@
             const trxInp = document.getElementById('checkoutTrxInput');
             const rawTrx = (trxInp ? trxInp.value : '').trim().toUpperCase();
 
-            // Basic TrxID format validation ("Transaction ID সঠিক নয়।")
-            const isValidFormat = /^[A-Z0-9]{6,16}$/.test(rawTrx);
+            // Accept standard 5-20 alphanumeric transaction IDs without blocking valid ones
+            const isValidFormat = /^[A-Z0-9_-]{5,20}$/.test(rawTrx);
             if (!rawTrx || !isValidFormat) {
-                window.showPaymentErrorToast('Transaction ID সঠিক নয়।');
+                window.showPaymentErrorToast('Transaction ID সঠিক নয়। (কমপক্ষে ৫ অক্ষরের সঠিক কোড দিন)');
                 return;
             }
 
-            const mainTrxEl = document.getElementById('addTrxInput');
-            if (mainTrxEl) {
-                mainTrxEl.value = `${activeCheckoutChannel.toUpperCase()}-${rawTrx}`;
-            }
+            const fullTrxWithMethod = `${activeCheckoutChannel.toUpperCase()}-${rawTrx}`;
+            window.__submittedTrxId = fullTrxWithMethod;
 
             if (typeof window.submitAddFundRequest === 'function') {
-                window.submitAddFundRequest();
+                window.submitAddFundRequest(fullTrxWithMethod);
                 window.closeChannelCheckoutModal();
             }
         };
@@ -1818,6 +1861,7 @@
             paidGroupLink: "",
             bkash: "01700000000",
             nagad: "01800000000",
+            paymentChannels: structuredClone(DEFAULT_PAYMENT_CHANNELS),
             bannerImg: "https://i.ibb.co/2kQ4Q1L/1000015879.jpg",
             bannerLink: "https://youtube.com",
             aiChatEnabled: true,
@@ -1958,6 +2002,74 @@
         window.__currentAdminHash = defaultStoreData.adminHash;
         window.__adminUnlockedSession = false;
 
+        // ==================== ADMIN PAYMENT CHANNELS MANAGER ====================
+        function renderAdminPaymentChannels() {
+            const container = document.getElementById('adminPaymentChannelsList');
+            if (!container) return;
+
+            const channels = window.getNormalizedPaymentChannels();
+            storeData.paymentChannels = channels;
+            window.__storeDataRef = storeData;
+
+            container.innerHTML = '';
+            channels.forEach((ch, idx) => {
+                container.innerHTML += `
+                    <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-2 text-xs">
+                        <div class="flex justify-between items-center gap-2">
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full inline-block" style="background:${ch.themeBg || '#e2136e'}"></span>
+                                <input type="text" value="${escapeHtml(ch.name)}" onchange="updatePaymentChannelField(${idx}, 'name', this.value)" class="w-24 bg-white px-2 py-1 rounded-lg border border-slate-200 font-black text-slate-800" placeholder="Name">
+                                <input type="text" value="${escapeHtml(ch.badge || '')}" onchange="updatePaymentChannelField(${idx}, 'badge', this.value)" class="w-24 bg-white px-2 py-1 rounded-lg border border-slate-200 font-bold text-[10px] uppercase" placeholder="PAYMENT">
+                            </div>
+                            <select onchange="updatePaymentChannelField(${idx}, 'enabled', this.value === 'true')" class="px-2.5 py-1 rounded-lg text-[11px] font-extrabold border ${ch.enabled ? 'bg-emerald-100 text-emerald-800 border-emerald-300' : 'bg-rose-100 text-rose-700 border-rose-300'} cursor-pointer">
+                                <option value="true" ${ch.enabled ? 'selected' : ''}>ON</option>
+                                <option value="false" ${!ch.enabled ? 'selected' : ''}>OFF</option>
+                            </select>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-1.5">
+                            <div>
+                                <label class="text-[9px] font-bold text-slate-500 block">Receiver Number</label>
+                                <input type="text" value="${escapeHtml(ch.number)}" onchange="updatePaymentChannelField(${idx}, 'number', this.value)" class="w-full bg-white px-2.5 py-1.5 rounded-lg border border-slate-200 font-mono font-bold text-slate-900" placeholder="017XXXXXXXX">
+                            </div>
+                            <div>
+                                <label class="text-[9px] font-bold text-slate-500 block">Action Label</label>
+                                <input type="text" value="${escapeHtml(ch.actionLabel || '')}" onchange="updatePaymentChannelField(${idx}, 'actionLabel', this.value)" class="w-full bg-white px-2.5 py-1.5 rounded-lg border border-slate-200 font-bold text-slate-800" placeholder="পেমেন্ট / সেন্ড মানি">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="text-[9px] font-bold text-slate-500 block">Instruction Line</label>
+                            <input type="text" value="${escapeHtml(ch.step1 || '')}" onchange="updatePaymentChannelField(${idx}, 'step1', this.value)" class="w-full bg-white px-2.5 py-1.5 rounded-lg border border-slate-200 text-[11px] text-slate-700" placeholder="নির্দেশনা লিখুন...">
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        window.updatePaymentChannelField = function(idx, field, val) {
+            const channels = window.getNormalizedPaymentChannels();
+            if (!channels[idx]) return;
+            channels[idx][field] = val;
+
+            if (channels[idx].id === 'bkash' && field === 'number') {
+                storeData.bkash = val;
+                const bInp = document.getElementById('editBkash');
+                if (bInp) bInp.value = val;
+            }
+            if (channels[idx].id === 'nagad' && field === 'number') {
+                storeData.nagad = val;
+                const nInp = document.getElementById('editNagad');
+                if (nInp) nInp.value = val;
+            }
+
+            storeData.paymentChannels = channels;
+            window.__storeDataRef = storeData;
+            saveToFirebase(true);
+            window.renderDynamicPaymentChannelsUI();
+            renderAdminPaymentChannels();
+        };
+
         // ==================== HYBRID AI LIVE CHAT ENGINE ====================
         function buildStoreContextSummary() {
             const panelsSummary = (storeData.panels || []).map(p => {
@@ -1975,7 +2087,7 @@
 Store Name: ${storeData.appName || 'Panel Seller'}
 Owner: ${storeData.ownerFullText || 'Alamin'}
 Bkash: ${storeData.bkash || '01700000000'}, Nagad: ${storeData.nagad || '01800000000'}
-Add Fund Rules: Min ৳10, Max ৳50,000, Send Money to Bkash/Nagad, submit TrxID, approved within 5 minutes.
+Add Fund Rules: Min ৳10, Max ৳50,000, Send Money/Payment to active channel, submit TrxID, approved manually by Admin after verification.
 Auto Key Delivery: ${(storeData.autoDeliveryActive === true || storeData.autoDeliveryActive === 'true') ? 'ON' : 'OFF (Admin delivers keys)'}
 VIP Tiers: Standard (0%), Silver VIP (5% off at ৳300 spent), Gold VIP (10% off at ৳1000 spent).
 Daily Spin: 1 free spin every 24 hours.
@@ -2009,7 +2121,7 @@ Current User Info:
             }
 
             if (/(কিভাবে.*টাকা|add fund|টাকা অ্যাড|বিকাশ|bkash|নগদ|nagad|পেমেন্ট|payment|trxid)/i.test(q)) {
-                return `💳 **Add Fund করার নিয়ম:**\n1. নিচের **Add Fund** ট্যাবে যান।\n2. **Bkash:** \`${storeData.bkash || '01700000000'}\` অথবা **Nagad:** \`${storeData.nagad || '01800000000'}\` নম্বরে সেন্ড মানি/পেমেন্ট করুন।\n3. অ্যামাউন্ট ও **TrxID** দিয়ে ভেরিফাই সাবমিট করুন। অ্যাডমিন চেক করে ব্যালেন্স অ্যাড করে দেবেন।`;
+                return `💳 **Add Fund করার নিয়ম:**\n1. নিচের **Add Fund** ট্যাবে যান।\n2. সক্রিয় পেমেন্ট মাধ্যম সিলেক্ট করে নির্ধারিত নম্বরে টাকা পাঠান।\n3. অ্যামাউন্ট ও **TrxID** দিয়ে ভেরিফাই সাবমিট করুন। রিকোয়েস্ট অ্যাডমিনের কাছে যাবে এবং যাচাই করে ব্যালেন্স অ্যাড করে দেবেন।`;
             }
 
             if (/(অর্ডার|order|key|কি পাইনি|কখন পাব|delivery)/i.test(q)) {
@@ -3302,6 +3414,7 @@ Current User Info:
             }
             
             if(document.getElementById('adminDashboard') && !document.getElementById('adminDashboard').classList.contains('hidden')) {
+                renderAdminPaymentChannels();
                 renderAdminSpinSettings();
                 renderAdminLiveChats();
                 renderAdminCategories();
@@ -3486,6 +3599,10 @@ Current User Info:
 
             document.getElementById('bkashNum').innerText = storeData.bkash || "";
             document.getElementById('nagadNum').innerText = storeData.nagad || "";
+
+            if (typeof window.renderDynamicPaymentChannelsUI === 'function') {
+                window.renderDynamicPaymentChannelsUI();
+            }
 
             renderCategories();
             renderPanels();
@@ -3750,6 +3867,9 @@ Current User Info:
                 renderSpinHistory();
             } else if(tab === 'fund') {
                 document.getElementById('fundView').classList.remove('hidden');
+                if (typeof window.renderDynamicPaymentChannelsUI === 'function') {
+                    window.renderDynamicPaymentChannelsUI();
+                }
                 window.switchFundSubTab('add');
                 startFundTimer();
                 processFundRequestsLifecycle(false);
@@ -4053,231 +4173,196 @@ Current User Info:
             document.querySelectorAll('[id^="pkg-"]').forEach((el, i) => {
                 if(i === index) {
                     el.style.borderColor = storeData.themeColor || '#4f46e5';
-                    el.style.background = 'linear-gradient(145deg, #ffffff, #e0e7ff)';
-                    el.style.boxShadow = '0 15px 30px -5px rgba(79, 70, 229, 0.25), inset 0 2px 6px rgba(255, 255, 255, 1)';
-                    el.style.transform = 'perspective(1000px) translateY(-4px) translateZ(10px) scale(1.02)';
+                    el.style.backgroundColor = '#eef2ff';
                 } else {
                     el.style.borderColor = '#e2e8f0';
-                    el.style.background = 'linear-gradient(145deg, #ffffff, #f8fafc)';
-                    el.style.boxShadow = '0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04), inset 0 2px 4px rgba(255, 255, 255, 0.9)';
-                    el.style.transform = 'perspective(1000px) translateY(0) translateZ(0) scale(1)';
+                    el.style.backgroundColor = '';
                 }
             });
         }
 
+        function updateWalletPayButtonLabel() {
+            const labelEl = document.getElementById('walletPayBtnText');
+            if(!labelEl) return;
+            if(!selectedPackage) {
+                labelEl.innerText = `WALLET PAY (৳0)`;
+                return;
+            }
+            const finalPrice = getFinalPackagePrice();
+            labelEl.innerText = `WALLET PAY (৳${finalPrice})`;
+        }
+
         window.selectPaymentMethod = function(mode) {
             activePaymentMode = mode;
-            const cardWallet = document.getElementById('payCard-wallet');
-            const cardInstant = document.getElementById('payCard-instant');
+            const walletCard = document.getElementById('payCard-wallet');
+            const instantCard = document.getElementById('payCard-instant');
             const instantDetails = document.getElementById('instantPayDetails');
             const actionBtn = document.getElementById('checkoutActionBtn');
 
             if(mode === 'wallet') {
-                cardWallet.className = "pkg-card p-3 rounded-2xl flex flex-col justify-between cursor-pointer border-2 border-red-500 relative overflow-hidden";
-                cardInstant.className = "pkg-card p-3 rounded-2xl flex flex-col justify-between cursor-pointer border border-slate-200";
+                walletCard.className = "pkg-card p-3 rounded-2xl flex flex-col justify-between cursor-pointer border-2 border-red-500 relative overflow-hidden";
+                instantCard.className = "pkg-card p-3 rounded-2xl flex flex-col justify-between cursor-pointer border border-slate-200";
                 instantDetails.classList.add('hidden');
-                
-                actionBtn.className = "w-full dynamic-theme-bg hover:opacity-95 text-white font-bold py-3 rounded-xl transition shadow-lg flex items-center justify-center gap-2 mt-2 cursor-pointer transform hover:scale-[1.01]";
                 actionBtn.innerHTML = `<i class="fa-solid fa-wallet text-lg"></i> Pay from Wallet & Order`;
             } else {
-                cardInstant.className = "pkg-card p-3 rounded-2xl flex flex-col justify-between cursor-pointer border-2 border-red-500 relative overflow-hidden";
-                cardWallet.className = "pkg-card p-3 rounded-2xl flex flex-col justify-between cursor-pointer border border-slate-200";
+                instantCard.className = "pkg-card p-3 rounded-2xl flex flex-col justify-between cursor-pointer border-2 border-indigo-600 relative overflow-hidden";
+                walletCard.className = "pkg-card p-3 rounded-2xl flex flex-col justify-between cursor-pointer border border-slate-200";
                 instantDetails.classList.remove('hidden');
-
-                actionBtn.className = "w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition shadow-lg flex items-center justify-center gap-2 mt-2 cursor-pointer transform hover:scale-[1.01]";
-                actionBtn.innerHTML = `<i class="fa-brands fa-whatsapp text-lg"></i> WhatsApp এ অর্ডার কনফার্ম করুন`;
+                actionBtn.innerHTML = `<i class="fa-solid fa-paper-plane text-lg"></i> Confirm Instant Order`;
             }
         }
 
-        function updateWalletPayButtonLabel() {
-            if(selectedPackage) {
-                const finalPrice = getFinalPackagePrice();
-                document.getElementById('walletPayBtnText').innerText = `WALLET PAY (৳${finalPrice})`;
-            }
-        }
-
-        window.closeModal = function() { document.getElementById('packageModal').classList.add('hidden'); }
-
-        function calculateExpiryTimestamp(timeStr) {
-            let hoursToAdd = 24;
-            if(timeStr.includes('Hour')) {
-                const num = parseInt(timeStr) || 1;
-                hoursToAdd = num;
-            } else if(timeStr.includes('Day')) {
-                const num = parseInt(timeStr) || 1;
-                hoursToAdd = num * 24;
-            } else if(timeStr.includes('Month')) {
-                const num = parseInt(timeStr) || 1;
-                hoursToAdd = num * 30 * 24;
-            }
-            return new Date().getTime() + (hoursToAdd * 60 * 60 * 1000);
-        }
-
-        function getRemainingTimeText(expiryTimestamp) {
-            const now = new Date().getTime();
-            const diff = expiryTimestamp - now;
-
-            if (diff <= 0) {
-                return '<span class="text-red-600 font-extrabold animate-pulse">🔴 Expired</span>';
-            }
-
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-            if (days > 0) {
-                return `⏳ বাকি: ${days} দিন ${hours} ঘণ্টা`;
-            } else {
-                return `⏳ বাকি: ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-            }
+        window.closeModal = function() {
+            resetCouponState();
+            document.getElementById('packageModal').classList.add('hidden');
         }
 
         window.checkout = function() {
-            if(!selectedPackage || !selectedPanel) return;
-            ensurePanelDurationStockMap(selectedPanel);
+            if(!selectedPanel || !selectedPackage) {
+                alert("Please select a panel and a package!");
+                return;
+            }
 
-            const finalPrice = getFinalPackagePrice();
-            const vipInfo = getUserVipTier(getUserTotalSpent());
-            const vipNote = vipInfo.discountPercent > 0 ? ` [${vipInfo.tierName} -${vipInfo.discountPercent}%]` : "";
-            const couponInfo = appliedCouponCode ? ` (Coupon: ${appliedCouponCode}, -৳${appliedCouponDiscount})` : "";
-            const expiryTs = calculateExpiryTimestamp(selectedPackage.time);
-            const buyerDisplayLabel = buildRecentBuyerLabel(clientUid);
+            if(selectedPackage.note && selectedPackage.note.toLowerCase().includes('stock out')) {
+                alert("এই প্যাকেজটি বর্তমানে Stock Out! অন্য কোনো প্যাকেজ সিলেক্ট করুন।");
+                return;
+            }
+
+            const finalPayAmount = getFinalPackagePrice();
+            const currentBal = getUserBalance();
+            const orderCode = generateSixDigitOrderId();
+            const createdAtTs = Date.now();
+            const formattedDate = formatCardDateTime(createdAtTs);
+            const durationText = selectedPackage.time || "";
+            const detailsText = `${selectedPanel.name} ${durationText}`.trim();
 
             if(activePaymentMode === 'wallet') {
-                const currentBal = getUserBalance();
-                if(currentBal < finalPrice) {
-                    alert(`অপর্যাপ্ত ব্যালেন্স! আপনার প্রয়োজন ৳${finalPrice}, কিন্তু আপনার ওয়ালেটে আছে মাত্র ৳${currentBal}। অনুগ্রহ করে Add Fund করুন।`);
-                    window.closeModal();
-                    window.switchTab('fund');
+                if(currentBal < finalPayAmount) {
+                    alert(`আপনার অ্যাকাউন্টে পর্যাপ্ত ব্যালেন্স নেই! (প্রয়োজন ৳${finalPayAmount}, আপনার আছে ৳${currentBal})। Add Fund করে ব্যালেন্স অ্যাড করুন।`);
                     return;
                 }
 
-                storeData.userBalances[clientUid] = currentBal - finalPrice;
+                storeData.userBalances[clientUid] = currentBal - finalPayAmount;
+                storeData.totalOrder = (storeData.totalOrder || 0) + 1;
+                storeData.totalSpent = (storeData.totalSpent || 0) + finalPayAmount;
 
-                const orderIdCode = generateSixDigitOrderId();
-                const orderDateStr = formatCardDateTime(Date.now());
-                const isAutoActive = (storeData.autoDeliveryActive === true || storeData.autoDeliveryActive === "true");
-                const durationStockArr = Array.isArray(selectedPanel.stockKeysByDuration[selectedPackage.time])
-                    ? selectedPanel.stockKeysByDuration[selectedPackage.time]
-                    : [];
+                let deliveredKey = null;
+                let finalStatus = "Pending";
+                const stockMap = ensurePanelDurationStockMap(selectedPanel);
+                const durationStockList = Array.isArray(stockMap[durationText]) ? stockMap[durationText] : [];
 
-                let deliveredAutoKey = null;
-                let autoKeySourceLabel = "";
-
-                if(isAutoActive && durationStockArr.length > 0) {
-                    deliveredAutoKey = durationStockArr.shift();
-                    autoKeySourceLabel = selectedPackage.time;
+                if((storeData.autoDeliveryActive === true || storeData.autoDeliveryActive === "true") && durationStockList.length > 0) {
+                    deliveredKey = durationStockList.shift();
+                    finalStatus = "Completed";
                 }
 
-                const finalStatus = deliveredAutoKey ? "Completed" : "Pending";
-
                 const newOrder = {
-                    id: orderIdCode,
-                    orderCode: orderIdCode,
+                    id: orderCode,
+                    orderCode: orderCode,
                     uid: clientUid,
-                    name: `${selectedPanel.name} (${selectedPackage.time})${vipNote}${couponInfo}`,
-                    panelName: selectedPanel.name,
-                    duration: selectedPackage.time,
-                    price: finalPrice,
+                    supportPin: clientSupportPin,
+                    name: selectedPanel.name,
+                    package: durationText,
+                    price: finalPayAmount,
+                    couponUsed: appliedCouponCode || null,
+                    paymentMode: 'wallet',
                     status: finalStatus,
-                    paymentMode: "wallet",
-                    date: orderDateStr
+                    deliveredKey: deliveredKey || null,
+                    createdAtTs: createdAtTs,
+                    date: formattedDate
                 };
 
+                if(!storeData.orders) storeData.orders = [];
                 storeData.orders.unshift(newOrder);
 
-                if(deliveredAutoKey) {
+                if(deliveredKey) {
+                    if(!storeData.keys) storeData.keys = [];
                     storeData.keys.unshift({
-                        id: orderIdCode,
-                        orderCode: orderIdCode,
+                        orderId: orderCode,
+                        orderCode: orderCode,
                         uid: clientUid,
-                        panel: `${selectedPanel.name} (${selectedPackage.time})`,
-                        panelName: selectedPanel.name,
-                        duration: selectedPackage.time,
-                        stockTag: autoKeySourceLabel,
-                        key: deliveredAutoKey,
-                        date: orderDateStr,
-                        expiryTimestamp: expiryTs
+                        supportPin: clientSupportPin,
+                        panel: selectedPanel.name,
+                        package: durationText,
+                        price: finalPayAmount,
+                        key: deliveredKey,
+                        createdAtTs: createdAtTs,
+                        date: formattedDate
                     });
-                    pushCompletedRecentOrder(
-                        buyerDisplayLabel,
-                        `${selectedPanel.name} ${selectedPackage.time}`,
-                        `${finalPrice}৳`,
-                        clientUid
-                    );
+                    const buyerLabel = buildRecentBuyerLabel(clientUid);
+                    pushCompletedRecentOrder(buyerLabel, detailsText, `${finalPayAmount}৳`, clientUid);
                 }
 
                 saveToFirebase(true);
                 updateAccountUI();
+                renderOrders();
+                renderKeys();
                 renderHomeTabContent();
 
                 sendTelegramAlert(
-                    `🛒 <b>নতুন অর্ডার সম্পন্ন হয়েছে! (Wallet)</b>\n\n` +
-                    `🆔 <b>Order ID:</b> <code>${orderIdCode}</code>\n` +
-                    `👤 <b>UID:</b> <code>${clientUid}</code>\n` +
-                    `🔑 <b>Support PIN:</b> <code>${clientSupportPin}</code>\n` +
-                    `📱 <b>ডিভাইস:</b> ${deviceDetails.model} (${deviceDetails.os})\n` +
-                    `📦 <b>প্যানেল:</b> ${selectedPanel.name} (${selectedPackage.time})\n` +
-                    `💰 <b>মূল্য:</b> ৳${finalPrice}${vipNote}${couponInfo}\n` +
-                    `📌 <b>স্ট্যাটাস:</b> ${finalStatus}${deliveredAutoKey ? ` (Auto Key: <code>${deliveredAutoKey}</code>)` : ''}\n` +
-                    `🕒 <b>সময়:</b> ${orderDateStr}`
-                );
-
-                closeModal();
-                if(deliveredAutoKey) {
-                    showSuccessModal(`অর্ডার সম্পন্ন হয়েছে! অটো কি (${deliveredAutoKey}) My Keys-এ যুক্ত হয়েছে।`);
-                    switchTab('keys');
-                } else {
-                    showSuccessModal('অর্ডার সফলভাবে সম্পন্ন হয়েছে! অ্যাডমিন আপনার কি (Key) শীঘ্রই পাঠিয়ে দেবেন।');
-                    switchTab('order');
-                }
-
-            } else {
-                const msg = `হ্যালো অ্যাডমিন,\nআমার UID: ${clientUid} (PIN: ${clientSupportPin})\nআমি এই প্যানেলটি কিনতে চাই:\n• প্যানেল: ${selectedPanel.name}\n• প্যাকেজ: ${selectedPackage.time}\n• মূল্য: ৳${finalPrice}${vipNote}${couponInfo}\n• মাধ্যম: বিকাশ/নগদ (Auto Payment)`;
-                
-                const waNum = (storeData.whatsapp || '8801700000000').replace(/[^0-9]/g, '');
-                window.open(`https://wa.me/${waNum}?text=${encodeURIComponent(msg)}`, '_blank');
-                
-                const orderIdCode = generateSixDigitOrderId();
-                const orderDateStr = formatCardDateTime(Date.now());
-                storeData.orders.unshift({
-                    id: orderIdCode,
-                    orderCode: orderIdCode,
-                    uid: clientUid,
-                    name: `${selectedPanel.name} (${selectedPackage.time})${vipNote}${couponInfo}`,
-                    panelName: selectedPanel.name,
-                    duration: selectedPackage.time,
-                    price: finalPrice,
-                    status: "Pending",
-                    paymentMode: "instant",
-                    date: orderDateStr
-                });
-
-                saveToFirebase(true);
-                updateAccountUI();
-
-                sendTelegramAlert(
-                    `📲 <b>নতুন Instant/WhatsApp অর্ডার রিকোয়েস্ট!</b>\n\n` +
-                    `🆔 <b>Order ID:</b> <code>${orderIdCode}</code>\n` +
+                    `🛒 <b>নতুন ওয়ালেট অর্ডার এসেছে!</b>\n\n` +
+                    `🔢 <b>Order ID:</b> <code>${orderCode}</code>\n` +
                     `👤 <b>UID:</b> <code>${clientUid}</code>\n` +
                     `🔑 <b>Support PIN:</b> <code>${clientSupportPin}</code>\n` +
                     `📱 <b>ডিভাইস:</b> ${deviceDetails.model}\n` +
-                    `📦 <b>প্যানেল:</b> ${selectedPanel.name} (${selectedPackage.time})\n` +
-                    `💰 <b>মূল্য:</b> ৳${finalPrice}\n` +
-                    `🕒 <b>সময়:</b> ${orderDateStr}`
+                    `🎮 <b>প্যানেল:</b> ${selectedPanel.name}\n` +
+                    `⏳ <b>প্যাকেজ:</b> ${durationText}\n` +
+                    `💰 <b>মূল্য:</b> ৳${finalPayAmount}\n` +
+                    `🔑 <b>ডেলিভারি স্ট্যাটাস:</b> ${deliveredKey ? `Auto Sent (<code>${deliveredKey}</code>)` : 'Pending Admin Key'}\n` +
+                    `🕒 <b>সময়:</b> ${formattedDate}`
                 );
 
                 closeModal();
-                showSuccessModal('অর্ডার রেকর্ড যুক্ত হয়েছে! হোয়াটসঅ্যাপে পেমেন্ট প্রমাণ পাঠান।');
-                switchTab('order');
+                if(deliveredKey) {
+                    showSuccessModal(`অর্ডার সম্পন্ন (Order ID: #${orderCode})! আপনার কি (Key) ডেলিভারি হয়েছে। My Keys ট্যাব চেক করুন।`);
+                } else {
+                    showSuccessModal(`অর্ডার সম্পন্ন (Order ID: #${orderCode})! অ্যাডমিন আপনার কি পাঠালে My Keys ট্যাবে দেখতে পাবেন।`);
+                }
+            } else {
+                const newOrder = {
+                    id: orderCode,
+                    orderCode: orderCode,
+                    uid: clientUid,
+                    supportPin: clientSupportPin,
+                    name: selectedPanel.name,
+                    package: durationText,
+                    price: finalPayAmount,
+                    couponUsed: appliedCouponCode || null,
+                    paymentMode: 'instant',
+                    status: "Pending",
+                    deliveredKey: null,
+                    createdAtTs: createdAtTs,
+                    date: formattedDate
+                };
+
+                if(!storeData.orders) storeData.orders = [];
+                storeData.orders.unshift(newOrder);
+                saveToFirebase(true);
+                renderOrders();
+
+                sendTelegramAlert(
+                    `⚡ <b>নতুন Instant Payment অর্ডার এসেছে!</b>\n\n` +
+                    `🔢 <b>Order ID:</b> <code>${orderCode}</code>\n` +
+                    `👤 <b>UID:</b> <code>${clientUid}</code>\n` +
+                    `🔑 <b>Support PIN:</b> <code>${clientSupportPin}</code>\n` +
+                    `📱 <b>ডিভাইস:</b> ${deviceDetails.model}\n` +
+                    `🎮 <b>প্যানেল:</b> ${selectedPanel.name}\n` +
+                    `⏳ <b>প্যাকেজ:</b> ${durationText}\n` +
+                    `💰 <b>মূল্য:</b> ৳${finalPayAmount}\n` +
+                    `🕒 <b>সময়:</b> ${formattedDate}`
+                );
+
+                const msg = `Hello, I have ordered ${selectedPanel.name} (${durationText}) for ৳${finalPayAmount}. Order ID: #${orderCode}, My UID: ${clientUid}, Support PIN: ${clientSupportPin}.`;
+                const waNumber = (storeData.whatsapp || "8801700000000").replace(/[^0-9]/g, '');
+                window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`, '_blank');
+                closeModal();
             }
         }
 
-        window.submitAddFundRequest = function() {
+        window.submitAddFundRequest = function(passedTrxId = '') {
             const amount = Number(document.getElementById('addAmountInput').value);
-            const trxIdRaw = (document.getElementById('addTrxInput')?.value || '').trim();
-            const trxId = trxIdRaw.toUpperCase();
+            const fallbackTrx = document.getElementById('checkoutTrxInput')?.value || window.__submittedTrxId || '';
+            const trxId = String(passedTrxId || fallbackTrx).trim().toUpperCase();
 
             if(!amount || isNaN(amount) || amount < 10) {
                 window.showPaymentErrorToast("সর্বনিম্ন ৳10 অ্যামাউন্ট লিখুন!");
@@ -4295,6 +4380,12 @@ Current User Info:
             processFundRequestsLifecycle(false);
             if(!storeData.fundRequests) storeData.fundRequests = [];
 
+            const isDuplicate = storeData.fundRequests.some(r => String(r.trxId || '').toUpperCase() === trxId);
+            if (isDuplicate) {
+                window.showPaymentErrorToast("এই Transaction ID ইতিমধ্যে ব্যবহার করা হয়েছে!");
+                return;
+            }
+
             const nowTs = Date.now();
             const newReq = {
                 id: "FND-" + Math.floor(100000 + Math.random() * 900000),
@@ -4311,8 +4402,8 @@ Current User Info:
             storeData.fundRequests = enforceMaxFiveFundRequests(storeData.fundRequests);
 
             saveToFirebase(true);
+            window.__submittedTrxId = '';
             if(document.getElementById('addAmountInput')) document.getElementById('addAmountInput').value = '';
-            if(document.getElementById('addTrxInput')) document.getElementById('addTrxInput').value = '';
             if(document.getElementById('checkoutTrxInput')) document.getElementById('checkoutTrxInput').value = '';
             document.querySelectorAll('#quickAmountChips .quick-amt-chip').forEach(c => c.classList.remove('active'));
 
@@ -4332,43 +4423,47 @@ Current User Info:
                 `🕒 <b>সময়:</b> ${newReq.date}`
             );
 
-            showSuccessModal("ফান্ড রিকোয়েস্ট (৫ মিনিট টাইমারসহ) সাবমিট হয়েছে! অ্যাডমিন যাচাই করে ব্যালেন্স অ্যাড করবেন।");
+            showSuccessModal("ফান্ড রিকোয়েস্ট সাবমিট হয়েছে! অ্যাডমিন যাচাই করে ব্যালেন্স অ্যাড করবেন।");
             window.switchFundSubTab('history');
         }
 
         function renderMyFundRequests() {
-            const container = document.getElementById('myFundRequestsList');
-            if(!container) return;
-
             processFundRequestsLifecycle(false);
-            const myReqs = enforceMaxFiveFundRequests((storeData.fundRequests || []).filter(r => r.uid === clientUid));
+            const list = document.getElementById('myFundRequestsList');
+            if(!list) return;
 
+            const myReqs = (storeData.fundRequests || []).filter(r => r.uid === clientUid).slice(0, MAX_FUND_REQUESTS_DISPLAY);
             if(myReqs.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">No fund requests submitted.</p>`;
+                list.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No fund requests submitted.</p>`;
                 return;
             }
 
-            container.innerHTML = '';
+            list.innerHTML = '';
             myReqs.forEach(r => {
-                let badgeClass = "bg-amber-100 text-amber-800";
-                if(r.status === "Approved") badgeClass = "bg-emerald-100 text-emerald-700";
-                if(r.status === "Rejected" || r.status === "Expired") badgeClass = "bg-red-100 text-red-700";
+                let statusBadge = `<span class="bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full text-[10px] font-bold">Pending</span>`;
+                let timerHtml = '';
 
-                const remMs = getFundRemainingMs(r);
-                const liveCountdownHtml = (r.status === "Pending")
-                    ? `<span class="ml-1.5 font-mono text-[10px] font-black text-red-600">⏱ ${formatMmSs(remMs)}</span>`
-                    : ``;
+                if(r.status === 'Approved') {
+                    statusBadge = `<span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full text-[10px] font-bold">Approved</span>`;
+                } else if(r.status === 'Rejected') {
+                    statusBadge = `<span class="bg-red-100 text-red-700 px-2 py-0.5 rounded-full text-[10px] font-bold">Rejected</span>`;
+                } else if(r.status === 'Expired') {
+                    statusBadge = `<span class="bg-slate-200 text-slate-600 px-2 py-0.5 rounded-full text-[10px] font-bold">Expired</span>`;
+                } else {
+                    const remMs = getFundRemainingMs(r);
+                    timerHtml = `<span class="bg-indigo-50 text-indigo-700 border border-indigo-200 px-2 py-0.5 rounded-full text-[10px] font-mono font-bold ml-1.5">⏱ ${formatMmSs(remMs)}</span>`;
+                }
 
-                container.innerHTML += `
-                    <div class="bg-slate-50 border border-slate-200 p-3 rounded-2xl flex justify-between items-center text-xs shadow-sm">
+                list.innerHTML += `
+                    <div class="bg-white border border-slate-200 p-3 rounded-2xl flex justify-between items-center text-xs shadow-sm">
                         <div>
-                            <p class="font-bold text-slate-800">Amount: ৳${r.amount} <span class="text-slate-500 font-normal ml-1">• Trx: ${r.trxId}</span></p>
-                            <p class="text-[10px] text-slate-400 mt-0.5">${r.date || ''}</p>
+                            <div class="flex items-center flex-wrap gap-1">
+                                <p class="font-bold text-slate-800">৳${r.amount} <span class="text-slate-400 font-mono text-[10px]">(${r.trxId})</span></p>
+                                ${timerHtml}
+                            </div>
+                            <p class="text-[10px] text-slate-400 mt-0.5">${r.date}</p>
                         </div>
-                        <div class="text-right">
-                            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${badgeClass}">${r.status}</span>
-                            ${liveCountdownHtml}
-                        </div>
+                        <div>${statusBadge}</div>
                     </div>
                 `;
             });
@@ -4376,31 +4471,43 @@ Current User Info:
 
         function renderOrders() {
             const container = document.getElementById('orderListContainer');
-            if(!container) return;
             const myOrders = (storeData.orders || []).filter(o => o.uid === clientUid);
-            
             if(myOrders.length === 0) {
                 container.innerHTML = `<p class="text-xs text-slate-400 text-center py-10">No orders placed yet.</p>`;
                 return;
             }
-            
             container.innerHTML = '';
-            myOrders.forEach(o => {
-                const badgeClass = o.status === "Completed" ? "bg-emerald-100 text-emerald-700" : "bg-amber-100 text-amber-700";
-                const displayCode = o.orderCode || o.id;
+            myOrders.forEach(order => {
+                const isCompleted = order.status === 'Completed' || Boolean(order.deliveredKey);
+                const statusBadge = isCompleted
+                    ? `<span class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold inline-flex items-center gap-1"><i class="fa-solid fa-circle-check"></i> Completed</span>`
+                    : `<span class="bg-amber-50 text-amber-700 border border-amber-200 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold inline-flex items-center gap-1"><i class="fa-solid fa-clock"></i> Pending</span>`;
+
+                const codeVal = order.orderCode || order.id || '000000';
+                const dateVal = order.date || formatCardDateTime(order.createdAtTs);
+                const durationVal = order.package || '';
+
                 container.innerHTML += `
-                    <div class="bg-white border border-slate-200 p-3.5 rounded-2xl shadow-sm space-y-2">
+                    <div class="bg-white border border-slate-200 rounded-3xl p-4 shadow-sm space-y-2.5">
                         <div class="flex justify-between items-start gap-2">
                             <div>
-                                <p class="font-bold text-xs text-slate-800">${escapeHtml(o.name)}</p>
-                                <p class="text-[11px] font-mono font-bold text-indigo-700 mt-0.5">Order ID: #${escapeHtml(displayCode)}</p>
-                                <p class="text-[10px] text-slate-400 mt-0.5">Date: ${escapeHtml(o.date || '')}</p>
+                                <h4 class="font-extrabold text-sm text-slate-900">${escapeHtml(order.name)}</h4>
+                                <p class="text-[11px] text-slate-500 mt-0.5">${escapeHtml(durationVal)} • <span class="font-bold text-slate-800">৳${escapeHtml(order.price)}</span></p>
                             </div>
-                            <div class="text-right shrink-0">
-                                <p class="font-black text-xs dynamic-theme-text">৳${o.price}</p>
-                                <span class="inline-block mt-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold ${badgeClass}">${o.status}</span>
-                            </div>
+                            ${statusBadge}
                         </div>
+
+                        <div class="bg-slate-50 border border-slate-200/80 rounded-2xl px-3 py-2 flex items-center justify-between text-[11px] font-mono">
+                            <span class="font-bold text-slate-700">Order ID: <strong class="text-indigo-700">#${escapeHtml(codeVal)}</strong></span>
+                            <span class="text-slate-400 text-[10px]">${escapeHtml(dateVal)}</span>
+                        </div>
+
+                        ${order.deliveredKey ? `
+                            <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-2.5 flex items-center justify-between gap-2">
+                                <span class="text-[11px] font-mono font-extrabold text-emerald-800 break-all">Key: ${escapeHtml(order.deliveredKey)}</span>
+                                <button onclick="copyPurchasedKey('${String(order.deliveredKey).replace(/'/g, "\\'")}')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded-xl text-[10px] font-bold cursor-pointer shrink-0">Copy</button>
+                            </div>
+                        ` : ''}
                     </div>
                 `;
             });
@@ -4409,167 +4516,140 @@ Current User Info:
         function renderKeys() {
             const container = document.getElementById('keysContainer');
             const badgeEl = document.getElementById('myKeysTotalBadge');
-            if(!container) return;
             const myKeys = (storeData.keys || []).filter(k => k.uid === clientUid);
-            if(badgeEl) badgeEl.innerText = `${myKeys.length} Key${myKeys.length !== 1 ? 's' : ''}`;
+            if(badgeEl) {
+                badgeEl.innerText = `${myKeys.length} Key${myKeys.length !== 1 ? 's' : ''}`;
+            }
 
             if(myKeys.length === 0) {
                 container.innerHTML = `<p class="text-xs text-slate-400 text-center py-10">No keys delivered yet. After payment, Admin will send your key here.</p>`;
                 return;
             }
 
-            const hasPaidGroupLink = Boolean(storeData.paidGroupLink && storeData.paidGroupLink.trim() !== '');
-            const paidGroupBtnTitle = (storeData.paidGroupBtnName && storeData.paidGroupBtnName.trim() !== '')
-                ? storeData.paidGroupBtnName.trim()
-                : 'Join Paid Telegram Group';
+            const paidGroupLink = (storeData.paidGroupLink || "").trim();
+            const paidGroupBtnName = (storeData.paidGroupBtnName || "").trim() || "Join Paid User Group";
 
             let paidGroupBannerHtml = '';
-            if(hasPaidGroupLink) {
+            if (paidGroupLink !== "") {
                 paidGroupBannerHtml = `
-                    <div class="bg-gradient-to-r from-sky-600 to-indigo-600 text-white p-3.5 rounded-2xl shadow-md flex items-center justify-between gap-2">
-                        <div class="min-w-0">
-                            <p class="text-[10px] font-extrabold uppercase tracking-wider text-sky-100"><i class="fa-solid fa-crown mr-1 text-amber-300"></i> Paid Buyer Access</p>
-                            <p class="text-xs font-bold truncate mt-0.5">${escapeHtml(paidGroupBtnTitle)}</p>
-                        </div>
-                        <a href="${escapeHtml(storeData.paidGroupLink.trim())}" target="_blank" rel="noopener noreferrer" class="bg-white text-indigo-700 hover:bg-sky-50 px-3 py-2 rounded-xl text-[11px] font-extrabold shrink-0 shadow transition flex items-center gap-1.5">
-                            <i class="fa-brands fa-telegram text-sm text-sky-600"></i>
-                            <span>Join Now</span>
-                        </a>
-                    </div>
+                    <a href="${escapeHtml(paidGroupLink)}" target="_blank" rel="noopener noreferrer" class="block w-full bg-gradient-to-r from-sky-500 to-indigo-600 hover:opacity-95 text-white font-extrabold py-3 px-4 rounded-2xl text-xs shadow-lg flex items-center justify-center gap-2 transition transform hover:scale-[1.01]">
+                        <i class="fa-brands fa-telegram text-base"></i>
+                        <span>${escapeHtml(paidGroupBtnName)}</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i>
+                    </a>
                 `;
             }
 
-            container.innerHTML = paidGroupBannerHtml;
+            let cardsHtml = '';
+            myKeys.forEach(item => {
+                const orderCodeVal = item.orderCode || item.orderId || '000000';
+                const dateVal = item.date || formatCardDateTime(item.createdAtTs);
+                const durationVal = item.package || '';
+                const panelTitleVal = item.panel || 'Panel';
+                const priceVal = item.price !== undefined && item.price !== null ? `${item.price}৳` : '';
 
-            myKeys.forEach((k, idx) => {
-                const expText = k.expiryTimestamp ? getRemainingTimeText(k.expiryTimestamp) : '';
-                const codeId = k.orderCode || k.id || `KEY-${idx + 1}`;
-                const keyDuration = k.duration || k.stockTag || 'Standard';
-
-                container.innerHTML += `
-                    <div class="bg-white border-2 border-indigo-100 rounded-3xl overflow-hidden shadow-md">
-                        <div class="dynamic-theme-bg text-white px-4 py-2.5 flex items-center justify-between">
-                            <div class="flex items-center gap-2">
-                                <span class="bg-white/20 text-white text-[10px] font-black px-2.5 py-0.5 rounded-full">
-                                    Code #${idx + 1}
-                                </span>
-                                <span class="text-xs font-extrabold tracking-wide">${escapeHtml(k.panel)}</span>
+                cardsHtml += `
+                    <div class="bg-white border border-slate-200/90 rounded-3xl p-4 shadow-md space-y-3">
+                        <div class="flex justify-between items-start gap-2">
+                            <div>
+                                <h4 class="font-extrabold text-sm text-slate-900 leading-snug">${escapeHtml(panelTitleVal)}</h4>
+                                <p class="text-xs text-slate-500 font-medium mt-0.5">${escapeHtml(durationVal)} ${priceVal ? `• <span class="font-bold text-slate-800">${escapeHtml(priceVal)}</span>` : ''}</p>
                             </div>
-                            <span class="bg-black/20 text-white text-[10px] font-mono font-bold px-2 py-0.5 rounded-lg">
-                                ID: #${escapeHtml(codeId)}
+                            <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 rounded-full text-[11px] font-bold inline-flex items-center gap-1 shrink-0">
+                                <i class="fa-solid fa-circle-check text-emerald-600"></i> Delivered
                             </span>
                         </div>
 
-                        <div class="p-4 space-y-3">
-                            <div class="flex flex-wrap items-center justify-between gap-1.5 text-[11px] text-slate-600 bg-slate-50 px-3 py-2 rounded-xl border border-slate-200">
-                                <span><i class="fa-regular fa-clock mr-1 text-indigo-600"></i><strong>${escapeHtml(keyDuration)}</strong></span>
-                                <span>${escapeHtml(k.date || '')}</span>
-                            </div>
+                        <div class="bg-slate-50/90 border border-slate-200/70 rounded-2xl px-3.5 py-2.5 flex items-center justify-between gap-2 text-xs">
+                            <span class="font-mono font-bold text-slate-600">Order ID: <strong class="text-indigo-700 font-extrabold">#${escapeHtml(orderCodeVal)}</strong></span>
+                            <span class="text-slate-400 font-mono text-[11px]">${escapeHtml(dateVal)}</span>
+                        </div>
 
-                            ${expText ? `<div class="text-[11px] font-bold bg-indigo-50/70 border border-indigo-100 px-3 py-1.5 rounded-xl">${expText}</div>` : ''}
-
-                            <div class="bg-slate-900 text-emerald-400 p-3.5 rounded-2xl flex items-center justify-between gap-2 shadow-inner">
-                                <code class="font-mono font-black text-xs select-all break-all">${escapeHtml(k.key)}</code>
-                                <button onclick="copyPurchasedKey('${String(k.key).replace(/'/g, "\\'")}')" class="bg-white/15 hover:bg-white/25 text-white px-3 py-1.5 rounded-xl text-[11px] font-bold shrink-0 cursor-pointer transition flex items-center gap-1">
-                                    <i class="fa-regular fa-copy"></i> Copy
-                                </button>
-                            </div>
+                        <div class="bg-slate-100/90 border border-slate-200 rounded-2xl px-3.5 py-2.5 flex items-center justify-between gap-2">
+                            <span class="font-mono font-extrabold text-xs text-slate-900 break-all select-all">${escapeHtml(item.key)}</span>
+                            <button onclick="copyPurchasedKey('${String(item.key).replace(/'/g, "\\'")}')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-3.5 py-1.5 rounded-xl cursor-pointer transition shadow-sm shrink-0">
+                                Copy
+                            </button>
                         </div>
                     </div>
                 `;
             });
+
+            container.innerHTML = paidGroupBannerHtml + cardsHtml;
         }
 
-        setInterval(() => {
-            const changed = processFundRequestsLifecycle(true);
-
-            const keysVisible = document.getElementById('keysView') && !document.getElementById('keysView').classList.contains('hidden');
-            if(keysVisible) {
-                renderKeys();
-            }
-
-            const fundVisible = document.getElementById('fundView') && !document.getElementById('fundView').classList.contains('hidden');
-            if(fundVisible || changed) {
-                renderMyFundRequests();
-            }
-
-            const adminVisible = document.getElementById('adminDashboard') && !document.getElementById('adminDashboard').classList.contains('hidden');
-            if(adminVisible && changed) {
-                renderAdminFundRequests();
-            }
-
-            updateSpinAvailabilityUI();
-        }, 1000);
-
-        // ==================== ADMIN PANEL FUNCTIONS ====================
         window.verifyAdmin = async function() {
             const pin = document.getElementById('adminPinInput').value.trim();
-            if(!pin) return alert("PIN লিখুন!");
+            if(!pin) return;
 
-            const inputHash = await sha256(pin);
-            const fallbackDefaultHash = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
-            if(inputHash === storeData.adminHash || inputHash === fallbackDefaultHash) {
+            const enteredHash = await sha256(pin);
+            const targetHash = window.__currentAdminHash || storeData.adminHash || defaultStoreData.adminHash;
+
+            if(enteredHash === targetHash) {
                 window.__adminUnlockedSession = true;
-                document.getElementById('adminPinInput').value = '';
-                document.getElementById('adminModal').classList.add('hidden');
-                document.getElementById('appUpdateModal').classList.add('hidden');
-                document.getElementById('maintenanceModal').classList.add('hidden');
-                document.getElementById('suspendedModal').classList.add('hidden');
-                document.getElementById('adminDashboard').classList.remove('hidden');
-
-                document.getElementById('editAiChatActive').value = (storeData.aiChatEnabled !== false && storeData.aiChatEnabled !== "false") ? "true" : "false";
-                document.getElementById('editAiApiKey').value = storeData.aiGeminiApiKey || "";
-                document.getElementById('editAppUpdatingActive').value = (storeData.appUpdating === true || storeData.appUpdating === "true") ? "true" : "false";
-                document.getElementById('editAppUpdateMsg').value = storeData.appUpdateMsg || "";
-                document.getElementById('editAppName').value = storeData.appName || "";
-                document.getElementById('editAppSub').value = storeData.appSub || "";
-                document.getElementById('editLogoUrl').value = storeData.logoUrl || "";
-                document.getElementById('editProfileName').value = storeData.profileName || "";
-                document.getElementById('editProfileBio').value = storeData.profileBio || "";
-                document.getElementById('editFooterText').value = storeData.footerText || "";
-                document.getElementById('editOwnerName').value = storeData.ownerFullText || "Owner ALAMIN";
-                document.getElementById('editOwnerColor').value = storeData.ownerColor || "#ef4444";
-                document.getElementById('editThemeColor').value = storeData.themeColor || "#4f46e5";
-                document.getElementById('editNotice').value = storeData.notice || "";
-                document.getElementById('editWhatsapp').value = storeData.whatsapp || "";
-                document.getElementById('editPaidGroupBtnName').value = storeData.paidGroupBtnName || "";
-                document.getElementById('editPaidGroupLink').value = storeData.paidGroupLink || "";
-                document.getElementById('editBkash').value = storeData.bkash || "";
-                document.getElementById('editNagad').value = storeData.nagad || "";
-                syncAdminImagePreviews();
-                document.getElementById('editBannerImg').value = storeData.bannerImg || "";
-                document.getElementById('editBannerLink').value = storeData.bannerLink || "";
-                document.getElementById('editPopupActive').value = (storeData.popupActive === true || storeData.popupActive === "true") ? "true" : "false";
-                document.getElementById('editPopupTitle').value = storeData.popupTitle || "";
-                document.getElementById('editPopupMsg').value = storeData.popupMsg || "";
-
-                document.getElementById('editMaintenanceActive').value = (storeData.maintenanceActive === true || storeData.maintenanceActive === "true") ? "true" : "false";
-                document.getElementById('editMaintenanceMsg').value = storeData.maintenanceMsg || "";
-                const bypassArr = Array.isArray(storeData.maintenanceBypassIds) ? storeData.maintenanceBypassIds : [];
-                document.getElementById('editMaintenanceBypassIds').value = bypassArr.join(", ");
-                const hintEl = document.getElementById('currentMyIdsHint');
-                if(hintEl) {
-                    hintEl.innerText = `আপনার UID: ${clientUid} | Device ID: ${deviceId}`;
-                }
-
-                document.getElementById('editAutoDeliveryActive').value = (storeData.autoDeliveryActive === true || storeData.autoDeliveryActive === "true") ? "true" : "false";
-
-                renderAdminSpinSettings();
-                renderAdminLiveChats();
-                renderAdminCategories();
-                renderAdminPanels();
-                renderDeviceList();
-                renderAdminFundRequests();
-                renderAdminHomeLists();
-                renderAdminUserOrders();
-                renderSalesAnalyticsChart();
+                window.closeAdminModal();
+                checkAppUpdateState();
+                checkMaintenanceState();
+                checkLiveSuspension();
+                openAdminDashboard();
             } else {
-                alert("ভুল Admin PIN! আবার চেষ্টা করুন।");
+                alert("Wrong PIN!");
             }
+        }
+
+        function openAdminDashboard() {
+            document.getElementById('adminDashboard').classList.remove('hidden');
+
+            document.getElementById('editAiChatActive').value = (storeData.aiChatEnabled !== false && storeData.aiChatEnabled !== "false") ? "true" : "false";
+            document.getElementById('editAiApiKey').value = storeData.aiGeminiApiKey || "";
+
+            document.getElementById('editAppUpdatingActive').value = (storeData.appUpdating === true || storeData.appUpdating === "true") ? "true" : "false";
+            document.getElementById('editAppUpdateMsg').value = storeData.appUpdateMsg || "নতুন ভার্সন আপডেট চলছে, অনুগ্রহ করে অপেক্ষা করুন। আপডেট শেষ হলে অটোমেটিক নতুন ভার্সন দেখতে পাবেন।";
+
+            document.getElementById('editMaintenanceActive').value = (storeData.maintenanceActive === true || storeData.maintenanceActive === "true") ? "true" : "false";
+            document.getElementById('editMaintenanceMsg').value = storeData.maintenanceMsg || "সার্ভার ও প্যানেল আপডেটের কাজ চলছে। সাময়িকভাবে স্টোর মেইনটেন্যান্স মোডে আছে।";
+            const bypassArr = Array.isArray(storeData.maintenanceBypassIds) ? storeData.maintenanceBypassIds : [];
+            document.getElementById('editMaintenanceBypassIds').value = bypassArr.join(", ");
+            document.getElementById('currentMyIdsHint').innerText = `আপনার UID: ${clientUid} | Device: ${deviceId}`;
+
+            document.getElementById('editAutoDeliveryActive').value = (storeData.autoDeliveryActive === true || storeData.autoDeliveryActive === "true") ? "true" : "false";
+
+            document.getElementById('editThemeColor').value = storeData.themeColor || "#4f46e5";
+            document.getElementById('editOwnerColor').value = storeData.ownerColor || "#ef4444";
+            document.getElementById('editOwnerName').value = storeData.ownerFullText || "Owner ALAMIN";
+            document.getElementById('editBannerImg').value = storeData.bannerImg || "";
+            document.getElementById('editBannerLink').value = storeData.bannerLink || "";
+            syncAdminImagePreviews();
+            document.getElementById('editPopupActive').value = (storeData.popupActive === true || storeData.popupActive === "true") ? "true" : "false";
+            document.getElementById('editPopupTitle').value = storeData.popupTitle || "";
+            document.getElementById('editPopupMsg').value = storeData.popupMsg || "";
+
+            document.getElementById('editAppName').value = storeData.appName || "";
+            document.getElementById('editAppSub').value = storeData.appSub || "";
+            document.getElementById('editLogoUrl').value = storeData.logoUrl || "";
+            document.getElementById('editProfileName').value = storeData.profileName || "";
+            document.getElementById('editProfileBio').value = storeData.profileBio || "";
+            document.getElementById('editFooterText').value = storeData.footerText || "";
+            document.getElementById('editNotice').value = storeData.notice || "";
+            document.getElementById('editWhatsapp').value = storeData.whatsapp || "";
+            document.getElementById('editPaidGroupBtnName').value = storeData.paidGroupBtnName || "";
+            document.getElementById('editPaidGroupLink').value = storeData.paidGroupLink || "";
+            document.getElementById('editBkash').value = storeData.bkash || "";
+            document.getElementById('editNagad').value = storeData.nagad || "";
+
+            renderAdminPaymentChannels();
+            renderAdminSpinSettings();
+            renderAdminLiveChats();
+            renderAdminCategories();
+            renderAdminPanels();
+            renderDeviceList();
+            renderAdminFundRequests();
+            renderAdminHomeLists();
+            renderAdminUserOrders();
+            renderSalesAnalyticsChart();
         }
 
         window.closeAdminDashboard = function() {
-            window.__adminUnlockedSession = false;
             document.getElementById('adminDashboard').classList.add('hidden');
             checkAppUpdateState();
             checkMaintenanceState();
@@ -4577,32 +4657,13 @@ Current User Info:
         }
 
         window.saveGeneralSettings = function() {
-            storeData.aiChatEnabled = (document.getElementById('editAiChatActive').value === "true");
+            storeData.aiChatEnabled = document.getElementById('editAiChatActive').value === "true";
             storeData.aiGeminiApiKey = document.getElementById('editAiApiKey').value.trim();
-            storeData.appUpdating = (document.getElementById('editAppUpdatingActive').value === "true");
-            storeData.appUpdateMsg = document.getElementById('editAppUpdateMsg').value.trim();
-            storeData.appName = document.getElementById('editAppName').value.trim();
-            storeData.appSub = document.getElementById('editAppSub').value.trim();
-            storeData.logoUrl = document.getElementById('editLogoUrl').value.trim();
-            storeData.profileName = document.getElementById('editProfileName').value.trim();
-            storeData.profileBio = document.getElementById('editProfileBio').value.trim();
-            storeData.footerText = document.getElementById('editFooterText').value.trim();
-            storeData.ownerFullText = document.getElementById('editOwnerName').value.trim();
-            storeData.ownerColor = document.getElementById('editOwnerColor').value;
-            storeData.themeColor = document.getElementById('editThemeColor').value;
-            storeData.notice = document.getElementById('editNotice').value.trim();
-            storeData.whatsapp = document.getElementById('editWhatsapp').value.trim();
-            storeData.paidGroupBtnName = document.getElementById('editPaidGroupBtnName').value.trim();
-            storeData.paidGroupLink = document.getElementById('editPaidGroupLink').value.trim();
-            storeData.bkash = document.getElementById('editBkash').value.trim();
-            storeData.nagad = document.getElementById('editNagad').value.trim();
-            storeData.bannerImg = document.getElementById('editBannerImg').value.trim();
-            storeData.bannerLink = document.getElementById('editBannerLink').value.trim();
-            storeData.popupActive = (document.getElementById('editPopupActive').value === "true");
-            storeData.popupTitle = document.getElementById('editPopupTitle').value.trim();
-            storeData.popupMsg = document.getElementById('editPopupMsg').value.trim();
 
-            storeData.maintenanceActive = (document.getElementById('editMaintenanceActive').value === "true");
+            storeData.appUpdating = document.getElementById('editAppUpdatingActive').value === "true";
+            storeData.appUpdateMsg = document.getElementById('editAppUpdateMsg').value.trim();
+
+            storeData.maintenanceActive = document.getElementById('editMaintenanceActive').value === "true";
             storeData.maintenanceMsg = document.getElementById('editMaintenanceMsg').value.trim();
             const rawBypass = document.getElementById('editMaintenanceBypassIds').value || "";
             storeData.maintenanceBypassIds = rawBypass
@@ -4610,417 +4671,471 @@ Current User Info:
                 .map(s => s.trim())
                 .filter(Boolean);
 
-            storeData.autoDeliveryActive = (document.getElementById('editAutoDeliveryActive').value === "true");
-            if(!storeData.dailySpin) storeData.dailySpin = structuredClone(defaultSpinConfig);
-            storeData.dailySpin.enabled = (document.getElementById('editDailySpinActive').value === "true");
+            storeData.autoDeliveryActive = document.getElementById('editAutoDeliveryActive').value === "true";
+
+            const spinCfg = getSpinConfig();
+            spinCfg.enabled = document.getElementById('editDailySpinActive').value === "true";
+            storeData.dailySpin = spinCfg;
+
+            storeData.themeColor = document.getElementById('editThemeColor').value;
+            storeData.ownerColor = document.getElementById('editOwnerColor').value;
+            storeData.ownerFullText = document.getElementById('editOwnerName').value.trim() || "Owner ALAMIN";
+            storeData.bannerImg = document.getElementById('editBannerImg').value.trim();
+            storeData.bannerLink = document.getElementById('editBannerLink').value.trim();
+            storeData.popupActive = document.getElementById('editPopupActive').value === "true";
+            storeData.popupTitle = document.getElementById('editPopupTitle').value.trim();
+            storeData.popupMsg = document.getElementById('editPopupMsg').value.trim();
+
+            storeData.appName = document.getElementById('editAppName').value.trim();
+            storeData.appSub = document.getElementById('editAppSub').value.trim();
+            storeData.logoUrl = document.getElementById('editLogoUrl').value.trim();
+            storeData.profileName = document.getElementById('editProfileName').value.trim();
+            storeData.profileBio = document.getElementById('editProfileBio').value.trim();
+            storeData.footerText = document.getElementById('editFooterText').value.trim();
+            storeData.notice = document.getElementById('editNotice').value.trim();
+            storeData.whatsapp = document.getElementById('editWhatsapp').value.trim();
+            storeData.paidGroupBtnName = document.getElementById('editPaidGroupBtnName').value.trim();
+            storeData.paidGroupLink = document.getElementById('editPaidGroupLink').value.trim();
+            storeData.bkash = document.getElementById('editBkash').value.trim();
+            storeData.nagad = document.getElementById('editNagad').value.trim();
+
+            const channels = window.getNormalizedPaymentChannels();
+            channels.forEach(ch => {
+                if (ch.id === 'bkash' && storeData.bkash) ch.number = storeData.bkash;
+                if (ch.id === 'nagad' && storeData.nagad) ch.number = storeData.nagad;
+            });
+            storeData.paymentChannels = channels;
 
             saveToFirebase(true);
-            renderUI();
-            updateAiChatStatusBadge();
-            updateSpinAvailabilityUI();
-            renderSpinWheelWithLabels();
             checkAppUpdateState();
             checkMaintenanceState();
-            showSuccessModal("সব সেটিংস সফলভাবে সেভ করা হয়েছে!");
+            updateAiChatStatusBadge();
+            updateSpinAvailabilityUI();
+            renderUI();
+            showSuccessModal("All settings saved to Firebase!");
         }
 
         window.updateAdminPin = async function() {
             const newPin = document.getElementById('newAdminPin').value.trim();
-            if(!newPin || newPin.length < 3) return alert("কমপক্ষে ৩ সংখ্যার একটি PIN লিখুন!");
-
-            const newHash = await sha256(newPin);
-            storeData.adminHash = newHash;
-            window.__currentAdminHash = newHash;
-            saveToFirebase(true);
+            if(!newPin || newPin.length < 3) {
+                alert("PIN must be at least 3 characters long!");
+                return;
+            }
+            const hashed = await sha256(newPin);
+            storeData.adminHash = hashed;
+            window.__currentAdminHash = hashed;
             document.getElementById('newAdminPin').value = '';
-            showSuccessModal("Admin PIN সফলভাবে আপডেট করা হয়েছে!");
+            saveToFirebase(true);
+            showSuccessModal("Admin PIN updated securely!");
         }
 
         window.modifyUserBalance = function(type) {
             const targetUid = document.getElementById('adjBalanceUid').value.trim();
-            const amt = Number(document.getElementById('adjBalanceAmt').value);
+            const amount = Number(document.getElementById('adjBalanceAmt').value);
 
-            if(!targetUid) return alert("সঠিক 8-ডিজিট User UID লিখুন!");
-            if(!amt || isNaN(amt) || amt <= 0) return alert("সঠিক অ্যামাউন্ট লিখুন!");
+            if(!targetUid) {
+                alert("Please enter the User's UID!");
+                return;
+            }
+            if(!amount || isNaN(amount) || amount <= 0) {
+                alert("Please enter a valid positive amount!");
+                return;
+            }
 
             if(!storeData.userBalances) storeData.userBalances = {};
-            const currentBal = Number(storeData.userBalances[targetUid] || 0);
+            const currentVal = Number(storeData.userBalances[targetUid] || 0);
 
             if(type === 'add') {
-                storeData.userBalances[targetUid] = currentBal + amt;
-                showSuccessModal(`UID ${targetUid} এর ওয়ালেটে ৳${amt} যোগ করা হয়েছে! নতুন ব্যালেন্স: ৳${storeData.userBalances[targetUid]}`);
+                storeData.userBalances[targetUid] = currentVal + amount;
             } else {
-                storeData.userBalances[targetUid] = Math.max(0, currentBal - amt);
-                showSuccessModal(`UID ${targetUid} এর ওয়ালেট থেকে ৳${amt} কাটা হয়েছে! নতুন ব্যালেন্স: ৳${storeData.userBalances[targetUid]}`);
+                storeData.userBalances[targetUid] = Math.max(0, currentVal - amount);
             }
 
+            document.getElementById('adjBalanceUid').value = '';
+            document.getElementById('adjBalanceAmt').value = '';
             saveToFirebase(true);
             updateAccountUI();
-            document.getElementById('adjBalanceAmt').value = '';
-        }
-
-        window.sendDirectKeyToUid = function() {
-            const targetUid = document.getElementById('directKeyUid').value.trim();
-            const panelName = document.getElementById('directKeyPanel').value.trim() || "Custom Panel";
-            const duration = document.getElementById('directKeyTime').value.trim() || "1 Hours";
-            const keyCode = document.getElementById('directKeyCode').value.trim();
-
-            if(!targetUid) return alert("User UID লিখুন!");
-            if(!keyCode) return alert("Key কোড লিখুন!");
-
-            if(!storeData.keys) storeData.keys = [];
-            const orderIdCode = generateSixDigitOrderId();
-            const nowDateStr = formatCardDateTime(Date.now());
-            const expiryTs = calculateExpiryTimestamp(duration);
-
-            storeData.keys.unshift({
-                id: orderIdCode,
-                orderCode: orderIdCode,
-                uid: targetUid,
-                panel: `${panelName} (${duration})`,
-                panelName: panelName,
-                duration: duration,
-                key: keyCode,
-                date: nowDateStr,
-                expiryTimestamp: expiryTs
-            });
-
-            if(Array.isArray(storeData.orders)) {
-                storeData.orders.forEach(o => {
-                    if(o.uid === targetUid && o.status !== "Completed") {
-                        o.status = "Completed";
-                    }
-                });
-            }
-
-            markRecentOrderCompletedByUidAndPanel(targetUid, panelName, duration);
-
-            saveToFirebase(true);
-            renderKeys();
-            renderHomeTabContent();
-            renderAdminUserOrders();
-            renderSalesAnalyticsChart();
-            document.getElementById('directKeyCode').value = '';
-            showSuccessModal(`Key (Order #${orderIdCode}) সফলভাবে UID ${targetUid} এর My Keys সেকশনে পাঠানো হয়েছে!`);
-        }
-
-        window.clearProcessedFundRequests = function() {
-            if(!confirm("Pending ছাড়া বাকি (Approved/Rejected/Expired) ফান্ড রিকোয়েস্টগুলো ক্লিয়ার করতে চান?")) return;
-            storeData.fundRequests = (storeData.fundRequests || []).filter(r => r.status === 'Pending');
-            saveToFirebase(true);
-            renderAdminFundRequests();
-            renderMyFundRequests();
-            showSuccessModal("Processed fund requests cleared!");
+            showSuccessModal(`Balance updated for UID: ${targetUid}! New Balance: ৳${storeData.userBalances[targetUid]}`);
         }
 
         function renderAdminFundRequests() {
             processFundRequestsLifecycle(false);
-            const listEl = document.getElementById('adminFundRequestsList');
-            const countBadge = document.getElementById('pendingFundCount');
+            const list = document.getElementById('adminFundRequestsList');
+            const badge = document.getElementById('pendingFundCount');
             const filterSel = document.getElementById('adminFundFilterSelect');
-            if(!listEl) return;
+            if(!list) return;
 
-            const allReqs = storeData.fundRequests || [];
-            const pendingList = allReqs.filter(r => r.status === "Pending");
-            if(countBadge) countBadge.innerText = `${pendingList.length} Pending`;
+            const allReqs = (storeData.fundRequests || []).slice(0, MAX_FUND_REQUESTS_DISPLAY);
+            const pendingList = allReqs.filter(r => r.status === 'Pending');
+            if(badge) badge.innerText = `${pendingList.length} Pending`;
 
-            const filterMode = filterSel ? filterSel.value : "Pending";
-            const displayList = filterMode === "All"
+            const activeFilter = filterSel ? filterSel.value : 'Pending';
+            const displayReqs = activeFilter === 'All'
                 ? allReqs
-                : allReqs.filter(r => r.status === filterMode);
+                : allReqs.filter(r => r.status === activeFilter);
 
-            if(displayList.length === 0) {
-                listEl.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No ${filterMode.toLowerCase()} fund requests.</p>`;
+            if(displayReqs.length === 0) {
+                list.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No ${activeFilter.toLowerCase()} fund requests.</p>`;
                 return;
             }
 
-            listEl.innerHTML = '';
-            displayList.forEach(req => {
-                const realIdx = allReqs.findIndex(item => item.id === req.id);
-                const isPending = req.status === "Pending";
+            list.innerHTML = '';
+            displayReqs.forEach((req, idx) => {
+                const isPending = req.status === 'Pending';
                 const remMs = getFundRemainingMs(req);
+                const statusTag = req.status === 'Approved'
+                    ? `<span class="bg-emerald-100 text-emerald-700 text-[10px] font-extrabold px-2 py-0.5 rounded-full">Approved</span>`
+                    : req.status === 'Rejected'
+                        ? `<span class="bg-rose-100 text-rose-700 text-[10px] font-extrabold px-2 py-0.5 rounded-full">Rejected</span>`
+                        : req.status === 'Expired'
+                            ? `<span class="bg-slate-200 text-slate-600 text-[10px] font-extrabold px-2 py-0.5 rounded-full">Expired</span>`
+                            : `<span class="bg-amber-100 text-amber-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full font-mono">⏱ ${formatMmSs(remMs)}</span>`;
 
-                let statusBadge = "bg-amber-100 text-amber-800";
-                if(req.status === "Approved") statusBadge = "bg-emerald-100 text-emerald-700";
-                if(req.status === "Rejected" || req.status === "Expired") statusBadge = "bg-red-100 text-red-700";
-
-                listEl.innerHTML += `
-                    <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-2 text-xs">
+                list.innerHTML += `
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs space-y-2">
                         <div class="flex justify-between items-start gap-2">
                             <div>
-                                <p class="font-bold text-slate-800">Amount: <span class="text-emerald-700">৳${req.amount}</span></p>
-                                <p class="text-[10px] font-mono text-indigo-700 font-bold">UID: ${req.uid}</p>
-                                <p class="text-[10px] font-mono text-slate-600">TrxID: <strong>${req.trxId}</strong></p>
-                                <p class="text-[9px] text-slate-400">${req.date || ''}</p>
-                            </div>
-                            <div class="text-right">
-                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${statusBadge}">${req.status}</span>
-                                ${isPending ? `<p class="text-[10px] font-mono font-bold text-red-600 mt-1">⏱ ${formatMmSs(remMs)}</p>` : ''}
+                                <div class="flex items-center gap-1.5 flex-wrap">
+                                    <span class="bg-red-50 text-red-600 font-mono font-bold text-[10px] px-1.5 py-0.5 rounded border border-red-200">UID: ${escapeHtml(req.uid)}</span>
+                                    <span class="font-bold text-slate-800 text-sm">৳${escapeHtml(req.amount)}</span>
+                                    ${statusTag}
+                                </div>
+                                <p class="text-[11px] font-mono text-slate-600 mt-1">TrxID: <strong>${escapeHtml(req.trxId)}</strong> • ID: ${escapeHtml(req.id)}</p>
+                                <p class="text-[10px] text-slate-400 mt-0.5">${escapeHtml(req.date || '')}</p>
                             </div>
                         </div>
                         ${isPending ? `
-                        <div class="flex gap-2 pt-1">
-                            <button onclick="approveFundRequest(${realIdx})" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-1.5 rounded-xl font-bold text-[11px] cursor-pointer">Approve</button>
-                            <button onclick="rejectFundRequest(${realIdx})" class="flex-1 bg-red-600 hover:bg-red-700 text-white py-1.5 rounded-xl font-bold text-[11px] cursor-pointer">Reject</button>
-                        </div>
-                        ` : ''}
+                            <div class="flex gap-2 pt-1">
+                                <button type="button" onclick="approveFundRequest('${escapeHtml(req.id)}')" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-1.5 rounded-lg text-[11px] font-bold cursor-pointer shadow-sm">
+                                    <i class="fa-solid fa-check mr-1"></i> Approve & Add ৳${escapeHtml(req.amount)}
+                                </button>
+                                <button type="button" onclick="rejectFundRequest('${escapeHtml(req.id)}')" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-lg text-[11px] font-bold cursor-pointer shadow-sm">
+                                    Reject
+                                </button>
+                            </div>
+                        ` : `
+                            <div class="flex justify-end">
+                                <button type="button" onclick="deleteSingleFundRequest('${escapeHtml(req.id)}')" class="text-rose-600 hover:underline text-[10px] font-bold cursor-pointer">
+                                    Remove Record
+                                </button>
+                            </div>
+                        `}
                     </div>
                 `;
             });
         }
 
-        window.approveFundRequest = function(index) {
+        window.approveFundRequest = function(reqId) {
             processFundRequestsLifecycle(false);
-            const req = storeData.fundRequests[index];
-            if(!req) return;
-            if(req.status !== "Pending") {
-                alert(`এই রিকোয়েস্টটি ইতিমধ্যে "${req.status}" অবস্থায় আছে!`);
+            const idx = (storeData.fundRequests || []).findIndex(r => r.id === reqId);
+            if(idx === -1) return;
+
+            const req = storeData.fundRequests[idx];
+            if(req.status !== 'Pending') {
+                alert("এই রিকোয়েস্টটি আর Pending অবস্থায় নেই!");
                 renderAdminFundRequests();
                 return;
             }
 
             if(!storeData.userBalances) storeData.userBalances = {};
-            const targetUid = req.uid;
-            storeData.userBalances[targetUid] = Number(storeData.userBalances[targetUid] || 0) + Number(req.amount);
+            const currentBal = Number(storeData.userBalances[req.uid] || 0);
+            storeData.userBalances[req.uid] = currentBal + Number(req.amount || 0);
 
-            req.status = "Approved";
+            req.status = 'Approved';
+            req.approvedAt = Date.now();
+            storeData.fundRequests = enforceMaxFiveFundRequests(storeData.fundRequests);
+
             saveToFirebase(true);
-            renderAdminFundRequests();
-            renderMyFundRequests();
             updateAccountUI();
-            renderSalesAnalyticsChart();
-            showSuccessModal(`৳${req.amount} সফলভাবে UID ${targetUid} এর ওয়ালেটে যুক্ত হয়েছে!`);
+            renderMyFundRequests();
+            renderAdminFundRequests();
+            showSuccessModal(`৳${req.amount} approved for UID: ${req.uid}!`);
         }
 
-        window.rejectFundRequest = function(index) {
-            const req = storeData.fundRequests[index];
-            if(!req) return;
-            req.status = "Rejected";
+        window.rejectFundRequest = function(reqId) {
+            processFundRequestsLifecycle(false);
+            const idx = (storeData.fundRequests || []).findIndex(r => r.id === reqId);
+            if(idx === -1) return;
+
+            storeData.fundRequests[idx].status = 'Rejected';
+            storeData.fundRequests[idx].rejectedAt = Date.now();
+            storeData.fundRequests = enforceMaxFiveFundRequests(storeData.fundRequests);
+
             saveToFirebase(true);
-            renderAdminFundRequests();
             renderMyFundRequests();
+            renderAdminFundRequests();
             showSuccessModal("Fund request rejected.");
         }
 
-        window.clearCompletedOrders = function() {
-            if(!confirm("Completed অর্ডারগুলো লিস্ট থেকে ক্লিয়ার করতে চান?")) return;
-            storeData.orders = (storeData.orders || []).filter(o => o.status !== "Completed");
+        window.deleteSingleFundRequest = function(reqId) {
+            storeData.fundRequests = (storeData.fundRequests || []).filter(r => r.id !== reqId);
             saveToFirebase(true);
-            renderAdminUserOrders();
-            renderOrders();
-            showSuccessModal("Completed orders cleared!");
+            renderMyFundRequests();
+            renderAdminFundRequests();
         }
 
-        function renderAdminUserOrders() {
-            const listEl = document.getElementById('adminUserOrdersList');
-            const badgeEl = document.getElementById('pendingOrderCount');
-            const filterSel = document.getElementById('adminOrderFilterSelect');
-            if(!listEl) return;
+        window.clearProcessedFundRequests = function() {
+            if (!confirm("Approved / Rejected / Expired ফান্ড রিকোয়েস্টগুলো মুছে ফেলতে চান?")) return;
+            storeData.fundRequests = (storeData.fundRequests || []).filter(r => r.status === 'Pending').slice(0, MAX_FUND_REQUESTS_DISPLAY);
+            saveToFirebase(true);
+            renderMyFundRequests();
+            renderAdminFundRequests();
+            showSuccessModal("Processed fund requests cleared!");
+        }
 
-            const allOrders = storeData.orders || [];
-            const pendingOrders = allOrders.filter(o => o.status !== "Completed");
-            if(badgeEl) badgeEl.innerText = `${pendingOrders.length} Pending`;
+        setInterval(() => {
+            processFundRequestsLifecycle(false);
+            if(!document.getElementById('fundView').classList.contains('hidden')) {
+                renderMyFundRequests();
+            }
+            if(!document.getElementById('adminDashboard').classList.contains('hidden')) {
+                renderAdminFundRequests();
+            }
+            if(!document.getElementById('dailySpinModal').classList.contains('hidden') || !document.getElementById('homeView').classList.contains('hidden')) {
+                updateSpinAvailabilityUI();
+            }
+        }, 1000);
 
-            const mode = filterSel ? filterSel.value : "Pending";
-            const filtered = mode === "All"
-                ? allOrders
-                : allOrders.filter(o => (o.status || "Pending") === mode);
+        window.sendDirectKeyToUid = function() {
+            const targetUid = document.getElementById('directKeyUid').value.trim();
+            const panelName = document.getElementById('directKeyPanel').value.trim() || "Panel";
+            const duration = document.getElementById('directKeyTime').value.trim() || "Package";
+            const keyCode = document.getElementById('directKeyCode').value.trim();
 
-            if(filtered.length === 0) {
-                listEl.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No ${mode.toLowerCase()} orders found.</p>`;
+            if(!targetUid) {
+                alert("Please enter the User's UID!");
+                return;
+            }
+            if(!keyCode) {
+                alert("Please enter the Key code!");
                 return;
             }
 
-            listEl.innerHTML = '';
-            filtered.forEach(o => {
-                const realIdx = allOrders.findIndex(item => item.id === o.id);
-                const statusBadge = o.status === "Completed" ? "bg-emerald-100 text-emerald-700" : "bg-amber-100 text-amber-800";
-                const displayCode = o.orderCode || o.id;
-                listEl.innerHTML += `
-                    <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-2 text-xs">
-                        <div class="flex justify-between items-start gap-2">
-                            <div>
-                                <p class="font-bold text-slate-800">${escapeHtml(o.name)}</p>
-                                <p class="text-[10px] font-mono font-bold text-indigo-700">Order #${escapeHtml(displayCode)} • UID: ${escapeHtml(o.uid)}</p>
-                                <p class="text-[9px] text-slate-400">${escapeHtml(o.date || '')}</p>
-                            </div>
-                            <div class="text-right">
-                                <p class="font-bold text-emerald-700">৳${o.price}</p>
-                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${statusBadge}">${o.status}</span>
-                            </div>
+            if(!storeData.keys) storeData.keys = [];
+            const orderCode = generateSixDigitOrderId();
+            const nowTs = Date.now();
+            const formattedDate = formatCardDateTime(nowTs);
+
+            storeData.keys.unshift({
+                orderId: orderCode,
+                orderCode: orderCode,
+                uid: targetUid,
+                panel: panelName,
+                package: duration,
+                key: keyCode,
+                createdAtTs: nowTs,
+                date: formattedDate
+            });
+
+            if(!storeData.orders) storeData.orders = [];
+            const pendingIdx = storeData.orders.findIndex(o => o.uid === targetUid && (!o.deliveredKey || o.status !== 'Completed'));
+            if(pendingIdx !== -1) {
+                storeData.orders[pendingIdx].status = 'Completed';
+                storeData.orders[pendingIdx].deliveredKey = keyCode;
+            }
+
+            const buyerLabel = buildRecentBuyerLabel(targetUid);
+            const detailStr = duration ? `${panelName} ${duration}` : panelName;
+            const matchingOrder = (storeData.orders || []).find(o => o.uid === targetUid);
+            const priceStr = matchingOrder ? `${matchingOrder.price}৳` : "";
+            pushCompletedRecentOrder(buyerLabel, detailStr, priceStr, targetUid);
+
+            document.getElementById('directKeyUid').value = '';
+            document.getElementById('directKeyPanel').value = '';
+            document.getElementById('directKeyTime').value = '';
+            document.getElementById('directKeyCode').value = '';
+
+            saveToFirebase(true);
+            renderKeys();
+            renderOrders();
+            renderHomeTabContent();
+            renderAdminUserOrders();
+            renderAdminHomeLists();
+            showSuccessModal(`Key sent to UID: ${targetUid}!`);
+        }
+
+        function renderAdminUserOrders() {
+            const list = document.getElementById('adminUserOrdersList');
+            const badge = document.getElementById('pendingOrderCount');
+            const filterSel = document.getElementById('adminOrderFilterSelect');
+            if(!list) return;
+
+            const allOrders = storeData.orders || [];
+            const pendingOrders = allOrders.filter(o => o.status !== 'Completed' && !o.deliveredKey);
+            if(badge) badge.innerText = `${pendingOrders.length} Pending`;
+
+            const mode = filterSel ? filterSel.value : 'Pending';
+            const filtered = mode === 'All'
+                ? allOrders
+                : (mode === 'Completed'
+                    ? allOrders.filter(o => o.status === 'Completed' || Boolean(o.deliveredKey))
+                    : pendingOrders);
+
+            if(filtered.length === 0) {
+                list.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No ${mode.toLowerCase()} orders.</p>`;
+                return;
+            }
+
+            list.innerHTML = '';
+            filtered.forEach((ord) => {
+                const actualIndex = allOrders.indexOf(ord);
+                const isDone = ord.status === 'Completed' || Boolean(ord.deliveredKey);
+                const codeVal = ord.orderCode || ord.id || '000000';
+
+                list.innerHTML += `
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="bg-red-50 text-red-600 font-mono font-bold text-[10px] px-1.5 py-0.5 rounded border border-red-200">UID: ${escapeHtml(ord.uid || 'N/A')}</span>
+                            <span class="font-mono font-extrabold text-indigo-700 text-[10px]">#${escapeHtml(codeVal)}</span>
+                            <span class="${isDone ? 'text-emerald-600' : 'text-amber-600'} font-extrabold text-[10px]">${isDone ? 'Completed' : (ord.status || 'Pending')}</span>
                         </div>
-                        ${o.status !== "Completed" ? `
-                        <div class="flex gap-1.5 pt-1">
-                            <input type="text" id="orderKeyInput-${realIdx}" placeholder="Enter key to deliver..." class="flex-1 bg-white border border-slate-200 px-2.5 py-1.5 rounded-lg text-xs font-mono">
-                            <button onclick="deliverKeyForOrder(${realIdx})" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-[11px] font-bold cursor-pointer">Deliver</button>
+                        <div>
+                            <p class="font-bold text-slate-800">${escapeHtml(ord.name)} (${escapeHtml(ord.package || '')}) — <span class="text-emerald-600">৳${escapeHtml(ord.price)}</span></p>
+                            <p class="text-[10px] text-slate-400">${escapeHtml(ord.date || '')}</p>
                         </div>
-                        ` : ''}
+                        ${!isDone ? `
+                            <div class="flex gap-1.5 pt-1">
+                                <input type="text" id="inlineKeyInput-${actualIndex}" placeholder="Enter key to deliver..." class="flex-1 bg-white border border-slate-300 px-2 py-1.5 rounded-lg text-xs font-mono">
+                                <button type="button" onclick="deliverKeyToUser(${actualIndex})" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-[10px] font-bold cursor-pointer shadow-sm">
+                                    Deliver Key
+                                </button>
+                            </div>
+                        ` : `
+                            <div class="flex items-center justify-between gap-2 bg-emerald-50/80 border border-emerald-200 px-2.5 py-1.5 rounded-lg">
+                                <p class="text-[10px] text-emerald-800 font-mono font-bold break-all">Key: ${escapeHtml(ord.deliveredKey || 'Delivered')}</p>
+                                <button type="button" onclick="deleteOrderRecord(${actualIndex})" class="text-rose-600 hover:underline text-[10px] font-bold cursor-pointer shrink-0">Delete</button>
+                            </div>
+                        `}
                     </div>
                 `;
             });
         }
 
-        window.deliverKeyForOrder = function(orderIndex) {
-            const ord = storeData.orders[orderIndex];
-            if(!ord) return;
-            const keyInp = document.getElementById(`orderKeyInput-${orderIndex}`);
-            const keyCode = keyInp ? keyInp.value.trim() : '';
-            if(!keyCode) return alert("ডেলিভার করার জন্য Key লিখুন!");
-
-            if(!storeData.keys) storeData.keys = [];
-            const orderIdCode = ord.orderCode || ord.id || generateSixDigitOrderId();
-            const nowDateStr = formatCardDateTime(Date.now());
-            const durationText = ord.duration || "1 Hours";
-            const expiryTs = calculateExpiryTimestamp(durationText);
-
-            storeData.keys.unshift({
-                id: orderIdCode,
-                orderCode: orderIdCode,
-                uid: ord.uid,
-                panel: ord.name,
-                panelName: ord.panelName || ord.name,
-                duration: durationText,
-                key: keyCode,
-                date: nowDateStr,
-                expiryTimestamp: expiryTs
-            });
-
-            ord.status = "Completed";
-            markRecentOrderCompletedByUidAndPanel(ord.uid, ord.panelName || ord.name, durationText);
-
+        window.deleteOrderRecord = function(index) {
+            if (!confirm("এই অর্ডার রেকর্ডটি ডিলিট করতে চান?")) return;
+            storeData.orders.splice(index, 1);
             saveToFirebase(true);
             renderOrders();
-            renderKeys();
-            renderHomeTabContent();
             renderAdminUserOrders();
-            renderSalesAnalyticsChart();
-            showSuccessModal(`Key (Order #${orderIdCode}) সফলভাবে UID ${ord.uid} কে ডেলিভার করা হয়েছে!`);
         }
 
-        function renderSalesAnalyticsChart() {
-            const canvas = document.getElementById('salesAnalyticsChart');
-            if(!canvas || typeof Chart === 'undefined') return;
+        window.clearCompletedOrders = function() {
+            if (!confirm("Completed অর্ডারগুলো তালিকা থেকে পরিষ্কার করতে চান?")) return;
+            storeData.orders = (storeData.orders || []).filter(o => o.status !== 'Completed' && !o.deliveredKey);
+            saveToFirebase(true);
+            renderOrders();
+            renderAdminUserOrders();
+            showSuccessModal("Completed orders cleared!");
+        }
 
-            const orders = storeData.orders || [];
-            const funds = (storeData.fundRequests || []).filter(f => f.status === 'Approved');
+        window.deliverKeyToUser = function(index) {
+            const ord = storeData.orders[index];
+            if(!ord) return;
 
-            const completedSales = orders
-                .filter(o => o.status === 'Completed')
-                .reduce((s, o) => s + Number(o.price || 0), 0);
+            const inputEl = document.getElementById(`inlineKeyInput-${index}`);
+            const keyCode = inputEl ? inputEl.value.trim() : '';
 
-            const pendingSales = orders
-                .filter(o => o.status !== 'Completed')
-                .reduce((s, o) => s + Number(o.price || 0), 0);
-
-            const approvedFundTotal = funds.reduce((s, f) => s + Number(f.amount || 0), 0);
-            const totalKeysSent = (storeData.keys || []).length;
-
-            if(salesChartInstance) {
-                salesChartInstance.destroy();
+            if(!keyCode) {
+                alert("Please enter a key first!");
+                return;
             }
 
-            salesChartInstance = new Chart(canvas.getContext('2d'), {
-                type: 'bar',
-                data: {
-                    labels: ['Completed Sales (৳)', 'Pending Orders (৳)', 'Approved Fund (৳)', 'Keys Sent'],
-                    datasets: [{
-                        label: 'Store Metrics',
-                        data: [completedSales, pendingSales, approvedFundTotal, totalKeysSent],
-                        backgroundColor: [
-                            storeData.themeColor || '#4f46e5',
-                            '#f59e0b',
-                            '#10b981',
-                            '#0ea5e9'
-                        ],
-                        borderRadius: 8
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: { font: { size: 10 } }
-                        },
-                        x: {
-                            ticks: { font: { size: 9 } }
-                        }
-                    }
-                }
+            ord.status = 'Completed';
+            ord.deliveredKey = keyCode;
+
+            if(!storeData.keys) storeData.keys = [];
+            const orderCodeVal = ord.orderCode || ord.id || generateSixDigitOrderId();
+            const nowTs = Date.now();
+            const formattedDate = ord.date || formatCardDateTime(nowTs);
+
+            storeData.keys.unshift({
+                orderId: orderCodeVal,
+                orderCode: orderCodeVal,
+                uid: ord.uid,
+                supportPin: ord.supportPin || '',
+                panel: ord.name,
+                package: ord.package,
+                price: ord.price,
+                key: keyCode,
+                createdAtTs: nowTs,
+                date: formattedDate
             });
+
+            const buyerLabel = buildRecentBuyerLabel(ord.uid);
+            const detailStr = ord.package ? `${ord.name} ${ord.package}` : ord.name;
+            const priceStr = ord.price !== undefined ? `${ord.price}৳` : "";
+            pushCompletedRecentOrder(buyerLabel, detailStr, priceStr, ord.uid);
+
+            saveToFirebase(true);
+            renderKeys();
+            renderOrders();
+            renderHomeTabContent();
+            renderAdminUserOrders();
+            renderAdminHomeLists();
+            showSuccessModal(`Key delivered to UID: ${ord.uid}!`);
         }
 
         function renderAdminHomeLists() {
-            const recEl = document.getElementById('adminRecentOrdersList');
-            if(recEl) {
-                recEl.innerHTML = '';
-                (storeData.homeRecentOrders || []).forEach((item, idx) => {
-                    recEl.innerHTML += `
-                        <div class="bg-slate-50 p-2 rounded-xl border border-slate-200 flex items-center gap-1.5 text-xs">
-                            <input type="text" value="${escapeHtml(item.name)}" onchange="updateHomeList('recent', ${idx}, 'name', this.value)" class="w-24 bg-white px-2 py-1 rounded border border-slate-200 font-bold" placeholder="Name">
-                            <input type="text" value="${escapeHtml(item.details)}" onchange="updateHomeList('recent', ${idx}, 'details', this.value)" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200" placeholder="Panel & Time">
-                            <input type="text" value="${escapeHtml(item.price)}" onchange="updateHomeList('recent', ${idx}, 'price', this.value)" class="w-16 bg-white px-2 py-1 rounded border border-slate-200 font-bold" placeholder="Price">
-                            <button onclick="deleteHomeList('recent', ${idx})" class="text-red-500 px-1.5 cursor-pointer"><i class="fa-solid fa-trash"></i></button>
-                        </div>
-                    `;
-                });
+            const recContainer = document.getElementById('adminRecentOrdersList');
+            const topContainer = document.getElementById('adminTopBuyersList');
+            const feedContainer = document.getElementById('adminFeedbacksList');
+            if(!recContainer || !topContainer || !feedContainer) return;
+
+            if(!Array.isArray(storeData.homeRecentOrders)) storeData.homeRecentOrders = [];
+            if(storeData.homeRecentOrders.length > MAX_RECENT_ORDERS) {
+                storeData.homeRecentOrders = storeData.homeRecentOrders.slice(0, MAX_RECENT_ORDERS);
             }
 
-            const topEl = document.getElementById('adminTopBuyersList');
-            if(topEl) {
-                topEl.innerHTML = '';
-                (storeData.homeTopBuyers || []).forEach((item, idx) => {
-                    topEl.innerHTML += `
-                        <div class="bg-slate-50 p-2 rounded-xl border border-slate-200 flex items-center gap-1.5 text-xs">
-                            <input type="text" value="${escapeHtml(item.name)}" onchange="updateHomeList('top', ${idx}, 'name', this.value)" class="w-24 bg-white px-2 py-1 rounded border border-slate-200 font-bold" placeholder="Name">
-                            <input type="text" value="${escapeHtml(item.badge)}" onchange="updateHomeList('top', ${idx}, 'badge', this.value)" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200" placeholder="Badge">
-                            <input type="text" value="${escapeHtml(item.spent)}" onchange="updateHomeList('top', ${idx}, 'spent', this.value)" class="w-16 bg-white px-2 py-1 rounded border border-slate-200 font-bold text-emerald-700" placeholder="Spent">
-                            <button onclick="deleteHomeList('top', ${idx})" class="text-red-500 px-1.5 cursor-pointer"><i class="fa-solid fa-trash"></i></button>
+            recContainer.innerHTML = '';
+            storeData.homeRecentOrders.forEach((item, idx) => {
+                recContainer.innerHTML += `
+                    <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-xs space-y-1.5">
+                        <div class="flex justify-between items-center gap-1.5">
+                            <input type="text" value="${escapeHtml(item.name)}" onchange="updateHomeListItem('recent', ${idx}, 'name', this.value)" placeholder="Buyer Name" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200 font-bold">
+                            <input type="text" value="${escapeHtml(item.price)}" onchange="updateHomeListItem('recent', ${idx}, 'price', this.value)" placeholder="15৳" class="w-16 bg-white px-2 py-1 rounded border border-slate-200 font-bold text-emerald-700">
+                            <select onchange="updateHomeListItem('recent', ${idx}, 'status', this.value)" class="bg-white px-1.5 py-1 rounded border border-slate-200 text-[10px] font-bold">
+                                <option value="Completed" ${(item.status || 'Completed') === 'Completed' ? 'selected' : ''}>Completed</option>
+                                <option value="Pending" ${item.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                            </select>
+                            <button onclick="deleteHomeListItem('recent', ${idx})" class="text-red-500 hover:text-red-700 px-1 cursor-pointer"><i class="fa-solid fa-trash"></i></button>
                         </div>
-                    `;
-                });
-            }
+                        <input type="text" value="${escapeHtml(item.details)}" onchange="updateHomeListItem('recent', ${idx}, 'details', this.value)" placeholder="Panel & Duration" class="w-full bg-white px-2 py-1 rounded border border-slate-200 text-[11px]">
+                    </div>
+                `;
+            });
 
-            const feedEl = document.getElementById('adminFeedbacksList');
-            if(feedEl) {
-                feedEl.innerHTML = '';
-                (storeData.homeFeedbacks || []).forEach((item, idx) => {
-                    feedEl.innerHTML += `
-                        <div class="bg-slate-50 p-2 rounded-xl border border-slate-200 flex items-center gap-1.5 text-xs">
-                            <input type="text" value="${escapeHtml(item.name)}" onchange="updateHomeList('feedback', ${idx}, 'name', this.value)" class="w-24 bg-white px-2 py-1 rounded border border-slate-200 font-bold" placeholder="Name">
-                            <input type="number" min="1" max="5" value="${item.stars || 5}" onchange="updateHomeList('feedback', ${idx}, 'stars', this.value)" class="w-12 bg-white px-2 py-1 rounded border border-slate-200 font-bold" placeholder="★">
-                            <input type="text" value="${escapeHtml(item.comment || '')}" onchange="updateHomeList('feedback', ${idx}, 'comment', this.value)" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200" placeholder="Comment">
-                            <button onclick="deleteHomeList('feedback', ${idx})" class="text-red-500 px-1.5 cursor-pointer"><i class="fa-solid fa-trash"></i></button>
+            topContainer.innerHTML = '';
+            (storeData.homeTopBuyers || []).forEach((item, idx) => {
+                topContainer.innerHTML += `
+                    <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-xs space-y-1.5">
+                        <div class="flex justify-between items-center gap-1.5">
+                            <input type="text" value="${item.name}" onchange="updateHomeListItem('topbuyer', ${idx}, 'name', this.value)" placeholder="Buyer Name" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200 font-bold">
+                            <input type="text" value="${item.spent}" onchange="updateHomeListItem('topbuyer', ${idx}, 'spent', this.value)" placeholder="195৳" class="w-20 bg-white px-2 py-1 rounded border border-slate-200 font-bold text-emerald-700">
+                            <button onclick="deleteHomeListItem('topbuyer', ${idx})" class="text-red-500 hover:text-red-700 px-1 cursor-pointer"><i class="fa-solid fa-trash"></i></button>
                         </div>
-                    `;
-                });
-            }
-        }
+                        <input type="text" value="${item.badge}" onchange="updateHomeListItem('topbuyer', ${idx}, 'badge', this.value)" placeholder="Top Member • #1" class="w-full bg-white px-2 py-1 rounded border border-slate-200 text-[11px]">
+                    </div>
+                `;
+            });
 
-        window.updateHomeList = function(type, idx, field, val) {
-            if(type === 'recent' && storeData.homeRecentOrders[idx]) {
-                storeData.homeRecentOrders[idx][field] = val;
-            } else if(type === 'top' && storeData.homeTopBuyers[idx]) {
-                storeData.homeTopBuyers[idx][field] = val;
-            } else if(type === 'feedback' && storeData.homeFeedbacks[idx]) {
-                storeData.homeFeedbacks[idx][field] = field === 'stars' ? Number(val) : val;
-            }
-            saveToFirebase(false);
-            renderHomeTabContent();
+            feedContainer.innerHTML = '';
+            (storeData.homeFeedbacks || []).forEach((item, idx) => {
+                feedContainer.innerHTML += `
+                    <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-xs space-y-1.5">
+                        <div class="flex justify-between items-center gap-1.5">
+                            <input type="text" value="${item.name}" onchange="updateHomeListItem('feedback', ${idx}, 'name', this.value)" placeholder="User Name" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200 font-bold">
+                            <input type="number" min="1" max="5" value="${item.stars || 5}" onchange="updateHomeListItem('feedback', ${idx}, 'stars', this.value)" class="w-14 bg-white px-2 py-1 rounded border border-slate-200 font-bold text-amber-600 text-center">
+                            <button onclick="deleteHomeListItem('feedback', ${idx})" class="text-red-500 hover:text-red-700 px-1 cursor-pointer"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                        <input type="text" value="${item.comment || ''}" onchange="updateHomeListItem('feedback', ${idx}, 'comment', this.value)" placeholder="Feedback comment (optional)" class="w-full bg-white px-2 py-1 rounded border border-slate-200 text-[11px]">
+                    </div>
+                `;
+            });
         }
 
         window.addAdminRecentOrder = function() {
-            if(!storeData.homeRecentOrders) storeData.homeRecentOrders = [];
-            storeData.homeRecentOrders.unshift({
-                name: "New Buyer",
-                details: "Panel - 1 Hours",
-                price: "20৳",
-                status: "Completed"
-            });
+            if(!Array.isArray(storeData.homeRecentOrders)) storeData.homeRecentOrders = [];
+            storeData.homeRecentOrders.unshift({ name: "New Buyer", details: "Aim Hack 1 Hours", price: "15৳", status: "Completed" });
             if(storeData.homeRecentOrders.length > MAX_RECENT_ORDERS) {
                 storeData.homeRecentOrders = storeData.homeRecentOrders.slice(0, MAX_RECENT_ORDERS);
             }
@@ -5031,12 +5146,8 @@ Current User Info:
 
         window.addAdminTopBuyer = function() {
             if(!storeData.homeTopBuyers) storeData.homeTopBuyers = [];
-            storeData.homeTopBuyers.push({
-                name: "Top User",
-                badge: "Top Member",
-                spent: "100৳",
-                avatarBg: "bg-indigo-100 text-indigo-700"
-            });
+            const nextRank = storeData.homeTopBuyers.length + 1;
+            storeData.homeTopBuyers.push({ name: "Top User", badge: `Top Member • #${nextRank}`, spent: "100৳", avatarBg: "bg-indigo-100 text-indigo-700" });
             saveToFirebase(true);
             renderAdminHomeLists();
             renderHomeTabContent();
@@ -5044,61 +5155,130 @@ Current User Info:
 
         window.addAdminFeedback = function() {
             if(!storeData.homeFeedbacks) storeData.homeFeedbacks = [];
-            storeData.homeFeedbacks.push({
-                name: "Buyer",
-                status: "Verified Buyer",
-                stars: 5,
-                comment: "Good service!"
-            });
+            storeData.homeFeedbacks.unshift({ name: "Verified User", status: "Verified Buyer", stars: 5, comment: "Good service!" });
             saveToFirebase(true);
             renderAdminHomeLists();
             renderHomeTabContent();
         }
 
-        window.deleteHomeList = function(type, idx) {
-            if(type === 'recent') storeData.homeRecentOrders.splice(idx, 1);
-            else if(type === 'top') storeData.homeTopBuyers.splice(idx, 1);
-            else if(type === 'feedback') storeData.homeFeedbacks.splice(idx, 1);
+        window.updateHomeListItem = function(type, index, field, value) {
+            if(type === 'recent' && storeData.homeRecentOrders[index]) {
+                storeData.homeRecentOrders[index][field] = value;
+                if(storeData.homeRecentOrders.length > MAX_RECENT_ORDERS) {
+                    storeData.homeRecentOrders = storeData.homeRecentOrders.slice(0, MAX_RECENT_ORDERS);
+                }
+            } else if(type === 'topbuyer' && storeData.homeTopBuyers[index]) {
+                storeData.homeTopBuyers[index][field] = value;
+            } else if(type === 'feedback' && storeData.homeFeedbacks[index]) {
+                storeData.homeFeedbacks[index][field] = field === 'stars' ? Number(value) : value;
+            }
+            saveToFirebase(true);
+            renderHomeTabContent();
+        }
+
+        window.deleteHomeListItem = function(type, index) {
+            if(type === 'recent') storeData.homeRecentOrders.splice(index, 1);
+            else if(type === 'topbuyer') storeData.homeTopBuyers.splice(index, 1);
+            else if(type === 'feedback') storeData.homeFeedbacks.splice(index, 1);
             saveToFirebase(true);
             renderAdminHomeLists();
             renderHomeTabContent();
+        }
+
+        function renderSalesAnalyticsChart() {
+            const ctx = document.getElementById('salesAnalyticsChart');
+            if(!ctx || typeof Chart === 'undefined') return;
+
+            const orders = storeData.orders || [];
+            const totalOrdersCount = orders.length;
+            const totalRevenueAmt = orders.reduce((sum, o) => sum + Number(o.price || 0), 0);
+
+            const byPanel = {};
+            orders.forEach(o => {
+                const key = o.name || "Panel";
+                byPanel[key] = (byPanel[key] || 0) + Number(o.price || 0);
+            });
+
+            const panelEntries = Object.entries(byPanel).slice(0, 5);
+            const labels = panelEntries.length > 0
+                ? [...panelEntries.map(e => e[0]), "Total Orders"]
+                : ["No Sales Yet", "Total Orders"];
+            const values = panelEntries.length > 0
+                ? [...panelEntries.map(e => e[1]), totalOrdersCount]
+                : [0, totalOrdersCount];
+
+            if(salesChartInstance) {
+                salesChartInstance.destroy();
+            }
+
+            salesChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: `Revenue (৳${totalRevenueAmt}) / Count`,
+                        data: values,
+                        backgroundColor: [
+                            storeData.themeColor || '#4f46e5',
+                            '#10b981',
+                            '#f59e0b',
+                            '#ec4899',
+                            '#3b82f6',
+                            '#ef4444'
+                        ],
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            labels: { boxWidth: 10, font: { size: 10 } }
+                        }
+                    },
+                    scales: {
+                        x: { ticks: { font: { size: 9 } } },
+                        y: { beginAtZero: true, ticks: { font: { size: 9 } } }
+                    }
+                }
+            });
         }
 
         function renderDeviceList() {
             const container = document.getElementById('deviceListContainer');
-            const suspContainer = document.getElementById('suspendedDeviceListContainer');
+            const susContainer = document.getElementById('suspendedDeviceListContainer');
             const countBadge = document.getElementById('activeDeviceCount');
-            const suspCountBadge = document.getElementById('suspendedDeviceCount');
+            const susBadge = document.getElementById('suspendedDeviceCount');
             if(!container) return;
 
-            const devicesObj = storeData.devices || {};
-            const allDevices = Object.values(devicesObj);
+            const allDevices = Object.values(storeData.devices || {});
             const activeDevices = allDevices.filter(d => !d.isSuspended);
             const suspendedDevices = allDevices.filter(d => Boolean(d.isSuspended));
 
-            if(countBadge) countBadge.innerText = `${activeDevices.length} Active`;
-            if(suspCountBadge) suspCountBadge.innerText = `${suspendedDevices.length} Suspended`;
+            if(countBadge) countBadge.innerText = `${activeDevices.length} Device${activeDevices.length !== 1 ? 's' : ''}`;
+            if(susBadge) susBadge.innerText = `${suspendedDevices.length} Suspended`;
 
-            container.innerHTML = '';
             if(activeDevices.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No active devices found.</p>`;
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No active devices.</p>`;
             } else {
-                activeDevices.forEach((dev) => {
-                    const devUid = dev.uid || "N/A";
-                    const devPin = dev.supportPin || "N/A";
-                    const uBal = Number((storeData.userBalances && storeData.userBalances[devUid]) || 0);
+                container.innerHTML = '';
+                activeDevices.forEach(dev => {
+                    const uBal = (storeData.userBalances && storeData.userBalances[dev.uid]) || 0;
+                    const uPin = dev.supportPin || (storeData.users && storeData.users[dev.uid] && storeData.users[dev.uid].supportPin) || '----';
                     container.innerHTML += `
-                        <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 flex justify-between items-center text-xs shadow-sm gap-2">
-                            <div class="space-y-0.5 min-w-0">
+                        <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 flex justify-between items-center text-xs shadow-sm">
+                            <div>
                                 <div class="flex items-center gap-1.5 flex-wrap">
-                                    <span class="font-bold text-slate-800">${escapeHtml(dev.model || 'Unknown Device')}</span>
-                                    <span class="bg-red-50 text-red-600 border border-red-200 px-1.5 py-0.5 rounded font-mono font-extrabold text-[10px]">UID: ${escapeHtml(devUid)}</span>
-                                    <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-1.5 py-0.5 rounded font-mono font-bold text-[10px]">Bal: ৳${uBal}</span>
+                                    <span class="bg-red-50 text-red-600 font-mono font-bold text-[10px] px-1.5 py-0.5 rounded border border-red-200">UID: ${dev.uid}</span>
+                                    <span class="bg-slate-200 text-slate-700 font-mono text-[9px] px-1.5 py-0.5 rounded">PIN: ${uPin}</span>
+                                    <span class="bg-emerald-50 text-emerald-700 font-bold text-[10px] px-1.5 py-0.5 rounded border border-emerald-200">Bal: ৳${uBal}</span>
+                                    <span class="font-bold text-slate-800">${dev.model || 'Unknown Device'}</span>
                                 </div>
-                                <p class="text-[10px] text-slate-500 font-mono">PIN: ${escapeHtml(devPin)} • ${escapeHtml(dev.os || '')} • ${escapeHtml(dev.browser || '')}</p>
-                                <p class="text-[9px] text-slate-400">Last Active: ${escapeHtml(dev.lastActive || '')}</p>
+                                <p class="text-[10px] text-slate-500 mt-1">${dev.os || ''} • ${dev.browser || ''} • <span class="text-slate-400">${dev.lastActive || ''}</span></p>
                             </div>
-                            <button type="button" onclick="toggleSuspendDevice('${dev.id}', true)" class="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-3 py-1.5 rounded-xl font-bold text-[11px] cursor-pointer shrink-0">
+                            <button type="button" onclick="toggleSuspendDevice('${dev.id}', true)" class="px-2.5 py-1.5 rounded-lg text-[10px] font-bold bg-red-600 hover:bg-red-700 text-white cursor-pointer shrink-0">
                                 Suspend
                             </button>
                         </div>
@@ -5106,26 +5286,26 @@ Current User Info:
                 });
             }
 
-            if(suspContainer) {
-                suspContainer.innerHTML = '';
+            if(susContainer) {
                 if(suspendedDevices.length === 0) {
-                    suspContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No suspended devices.</p>`;
+                    susContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No suspended devices.</p>`;
                 } else {
-                    suspendedDevices.forEach((dev) => {
-                        const devUid = dev.uid || "N/A";
-                        const devPin = dev.supportPin || "N/A";
-                        suspContainer.innerHTML += `
-                            <div class="bg-white p-3 rounded-2xl border border-red-200 flex justify-between items-center text-xs shadow-sm gap-2">
-                                <div class="space-y-0.5 min-w-0">
+                    susContainer.innerHTML = '';
+                    suspendedDevices.forEach(dev => {
+                        const uBal = (storeData.userBalances && storeData.userBalances[dev.uid]) || 0;
+                        const uPin = dev.supportPin || (storeData.users && storeData.users[dev.uid] && storeData.users[dev.uid].supportPin) || '----';
+                        susContainer.innerHTML += `
+                            <div class="bg-white p-3 rounded-2xl border border-red-200 flex justify-between items-center text-xs shadow-sm">
+                                <div>
                                     <div class="flex items-center gap-1.5 flex-wrap">
-                                        <span class="font-bold text-slate-800">${escapeHtml(dev.model || 'Unknown Device')}</span>
-                                        <span class="bg-red-100 text-red-700 border border-red-300 px-1.5 py-0.5 rounded font-mono font-extrabold text-[10px]">UID: ${escapeHtml(devUid)}</span>
-                                        <span class="bg-red-600 text-white px-1.5 py-0.5 rounded font-bold text-[9px]">SUSPENDED</span>
+                                        <span class="bg-red-100 text-red-700 font-mono font-bold text-[10px] px-1.5 py-0.5 rounded border border-red-300">UID: ${dev.uid}</span>
+                                        <span class="bg-slate-100 text-slate-700 font-mono text-[9px] px-1.5 py-0.5 rounded">PIN: ${uPin}</span>
+                                        <span class="bg-emerald-50 text-emerald-700 font-bold text-[10px] px-1.5 py-0.5 rounded border border-emerald-200">Bal: ৳${uBal}</span>
+                                        <span class="font-bold text-slate-800">${dev.model || 'Unknown Device'}</span>
                                     </div>
-                                    <p class="text-[10px] text-slate-500 font-mono">PIN: ${escapeHtml(devPin)} • ${escapeHtml(dev.os || '')}</p>
-                                    <p class="text-[9px] text-slate-400">Last Active: ${escapeHtml(dev.lastActive || '')}</p>
+                                    <p class="text-[10px] text-slate-500 mt-1">${dev.os || ''} • ${dev.browser || ''} • <span class="text-red-600 font-semibold">Suspended</span></p>
                                 </div>
-                                <button type="button" onclick="toggleSuspendDevice('${dev.id}', false)" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl font-bold text-[11px] cursor-pointer shadow-sm shrink-0">
+                                <button type="button" onclick="toggleSuspendDevice('${dev.id}', false)" class="px-2.5 py-1.5 rounded-lg text-[10px] font-bold bg-emerald-600 hover:bg-emerald-700 text-white cursor-pointer shrink-0">
                                     Unsuspend
                                 </button>
                             </div>
@@ -5136,46 +5316,41 @@ Current User Info:
         }
 
         window.toggleSuspendDevice = function(targetDevId, shouldSuspend) {
-            if(!storeData.devices || !storeData.devices[targetDevId]) return;
-            storeData.devices[targetDevId].isSuspended = Boolean(shouldSuspend);
-            update(ref(db, `panelStore/devices/${targetDevId}`), {
-                isSuspended: Boolean(shouldSuspend)
-            }).catch(() => {});
-            saveToFirebase(true);
-            renderDeviceList();
-            showSuccessModal(shouldSuspend ? `Device ${targetDevId} suspended!` : `Device ${targetDevId} unsuspended!`);
+            if(storeData.devices && storeData.devices[targetDevId]) {
+                storeData.devices[targetDevId].isSuspended = Boolean(shouldSuspend);
+                update(ref(db, 'panelStore/devices/' + targetDevId), { isSuspended: Boolean(shouldSuspend) });
+                renderDeviceList();
+            }
         }
 
         function renderAdminPanels() {
-            const list = document.getElementById('adminPanelList');
-            list.innerHTML = '';
-
-            const catOptionsHtml = (storeData.categories || ["Non Root", "Root", "iPhone", "PC"])
-                .map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`)
-                .join('');
+            const container = document.getElementById('adminPanelList');
+            container.innerHTML = '';
 
             (storeData.panels || []).forEach((panel, pIndex) => {
                 ensurePanelDurationStockMap(panel);
                 const durationList = getPanelDurationList(panel);
+                let stockCountByDurHtml = '';
+                durationList.forEach(dur => {
+                    const arr = panel.stockKeysByDuration[dur] || [];
+                    stockCountByDurHtml += `<span class="bg-indigo-50 text-indigo-800 border border-indigo-200 px-2 py-0.5 rounded text-[10px] font-mono font-bold">${escapeHtml(dur)}: ${arr.length} keys</span>`;
+                });
 
-                let pkgsHtml = '';
-                (panel.packages || []).forEach((pkg, kIndex) => {
-                    const durStockCount = Array.isArray(panel.stockKeysByDuration[pkg.time])
-                        ? panel.stockKeysByDuration[pkg.time].length
-                        : 0;
-
-                    pkgsHtml += `
-                        <div class="bg-white p-2 rounded-xl border border-slate-200 space-y-1.5 mb-1.5">
-                            <div class="flex items-center gap-1.5 text-xs">
-                                <input type="text" value="${escapeHtml(pkg.time)}" onchange="updatePkg(${pIndex}, ${kIndex}, 'time', this.value)" class="w-20 bg-slate-50 px-2 py-1 rounded border border-slate-200 font-bold" placeholder="Duration">
-                                <input type="number" value="${pkg.price}" onchange="updatePkg(${pIndex}, ${kIndex}, 'price', this.value)" class="w-16 bg-slate-50 px-2 py-1 rounded border border-slate-200 font-bold" placeholder="Price">
-                                <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-1.5 py-0.5 rounded text-[9px] font-mono font-bold" title="Auto Stock Keys for this duration">Stock:${durStockCount}</span>
-                                <input type="text" value="${escapeHtml(pkg.note || '')}" onchange="updatePkg(${pIndex}, ${kIndex}, 'note', this.value)" class="flex-1 bg-slate-50 px-2 py-1 rounded border border-slate-200 text-[10px]" placeholder="Note (e.g. Stock Out)">
-                                <button onclick="deletePkg(${pIndex}, ${kIndex})" class="text-red-500 hover:text-red-700 text-xs px-1 cursor-pointer"><i class="fa-solid fa-trash"></i></button>
+                let pkgHtml = '';
+                (panel.packages || []).forEach((pkg, pkgIndex) => {
+                    const durKeysArr = panel.stockKeysByDuration[pkg.time] || [];
+                    pkgHtml += `
+                        <div class="bg-slate-100/80 p-2 rounded-xl border border-slate-200 space-y-1.5 text-xs">
+                            <div class="flex gap-1.5 items-center">
+                                <input type="text" value="${pkg.time}" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'time', this.value)" class="w-24 bg-white px-2 py-1 rounded border border-slate-200 font-bold" placeholder="1 Hours">
+                                <input type="number" value="${pkg.price}" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'price', this.value)" class="w-20 bg-white px-2 py-1 rounded border border-slate-200 font-bold text-indigo-700" placeholder="Price">
+                                <input type="text" value="${pkg.note || ''}" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'note', this.value)" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200 text-red-600" placeholder="Stock Out / Note">
+                                <button onclick="deletePkg(${pIndex}, ${pkgIndex})" class="text-red-500 hover:text-red-700 px-1 cursor-pointer"><i class="fa-solid fa-trash"></i></button>
                             </div>
-                            <div class="flex items-center gap-1.5 text-[10px]">
-                                <input type="text" value="${escapeHtml(pkg.couponCode || '')}" onchange="updatePkg(${pIndex}, ${kIndex}, 'couponCode', this.value)" class="flex-1 bg-indigo-50/60 px-2 py-1 rounded border border-indigo-200 font-mono uppercase font-bold text-indigo-800" placeholder="Coupon Code (e.g. SAVE10)">
-                                <input type="number" value="${pkg.couponDiscount || 0}" onchange="updatePkg(${pIndex}, ${kIndex}, 'couponDiscount', this.value)" class="w-20 bg-indigo-50/60 px-2 py-1 rounded border border-indigo-200 font-bold text-emerald-700" placeholder="Off ৳">
+                            <div class="flex gap-1.5 items-center">
+                                <input type="text" value="${pkg.couponCode || ''}" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'couponCode', this.value)" class="flex-1 bg-white px-2 py-1 rounded border border-indigo-200 font-mono uppercase text-[11px]" placeholder="Coupon Code (e.g. SAVE5)">
+                                <input type="number" value="${pkg.couponDiscount || 0}" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'couponDiscount', this.value)" class="w-20 bg-white px-2 py-1 rounded border border-indigo-200 font-bold text-emerald-700 text-[11px]" placeholder="Off ৳">
+                                <span class="text-[10px] font-mono font-bold text-slate-600 bg-white px-2 py-1 rounded border border-slate-200">${durKeysArr.length} Keys</span>
                             </div>
                         </div>
                     `;
@@ -5184,199 +5359,188 @@ Current User Info:
                 let linksHtml = '';
                 (panel.links || []).forEach((lnk, lIndex) => {
                     linksHtml += `
-                        <div class="flex items-center gap-1.5 text-xs mb-1">
-                            <input type="text" value="${escapeHtml(lnk.name || '')}" onchange="updateLink(${pIndex}, ${lIndex}, 'name', this.value)" class="w-28 bg-white px-2 py-1 rounded border border-slate-200 font-bold" placeholder="Link Name">
-                            <input type="text" value="${escapeHtml(lnk.url || '')}" onchange="updateLink(${pIndex}, ${lIndex}, 'url', this.value)" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200 font-mono text-[11px]" placeholder="https://...">
+                        <div class="flex gap-1.5 items-center text-xs">
+                            <input type="text" value="${lnk.name || ''}" onchange="updatePanelLink(${pIndex}, ${lIndex}, 'name', this.value)" class="w-28 bg-slate-50 px-2 py-1 rounded border border-slate-200 font-semibold" placeholder="Button Name">
+                            <input type="text" value="${lnk.url || ''}" onchange="updatePanelLink(${pIndex}, ${lIndex}, 'url', this.value)" class="flex-1 bg-slate-50 px-2 py-1 rounded border border-slate-200 font-mono text-[11px]" placeholder="https://...">
                         </div>
                     `;
                 });
 
-                const selectedDurForStock = durationList[0] || "1 Hours";
-                const stockChipsHtml = durationList.map(dur => {
-                    const arr = Array.isArray(panel.stockKeysByDuration[dur]) ? panel.stockKeysByDuration[dur] : [];
-                    return `<span class="bg-white border border-emerald-200 text-emerald-800 px-2 py-0.5 rounded-lg text-[10px] font-mono font-bold">${escapeHtml(dur)}: ${arr.length}</span>`;
-                }).join('');
+                let catOptionsHtml = '';
+                (storeData.categories || []).forEach(cat => {
+                    catOptionsHtml += `<option value="${cat}" ${panel.category === cat ? 'selected' : ''}>${cat}</option>`;
+                });
 
-                const durationSelectOptions = durationList.map(dur =>
-                    `<option value="${escapeHtml(dur)}">${escapeHtml(dur)}</option>`
-                ).join('') || `<option value="1 Hours">1 Hours</option>`;
-
-                list.innerHTML += `
-                    <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-2.5 shadow-sm">
+                container.innerHTML += `
+                    <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-3 shadow-sm">
                         <div class="flex justify-between items-center gap-2">
-                            <input type="text" value="${escapeHtml(panel.name)}" onchange="updatePanel(${pIndex}, 'name', this.value)" class="bg-white font-bold text-xs flex-1 px-2.5 py-1.5 rounded-xl border border-slate-200">
-                            <select onchange="updatePanel(${pIndex}, 'category', this.value)" class="bg-white text-xs p-1.5 rounded-xl border border-slate-200 font-semibold" data-cat="${escapeHtml(panel.category)}">
+                            <input type="text" value="${panel.name}" onchange="updatePanelField(${pIndex}, 'name', this.value)" class="font-bold text-xs bg-white px-2.5 py-1.5 rounded-lg border border-slate-200 flex-1">
+                            <select onchange="updatePanelField(${pIndex}, 'category', this.value)" class="bg-white text-xs p-1.5 rounded-lg border border-slate-200 font-semibold">
                                 ${catOptionsHtml}
                             </select>
+                            <button onclick="deletePanel(${pIndex})" class="text-red-500 hover:text-red-700 bg-white px-2 py-1.5 rounded-lg border border-red-200 text-xs cursor-pointer"><i class="fa-solid fa-trash"></i></button>
                         </div>
 
-                        <div class="flex items-center gap-1.5">
-                            <img src="${escapeHtml(panel.icon)}" class="w-9 h-9 rounded-xl object-cover border border-slate-200 shrink-0 bg-white">
-                            <input type="text" value="${escapeHtml(panel.icon)}" onchange="updatePanel(${pIndex}, 'icon', this.value)" class="flex-1 min-w-0 bg-white text-[11px] px-2.5 py-1.5 rounded-xl border border-slate-200 font-mono" placeholder="Icon URL অথবা গ্যালারি থেকে নিন">
-                            <button type="button" onclick="pickPhotoFromGallery('panel', ${pIndex})" class="bg-indigo-50 hover:bg-indigo-100 dynamic-theme-text border border-indigo-200 px-2.5 py-1.5 rounded-xl text-xs font-bold cursor-pointer shrink-0">
-                                <i class="fa-solid fa-images"></i>
-                            </button>
+                        <div class="grid grid-cols-2 gap-2 text-xs">
+                            <div>
+                                <label class="text-[10px] text-slate-500 font-bold block">Status Badge</label>
+                                <input type="text" value="${panel.status || ''}" onchange="updatePanelField(${pIndex}, 'status', this.value)" class="w-full bg-white px-2 py-1.5 rounded-lg border border-slate-200 mt-0.5 font-semibold" placeholder="Working ✅ / Stock Out">
+                            </div>
+                            <div>
+                                <label class="text-[10px] text-slate-500 font-bold block">Promo Badge</label>
+                                <input type="text" value="${panel.badge || ''}" onchange="updatePanelField(${pIndex}, 'badge', this.value)" class="w-full bg-white px-2 py-1.5 rounded-lg border border-slate-200 mt-0.5 font-semibold" placeholder="Hot / VIP / New">
+                            </div>
                         </div>
 
-                        <div class="flex gap-2">
-                            <input type="text" value="${escapeHtml(panel.status || '')}" onchange="updatePanel(${pIndex}, 'status', this.value)" class="flex-1 bg-white text-xs p-2 rounded-xl border border-slate-200" placeholder="Status (e.g. Stock Out, Safe 🛡️)">
-                            <input type="text" value="${escapeHtml(panel.badge || '')}" onchange="updatePanel(${pIndex}, 'badge', this.value)" class="w-28 bg-white text-xs p-2 rounded-xl border border-slate-200 font-bold text-indigo-700" placeholder="Badge (e.g. Hot)">
+                        <div>
+                            <label class="text-[10px] text-slate-500 font-bold block">Panel Image (URL অথবা গ্যালারি)</label>
+                            <div class="flex items-center gap-1.5 mt-0.5">
+                                <img src="${panel.icon || 'https://i.ibb.co/3W9v93z/default.png'}" class="w-8 h-8 rounded-lg object-cover border border-slate-200 shrink-0 bg-white">
+                                <input type="text" value="${panel.icon || ''}" onchange="updatePanelField(${pIndex}, 'icon', this.value)" class="flex-1 min-w-0 bg-white px-2 py-1.5 rounded-lg border border-slate-200 text-xs font-mono" placeholder="https://...">
+                                <button type="button" onclick="pickPhotoFromGallery('panel', ${pIndex})" class="bg-indigo-50 hover:bg-indigo-100 dynamic-theme-text border border-indigo-200 px-2.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer shrink-0">
+                                    <i class="fa-solid fa-images"></i>
+                                </button>
+                            </div>
                         </div>
 
-                        <!-- Duration-Wise Auto Stock Keys Manager -->
-                        <div class="bg-emerald-50/70 p-2.5 rounded-xl border border-emerald-200 space-y-1.5">
-                            <div class="flex items-center justify-between gap-1 flex-wrap">
-                                <span class="text-[10px] font-extrabold text-emerald-800 uppercase"><i class="fa-solid fa-key mr-1"></i> Duration-Wise Auto Stock</span>
-                                <div class="flex flex-wrap gap-1">${stockChipsHtml}</div>
+                        <div class="bg-white p-2.5 rounded-xl border border-slate-200 space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[11px] font-bold text-slate-700">Duration-Wise Auto Stock Keys</span>
+                            </div>
+                            <div class="flex flex-wrap gap-1">
+                                ${stockCountByDurHtml || '<span class="text-[10px] text-slate-400">No durations yet</span>'}
                             </div>
                             <div class="flex gap-1.5">
-                                <select id="stockDurSelect-${pIndex}" class="bg-white border border-emerald-200 px-2 py-1.5 rounded-lg text-[11px] font-bold text-slate-800 shrink-0">
-                                    ${durationSelectOptions}
-                                </select>
-                                <input type="text" id="bulkKeysInput-${pIndex}" placeholder="KEY1, KEY2 বা এক লাইনে ১টি কি" class="flex-1 min-w-0 bg-white border border-slate-200 px-2.5 py-1.5 rounded-lg text-[11px] font-mono">
-                                <button type="button" onclick="addBulkStockKeys(${pIndex})" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1.5 rounded-lg text-[10px] font-bold cursor-pointer shrink-0">+ Add Keys</button>
+                                <input type="text" id="stockDurSelectInput-${pIndex}" value="${escapeHtml(durationList[0] || '1 Hours')}" placeholder="Duration (e.g. 1 Hours)" class="w-28 bg-slate-50 border border-slate-200 px-2 py-1 rounded-lg text-[11px] font-bold">
+                                <textarea id="bulkStockInput-${pIndex}" rows="2" placeholder="এই ডিউরেশনের কিগুলো এক লাইনে একটি করে লিখুন..." class="flex-1 bg-slate-50 border border-slate-200 p-1.5 rounded-lg text-[11px] font-mono"></textarea>
+                                <button onclick="addBulkStockKeys(${pIndex})" class="bg-indigo-600 hover:bg-indigo-700 text-white px-2.5 rounded-lg text-[10px] font-bold cursor-pointer shrink-0">+ Stock</button>
                             </div>
                         </div>
 
-                        <div class="bg-slate-100/70 p-2.5 rounded-xl border border-slate-200 space-y-1">
-                            <span class="text-[10px] font-bold text-slate-600 uppercase block mb-1"><i class="fa-solid fa-link mr-1"></i> APK & Setup Links (6 Slots)</span>
-                            ${linksHtml}
+                        <div class="space-y-1.5">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[11px] font-bold text-slate-700">Packages & Coupons</span>
+                                <button onclick="addPkgToPanel(${pIndex})" class="text-[10px] bg-indigo-50 text-indigo-700 border border-indigo-200 px-2 py-0.5 rounded font-bold cursor-pointer">+ Add Pkg</button>
+                            </div>
+                            <div class="space-y-1.5">${pkgHtml}</div>
                         </div>
 
-                        <div class="border-t border-slate-200 pt-2">
-                            <div class="flex justify-between items-center mb-1.5">
-                                <span class="text-[11px] font-bold text-slate-600">Packages & Coupons:</span>
-                                <button onclick="addPkg(${pIndex})" class="text-[10px] bg-indigo-50 dynamic-theme-text border border-indigo-200 px-2 py-0.5 rounded font-bold cursor-pointer">+ Add Pkg</button>
-                            </div>
-                            ${pkgsHtml}
+                        <div class="space-y-1.5">
+                            <span class="text-[11px] font-bold text-slate-700 block">APK & Setup Links</span>
+                            <div class="space-y-1">${linksHtml}</div>
                         </div>
-                        <button onclick="deletePanel(${pIndex})" class="w-full bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 py-1.5 rounded-xl text-[11px] font-bold mt-1 cursor-pointer">Delete Panel</button>
                     </div>
                 `;
-
-                const addedCard = list.lastElementChild;
-                const catSel = addedCard ? addedCard.querySelector('select[data-cat]') : null;
-                if(catSel) catSel.value = panel.category || "Non Root";
             });
         }
 
-        window.addBulkStockKeys = function(pIndex) {
-            const panel = storeData.panels[pIndex];
-            if(!panel) return;
-            ensurePanelDurationStockMap(panel);
-
-            const durSel = document.getElementById(`stockDurSelect-${pIndex}`);
-            const targetDur = durSel ? durSel.value : "1 Hours";
-            if(!Array.isArray(panel.stockKeysByDuration[targetDur])) {
-                panel.stockKeysByDuration[targetDur] = [];
-            }
-
-            const inp = document.getElementById(`bulkKeysInput-${pIndex}`);
-            const raw = inp ? inp.value.trim() : '';
-            if(!raw) return alert("কমপক্ষে ১টি Key লিখুন!");
-
-            const parts = raw.split(/[\n,]+/).map(s => s.trim()).filter(Boolean);
-            if(parts.length === 0) return alert("সঠিক Key লিখুন!");
-
-            panel.stockKeysByDuration[targetDur].push(...parts);
-            inp.value = '';
-            saveToFirebase(true);
-            renderAdminPanels();
-            showSuccessModal(`${parts.length}টি Key "${targetDur}" স্টকে যোগ করা হয়েছে! মোট স্টক: ${panel.stockKeysByDuration[targetDur].length}টি`);
-        }
-
-        window.updateLink = function(pIndex, lIndex, field, val) {
-            if(!storeData.panels[pIndex].links) storeData.panels[pIndex].links = JSON.parse(JSON.stringify(defaultLinks));
-            storeData.panels[pIndex].links[lIndex][field] = val;
-            saveToFirebase(false);
-        }
-
         window.addNewPanelPrompt = function() {
-            const name = prompt("নতুন প্যানেলের নাম লিখুন:");
-            if(!name) return;
-            const defaultCat = (storeData.categories && storeData.categories[0]) ? storeData.categories[0] : "Non Root";
-            const newId = storeData.panels.length > 0 ? Math.max(...storeData.panels.map(p => p.id)) + 1 : 1;
+            const name = prompt("Enter new Panel Name:");
+            if(!name || !name.trim()) return;
+            const defaultCat = (storeData.categories && storeData.categories.length > 0) ? storeData.categories[0] : "Non Root";
+            const newId = Date.now();
             storeData.panels.push({
                 id: newId,
-                name: name,
-                category: defaultCat,
+                name: name.trim(),
+                category: currentCategory || defaultCat,
                 icon: "https://i.ibb.co/3W9v93z/default.png",
                 status: "Working ✅",
                 badge: "New",
                 stockKeysByDuration: { "1 Hours": [] },
                 links: JSON.parse(JSON.stringify(defaultLinks)),
                 packages: [
-                    {time: "1 Hours", price: 20, note: "", couponCode: "", couponDiscount: 0},
-                    {time: "1 Days", price: 150, note: "", couponCode: "", couponDiscount: 0}
+                    { time: "1 Hours", price: 20, note: "", couponCode: "", couponDiscount: 0 },
+                    { time: "1 Days", price: 150, note: "", couponCode: "", couponDiscount: 0 }
                 ]
             });
             saveToFirebase(true);
             renderAdminPanels();
             renderPanels();
-            showSuccessModal("নতুন প্যানেল যুক্ত করা হয়েছে!");
-        }
-
-        window.updatePanel = function(pIndex, field, val) {
-            storeData.panels[pIndex][field] = val;
-            saveToFirebase(false);
-            renderPanels();
+            showSuccessModal(`"${name.trim()}" panel added!`);
         }
 
         window.deletePanel = function(pIndex) {
-            if(confirm("আপনি কি এই প্যানেলটি ডিলিট করতে চান?")) {
-                storeData.panels.splice(pIndex, 1);
-                saveToFirebase(true);
-                renderAdminPanels();
-                renderPanels();
-            }
-        }
-
-        window.updatePkg = function(pIndex, kIndex, field, val) {
-            const pkg = storeData.panels[pIndex].packages[kIndex];
-            const oldTime = pkg.time;
-            if(field === 'price' || field === 'couponDiscount') {
-                pkg[field] = Number(val) || 0;
-            } else if(field === 'couponCode') {
-                pkg[field] = val.trim().toUpperCase();
-            } else {
-                pkg[field] = val;
-                if(field === 'time' && oldTime && val && oldTime !== val) {
-                    ensurePanelDurationStockMap(storeData.panels[pIndex]);
-                    const map = storeData.panels[pIndex].stockKeysByDuration;
-                    if(Array.isArray(map[oldTime])) {
-                        map[val] = [...(map[val] || []), ...map[oldTime]];
-                        delete map[oldTime];
-                    }
-                }
-            }
-            saveToFirebase(false);
+            if(!confirm("Delete this panel?")) return;
+            storeData.panels.splice(pIndex, 1);
+            saveToFirebase(true);
             renderAdminPanels();
+            renderPanels();
         }
 
-        window.addPkg = function(pIndex) {
-            storeData.panels[pIndex].packages.push({
-                time: "3 Days",
-                price: 300,
-                note: "",
-                couponCode: "",
-                couponDiscount: 0
-            });
+        window.updatePanelField = function(pIndex, field, value) {
+            if(!storeData.panels[pIndex]) return;
+            storeData.panels[pIndex][field] = value;
+            if(field === 'packages') ensurePanelDurationStockMap(storeData.panels[pIndex]);
+            saveToFirebase(true);
+            renderPanels();
+            if(field === 'category') renderAdminPanels();
+        }
+
+        window.addPkgToPanel = function(pIndex) {
+            if(!storeData.panels[pIndex]) return;
+            if(!storeData.panels[pIndex].packages) storeData.panels[pIndex].packages = [];
+            storeData.panels[pIndex].packages.push({ time: "3 Hours", price: 50, note: "", couponCode: "", couponDiscount: 0 });
             ensurePanelDurationStockMap(storeData.panels[pIndex]);
-            storeData.panels[pIndex].stockKeysByDuration["3 Days"] = [];
             saveToFirebase(true);
             renderAdminPanels();
         }
 
-        window.deletePkg = function(pIndex, kIndex) {
-            storeData.panels[pIndex].packages.splice(kIndex, 1);
+        window.deletePkg = function(pIndex, pkgIndex) {
+            if(!storeData.panels[pIndex] || !storeData.panels[pIndex].packages) return;
+            storeData.panels[pIndex].packages.splice(pkgIndex, 1);
             saveToFirebase(true);
             renderAdminPanels();
         }
 
-        renderCategories();
-        renderPanels();
-        renderHomeTabContent();
-        updateAccountUI();
+        window.updatePkg = function(pIndex, pkgIndex, field, value) {
+            const pkg = storeData.panels[pIndex]?.packages?.[pkgIndex];
+            if(!pkg) return;
+            if(field === 'price' || field === 'couponDiscount') {
+                pkg[field] = Number(value) || 0;
+            } else if(field === 'couponCode') {
+                pkg[field] = String(value || '').trim().toUpperCase();
+            } else {
+                pkg[field] = value;
+            }
+            ensurePanelDurationStockMap(storeData.panels[pIndex]);
+            saveToFirebase(true);
+        }
+
+        window.updatePanelLink = function(pIndex, lIndex, field, value) {
+            const panel = storeData.panels[pIndex];
+            if(!panel) return;
+            if(!Array.isArray(panel.links)) panel.links = JSON.parse(JSON.stringify(defaultLinks));
+            if(!panel.links[lIndex]) panel.links[lIndex] = { name: "", url: "" };
+            panel.links[lIndex][field] = value;
+            saveToFirebase(true);
+        }
+
+        window.addBulkStockKeys = function(pIndex) {
+            const panel = storeData.panels[pIndex];
+            if(!panel) return;
+            const stockMap = ensurePanelDurationStockMap(panel);
+
+            const durInput = document.getElementById(`stockDurSelectInput-${pIndex}`);
+            const targetDur = (durInput && durInput.value.trim()) ? durInput.value.trim() : ((panel.packages && panel.packages[0] && panel.packages[0].time) || "1 Hours");
+
+            const textarea = document.getElementById(`bulkStockInput-${pIndex}`);
+            const rawText = textarea ? textarea.value : "";
+            const newKeys = rawText.split(/\r?\n/).map(k => k.trim()).filter(Boolean);
+            if(newKeys.length === 0) {
+                alert("Please enter at least one key!");
+                return;
+            }
+            if(!Array.isArray(stockMap[targetDur])) {
+                stockMap[targetDur] = [];
+            }
+            stockMap[targetDur].push(...newKeys);
+            if(textarea) textarea.value = "";
+            saveToFirebase(true);
+            renderAdminPanels();
+            showSuccessModal(`${newKeys.length} keys added to "${targetDur}" stock for ${panel.name}!`);
+        }
+
+        renderUI();
         renderSpinWheelWithLabels();
         updateSpinAvailabilityUI();
     </script>
