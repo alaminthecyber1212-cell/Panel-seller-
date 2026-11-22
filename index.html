@@ -354,11 +354,14 @@
                 </div>
             </div>
 
-            <!-- MY KEYS VIEW -->
+            <!-- MY KEYS VIEW (First Image Styled Cards) -->
             <div id="keysView" class="view-section p-4 space-y-4 hidden">
-                <h2 class="text-base font-bold text-slate-800">My Purchased Keys</h2>
-                <div id="keysContainer" class="space-y-2.5">
-                    <p class="text-xs text-slate-400 text-center py-10">No keys purchased yet.</p>
+                <div class="flex items-center justify-between">
+                    <h2 class="text-lg font-extrabold text-slate-900">My Codes</h2>
+                    <span id="myKeysTotalBadge" class="bg-indigo-50 text-indigo-700 border border-indigo-200 px-2.5 py-1 rounded-full text-[10px] font-extrabold">0 Keys</span>
+                </div>
+                <div id="keysContainer" class="space-y-4">
+                    <p class="text-xs text-slate-400 text-center py-10">No keys delivered yet. After payment, Admin will send your key here.</p>
                 </div>
             </div>
 
@@ -375,7 +378,7 @@
                     </div>
                 </div>
 
-                <!-- Profile Box (4 consecutive clicks on profile avatar/area opens Admin Login when not updating) -->
+                <!-- Profile Box -->
                 <div class="bg-white border border-slate-200 rounded-3xl p-6 text-center space-y-3 shadow-xl relative">
                     <div id="profileAdminTrigger" onclick="profileFourTapAdminTrigger()" title="Tap 4 times for Admin" class="relative w-20 h-20 mx-auto cursor-pointer select-none">
                         <div class="rotating-border-ring"></div>
@@ -909,7 +912,7 @@
             <div class="bg-white p-4 rounded-2xl border-2 border-emerald-400 flex justify-between items-center shadow-md">
                 <div>
                     <h4 class="text-xs font-extrabold text-emerald-700 uppercase"><i class="fa-solid fa-robot mr-1"></i> Auto Key Delivery System</h4>
-                    <p class="text-[10px] text-slate-400">অন করলে অটো স্টক থেকে কি যাবে, অফ থাকলে ম্যানুয়াল থাকবে</p>
+                    <p class="text-[10px] text-slate-400">অন করলে ডিউরেশন অনুযায়ী অটো স্টক থেকে কি যাবে</p>
                 </div>
                 <select id="editAutoDeliveryActive" class="bg-slate-50 text-xs font-bold p-2 rounded-xl border border-slate-200 text-emerald-700 outline-none">
                     <option value="false">OFF (Manual Mode)</option>
@@ -950,13 +953,13 @@
                 </div>
                 
                 <div class="bg-emerald-50/50 p-3 rounded-xl border border-emerald-200 space-y-2">
-                    <p class="text-[11px] font-bold text-slate-700">Direct Send Key to Any UID:</p>
+                    <p class="text-[11px] font-bold text-slate-700">Direct Send Key to Any UID (6-Digit Order ID):</p>
                     <div class="grid grid-cols-2 gap-1.5">
                         <input type="text" id="directKeyUid" placeholder="User UID (8 Digit)" class="bg-white border border-slate-200 p-2 rounded-lg text-xs font-mono">
                         <input type="text" id="directKeyPanel" placeholder="Panel Name" class="bg-white border border-slate-200 p-2 rounded-lg text-xs">
                     </div>
                     <div class="flex gap-1.5">
-                        <input type="text" id="directKeyTime" placeholder="Duration (e.g. 1 Days)" class="w-28 bg-white border border-slate-200 p-2 rounded-lg text-xs">
+                        <input type="text" id="directKeyTime" placeholder="Duration (e.g. 3 Hours)" class="w-28 bg-white border border-slate-200 p-2 rounded-lg text-xs">
                         <input type="text" id="directKeyCode" placeholder="Enter Real Key Here" class="flex-1 bg-white border border-slate-200 p-2 rounded-lg text-xs font-mono font-bold text-emerald-700">
                     </div>
                     <button onclick="sendDirectKeyToUid()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2 rounded-lg text-xs font-bold cursor-pointer shadow-sm">Send Key Now</button>
@@ -1178,7 +1181,7 @@
 
             <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-4 shadow-sm">
                 <div class="flex justify-between items-center">
-                    <h4 class="text-xs font-bold text-slate-400 uppercase">Manage Panels, Packages & Badges</h4>
+                    <h4 class="text-xs font-bold text-slate-400 uppercase">Manage Panels, Duration Stock & Badges</h4>
                     <button onclick="addNewPanelPrompt()" class="bg-emerald-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold cursor-pointer shadow-sm">+ New Panel</button>
                 </div>
                 <div id="adminPanelList" class="space-y-3"></div>
@@ -1394,13 +1397,148 @@
             ],
             categories: ["Non Root", "Root", "iPhone", "PC"],
             panels: [
-                { id: 1, name: "Aim Hack - Android", category: "Non Root", icon: "https://i.ibb.co/3W9v93z/default.png", status: "Maintenance", badge: "Hot Selling", stockKeys: ["KEY-DEMO-1111", "KEY-DEMO-2222"], links: JSON.parse(JSON.stringify(defaultLinks)), packages: [{time: "1 Hours", price: 10, note: "", couponCode: "", couponDiscount: 0}, {time: "3 Hours", price: 35, note: "Stock Out", couponCode: "", couponDiscount: 0}, {time: "6 Hours", price: 70, note: "", couponCode: "", couponDiscount: 0}, {time: "12 Hours", price: 120, note: "", couponCode: "", couponDiscount: 0}, {time: "1 Days", price: 160, note: "", couponCode: "", couponDiscount: 0}, {time: "7 Days", price: 500, note: "", couponCode: "", couponDiscount: 0}] },
-                { id: 2, name: "Drip Wire External", category: "Non Root", icon: "https://i.ibb.co/3W9v93z/default.png", status: "Stock Out", badge: "New", stockKeys: [], links: JSON.parse(JSON.stringify(defaultLinks)), packages: [{time: "1 Hours", price: 20, note: "", couponCode: "", couponDiscount: 0}, {time: "3 Hours", price: 50, note: "", couponCode: "", couponDiscount: 0}, {time: "6 Hours", price: 90, note: "", couponCode: "", couponDiscount: 0}, {time: "12 Hours", price: 150, note: "Stock Out", couponCode: "", couponDiscount: 0}, {time: "1 Days", price: 200, note: "", couponCode: "", couponDiscount: 0}, {time: "7 Days", price: 600, note: "", couponCode: "", couponDiscount: 0}] },
-                { id: 3, name: "Root Magic Injector", category: "Root", icon: "https://i.ibb.co/3W9v93z/default.png", status: "Working ✅", badge: "", stockKeys: [], links: JSON.parse(JSON.stringify(defaultLinks)), packages: [{time: "1 Hours", price: 30, note: "", couponCode: "", couponDiscount: 0}, {time: "3 Hours", price: 70, note: "", couponCode: "", couponDiscount: 0}, {time: "1 Days", price: 250, note: "", couponCode: "", couponDiscount: 0}, {time: "7 Days", price: 700, note: "", couponCode: "", couponDiscount: 0}] },
-                { id: 4, name: "Fluorite iOS VIP", category: "iPhone", icon: "https://i.ibb.co/3W9v93z/default.png", status: "Safe 🛡️", badge: "VIP", stockKeys: [], links: JSON.parse(JSON.stringify(defaultLinks)), packages: [{time: "1 Hours", price: 40, note: "", couponCode: "", couponDiscount: 0}, {time: "1 Days", price: 300, note: "", couponCode: "", couponDiscount: 0}, {time: "7 Days", price: 900, note: "", couponCode: "", couponDiscount: 0}, {time: "30 Days", price: 2000, note: "", couponCode: "", couponDiscount: 0}] },
-                { id: 5, name: "PC Bypass Loader", category: "PC", icon: "https://i.ibb.co/3W9v93z/default.png", status: "Working ✅", badge: "", stockKeys: [], links: JSON.parse(JSON.stringify(defaultLinks)), packages: [{time: "1 Days", price: 500, note: "", couponCode: "", couponDiscount: 0}, {time: "7 Days", price: 1500, note: "", couponCode: "", couponDiscount: 0}, {time: "30 Days", price: 3500, note: "", couponCode: "", couponDiscount: 0}] }
+                {
+                    id: 1,
+                    name: "Aim Hack - Android",
+                    category: "Non Root",
+                    icon: "https://i.ibb.co/3W9v93z/default.png",
+                    status: "Maintenance",
+                    badge: "Hot Selling",
+                    stockKeysByDuration: { "1 Hours": ["KEY-1H-101", "KEY-1H-102"], "3 Hours": ["KEY-3H-201"] },
+                    links: JSON.parse(JSON.stringify(defaultLinks)),
+                    packages: [
+                        {time: "1 Hours", price: 10, note: "", couponCode: "", couponDiscount: 0},
+                        {time: "3 Hours", price: 35, note: "Stock Out", couponCode: "", couponDiscount: 0},
+                        {time: "6 Hours", price: 70, note: "", couponCode: "", couponDiscount: 0},
+                        {time: "12 Hours", price: 120, note: "", couponCode: "", couponDiscount: 0},
+                        {time: "1 Days", price: 160, note: "", couponCode: "", couponDiscount: 0},
+                        {time: "7 Days", price: 500, note: "", couponCode: "", couponDiscount: 0}
+                    ]
+                },
+                {
+                    id: 2,
+                    name: "Drip Wire External",
+                    category: "Non Root",
+                    icon: "https://i.ibb.co/3W9v93z/default.png",
+                    status: "Stock Out",
+                    badge: "New",
+                    stockKeysByDuration: {},
+                    links: JSON.parse(JSON.stringify(defaultLinks)),
+                    packages: [
+                        {time: "1 Hours", price: 20, note: "", couponCode: "", couponDiscount: 0},
+                        {time: "3 Hours", price: 50, note: "", couponCode: "", couponDiscount: 0},
+                        {time: "6 Hours", price: 90, note: "", couponCode: "", couponDiscount: 0},
+                        {time: "12 Hours", price: 150, note: "Stock Out", couponCode: "", couponDiscount: 0},
+                        {time: "1 Days", price: 200, note: "", couponCode: "", couponDiscount: 0},
+                        {time: "7 Days", price: 600, note: "", couponCode: "", couponDiscount: 0}
+                    ]
+                },
+                {
+                    id: 3,
+                    name: "Root Magic Injector",
+                    category: "Root",
+                    icon: "https://i.ibb.co/3W9v93z/default.png",
+                    status: "Working ✅",
+                    badge: "",
+                    stockKeysByDuration: {},
+                    links: JSON.parse(JSON.stringify(defaultLinks)),
+                    packages: [
+                        {time: "1 Hours", price: 30, note: "", couponCode: "", couponDiscount: 0},
+                        {time: "3 Hours", price: 70, note: "", couponCode: "", couponDiscount: 0},
+                        {time: "1 Days", price: 250, note: "", couponCode: "", couponDiscount: 0},
+                        {time: "7 Days", price: 700, note: "", couponCode: "", couponDiscount: 0}
+                    ]
+                },
+                {
+                    id: 4,
+                    name: "Fluorite iOS VIP",
+                    category: "iPhone",
+                    icon: "https://i.ibb.co/3W9v93z/default.png",
+                    status: "Safe 🛡️",
+                    badge: "VIP",
+                    stockKeysByDuration: {},
+                    links: JSON.parse(JSON.stringify(defaultLinks)),
+                    packages: [
+                        {time: "1 Hours", price: 40, note: "", couponCode: "", couponDiscount: 0},
+                        {time: "1 Days", price: 300, note: "", couponCode: "", couponDiscount: 0},
+                        {time: "7 Days", price: 900, note: "", couponCode: "", couponDiscount: 0},
+                        {time: "30 Days", price: 2000, note: "", couponCode: "", couponDiscount: 0}
+                    ]
+                },
+                {
+                    id: 5,
+                    name: "PC Bypass Loader",
+                    category: "PC",
+                    icon: "https://i.ibb.co/3W9v93z/default.png",
+                    status: "Working ✅",
+                    badge: "",
+                    stockKeysByDuration: {},
+                    links: JSON.parse(JSON.stringify(defaultLinks)),
+                    packages: [
+                        {time: "1 Days", price: 500, note: "", couponCode: "", couponDiscount: 0},
+                        {time: "7 Days", price: 1500, note: "", couponCode: "", couponDiscount: 0},
+                        {time: "30 Days", price: 3500, note: "", couponCode: "", couponDiscount: 0}
+                    ]
+                }
             ]
         };
+
+        function generateSixDigitOrderId() {
+            const usedIds = new Set([
+                ...(storeData.orders || []).map(o => String(o.orderCode || o.id || '')),
+                ...(storeData.keys || []).map(k => String(k.orderCode || ''))
+            ]);
+            let code = String(Math.floor(100000 + Math.random() * 900000));
+            let guard = 0;
+            while (usedIds.has(code) && guard < 200) {
+                code = String(Math.floor(100000 + Math.random() * 900000));
+                guard++;
+            }
+            return code;
+        }
+
+        function formatCardDateTime(ts = Date.now()) {
+            const d = new Date(ts);
+            const dd = String(d.getDate()).padStart(2, '0');
+            const mm = String(d.getMonth() + 1).padStart(2, '0');
+            const yyyy = d.getFullYear();
+            let hours = d.getHours();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            if (hours === 0) hours = 12;
+            const hh = String(hours).padStart(2, '0');
+            const min = String(d.getMinutes()).padStart(2, '0');
+            const sec = String(d.getSeconds()).padStart(2, '0');
+            return `${dd}-${mm}-${yyyy} ${hh}:${min}:${sec} ${ampm}`;
+        }
+
+        function ensurePanelDurationStockMap(panel) {
+            if (!panel) return {};
+            if (!panel.stockKeysByDuration || typeof panel.stockKeysByDuration !== 'object') {
+                panel.stockKeysByDuration = {};
+            }
+            if (Array.isArray(panel.stockKeys) && panel.stockKeys.length > 0) {
+                const firstPkgTime = (panel.packages && panel.packages[0] && panel.packages[0].time) ? panel.packages[0].time : "1 Hours";
+                if (!Array.isArray(panel.stockKeysByDuration[firstPkgTime])) {
+                    panel.stockKeysByDuration[firstPkgTime] = [];
+                }
+                panel.stockKeysByDuration[firstPkgTime].push(...panel.stockKeys);
+                panel.stockKeys = [];
+            }
+            (panel.packages || []).forEach(pkg => {
+                if (pkg && pkg.time && !Array.isArray(panel.stockKeysByDuration[pkg.time])) {
+                    panel.stockKeysByDuration[pkg.time] = [];
+                }
+            });
+            return panel.stockKeysByDuration;
+        }
+
+        function getPanelDurationList(panel) {
+            const map = ensurePanelDurationStockMap(panel);
+            const fromPkgs = (panel.packages || []).map(p => String(p.time || '').trim()).filter(Boolean);
+            const fromMap = Object.keys(map).map(k => String(k || '').trim()).filter(Boolean);
+            return Array.from(new Set([...fromPkgs, ...fromMap]));
+        }
 
         function getPromoBadgeIconClass(badgeText) {
             const lower = String(badgeText || '').toLowerCase();
@@ -1509,7 +1647,6 @@
             const now = Date.now();
             let changed = false;
 
-            const beforeLen = storeData.fundRequests.length;
             const filtered = [];
 
             for (const req of storeData.fundRequests) {
@@ -1536,7 +1673,7 @@
             }
 
             const capped = filtered.slice(0, MAX_FUND_REQUESTS_DISPLAY);
-            if (capped.length !== beforeLen) {
+            if (capped.length !== storeData.fundRequests.length) {
                 changed = true;
             }
 
@@ -2462,6 +2599,8 @@
                 set(storeRef, storeData);
             }
 
+            (storeData.panels || []).forEach(p => ensurePanelDurationStockMap(p));
+
             if (!Array.isArray(storeData.homeRecentOrders)) {
                 storeData.homeRecentOrders = [];
             } else if (storeData.homeRecentOrders.length > MAX_RECENT_ORDERS) {
@@ -3192,6 +3331,8 @@
         window.openPackageModal = function(id) {
             selectedPanel = storeData.panels.find(p => p.id === id);
             if(!selectedPanel) return;
+            ensurePanelDurationStockMap(selectedPanel);
+
             document.getElementById('modalIcon').src = selectedPanel.icon;
             document.getElementById('modalTitle').innerText = selectedPanel.name;
             
@@ -3322,12 +3463,17 @@
 
         window.checkout = function() {
             if(!selectedPackage || !selectedPanel) return;
+            ensurePanelDurationStockMap(selectedPanel);
+
             const finalPrice = getFinalPackagePrice();
             const vipInfo = getUserVipTier(getUserTotalSpent());
             const vipNote = vipInfo.discountPercent > 0 ? ` [${vipInfo.tierName} -${vipInfo.discountPercent}%]` : "";
             const couponInfo = appliedCouponCode ? ` (Coupon: ${appliedCouponCode}, -৳${appliedCouponDiscount})` : "";
             const expiryTs = calculateExpiryTimestamp(selectedPackage.time);
             const buyerDisplayLabel = buildRecentBuyerLabel(clientUid);
+            const sixDigitOrderCode = generateSixDigitOrderId();
+            const nowFormatted = formatCardDateTime(Date.now());
+            const durationKey = String(selectedPackage.time || '').trim();
 
             if(activePaymentMode === 'wallet') {
                 const currentBal = getUserBalance();
@@ -3345,16 +3491,19 @@
                 let orderStatus = "Pending";
 
                 if (storeData.autoDeliveryActive === true || storeData.autoDeliveryActive === "true") {
-                    if (selectedPanel.stockKeys && selectedPanel.stockKeys.length > 0) {
-                        assignedKey = selectedPanel.stockKeys.shift();
+                    const durBucket = selectedPanel.stockKeysByDuration[durationKey];
+                    if (Array.isArray(durBucket) && durBucket.length > 0) {
+                        assignedKey = durBucket.shift();
                         orderStatus = "Completed";
                     }
                 }
 
                 const newOrder = {
-                    id: Date.now(),
+                    id: sixDigitOrderCode,
+                    orderCode: sixDigitOrderCode,
                     uid: clientUid,
                     name: selectedPanel.name,
+                    icon: selectedPanel.icon || "https://i.ibb.co/3W9v93z/default.png",
                     time: selectedPackage.time,
                     price: finalPrice,
                     paymentMode: 'wallet',
@@ -3362,6 +3511,7 @@
                     vipTier: vipInfo.tierName,
                     status: orderStatus,
                     date: new Date().toLocaleDateString(),
+                    dateTime: nowFormatted,
                     expiryTimestamp: expiryTs
                 };
 
@@ -3380,34 +3530,40 @@
                 if (orderStatus === "Completed" && assignedKey) {
                     if(!storeData.keys) storeData.keys = [];
                     storeData.keys.unshift({
+                        orderCode: sixDigitOrderCode,
                         uid: clientUid,
                         name: selectedPanel.name,
+                        icon: selectedPanel.icon || "https://i.ibb.co/3W9v93z/default.png",
                         time: selectedPackage.time,
+                        price: finalPrice,
                         key: assignedKey,
                         date: new Date().toLocaleDateString(),
+                        dateTime: nowFormatted,
                         expiryTimestamp: expiryTs
                     });
                 }
 
                 saveToFirebase(true);
 
-                sendTelegramAlert(`🛒 <b>নতুন Key অর্ডার (Wallet Pay)!</b>\n\n👤 <b>UID:</b> <code>${clientUid}</code>\n👑 <b>VIP:</b> ${vipInfo.tierName}\n📦 <b>প্যানেল:</b> ${selectedPanel.name}\n⏳ <b>মেয়াদ:</b> ${selectedPackage.time}\n💵 <b>মূল্য:</b> ৳${finalPrice}${vipNote}${couponInfo}\n⚙️ <b>মোড:</b> ${orderStatus === 'Completed' ? 'অটো ডেলিভারি সফল' : 'পেন্ডিং (ম্যানুয়াল)'}\n📅 <b>তারিখ:</b> ${new Date().toLocaleString()}`);
+                sendTelegramAlert(`🛒 <b>নতুন Key অর্ডার (#${sixDigitOrderCode} - Wallet Pay)!</b>\n\n🧾 <b>Order ID:</b> <code>#${sixDigitOrderCode}</code>\n👤 <b>UID:</b> <code>${clientUid}</code>\n👑 <b>VIP:</b> ${vipInfo.tierName}\n📦 <b>প্যানেল:</b> ${selectedPanel.name}\n⏳ <b>ডিউরেশন:</b> ${selectedPackage.time}\n💵 <b>মূল্য:</b> ৳${finalPrice}${vipNote}${couponInfo}\n⚙️ <b>মোড:</b> ${orderStatus === 'Completed' ? 'অটো ডেলিভারি সফল' : 'পেন্ডিং (ম্যানুয়াল)'}\n📅 <b>সময়:</b> ${nowFormatted}`);
 
                 closeModal();
                 updateAccountUI();
                 renderHomeTabContent();
 
                 if (orderStatus === 'Completed') {
-                    showSuccessModal(`৳${finalPrice} কেটে নেওয়া হয়েছে এবং অটো-ডেলিভারির মাধ্যমে আপনার কি (Key) "My Keys" সেকশনে পাঠিয়ে দেওয়া হয়েছে!`);
+                    showSuccessModal(`Order #${sixDigitOrderCode}: ৳${finalPrice} কেটে নেওয়া হয়েছে এবং (${selectedPackage.time}) স্টক থেকে কি "My Keys" সেকশনে পাঠিয়ে দেওয়া হয়েছে!`);
                     switchTab('keys');
                 } else {
-                    showSuccessModal(`৳${finalPrice} সফলভাবে ওয়ালেট থেকে কেটে নেওয়া হয়েছে! অ্যাডমিন Key দিলে অর্ডার Completed হয়ে Recent Order-এ যুক্ত হবে।`);
+                    showSuccessModal(`Order #${sixDigitOrderCode}: ৳${finalPrice} সফলভাবে ওয়ালেট থেকে কেটে নেওয়া হয়েছে! অ্যাডমিন Key দিলে অর্ডার Completed হয়ে My Keys-এ যুক্ত হবে।`);
                 }
             } else {
                 const newOrder = {
-                    id: Date.now(),
+                    id: sixDigitOrderCode,
+                    orderCode: sixDigitOrderCode,
                     uid: clientUid,
                     name: selectedPanel.name,
+                    icon: selectedPanel.icon || "https://i.ibb.co/3W9v93z/default.png",
                     time: selectedPackage.time,
                     price: finalPrice,
                     paymentMode: 'instant',
@@ -3415,6 +3571,7 @@
                     vipTier: vipInfo.tierName,
                     status: "Pending",
                     date: new Date().toLocaleDateString(),
+                    dateTime: nowFormatted,
                     expiryTimestamp: expiryTs
                 };
                 if(!storeData.orders) storeData.orders = [];
@@ -3423,12 +3580,12 @@
                 saveToFirebase(true);
                 renderHomeTabContent();
 
-                sendTelegramAlert(`🛒 <b>নতুন Key অর্ডার (Instant Pay)!</b>\n\n👤 <b>UID:</b> <code>${clientUid}</code>\n👑 <b>VIP:</b> ${vipInfo.tierName}\n📦 <b>প্যানেল:</b> ${selectedPanel.name}\n⏳ <b>মেয়াদ:</b> ${selectedPackage.time}\n💵 <b>মূল্য:</b> ৳${finalPrice}${vipNote}${couponInfo}\n📅 <b>তারিখ:</b> ${new Date().toLocaleString()}`);
+                sendTelegramAlert(`🛒 <b>নতুন Key অর্ডার (#${sixDigitOrderCode} - Instant Pay)!</b>\n\n🧾 <b>Order ID:</b> <code>#${sixDigitOrderCode}</code>\n👤 <b>UID:</b> <code>${clientUid}</code>\n👑 <b>VIP:</b> ${vipInfo.tierName}\n📦 <b>প্যানেল:</b> ${selectedPanel.name}\n⏳ <b>ডিউরেশন:</b> ${selectedPackage.time}\n💵 <b>মূল্য:</b> ৳${finalPrice}${vipNote}${couponInfo}\n📅 <b>সময়:</b> ${nowFormatted}`);
 
                 closeModal();
 
                 const waNum = String(storeData.whatsapp || '8801700000000').replace(/[^0-9]/g, '');
-                const text = `Hello, I want to buy ${selectedPanel.name} (${selectedPackage.time}) for ৳${finalPrice}${vipNote}${couponInfo} via Instant Pay.\nMy UID: ${clientUid}\nSupport PIN: ${clientSupportPin}`;
+                const text = `Hello, I want to buy ${selectedPanel.name} (${selectedPackage.time}) for ৳${finalPrice}${vipNote}${couponInfo} via Instant Pay.\nOrder ID: #${sixDigitOrderCode}\nMy UID: ${clientUid}\nSupport PIN: ${clientSupportPin}`;
                 window.open(`https://wa.me/${waNum}?text=${encodeURIComponent(text)}`, '_blank');
             }
         }
@@ -3551,18 +3708,26 @@
             myOrders.forEach(o => {
                 const isDelivered = o.status === 'Completed';
                 const countdownHtml = o.expiryTimestamp ? `<p class="text-[11px] font-bold text-indigo-600 mt-1">${getRemainingTimeText(o.expiryTimestamp)}</p>` : '';
+                const orderCodeStr = o.orderCode || o.id || '000000';
+                const panelIcon = o.icon || "https://i.ibb.co/3W9v93z/default.png";
 
                 container.innerHTML += `
-                    <div class="bg-white border border-slate-200 p-3.5 rounded-2xl flex justify-between items-center text-xs shadow-sm">
-                        <div>
-                            <p class="font-bold text-slate-800">${o.name} <span class="text-slate-400 font-normal">(${o.time})</span></p>
-                            <p class="text-slate-400 mt-0.5">Date: ${o.date}</p>
-                            ${countdownHtml}
-                            <span class="inline-block mt-1 px-2 py-0.5 rounded-md text-[10px] font-bold ${isDelivered ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-amber-50 text-amber-600 border border-amber-200'}">
-                                ${isDelivered ? 'Key Delivered' : 'Pending Key Delivery'}
-                            </span>
+                    <div class="bg-white border border-slate-200 p-3.5 rounded-2xl flex justify-between items-center gap-3 text-xs shadow-sm">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <img src="${escapeHtml(panelIcon)}" class="w-11 h-11 rounded-xl object-cover border border-slate-200 shrink-0">
+                            <div class="min-w-0">
+                                <div class="flex items-center gap-1.5 flex-wrap">
+                                    <span class="font-mono font-extrabold text-[11px] text-slate-700">#${escapeHtml(orderCodeStr)}</span>
+                                    <span class="px-2 py-0.5 rounded text-[9px] font-bold ${isDelivered ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-amber-50 text-amber-600 border border-amber-200'}">
+                                        ${isDelivered ? 'COMPLETED' : 'PENDING'}
+                                    </span>
+                                </div>
+                                <p class="font-bold text-slate-800 truncate mt-0.5">${escapeHtml(o.name)} <span class="text-pink-600 font-extrabold">(${escapeHtml(o.time)})</span></p>
+                                <p class="text-[10px] text-slate-400">${escapeHtml(o.dateTime || o.date || '')}</p>
+                                ${countdownHtml}
+                            </div>
                         </div>
-                        <span class="dynamic-theme-text font-bold text-sm">৳${o.price}</span>
+                        <span class="dynamic-theme-text font-black text-sm shrink-0">৳${Number(o.price || 0)}</span>
                     </div>
                 `;
             });
@@ -3570,8 +3735,10 @@
 
         function renderKeys() {
             const container = document.getElementById('keysContainer');
+            const badge = document.getElementById('myKeysTotalBadge');
             if(!container) return;
             const myKeys = (storeData.keys || []).filter(k => k.uid === clientUid);
+            if(badge) badge.innerText = `${myKeys.length} Key${myKeys.length !== 1 ? 's' : ''}`;
 
             if(myKeys.length === 0) {
                 container.innerHTML = `<p class="text-xs text-slate-400 text-center py-10">No keys delivered yet. After payment, Admin will send your key here.</p>`;
@@ -3579,20 +3746,78 @@
             }
             container.innerHTML = '';
             myKeys.forEach(k => {
-                const countdownHtml = k.expiryTimestamp ? `<p class="text-[11px] font-bold text-indigo-600 mt-1">${getRemainingTimeText(k.expiryTimestamp)}</p>` : '';
+                const orderNum = k.orderCode || generateSixDigitOrderId();
+                const panelObj = (storeData.panels || []).find(p => String(p.name || '').trim().toLowerCase() === String(k.name || '').trim().toLowerCase());
+                const iconUrl = k.icon || (panelObj && panelObj.icon) || "https://i.ibb.co/3W9v93z/default.png";
+
+                let priceVal = Number(k.price || 0);
+                if (!priceVal) {
+                    const matchedOrd = (storeData.orders || []).find(
+                        o => String(o.uid || '') === clientUid &&
+                             (String(o.orderCode || '') === String(orderNum) || String(o.name || '') === String(k.name || ''))
+                    );
+                    if (matchedOrd) priceVal = Number(matchedOrd.price || 0);
+                }
+
+                const dateDisplay = k.dateTime || k.date || formatCardDateTime(Date.now());
+                const waNum = String(storeData.whatsapp || '8801700000000').replace(/[^0-9]/g, '');
+                const groupUrl = `https://wa.me/${waNum}?text=${encodeURIComponent(`Hello Admin, Order #${orderNum} (${k.name} - ${k.time}) Paid User Group access.`)}`;
 
                 container.innerHTML += `
-                    <div class="bg-white border border-slate-200 p-4 rounded-2xl flex justify-between items-center text-xs shadow-sm">
-                        <div class="space-y-1">
-                            <p class="font-bold text-slate-800">${k.name} <span class="text-slate-400 font-normal">(${k.time})</span></p>
-                            ${countdownHtml}
-                            <div class="bg-emerald-50 border border-emerald-200 px-2.5 py-1.5 rounded-lg inline-block">
-                                <p class="text-emerald-700 font-mono font-extrabold tracking-wide select-all">${k.key}</p>
+                    <div class="bg-white border border-slate-200/90 rounded-3xl p-4 space-y-3.5 shadow-md">
+                        <!-- Top Row: 6-Digit Order ID + COMPLETED Pill -->
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-extrabold text-sm text-slate-800">#${escapeHtml(orderNum)}</span>
+                            <span class="bg-emerald-50 text-emerald-600 border border-emerald-400 px-3 py-0.5 rounded-full text-[10px] font-extrabold tracking-wider uppercase">
+                                COMPLETED
+                            </span>
+                        </div>
+
+                        <!-- Panel Image + Name + Duration Badge -->
+                        <div class="flex items-center gap-3 pb-3 border-b border-slate-100">
+                            <img src="${escapeHtml(iconUrl)}" class="w-14 h-14 rounded-2xl object-cover border border-slate-200 shadow-sm shrink-0">
+                            <div class="min-w-0">
+                                <h3 class="font-extrabold text-sm text-slate-900 uppercase tracking-tight leading-snug">${escapeHtml(k.name)}</h3>
+                                <span class="mt-1 inline-flex items-center gap-1 bg-pink-50 text-pink-600 border border-pink-200 px-2.5 py-0.5 rounded-full text-[11px] font-bold">
+                                    <i class="fa-regular fa-clock text-[10px]"></i> ${escapeHtml(k.time)}
+                                </span>
                             </div>
                         </div>
-                        <button onclick="copyPurchasedKey('${k.key.replace(/'/g, "\\'")}')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-xl text-[11px] font-bold cursor-pointer shadow-sm shrink-0">
-                            <i class="fa-solid fa-copy mr-1"></i> Copy
-                        </button>
+
+                        <!-- Date & Price Box -->
+                        <div class="bg-slate-50/90 border border-slate-200/80 rounded-2xl p-3 space-y-2 text-xs">
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-400 font-bold text-[10px] uppercase tracking-wider flex items-center gap-1.5">
+                                    <i class="fa-regular fa-calendar"></i> DATE
+                                </span>
+                                <span class="font-mono font-bold text-slate-800 text-[11px]">${escapeHtml(dateDisplay)}</span>
+                            </div>
+                            <div class="flex justify-between items-center pt-1.5 border-t border-slate-200/60">
+                                <span class="text-slate-400 font-bold text-[10px] uppercase tracking-wider flex items-center gap-1.5">
+                                    <i class="fa-solid fa-money-bill-wave"></i> PRICE
+                                </span>
+                                <span class="font-black text-slate-900 text-sm">৳${priceVal}</span>
+                            </div>
+                        </div>
+
+                        <!-- Join Paid User Group Button -->
+                        <a href="${groupUrl}" target="_blank" rel="noopener noreferrer" class="w-full bg-sky-500 hover:bg-sky-600 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-md flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i> Join Paid User Group
+                        </a>
+
+                        <!-- YOUR CODE + COPY -->
+                        <div class="space-y-1.5 pt-0.5">
+                            <p class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">YOUR CODE</p>
+                            <div class="flex items-center gap-2">
+                                <div class="flex-1 bg-white border-2 border-emerald-500/80 rounded-xl px-3 py-2 flex items-center gap-1.5 min-w-0">
+                                    <span class="text-xs font-extrabold text-slate-800 shrink-0">Key:</span>
+                                    <span class="font-mono font-black text-xs text-emerald-600 tracking-wide truncate select-all">${escapeHtml(k.key)}</span>
+                                </div>
+                                <button type="button" onclick="copyPurchasedKey('${String(k.key).replace(/'/g, "\\'")}')" class="bg-rose-500 hover:bg-rose-600 text-white font-extrabold px-3.5 py-2.5 rounded-xl text-xs transition shadow-md cursor-pointer flex items-center gap-1.5 shrink-0">
+                                    <i class="fa-regular fa-copy"></i> COPY
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 `;
             });
@@ -3762,6 +3987,7 @@
             container.innerHTML = '';
             indexedOrders.forEach(({ ord, realIdx }) => {
                 const isDone = ord.status === 'Completed';
+                const orderCodeStr = ord.orderCode || ord.id || '000000';
                 const couponBadge = ord.couponUsed ? `<span class="bg-indigo-50 text-indigo-600 border border-indigo-200 px-1.5 py-0.5 rounded font-mono text-[9px] font-bold ml-1">Coupon: ${ord.couponUsed}</span>` : '';
                 const vipTag = ord.vipTier ? `<span class="bg-amber-50 text-amber-700 border border-amber-200 px-1.5 py-0.5 rounded text-[9px] font-bold ml-1">${ord.vipTier}</span>` : '';
                 const statusPill = isDone
@@ -3772,12 +3998,13 @@
                     <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-2 text-xs shadow-sm">
                         <div class="flex justify-between items-start">
                             <div>
-                                <span class="bg-red-50 text-red-600 border border-red-200 px-2 py-0.5 rounded font-mono font-extrabold text-[10px]">UID: ${ord.uid || 'Unknown'}</span>
+                                <span class="bg-slate-800 text-white px-2 py-0.5 rounded font-mono font-extrabold text-[10px]">#${escapeHtml(orderCodeStr)}</span>
+                                <span class="bg-red-50 text-red-600 border border-red-200 px-2 py-0.5 rounded font-mono font-extrabold text-[10px] ml-1">UID: ${ord.uid || 'Unknown'}</span>
                                 ${statusPill}
                                 ${vipTag}
                                 ${couponBadge}
-                                <p class="font-bold text-slate-800 mt-1">${ord.name} (${ord.time}) - <span class="dynamic-theme-text">৳${ord.price}</span></p>
-                                <p class="text-[10px] text-slate-400">Date: ${ord.date}</p>
+                                <p class="font-bold text-slate-800 mt-1">${escapeHtml(o.name)} <span class="text-pink-600 font-extrabold">(${escapeHtml(o.time)})</span> - <span class="dynamic-theme-text">৳${Number(o.price || 0)}</span></p>
+                                <p class="text-[10px] text-slate-400">${escapeHtml(o.dateTime || o.date || '')}</p>
                             </div>
                             <button onclick="deleteUserOrder(${realIdx})" class="text-red-500 hover:text-red-700 p-1 cursor-pointer" title="Delete Order"><i class="fa-solid fa-trash"></i></button>
                         </div>
@@ -3811,15 +4038,25 @@
 
             const ord = storeData.orders[orderIndex];
             if(!ord) return;
+            const orderCodeStr = ord.orderCode || generateSixDigitOrderId();
+            ord.orderCode = orderCodeStr;
             ord.status = 'Completed';
+
+            const panelObj = (storeData.panels || []).find(p => String(p.name || '').trim().toLowerCase() === String(ord.name || '').trim().toLowerCase());
+            const iconUrl = ord.icon || (panelObj && panelObj.icon) || "https://i.ibb.co/3W9v93z/default.png";
+            const nowFormatted = ord.dateTime || formatCardDateTime(Date.now());
 
             if(!storeData.keys) storeData.keys = [];
             storeData.keys.unshift({
+                orderCode: orderCodeStr,
                 uid: ord.uid,
                 name: ord.name,
+                icon: iconUrl,
                 time: ord.time,
+                price: Number(ord.price || 0),
                 key: keyVal,
                 date: new Date().toLocaleDateString(),
+                dateTime: nowFormatted,
                 expiryTimestamp: ord.expiryTimestamp
             });
 
@@ -3835,7 +4072,7 @@
             renderAdminHomeLists();
             renderHomeTabContent();
             renderSalesAnalyticsChart();
-            showSuccessModal(`Key sent & order marked Completed for UID: ${ord.uid}`);
+            showSuccessModal(`Order #${orderCodeStr}: Key sent & order marked Completed for UID: ${ord.uid}`);
         }
 
         window.deleteUserOrder = function(orderIndex) {
@@ -3859,24 +4096,41 @@
             }
 
             const expiryTs = calculateExpiryTimestamp(duration);
-
-            if(!storeData.keys) storeData.keys = [];
-            storeData.keys.unshift({
-                uid: targetUid,
-                name: panelName,
-                time: duration,
-                key: keyCode,
-                date: new Date().toLocaleDateString(),
-                expiryTimestamp: expiryTs
-            });
+            const panelObj = (storeData.panels || []).find(p => String(p.name || '').trim().toLowerCase().includes(panelName.toLowerCase()));
+            const iconUrl = (panelObj && panelObj.icon) || "https://i.ibb.co/3W9v93z/default.png";
+            const nowFormatted = formatCardDateTime(Date.now());
 
             if(!storeData.orders) storeData.orders = [];
             const matchingPending = storeData.orders.find(
                 o => String(o.uid || '').trim() === targetUid && o.status !== 'Completed' && (!panelName || String(o.name || '').toLowerCase().includes(panelName.toLowerCase()))
             );
+
+            const orderCodeStr = (matchingPending && (matchingPending.orderCode || matchingPending.id))
+                ? String(matchingPending.orderCode || matchingPending.id)
+                : generateSixDigitOrderId();
+
+            const priceVal = matchingPending ? Number(matchingPending.price || 0) : 0;
+
             if (matchingPending) {
+                matchingPending.orderCode = orderCodeStr;
                 matchingPending.status = 'Completed';
+                if (!matchingPending.icon) matchingPending.icon = iconUrl;
+                if (!matchingPending.dateTime) matchingPending.dateTime = nowFormatted;
             }
+
+            if(!storeData.keys) storeData.keys = [];
+            storeData.keys.unshift({
+                orderCode: orderCodeStr,
+                uid: targetUid,
+                name: panelName,
+                icon: iconUrl,
+                time: duration,
+                price: priceVal,
+                key: keyCode,
+                date: new Date().toLocaleDateString(),
+                dateTime: nowFormatted,
+                expiryTimestamp: expiryTs
+            });
 
             markRecentOrderCompletedByUidAndPanel(targetUid, panelName, duration);
 
@@ -3888,7 +4142,7 @@
             renderAdminUserOrders();
             renderAdminHomeLists();
             renderHomeTabContent();
-            showSuccessModal(`Key delivered & Recent Order updated for UID: ${targetUid}`);
+            showSuccessModal(`Order #${orderCodeStr}: Key delivered & Recent Order updated for UID: ${targetUid}`);
         }
 
         window.updateAdminPin = async function() {
@@ -4001,7 +4255,7 @@
 
         window.addAdminFeedback = function() {
             if(!storeData.homeFeedbacks) storeData.homeFeedbacks = [];
-            storeData.homeFeedbacks.push({ name: "New Reviewer", status: "Verified Buyer", stars: 5, comment: "Good service!" });
+            storeData.homeFeedbacks.push({ name: "New User", status: "Verified Buyer", stars: 5, comment: "Nice!" });
             saveToFirebase(true);
             renderAdminHomeLists();
             renderHomeTabContent();
@@ -4013,365 +4267,9 @@
             renderHomeTabContent();
         }
         window.updateFeedback = function(idx, field, val) {
-            storeData.homeFeedbacks[idx][field] = field === 'stars' ? Number(val) : val;
+            storeData.homeFeedbacks[idx][field] = val;
             saveToFirebase(false);
             renderHomeTabContent();
-        }
-
-        function renderAdminFundRequests() {
-            const container = document.getElementById('adminFundRequestsList');
-            const countBadge = document.getElementById('pendingFundCount');
-            const filterSel = document.getElementById('adminFundFilterSelect');
-            if(!container) return;
-
-            if(!storeData.fundRequests || storeData.fundRequests.length === 0) {
-                countBadge.innerText = "0 Pending";
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No fund requests.</p>`;
-                return;
-            }
-
-            const filterVal = filterSel ? filterSel.value : 'Pending';
-            const pendingReqs = storeData.fundRequests.filter(r => r.status === 'Pending');
-            countBadge.innerText = `${pendingReqs.length} Pending`;
-
-            const filteredList = storeData.fundRequests
-                .map((req, index) => ({ req, index }))
-                .filter(({ req }) => filterVal === 'All' || req.status === filterVal);
-
-            if(filteredList.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No matching fund requests.</p>`;
-                return;
-            }
-
-            container.innerHTML = '';
-            filteredList.forEach(({ req, index }) => {
-                let badgeCls = 'bg-amber-100 text-amber-700';
-                if(req.status === 'Approved') badgeCls = 'bg-emerald-100 text-emerald-700';
-                else if(req.status === 'Rejected' || req.status === 'Expired') badgeCls = 'bg-red-100 text-red-700';
-
-                container.innerHTML += `
-                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 flex justify-between items-center text-xs">
-                        <div>
-                            <p class="font-bold text-slate-800">UID: ${req.uid} | <span class="dynamic-theme-text font-black">৳${req.amount}</span> <span class="px-1.5 py-0.5 rounded text-[9px] font-bold ml-1 ${badgeCls}">${req.status}</span></p>
-                            <p class="text-[10px] text-slate-500 font-mono mt-0.5">TrxID: ${req.trxId} (${req.date})</p>
-                        </div>
-                        ${req.status === 'Pending' ? `
-                        <div class="flex gap-1.5">
-                            <button onclick="approveFundRequest(${index})" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded-lg text-[10px] font-bold cursor-pointer shadow-sm">Approve</button>
-                            <button onclick="rejectFundRequest(${index})" class="bg-red-600 hover:bg-red-700 text-white px-2.5 py-1 rounded-lg text-[10px] font-bold cursor-pointer shadow-sm">Reject</button>
-                        </div>` : ''}
-                    </div>
-                `;
-            });
-        }
-
-        window.clearProcessedFundRequests = function() {
-            if(!Array.isArray(storeData.fundRequests) || storeData.fundRequests.length === 0) return;
-            if(!confirm("সব Approved, Rejected ও Expired ফান্ড রিকোয়েস্ট ক্লিয়ার করতে চান?")) return;
-            storeData.fundRequests = storeData.fundRequests.filter(r => r.status === 'Pending');
-            saveToFirebase(true);
-            renderAdminFundRequests();
-            renderMyFundRequests();
-            showSuccessModal("পুরনো ফান্ড রিকোয়েস্টগুলো ক্লিয়ার করা হয়েছে!");
-        }
-
-        window.approveFundRequest = function(index) {
-            const req = storeData.fundRequests[index];
-            if(!req) return;
-            req.status = 'Approved';
-
-            if(!storeData.userBalances) storeData.userBalances = {};
-            storeData.userBalances[req.uid] = Number(storeData.userBalances[req.uid] || 0) + Number(req.amount);
-
-            saveToFirebase(true);
-            renderAdminFundRequests();
-            renderMyFundRequests();
-            updateAccountUI();
-            showSuccessModal(`Fund of ৳${req.amount} approved for UID: ${req.uid}`);
-        }
-
-        window.rejectFundRequest = function(index) {
-            if(!storeData.fundRequests[index]) return;
-            storeData.fundRequests[index].status = 'Rejected';
-            saveToFirebase(true);
-            renderAdminFundRequests();
-            renderMyFundRequests();
-            showSuccessModal('Fund request rejected.');
-        }
-
-        function renderDeviceList() {
-            const container = document.getElementById('deviceListContainer');
-            const countBadge = document.getElementById('activeDeviceCount');
-            const suspendedContainer = document.getElementById('suspendedDeviceListContainer');
-            const suspendedCountBadge = document.getElementById('suspendedDeviceCount');
-
-            container.innerHTML = '';
-            suspendedContainer.innerHTML = '';
-
-            if(!storeData.devices || Object.keys(storeData.devices).length === 0) {
-                countBadge.innerText = "0 Devices";
-                suspendedCountBadge.innerText = "0 Suspended";
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No connected devices yet.</p>`;
-                suspendedContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No suspended devices.</p>`;
-                return;
-            }
-
-            const keys = Object.keys(storeData.devices);
-            let activeKeys = keys.filter(k => !storeData.devices[k].isSuspended);
-            let suspendedKeys = keys.filter(k => storeData.devices[k].isSuspended);
-
-            countBadge.innerText = `${activeKeys.length} Device${activeKeys.length > 1 ? 's' : ''}`;
-            suspendedCountBadge.innerText = `${suspendedKeys.length} Suspended`;
-
-            if(activeKeys.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No active devices.</p>`;
-            } else {
-                activeKeys.forEach(devKey => {
-                    let dev = storeData.devices[devKey];
-                    const isCurrentDevice = (devKey === deviceId);
-                    const modelText = dev.model || "Unknown Device";
-                    const osBrowserText = dev.os ? `${dev.os} • ${dev.browser || 'Browser'}` : '';
-
-                    container.innerHTML += `
-                        <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 flex justify-between items-start gap-2 text-xs shadow-sm">
-                            <div class="space-y-1">
-                                <div class="flex items-center gap-1.5 flex-wrap">
-                                    <span class="font-bold text-slate-800"><i class="fa-solid fa-mobile-screen-button dynamic-theme-text mr-1"></i>${modelText}</span>
-                                    ${isCurrentDevice ? '<span class="bg-emerald-100 text-emerald-700 text-[9px] font-bold px-1.5 py-0.5 rounded">You</span>' : ''}
-                                </div>
-                                ${osBrowserText ? `<p class="text-[10px] text-slate-500 font-medium">${osBrowserText}</p>` : ''}
-                                <div class="flex items-center gap-2 pt-0.5 flex-wrap">
-                                    <span class="bg-red-50 text-red-600 border border-red-200 px-2 py-0.5 rounded-md text-[10px] font-mono font-bold">UID: ${dev.uid || 'N/A'}</span>
-                                    <span class="bg-indigo-50 dynamic-theme-text border border-indigo-200 px-2 py-0.5 rounded-md text-[10px] font-mono font-bold">PIN: ${dev.supportPin || 'N/A'}</span>
-                                </div>
-                            </div>
-                            <button onclick="toggleSuspend('${devKey}')" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-xl text-[10px] font-bold cursor-pointer shrink-0 shadow-sm transition">
-                                Suspend
-                            </button>
-                        </div>
-                    `;
-                });
-            }
-
-            if(suspendedKeys.length === 0) {
-                suspendedContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No suspended devices.</p>`;
-            } else {
-                suspendedKeys.forEach(devKey => {
-                    let dev = storeData.devices[devKey];
-                    const modelText = dev.model || "Unknown Device";
-                    const osBrowserText = dev.os ? `${dev.os} • ${dev.browser || 'Browser'}` : '';
-
-                    suspendedContainer.innerHTML += `
-                        <div class="bg-white p-3 rounded-2xl border border-red-300 flex justify-between items-start gap-2 text-xs shadow-sm">
-                            <div class="space-y-1">
-                                <span class="font-bold text-red-700"><i class="fa-solid fa-ban mr-1"></i>${modelText}</span>
-                                ${osBrowserText ? `<p class="text-[10px] text-slate-500 font-medium">${osBrowserText}</p>` : ''}
-                                <div class="flex items-center gap-2 pt-0.5 flex-wrap">
-                                    <span class="bg-red-50 text-red-600 border border-red-200 px-2 py-0.5 rounded-md text-[10px] font-mono font-bold">UID: ${dev.uid || 'N/A'}</span>
-                                    <span class="bg-indigo-50 dynamic-theme-text border border-indigo-200 px-2 py-0.5 rounded-md text-[10px] font-mono font-bold">PIN: ${dev.supportPin || 'N/A'}</span>
-                                </div>
-                            </div>
-                            <button onclick="toggleSuspend('${devKey}')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-[10px] font-bold cursor-pointer shrink-0 shadow-sm transition">
-                                Unsuspend
-                            </button>
-                        </div>
-                    `;
-                });
-            }
-        }
-
-        window.toggleSuspend = function(devKey) {
-            if(!storeData.devices || !storeData.devices[devKey]) return;
-            storeData.devices[devKey].isSuspended = !storeData.devices[devKey].isSuspended;
-            update(ref(db, 'panelStore/devices/' + devKey), {
-                isSuspended: storeData.devices[devKey].isSuspended
-            });
-            renderDeviceList();
-        }
-
-        function ensureSixLinkSlots(linksArr) {
-            const arr = Array.isArray(linksArr) ? [...linksArr] : [];
-            while (arr.length < 6) {
-                const idx = arr.length + 1;
-                arr.push({ name: idx <= 2 ? `Setup Video ${idx}` : (idx <= 4 ? `APK File ${idx - 2}` : `Extra Link ${idx - 4}`), url: "" });
-            }
-            return arr;
-        }
-
-        function renderAdminPanels() {
-            const list = document.getElementById('adminPanelList');
-            list.innerHTML = '';
-            if(!storeData.panels) return;
-            const catOptionsHtml = (storeData.categories || ["Non Root"]).map(c => `<option value="${c}">${c}</option>`).join('');
-
-            storeData.panels.forEach((p, idx) => {
-                const links = ensureSixLinkSlots(p.links);
-                let linksHtml = '';
-                links.forEach((l, lIdx) => {
-                    linksHtml += `
-                        <div class="flex gap-1.5 items-center text-[11px] bg-white p-1.5 rounded-lg border border-slate-200">
-                            <input type="text" value="${l.name}" onchange="updatePanelLink(${idx}, ${lIdx}, 'name', this.value)" class="w-28 bg-slate-50 px-2 py-1 rounded border border-slate-200 text-slate-700 font-semibold" placeholder="Label">
-                            <input type="text" value="${l.url}" onchange="updatePanelLink(${idx}, ${lIdx}, 'url', this.value)" class="flex-1 bg-slate-50 px-2 py-1 rounded border border-slate-200 text-slate-800" placeholder="https://...">
-                        </div>
-                    `;
-                });
-
-                let pkgHtml = '';
-                (p.packages || []).forEach((pkg, pkgIdx) => {
-                    pkgHtml += `
-                        <div class="bg-white p-2 rounded-xl border border-slate-200 space-y-1.5 text-[11px]">
-                            <div class="flex gap-1.5 items-center">
-                                <input type="text" value="${pkg.time}" onchange="updatePkg(${idx}, ${pkgIdx}, 'time', this.value)" class="w-24 bg-slate-50 px-2 py-1 rounded border border-slate-200 text-slate-800 font-medium" placeholder="1 Hours">
-                                <input type="number" value="${pkg.price}" onchange="updatePkg(${idx}, ${pkgIdx}, 'price', this.value)" class="w-16 bg-slate-50 px-2 py-1 rounded border border-slate-200 font-bold text-slate-800" placeholder="৳">
-                                <input type="text" value="${pkg.note || ''}" onchange="updatePkg(${idx}, ${pkgIdx}, 'note', this.value)" class="flex-1 bg-slate-50 px-2 py-1 rounded border border-slate-200 text-red-600 font-bold" placeholder="Note (e.g. Stock Out)">
-                                <button onclick="deletePkg(${idx}, ${pkgIdx})" class="text-red-500 hover:text-red-700 px-1.5 cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
-                            </div>
-                            <div class="flex gap-1.5 items-center pt-1 border-t border-slate-100">
-                                <span class="text-[10px] text-slate-500 font-semibold">Coupon:</span>
-                                <input type="text" value="${pkg.couponCode || ''}" onchange="updatePkg(${idx}, ${pkgIdx}, 'couponCode', this.value)" class="w-24 bg-indigo-50/60 px-2 py-1 rounded border border-indigo-200 text-indigo-800 font-mono font-bold uppercase text-[10px]" placeholder="CODE">
-                                <span class="text-[10px] text-slate-500 font-semibold">Off ৳:</span>
-                                <input type="number" value="${pkg.couponDiscount || 0}" onchange="updatePkg(${idx}, ${pkgIdx}, 'couponDiscount', this.value)" class="w-16 bg-indigo-50/60 px-2 py-1 rounded border border-indigo-200 text-emerald-700 font-bold text-[10px]" placeholder="0">
-                            </div>
-                        </div>
-                    `;
-                });
-
-                const stockList = Array.isArray(p.stockKeys) ? p.stockKeys : [];
-
-                list.innerHTML += `
-                    <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-2.5 shadow-sm">
-                        <div class="flex justify-between items-center">
-                            <input type="text" value="${p.name}" onchange="updatePanel(${idx}, 'name', this.value)" class="font-bold text-xs text-slate-800 bg-transparent border-b border-slate-300 focus:border-indigo-500 outline-none w-44">
-                            <button onclick="deletePanel(${idx})" class="text-red-500 hover:text-red-700 text-xs font-bold cursor-pointer"><i class="fa-solid fa-trash mr-1"></i>Delete</button>
-                        </div>
-
-                        <div class="flex items-center gap-2 bg-white p-2 rounded-xl border border-slate-200">
-                            <img src="${p.icon || 'https://i.ibb.co/3W9v93z/default.png'}" class="w-10 h-10 rounded-lg object-cover border border-slate-200 shrink-0">
-                            <input type="text" value="${p.icon || ''}" onchange="updatePanel(${idx}, 'icon', this.value)" class="flex-1 min-w-0 bg-slate-50 px-2 py-1.5 rounded-lg border border-slate-200 text-[11px] text-slate-700" placeholder="Icon Image URL">
-                            <button type="button" onclick="pickPhotoFromGallery('panel', ${idx})" class="bg-indigo-50 hover:bg-indigo-100 dynamic-theme-text border border-indigo-200 px-2.5 py-1.5 rounded-lg text-[10px] font-bold cursor-pointer shrink-0">
-                                <i class="fa-solid fa-images mr-1"></i>Gallery
-                            </button>
-                        </div>
-
-                        <div class="grid grid-cols-3 gap-1.5 text-xs">
-                            <select onchange="updatePanel(${idx}, 'category', this.value)" class="bg-white border border-slate-200 rounded-lg p-1.5 text-slate-700 font-semibold text-[11px]">
-                                ${catOptionsHtml.replace(`value="${p.category}"`, `value="${p.category}" selected`)}
-                            </select>
-                            <input type="text" value="${p.status || ''}" onchange="updatePanel(${idx}, 'status', this.value)" class="bg-white border border-slate-200 rounded-lg p-1.5 text-slate-700 text-[11px]" placeholder="Status">
-                            <input type="text" value="${p.badge || ''}" onchange="updatePanel(${idx}, 'badge', this.value)" class="bg-white border border-slate-200 rounded-lg p-1.5 text-indigo-700 font-bold text-[11px]" placeholder="Badge (e.g. Hot)">
-                        </div>
-
-                        <div class="bg-emerald-50/70 p-2.5 rounded-xl border border-emerald-200 space-y-1.5">
-                            <div class="flex justify-between items-center">
-                                <span class="text-[10px] font-extrabold text-emerald-800 uppercase">Auto Stock Keys (${stockList.length} available)</span>
-                            </div>
-                            <div class="flex gap-1.5">
-                                <input type="text" id="stockKeyInput-${idx}" placeholder="Add key(s) comma separated..." class="flex-1 bg-white border border-emerald-200 px-2 py-1 rounded-lg text-[11px] font-mono">
-                                <button onclick="addPanelStockKey(${idx})" class="bg-emerald-600 text-white px-2.5 py-1 rounded-lg text-[10px] font-bold cursor-pointer">+ Add</button>
-                            </div>
-                            ${stockList.length > 0 ? `<div class="flex flex-wrap gap-1 pt-1">${stockList.map((k, kIdx) => `<span class="bg-white border border-emerald-200 text-emerald-700 px-1.5 py-0.5 rounded font-mono text-[9px] font-bold inline-flex items-center gap-1">${k}<button onclick="removePanelStockKey(${idx}, ${kIdx})" class="text-red-500 hover:text-red-700 cursor-pointer">×</button></span>`).join('')}</div>` : ''}
-                        </div>
-
-                        <div class="space-y-1 pt-1">
-                            <span class="text-[10px] text-slate-500 font-bold uppercase block">Setup & APK Links (6 Slots)</span>
-                            ${linksHtml}
-                        </div>
-
-                        <div class="space-y-1.5 pt-2 border-t border-slate-200">
-                            <div class="flex justify-between items-center">
-                                <span class="text-[10px] text-slate-500 font-bold uppercase">Packages & Coupons</span>
-                                <button onclick="addPkg(${idx})" class="text-[10px] bg-indigo-50 dynamic-theme-text px-2 py-0.5 rounded border border-indigo-200 font-bold cursor-pointer">+ Add Package</button>
-                            </div>
-                            ${pkgHtml}
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        window.addPanelStockKey = function(panelIdx) {
-            const input = document.getElementById(`stockKeyInput-${panelIdx}`);
-            const raw = input ? input.value.trim() : '';
-            if(!raw) return;
-            const keysToAdd = raw.split(',').map(s => s.trim()).filter(Boolean);
-            if(keysToAdd.length === 0) return;
-
-            if(!Array.isArray(storeData.panels[panelIdx].stockKeys)) {
-                storeData.panels[panelIdx].stockKeys = [];
-            }
-            storeData.panels[panelIdx].stockKeys.push(...keysToAdd);
-            input.value = '';
-            saveToFirebase(true);
-            renderAdminPanels();
-            showSuccessModal(`${keysToAdd.length}টি স্টক কি যুক্ত করা হয়েছে!`);
-        }
-
-        window.removePanelStockKey = function(panelIdx, keyIdx) {
-            if(!Array.isArray(storeData.panels[panelIdx].stockKeys)) return;
-            storeData.panels[panelIdx].stockKeys.splice(keyIdx, 1);
-            saveToFirebase(true);
-            renderAdminPanels();
-        }
-
-        window.updatePanel = function(idx, field, val) {
-            storeData.panels[idx][field] = val;
-            saveToFirebase(false);
-            renderPanels();
-        }
-
-        window.updatePanelLink = function(pIdx, lIdx, field, val) {
-            storeData.panels[pIdx].links = ensureSixLinkSlots(storeData.panels[pIdx].links);
-            storeData.panels[pIdx].links[lIdx][field] = val;
-            saveToFirebase(false);
-        }
-
-        window.updatePkg = function(pIdx, pkgIdx, field, val) {
-            if(field === 'price' || field === 'couponDiscount') {
-                storeData.panels[pIdx].packages[pkgIdx][field] = Number(val) || 0;
-            } else if(field === 'couponCode') {
-                storeData.panels[pIdx].packages[pkgIdx][field] = String(val || '').trim().toUpperCase();
-            } else {
-                storeData.panels[pIdx].packages[pkgIdx][field] = val;
-            }
-            saveToFirebase(false);
-        }
-
-        window.addPkg = function(pIdx) {
-            if(!storeData.panels[pIdx].packages) storeData.panels[pIdx].packages = [];
-            storeData.panels[pIdx].packages.push({time: "1 Hours", price: 50, note: "", couponCode: "", couponDiscount: 0});
-            saveToFirebase(true);
-            renderAdminPanels();
-        }
-
-        window.deletePkg = function(pIdx, pkgIdx) {
-            storeData.panels[pIdx].packages.splice(pkgIdx, 1);
-            saveToFirebase(true);
-            renderAdminPanels();
-        }
-
-        window.addNewPanelPrompt = function() {
-            const name = prompt("Enter New Panel Name:");
-            if(!name) return;
-            const defCat = (storeData.categories && storeData.categories.length > 0) ? storeData.categories[0] : "Non Root";
-            const newId = storeData.panels.length > 0 ? Math.max(...storeData.panels.map(p => p.id)) + 1 : 1;
-            storeData.panels.push({
-                id: newId, name: name, category: defCat,
-                icon: "https://i.ibb.co/3W9v93z/default.png", status: "", badge: "", stockKeys: [],
-                links: JSON.parse(JSON.stringify(defaultLinks)),
-                packages: [{time: "1 Hours", price: 30, note: "", couponCode: "", couponDiscount: 0}]
-            });
-            saveToFirebase(true);
-            renderAdminPanels();
-            renderPanels();
-        }
-
-        window.deletePanel = function(idx) {
-            if(confirm('Are you sure you want to delete this panel?')) {
-                storeData.panels.splice(idx, 1);
-                saveToFirebase(true);
-                renderAdminPanels();
-                renderPanels();
-            }
         }
 
         window.saveGeneralSettings = function() {
@@ -4386,64 +4284,458 @@
             storeData.bkash = document.getElementById('editBkash').value.trim();
             storeData.nagad = document.getElementById('editNagad').value.trim();
 
-            const updateSel = document.getElementById('editAppUpdatingActive');
-            if (updateSel) storeData.appUpdating = (updateSel.value === "true");
-            const updateMsgEl = document.getElementById('editAppUpdateMsg');
-            if (updateMsgEl && updateMsgEl.value.trim() !== "") {
-                storeData.appUpdateMsg = updateMsgEl.value.trim();
-            }
+            storeData.appUpdating = document.getElementById('editAppUpdatingActive').value === "true";
+            storeData.appUpdateMsg = document.getElementById('editAppUpdateMsg').value.trim();
 
-            const spinSel = document.getElementById('editDailySpinActive');
-            if (spinSel) {
-                const spinCfg = getSpinConfig();
-                spinCfg.enabled = (spinSel.value === "true");
-                storeData.dailySpin = spinCfg;
-            }
-
-            storeData.maintenanceActive = (document.getElementById('editMaintenanceActive').value === "true");
+            storeData.maintenanceActive = document.getElementById('editMaintenanceActive').value === "true";
             storeData.maintenanceMsg = document.getElementById('editMaintenanceMsg').value.trim();
-
             const rawBypass = document.getElementById('editMaintenanceBypassIds').value || "";
-            const parsedBypass = rawBypass.split(',').map(s => s.trim()).filter(Boolean);
-            if (!parsedBypass.includes(String(clientUid))) parsedBypass.push(String(clientUid));
-            if (!parsedBypass.includes(String(deviceId))) parsedBypass.push(String(deviceId));
-            storeData.maintenanceBypassIds = parsedBypass;
+            storeData.maintenanceBypassIds = rawBypass.split(",").map(s => s.trim()).filter(Boolean);
 
-            storeData.autoDeliveryActive = (document.getElementById('editAutoDeliveryActive').value === "true");
+            storeData.autoDeliveryActive = document.getElementById('editAutoDeliveryActive').value === "true";
+
+            if(storeData.dailySpin) {
+                storeData.dailySpin.enabled = document.getElementById('editDailySpinActive').value === "true";
+            }
 
             storeData.themeColor = document.getElementById('editThemeColor').value;
             storeData.ownerColor = document.getElementById('editOwnerColor').value;
-            storeData.ownerFullText = document.getElementById('editOwnerName').value.trim();
+            storeData.ownerFullText = document.getElementById('editOwnerName').value.trim() || "Owner ALAMIN";
 
-            storeData.bannerImg = document.getElementById('editBannerImg').value.trim() || "https://i.ibb.co/2kQ4Q1L/1000015879.jpg";
+            storeData.bannerImg = document.getElementById('editBannerImg').value.trim();
             storeData.bannerLink = document.getElementById('editBannerLink').value.trim();
-            storeData.popupActive = (document.getElementById('editPopupActive').value === "true");
+            storeData.popupActive = document.getElementById('editPopupActive').value === "true";
             storeData.popupTitle = document.getElementById('editPopupTitle').value.trim();
             storeData.popupMsg = document.getElementById('editPopupMsg').value.trim();
 
             saveToFirebase(true);
             checkAppUpdateState();
             checkMaintenanceState();
+            updateSpinAvailabilityUI();
+            renderSpinWheelWithLabels();
             renderUI();
-            showSuccessModal('All settings saved to cloud!');
+            showSuccessModal('All settings saved to Cloud Database!');
         }
 
-        renderUI();
-        renderSpinWheelWithLabels();
-        updateSpinAvailabilityUI();
+        function renderDeviceList() {
+            const container = document.getElementById('deviceListContainer');
+            const suspContainer = document.getElementById('suspendedDeviceListContainer');
+            const activeBadge = document.getElementById('activeDeviceCount');
+            const suspBadge = document.getElementById('suspendedDeviceCount');
+            if(!container) return;
+
+            const devicesObj = storeData.devices || {};
+            const allDevs = Object.values(devicesObj);
+            const activeDevs = allDevs.filter(d => !d.isSuspended);
+            const suspendedDevs = allDevs.filter(d => !!d.isSuspended);
+
+            activeBadge.innerText = `${activeDevs.length} Device${activeDevs.length !== 1 ? 's' : ''}`;
+            suspBadge.innerText = `${suspendedDevs.length} Suspended`;
+
+            container.innerHTML = '';
+            if(activeDevs.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No active devices found.</p>`;
+            } else {
+                activeDevs.forEach(dev => {
+                    const isMe = dev.id === deviceId;
+                    const devUid = dev.uid || "N/A";
+                    container.innerHTML += `
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 flex justify-between items-center text-xs shadow-sm">
+                            <div>
+                                <div class="flex items-center gap-1.5 flex-wrap">
+                                    <span class="bg-red-50 text-red-600 border border-red-200 px-2 py-0.5 rounded font-mono font-extrabold text-[10px]">UID: ${devUid}</span>
+                                    <span class="bg-indigo-50 text-indigo-700 border border-indigo-200 px-1.5 py-0.5 rounded font-mono font-bold text-[9px]">PIN: ${dev.supportPin || 'N/A'}</span>
+                                    <span class="font-bold text-slate-800">${dev.model || 'Unknown Device'}</span>
+                                    ${isMe ? '<span class="bg-emerald-100 text-emerald-700 text-[9px] font-bold px-1.5 py-0.5 rounded">You</span>' : ''}
+                                </div>
+                                <p class="text-[10px] text-slate-500 mt-1">${dev.os || ''} • ${dev.browser || ''} • ID: <span class="font-mono">${dev.id}</span></p>
+                                <p class="text-[9px] text-slate-400 mt-0.5">Last Active: ${dev.lastActive || ''}</p>
+                            </div>
+                            <button onclick="toggleSuspendDevice('${dev.id}', true)" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-lg text-[10px] font-bold cursor-pointer shadow-sm shrink-0">Suspend</button>
+                        </div>
+                    `;
+                });
+            }
+
+            if(suspContainer) {
+                suspContainer.innerHTML = '';
+                if(suspendedDevs.length === 0) {
+                    suspContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No suspended devices.</p>`;
+                } else {
+                    suspendedDevs.forEach(dev => {
+                        const isMe = dev.id === deviceId;
+                        const devUid = dev.uid || "N/A";
+                        suspContainer.innerHTML += `
+                            <div class="bg-white p-3 rounded-xl border border-red-200 flex justify-between items-center text-xs shadow-sm">
+                                <div>
+                                    <div class="flex items-center gap-1.5 flex-wrap">
+                                        <span class="bg-red-100 text-red-700 border border-red-300 px-2 py-0.5 rounded font-mono font-extrabold text-[10px]">UID: ${devUid}</span>
+                                        <span class="bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded font-mono font-bold text-[9px]">PIN: ${dev.supportPin || 'N/A'}</span>
+                                        <span class="font-bold text-slate-800">${dev.model || 'Unknown Device'}</span>
+                                        ${isMe ? '<span class="bg-amber-100 text-amber-800 text-[9px] font-bold px-1.5 py-0.5 rounded">You</span>' : ''}
+                                    </div>
+                                    <p class="text-[10px] text-slate-500 mt-1">${dev.os || ''} • ${dev.browser || ''} • ID: <span class="font-mono">${dev.id}</span></p>
+                                    <p class="text-[9px] text-red-500 font-semibold mt-0.5">Status: Suspended</p>
+                                </div>
+                                <button onclick="toggleSuspendDevice('${dev.id}', false)" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-[10px] font-bold cursor-pointer shadow-sm shrink-0">Unsuspend</button>
+                            </div>
+                        `;
+                    });
+                }
+            }
+        }
+
+        window.toggleSuspendDevice = function(devId, suspendStatus) {
+            if(!storeData.devices) storeData.devices = {};
+            if(!storeData.devices[devId]) storeData.devices[devId] = { id: devId };
+            storeData.devices[devId].isSuspended = suspendStatus;
+            update(ref(db, 'panelStore/devices/' + devId), { isSuspended: suspendStatus });
+            renderDeviceList();
+            checkLiveSuspension();
+        }
+
+        function renderAdminFundRequests() {
+            const container = document.getElementById('adminFundRequestsList');
+            const badge = document.getElementById('pendingFundCount');
+            const filterSel = document.getElementById('adminFundFilterSelect');
+            if(!container) return;
+
+            processFundRequestsLifecycle(false);
+            const allReqs = enforceMaxFiveFundRequests(storeData.fundRequests || []);
+            const pendingCount = allReqs.filter(r => r.status === 'Pending').length;
+            badge.innerText = `${pendingCount} Pending`;
+
+            const filterVal = filterSel ? filterSel.value : 'Pending';
+            const indexedReqs = allReqs
+                .map((req, idx) => ({ req, idx }))
+                .filter(({ req }) => filterVal === 'All' ? true : req.status === filterVal);
+
+            if(indexedReqs.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No matching fund requests.</p>`;
+                return;
+            }
+
+            container.innerHTML = '';
+            indexedReqs.forEach(({ req, idx }) => {
+                let statusPill = `<span class="text-amber-600 font-bold ml-1">[${req.status}]</span>`;
+                if (req.status === 'Approved') statusPill = `<span class="text-emerald-600 font-bold ml-1">[Approved]</span>`;
+                else if (req.status === 'Rejected') statusPill = `<span class="text-red-600 font-bold ml-1">[Rejected]</span>`;
+                else if (req.status === 'Expired') statusPill = `<span class="text-red-600 font-bold ml-1">[Expired]</span>`;
+
+                const countdownText = req.status === 'Pending' ? ` • ⏳ ${formatMmSs(getFundRemainingMs(req))}` : '';
+
+                container.innerHTML += `
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 flex justify-between items-center text-xs shadow-sm">
+                        <div>
+                            <span class="bg-red-50 text-red-600 border border-red-200 px-1.5 py-0.5 rounded font-mono font-extrabold text-[10px]">UID: ${req.uid || 'N/A'}</span>
+                            <span class="font-bold text-slate-800 ml-1">৳${req.amount}</span>
+                            <span class="font-mono text-slate-600 ml-1">Trx: ${req.trxId}</span>
+                            ${statusPill}
+                            <p class="text-[9px] text-slate-400 mt-0.5">${req.date || ''}${countdownText}</p>
+                        </div>
+                        <div class="flex gap-1.5 shrink-0">
+                            ${req.status === 'Pending' ? `
+                                <button onclick="approveFund(${idx})" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded-lg text-[10px] font-bold cursor-pointer">Approve</button>
+                                <button onclick="rejectFund(${idx})" class="bg-red-600 hover:bg-red-700 text-white px-2.5 py-1 rounded-lg text-[10px] font-bold cursor-pointer">Reject</button>
+                            ` : `<button onclick="deleteFundReq(${idx})" class="text-slate-400 hover:text-red-600 p-1 cursor-pointer" title="Delete"><i class="fa-solid fa-trash"></i></button>`}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        window.clearProcessedFundRequests = function() {
+            if(!Array.isArray(storeData.fundRequests) || storeData.fundRequests.length === 0) return;
+            storeData.fundRequests = storeData.fundRequests.filter(r => r.status === 'Pending').slice(0, MAX_FUND_REQUESTS_DISPLAY);
+            saveToFirebase(true);
+            renderAdminFundRequests();
+            renderMyFundRequests();
+            showSuccessModal("Approved / Rejected / Expired ফান্ড রিকোয়েস্টগুলো ক্লিয়ার করা হয়েছে!");
+        }
+
+        window.approveFund = function(index) {
+            const req = storeData.fundRequests[index];
+            if(!req || req.status !== 'Pending') return;
+            req.status = 'Approved';
+            const targetUid = req.uid || clientUid;
+            const addAmt = Number(req.amount || 0);
+            if(!storeData.userBalances) storeData.userBalances = {};
+            storeData.userBalances[targetUid] = Number(storeData.userBalances[targetUid] || 0) + addAmt;
+            if(!storeData.users) storeData.users = {};
+            if(storeData.users[targetUid]) storeData.users[targetUid].balance = storeData.userBalances[targetUid];
+
+            saveToFirebase(true);
+            updateAccountUI();
+            renderMyFundRequests();
+            renderAdminFundRequests();
+            showSuccessModal(`৳${addAmt} approved and added to UID: ${targetUid}!`);
+        }
+
+        window.rejectFund = function(index) {
+            const req = storeData.fundRequests[index];
+            if(!req || req.status !== 'Pending') return;
+            req.status = 'Rejected';
+            saveToFirebase(true);
+            renderMyFundRequests();
+            renderAdminFundRequests();
+        }
+
+        window.deleteFundReq = function(index) {
+            storeData.fundRequests.splice(index, 1);
+            saveToFirebase(true);
+            renderMyFundRequests();
+            renderAdminFundRequests();
+        }
+
+        function renderAdminPanels() {
+            const container = document.getElementById('adminPanelList');
+            container.innerHTML = '';
+            if(!storeData.panels) return;
+
+            storeData.panels.forEach((panel, pIndex) => {
+                const durMap = ensurePanelDurationStockMap(panel);
+                const durations = getPanelDurationList(panel);
+                const defaultDur = durations[0] || "1 Hours";
+                const totalStockCount = Object.values(durMap).reduce((sum, arr) => sum + (Array.isArray(arr) ? arr.length : 0), 0);
+
+                let linksHtml = '';
+                if(!panel.links) panel.links = JSON.parse(JSON.stringify(defaultLinks));
+                panel.links.forEach((link, lIndex) => {
+                    linksHtml += `
+                        <div class="flex gap-1.5 items-center text-xs bg-white p-1.5 rounded border border-slate-200">
+                            <input type="text" value="${link.name || ''}" onchange="updateLink(${pIndex}, ${lIndex}, 'name', this.value)" class="w-24 bg-slate-50 px-2 py-1 rounded border border-slate-100 font-semibold text-slate-700" placeholder="Label">
+                            <input type="text" value="${link.url || ''}" onchange="updateLink(${pIndex}, ${lIndex}, 'url', this.value)" class="flex-1 bg-slate-50 px-2 py-1 rounded border border-slate-100 text-slate-600" placeholder="https://...">
+                        </div>
+                    `;
+                });
+
+                let pkgHtml = '';
+                if(!panel.packages) panel.packages = [];
+                panel.packages.forEach((pkg, pkgIndex) => {
+                    const pDurKey = String(pkg.time || '').trim();
+                    const pStockCount = (Array.isArray(durMap[pDurKey]) ? durMap[pDurKey].length : 0);
+                    pkgHtml += `
+                        <div class="bg-slate-50 p-2 rounded-lg border border-slate-200 space-y-1.5 text-xs">
+                            <div class="flex gap-1.5 items-center">
+                                <input type="text" value="${pkg.time}" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'time', this.value)" class="w-20 bg-white px-2 py-1 rounded border border-slate-200 text-slate-700 font-semibold" placeholder="1 Hours">
+                                <input type="number" value="${pkg.price}" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'price', this.value)" class="w-20 bg-white px-2 py-1 rounded border border-slate-200 font-bold text-slate-800" placeholder="Price">
+                                <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded font-mono font-bold text-[10px]">Stock: ${pStockCount}</span>
+                                <input type="text" value="${pkg.note || ''}" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'note', this.value)" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200 text-red-600 font-bold" placeholder="Note (e.g. Stock Out)">
+                                <button onclick="deletePkg(${pIndex}, ${pkgIndex})" class="text-red-500 hover:text-red-700 px-1 cursor-pointer"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                            <div class="flex gap-1.5 items-center">
+                                <span class="text-[10px] font-bold text-slate-500"><i class="fa-solid fa-ticket text-indigo-500"></i> Coupon:</span>
+                                <input type="text" value="${pkg.couponCode || ''}" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'couponCode', this.value)" class="w-24 bg-white px-2 py-1 rounded border border-slate-200 font-mono uppercase text-indigo-700 font-bold" placeholder="Code">
+                                <input type="number" value="${pkg.couponDiscount || 0}" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'couponDiscount', this.value)" class="w-20 bg-white px-2 py-1 rounded border border-slate-200 text-emerald-700 font-bold" placeholder="Off ৳">
+                            </div>
+                        </div>
+                    `;
+                });
+
+                let categoryOptionsHtml = '';
+                (storeData.categories || ["Non Root", "Root", "iPhone", "PC"]).forEach(cat => {
+                    categoryOptionsHtml += `<option value="${cat}" ${panel.category === cat ? 'selected' : ''}>${cat}</option>`;
+                });
+
+                let durationSelectHtml = '';
+                durations.forEach(d => {
+                    const cnt = Array.isArray(durMap[d]) ? durMap[d].length : 0;
+                    durationSelectHtml += `<option value="${escapeHtml(d)}">${escapeHtml(d)} (${cnt} keys)</option>`;
+                });
+
+                let stockSummaryBadgesHtml = '';
+                durations.forEach(d => {
+                    const arr = Array.isArray(durMap[d]) ? durMap[d] : [];
+                    stockSummaryBadgesHtml += `
+                        <div class="bg-white border border-emerald-200 rounded-lg px-2 py-1 text-[10px] flex items-center justify-between gap-1.5">
+                            <span class="font-bold text-slate-700">${escapeHtml(d)}</span>
+                            <span class="font-mono font-extrabold text-emerald-700">${arr.length} keys</span>
+                        </div>
+                    `;
+                });
+
+                container.innerHTML += `
+                    <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-3 shadow-sm">
+                        <div class="flex justify-between items-center gap-2">
+                            <input type="text" value="${panel.name}" onchange="updatePanel(${pIndex}, 'name', this.value)" class="bg-white font-bold text-xs text-slate-800 flex-1 border border-slate-200 px-2.5 py-1.5 rounded-xl" placeholder="Panel Name">
+                            <select onchange="updatePanel(${pIndex}, 'category', this.value)" class="bg-white text-xs p-1.5 rounded-xl border border-slate-200 text-slate-700 font-medium">
+                                ${categoryOptionsHtml}
+                            </select>
+                            <button onclick="deletePanel(${pIndex})" class="text-red-500 hover:text-red-700 p-1.5 cursor-pointer"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-2 text-xs">
+                            <div>
+                                <label class="text-[10px] text-slate-500 font-medium">Status Badge (e.g. Stock Out)</label>
+                                <input type="text" value="${panel.status || ''}" onchange="updatePanel(${pIndex}, 'status', this.value)" class="w-full bg-white text-xs p-1.5 rounded-xl border border-slate-200 text-slate-700" placeholder="Working ✅ / Stock Out">
+                            </div>
+                            <div>
+                                <label class="text-[10px] text-slate-500 font-medium">Promo Badge (e.g. Hot)</label>
+                                <input type="text" value="${panel.badge || ''}" onchange="updatePanel(${pIndex}, 'badge', this.value)" class="w-full bg-white text-xs p-1.5 rounded-xl border border-slate-200 text-slate-700" placeholder="Hot Selling / New">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="text-[10px] text-slate-500 font-medium">Panel Icon (URL অথবা গ্যালারি)</label>
+                            <div class="flex items-center gap-1.5 mt-1">
+                                <img src="${panel.icon || 'https://i.ibb.co/3W9v93z/default.png'}" class="w-9 h-9 rounded-lg object-cover border border-slate-200 shrink-0 bg-white">
+                                <input type="text" value="${panel.icon}" onchange="updatePanel(${pIndex}, 'icon', this.value)" class="flex-1 min-w-0 bg-white text-xs p-1.5 rounded-xl border border-slate-200 text-slate-600" placeholder="https://...">
+                                <button type="button" onclick="pickPhotoFromGallery('panel', ${pIndex})" class="bg-indigo-50 hover:bg-indigo-100 dynamic-theme-text border border-indigo-200 px-2.5 py-1.5 rounded-xl text-xs font-bold cursor-pointer shrink-0">
+                                    <i class="fa-solid fa-images"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- DURATION-WISE AUTO STOCK KEYS MANAGER -->
+                        <div class="bg-emerald-50/70 p-2.5 rounded-xl border border-emerald-200 space-y-2 text-xs">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[11px] font-bold text-emerald-800"><i class="fa-solid fa-robot mr-1"></i> Duration-Wise Auto Stock Keys</span>
+                                <span class="bg-emerald-600 text-white px-2 py-0.5 rounded-full text-[10px] font-bold">Total: ${totalStockCount} Keys</span>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-1.5">
+                                ${stockSummaryBadgesHtml}
+                            </div>
+
+                            <div class="flex gap-1.5 items-center pt-0.5">
+                                <select id="stockDurationSelect-${pIndex}" class="bg-white border border-emerald-300 rounded-lg px-2 py-1.5 text-[11px] font-bold text-slate-800 outline-none shrink-0">
+                                    ${durationSelectHtml}
+                                </select>
+                                <input type="text" id="stockKeysInput-${pIndex}" placeholder="Keys (কমা বা নতুন লাইনে দিন)" class="flex-1 min-w-0 bg-white border border-emerald-200 rounded-lg px-2 py-1.5 text-xs font-mono text-slate-800 outline-none">
+                                <button type="button" onclick="addPanelDurationStockKeys(${pIndex})" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1.5 rounded-lg text-[10px] font-bold cursor-pointer shrink-0">+ Add</button>
+                            </div>
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <p class="text-[10px] font-bold text-slate-500 uppercase">APK & Setup Links (6 Slots)</p>
+                            ${linksHtml}
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <div class="flex justify-between items-center">
+                                <p class="text-[10px] font-bold text-slate-500 uppercase">Packages & Coupons</p>
+                                <button onclick="addPkg(${pIndex})" class="text-[10px] dynamic-theme-text font-bold hover:underline cursor-pointer">+ Add Package</button>
+                            </div>
+                            ${pkgHtml}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        window.addPanelDurationStockKeys = function(pIndex) {
+            const panel = storeData.panels[pIndex];
+            if(!panel) return;
+            const durMap = ensurePanelDurationStockMap(panel);
+            const selEl = document.getElementById(`stockDurationSelect-${pIndex}`);
+            const inputEl = document.getElementById(`stockKeysInput-${pIndex}`);
+            const chosenDur = (selEl && selEl.value) ? selEl.value.trim() : ((panel.packages && panel.packages[0] && panel.packages[0].time) || "1 Hours");
+            const rawText = inputEl ? inputEl.value : "";
+
+            const parsedKeys = rawText
+                .split(/[\n,]+/)
+                .map(k => k.trim())
+                .filter(k => k.length > 0);
+
+            if(parsedKeys.length === 0) {
+                alert("স্টকে যোগ করার জন্য অন্তত ১টি Key লিখুন!");
+                return;
+            }
+
+            if(!Array.isArray(durMap[chosenDur])) {
+                durMap[chosenDur] = [];
+            }
+            durMap[chosenDur].push(...parsedKeys);
+            inputEl.value = "";
+            saveToFirebase(true);
+            renderAdminPanels();
+            showSuccessModal(`"${chosenDur}" ডিউরেশনে ${parsedKeys.length}টি নতুন Key স্টকে যোগ হয়েছে!`);
+        }
+
+        window.updatePanel = function(pIndex, field, val) {
+            storeData.panels[pIndex][field] = val;
+            if(field === 'category' || field === 'icon') {
+                renderPanels();
+            }
+            saveToFirebase(false);
+        }
+
+        window.updateLink = function(pIndex, lIndex, field, val) {
+            if(!storeData.panels[pIndex].links) storeData.panels[pIndex].links = JSON.parse(JSON.stringify(defaultLinks));
+            storeData.panels[pIndex].links[lIndex][field] = val;
+            saveToFirebase(false);
+        }
+
+        window.updatePkg = function(pIndex, pkgIndex, field, val) {
+            const oldTime = storeData.panels[pIndex].packages[pkgIndex].time;
+            const newVal = (field === 'price' || field === 'couponDiscount') ? Number(val) : (field === 'couponCode' ? String(val).trim().toUpperCase() : val);
+            storeData.panels[pIndex].packages[pkgIndex][field] = newVal;
+
+            if (field === 'time' && oldTime && newVal && oldTime !== newVal) {
+                const durMap = ensurePanelDurationStockMap(storeData.panels[pIndex]);
+                if (Array.isArray(durMap[oldTime]) && durMap[oldTime].length > 0) {
+                    if (!Array.isArray(durMap[newVal])) durMap[newVal] = [];
+                    durMap[newVal].push(...durMap[oldTime]);
+                    delete durMap[oldTime];
+                }
+            }
+
+            saveToFirebase(false);
+            if (field === 'time') renderAdminPanels();
+        }
+
+        window.addPkg = function(pIndex) {
+            storeData.panels[pIndex].packages.push({time: "1 Hours", price: 50, note: "", couponCode: "", couponDiscount: 0});
+            saveToFirebase(true);
+            renderAdminPanels();
+        }
+
+        window.deletePkg = function(pIndex, pkgIndex) {
+            storeData.panels[pIndex].packages.splice(pkgIndex, 1);
+            saveToFirebase(true);
+            renderAdminPanels();
+        }
+
+        window.deletePanel = function(pIndex) {
+            if(confirm('Delete this panel?')) {
+                storeData.panels.splice(pIndex, 1);
+                saveToFirebase(true);
+                renderAdminPanels();
+                renderPanels();
+            }
+        }
+
+        window.addNewPanelPrompt = function() {
+            const name = prompt('Enter New Panel Name:');
+            if(!name) return;
+            const defaultCat = (storeData.categories && storeData.categories[0]) ? storeData.categories[0] : "Non Root";
+            const newPanel = {
+                id: Date.now(),
+                name: name,
+                category: defaultCat,
+                icon: "https://i.ibb.co/3W9v93z/default.png",
+                status: "Working ✅",
+                badge: "New",
+                stockKeysByDuration: { "1 Hours": [] },
+                links: JSON.parse(JSON.stringify(defaultLinks)),
+                packages: [{time: "1 Hours", price: 50, note: "", couponCode: "", couponDiscount: 0}]
+            };
+            storeData.panels.push(newPanel);
+            saveToFirebase(true);
+            renderAdminPanels();
+            renderPanels();
+        }
 
         setInterval(() => {
+            processFundRequestsLifecycle(true);
+            renderMyFundRequests();
+            updateSpinAvailabilityUI();
+            if(document.getElementById('adminDashboard') && !document.getElementById('adminDashboard').classList.contains('hidden')) {
+                renderAdminFundRequests();
+            }
             if(!document.getElementById('orderView').classList.contains('hidden')) {
                 renderOrders();
             }
-            if(!document.getElementById('keysView').classList.contains('hidden')) {
-                renderKeys();
-            }
-            processFundRequestsLifecycle(true);
-            if(!document.getElementById('fundView').classList.contains('hidden')) {
-                renderMyFundRequests();
-            }
-            updateSpinAvailabilityUI();
         }, 1000);
     </script>
 </body>
