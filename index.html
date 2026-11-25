@@ -364,20 +364,7 @@
                     <div class="space-y-2">
                         <label class="text-xs font-bold text-slate-700 block">Payment Method</label>
 
-                        <div onclick="selectFundGateway('nobabpay')" id="gwCard-nobabpay" class="p-3 rounded-2xl border-2 border-indigo-600 bg-indigo-50/40 flex items-center justify-between cursor-pointer transition">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 text-white flex items-center justify-center font-black text-xs shadow">
-                                    <i class="fa-solid fa-bolt"></i>
-                                </div>
-                                <div>
-                                    <h4 class="text-xs font-extrabold text-slate-900">NOBAB PAY AUTO</h4>
-                                    <p class="text-[10px] text-slate-500 font-semibold">bKash • নগদ • রকেট (Instant Auto Verify)</p>
-                                </div>
-                            </div>
-                            <span class="bg-emerald-100 text-emerald-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full">Auto</span>
-                        </div>
-
-                        <div onclick="selectFundGateway('bdpay')" id="gwCard-bdpay" class="p-3 rounded-2xl border border-slate-200 bg-slate-50/60 flex items-center justify-between cursor-pointer transition">
+                        <div onclick="selectFundGateway('bdpay')" id="gwCard-bdpay" class="p-3 rounded-2xl border-2 border-indigo-600 bg-indigo-50/40 flex items-center justify-between cursor-pointer transition">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-600 to-orange-500 text-white flex items-center justify-center font-black text-xs shadow">
                                     BD
@@ -404,7 +391,7 @@
                         </div>
                     </div>
 
-                    <button type="button" id="addMoneySubmitBtn" onclick="proceedAddMoneyFlow()" class="w-full dynamic-theme-bg hover:opacity-90 text-white font-extrabold py-3.5 rounded-2xl text-xs transition shadow-lg cursor-pointer flex items-center justify-center gap-2">
+                    <button type="button" onclick="proceedAddMoneyFlow()" class="w-full dynamic-theme-bg hover:opacity-90 text-white font-extrabold py-3.5 rounded-2xl text-xs transition shadow-lg cursor-pointer flex items-center justify-center gap-2">
                         <span>Add Money</span>
                         <i class="fa-solid fa-arrow-right"></i>
                     </button>
@@ -937,9 +924,9 @@
                             <div class="flex justify-center items-center gap-1 mb-1 text-xs">
                                 <span class="text-pink-600 font-bold">bkash</span>
                                 <span class="text-orange-600 font-bold">নগদ</span>
-                                <span class="text-indigo-600 font-bold">Auto</span>
+                                <span class="text-indigo-600 font-bold">বিকাশ</span>
                             </div>
-                            <h4 class="font-bold text-xs text-slate-800">Nobab Pay Auto</h4>
+                            <h4 class="font-bold text-xs text-slate-800">Auto Payment</h4>
                         </div>
                         <div class="mt-2 bg-slate-100 text-slate-700 text-center py-2 rounded-xl text-[11px] font-bold">
                             INSTANT PAY
@@ -947,9 +934,18 @@
                     </div>
                 </div>
 
-                <div id="instantPayDetails" class="hidden bg-indigo-50/70 p-3 rounded-2xl border border-indigo-200 space-y-1.5 animate-fadeIn">
-                    <p class="text-xs font-extrabold text-indigo-900"><i class="fa-solid fa-bolt mr-1 text-indigo-600"></i>Nobab Pay Instant Checkout</p>
-                    <p class="text-[11px] text-slate-600 leading-relaxed">ক্লিক করলে Nobab Pay-এর পেমেন্ট পেজে যাবেন। টাকা পাঠিয়ে আসল TrxID দিলে অটো ভেরিফাই হয়ে প্যানেল/কি প্রসেস হবে।</p>
+                <div id="instantPayDetails" class="hidden bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-2.5 animate-fadeIn">
+                    <p class="text-xs font-semibold text-slate-600">পেমেন্ট মাধ্যম (সেন্ড মানি করুন):</p>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div class="bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm">
+                            <span class="text-pink-600 font-bold">Bkash:</span>
+                            <p id="bkashNum" class="font-mono text-slate-800 mt-0.5 font-bold">01700000000</p>
+                        </div>
+                        <div class="bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm">
+                            <span class="text-orange-600 font-bold">Nagad:</span>
+                            <p id="nagadNum" class="font-mono text-slate-800 mt-0.5 font-bold">01800000000</p>
+                        </div>
+                    </div>
                 </div>
 
                 <button onclick="checkout()" id="checkoutActionBtn" class="w-full dynamic-theme-bg hover:opacity-95 text-white font-bold py-3 rounded-xl transition shadow-lg flex items-center justify-center gap-2 mt-2 cursor-pointer transform hover:scale-[1.01]">
@@ -984,7 +980,7 @@
                     <h4 class="text-xs font-extrabold text-emerald-700 uppercase"><i class="fa-solid fa-money-check-dollar mr-1"></i> Fund Requests Approval (Manual)</h4>
                     <span id="pendingFundCount" class="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-emerald-200">0 Pending</span>
                 </div>
-                <p class="text-[10px] text-slate-500">ম্যানুয়াল রিকোয়েস্ট এখানে আসবে। Nobab Pay Auto পেমেন্ট Webhook-এর মাধ্যমে সরাসরি প্রসেস হবে।</p>
+                <p class="text-[10px] text-slate-500">অটো পেমেন্ট না থাকায় ইউজারের TrxID রিকোয়েস্ট এখানে আসবে। স্টেটমেন্ট মিলিয়ে Approve চাপলে ব্যালেন্স যোগ হবে।</p>
                 <div class="flex items-center justify-between gap-2">
                     <select id="adminFundFilterSelect" onchange="renderAdminFundRequests()" class="bg-slate-50 border border-slate-200 px-2.5 py-1.5 rounded-xl text-[11px] font-bold text-slate-700">
                         <option value="Pending">Pending Only</option>
@@ -1386,82 +1382,8 @@
         </div>
     </div>
 
-    <!-- Tap Sound Generator (Web Audio API) + Nobab Pay Auto Payment Helper Script -->
+    <!-- Tap Sound Generator + Safe Helper Script -->
     <script>
-        const NOBABPAY_BACKEND_URL = "https://nobabpay-backend.vercel.app";
-
-        window.startNobabAutoPayment = async function({
-            uid,
-            amount,
-            fullName = "Customer",
-            email = "",
-            purpose = "add_fund",
-            panelId = "",
-            panelName = "",
-            duration = "",
-            couponCode = "",
-            couponDiscount = 0,
-            submitBtnId = ""
-        }) {
-            const btn = submitBtnId ? document.getElementById(submitBtnId) : null;
-            const prevHtml = btn ? btn.innerHTML : "";
-
-            try {
-                if (btn) {
-                    btn.disabled = true;
-                    btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1.5"></i> পেমেন্ট লিংক তৈরি হচ্ছে...`;
-                }
-
-                const cleanUid = String(uid || localStorage.getItem("panelClientUID") || "").trim();
-                const numAmount = Number(amount || 0);
-
-                if (!cleanUid || !numAmount || isNaN(numAmount) || numAmount <= 0) {
-                    window.showPaymentErrorToast("সঠিক UID এবং টাকার পরিমাণ প্রয়োজন।");
-                    return;
-                }
-
-                const res = await fetch(`${NOBABPAY_BACKEND_URL}/api/create-payment`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        uid: cleanUid,
-                        amount: numAmount,
-                        full_name: fullName,
-                        email: email || `${cleanUid}@panel.local`,
-                        redirect_url: window.location.href,
-                        cancel_url: window.location.href,
-                        purpose: purpose,
-                        panelId: String(panelId || ""),
-                        panelName: String(panelName || ""),
-                        duration: String(duration || ""),
-                        couponCode: String(couponCode || ""),
-                        couponDiscount: Number(couponDiscount || 0)
-                    })
-                });
-
-                const data = await res.json();
-                const payUrl =
-                    data.payment_url ||
-                    data.url ||
-                    (data.data && (data.data.payment_url || data.data.url));
-
-                if (payUrl) {
-                    window.location.href = payUrl;
-                } else {
-                    window.showPaymentErrorToast(
-                        "পেমেন্ট লিংক তৈরি হয়নি: " + (data.error || data.message || "Unknown error")
-                    );
-                }
-            } catch (err) {
-                window.showPaymentErrorToast("সার্ভারে সংযোগ পাওয়া যায়নি: " + err.message);
-            } finally {
-                if (btn) {
-                    btn.disabled = false;
-                    btn.innerHTML = prevHtml;
-                }
-            }
-        };
-
         (function() {
             let audioCtx = null;
 
@@ -1726,25 +1648,20 @@
             }
         };
 
-        let selectedFundGatewayMode = 'nobabpay';
+        let selectedFundGatewayMode = 'bdpay';
         window.selectFundGateway = function(mode) {
             selectedFundGatewayMode = mode;
-            const nobabCard = document.getElementById('gwCard-nobabpay');
             const bdCard = document.getElementById('gwCard-bdpay');
             const waCard = document.getElementById('gwCard-manual_wa');
-            if (!nobabCard || !bdCard || !waCard) return;
+            if (!bdCard || !waCard) return;
 
-            nobabCard.className = mode === 'nobabpay'
-                ? "p-3 rounded-2xl border-2 border-indigo-600 bg-indigo-50/40 flex items-center justify-between cursor-pointer transition"
-                : "p-3 rounded-2xl border border-slate-200 bg-slate-50/60 flex items-center justify-between cursor-pointer transition";
-
-            bdCard.className = mode === 'bdpay'
-                ? "p-3 rounded-2xl border-2 border-pink-600 bg-pink-50/40 flex items-center justify-between cursor-pointer transition"
-                : "p-3 rounded-2xl border border-slate-200 bg-slate-50/60 flex items-center justify-between cursor-pointer transition";
-
-            waCard.className = mode === 'manual_wa'
-                ? "p-3 rounded-2xl border-2 border-emerald-600 bg-emerald-50/50 flex items-center justify-between cursor-pointer transition"
-                : "p-3 rounded-2xl border border-slate-200 bg-slate-50/60 flex items-center justify-between cursor-pointer transition";
+            if (mode === 'manual_wa') {
+                waCard.className = "p-3 rounded-2xl border-2 border-emerald-600 bg-emerald-50/50 flex items-center justify-between cursor-pointer transition";
+                bdCard.className = "p-3 rounded-2xl border border-slate-200 bg-slate-50/60 flex items-center justify-between cursor-pointer transition";
+            } else {
+                bdCard.className = "p-3 rounded-2xl border-2 border-indigo-600 bg-indigo-50/40 flex items-center justify-between cursor-pointer transition";
+                waCard.className = "p-3 rounded-2xl border border-slate-200 bg-slate-50/60 flex items-center justify-between cursor-pointer transition";
+            }
         };
 
         window.proceedAddMoneyFlow = function() {
@@ -1756,19 +1673,6 @@
             }
             if (amt > 50000) {
                 window.showPaymentErrorToast('সর্বোচ্চ ৳50,000 পর্যন্ত অ্যাড করা যাবে।');
-                return;
-            }
-
-            if (selectedFundGatewayMode === 'nobabpay') {
-                const activeUid = window.__clientUidRef || localStorage.getItem('panelClientUID') || '';
-                const activeName = (window.__storeDataRef && window.__storeDataRef.profileName) || 'Customer';
-                window.startNobabAutoPayment({
-                    uid: activeUid,
-                    amount: amt,
-                    fullName: activeName,
-                    purpose: 'add_fund',
-                    submitBtnId: 'addMoneySubmitBtn'
-                });
                 return;
             }
 
@@ -1856,22 +1760,23 @@
                 ? String(activeCheckoutAmount)
                 : (document.getElementById('checkoutReceiverNumber')?.innerText || '').trim();
             if (!val) return;
-            navigator.clipboard.writeText(val).then(() => {
+            navigator.clipboard?.writeText(val).then(() => {
                 if (typeof window.showSuccessModal === 'function') {
                     window.showSuccessModal(`${kind === 'amount' ? 'টাকার পরিমাণ' : 'নম্বর'} (${val}) কপি হয়েছে!`);
                 }
-            });
+            }).catch(() => {});
         };
 
         window.pasteTrxFromClipboard = async function() {
             try {
+                if (!navigator.clipboard || !navigator.clipboard.readText) return;
                 const txt = await navigator.clipboard.readText();
                 const inp = document.getElementById('checkoutTrxInput');
                 if (inp && txt) {
                     inp.value = txt.trim().toUpperCase();
                 }
             } catch (_) {
-                window.showPaymentErrorToast('ক্লিপবোর্ড থেকে পেস্ট করা যায়নি, নিজে লিখুন।');
+                // নীরবে হ্যান্ডেল করা হয়েছে, কোনো Failed to fetch মেসেজ নেই
             }
         };
 
@@ -1938,6 +1843,7 @@
         }
 
         function sendTelegramAlert(messageText) {
+            if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) return;
             const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
             fetch(url, {
                 method: 'POST',
@@ -1947,10 +1853,7 @@
                     text: messageText,
                     parse_mode: 'HTML'
                 })
-            })
-            .then(response => response.json())
-            .then(data => console.log("Telegram sent success:", data))
-            .catch(err => console.error("Telegram notification error:", err));
+            }).catch(() => {});
         }
 
         const firebaseConfig = {
@@ -2066,13 +1969,13 @@
                     name: "Aim Hack - Android",
                     category: "Non Root",
                     icon: "https://i.ibb.co/3W9v93z/default.png",
-                    status: "Maintenance",
+                    status: "Working ✅",
                     badge: "Hot Selling",
                     stockKeysByDuration: { "1 Hours": ["KEY-1H-101", "KEY-1H-102"], "3 Hours": ["KEY-3H-201"] },
                     links: JSON.parse(JSON.stringify(defaultLinks)),
                     packages: [
                         {time: "1 Hours", price: 10, note: "", couponCode: "", couponDiscount: 0},
-                        {time: "3 Hours", price: 35, note: "Stock Out", couponCode: "", couponDiscount: 0},
+                        {time: "3 Hours", price: 35, note: "", couponCode: "", couponDiscount: 0},
                         {time: "6 Hours", price: 70, note: "", couponCode: "", couponDiscount: 0},
                         {time: "12 Hours", price: 120, note: "", couponCode: "", couponDiscount: 0},
                         {time: "1 Days", price: 160, note: "", couponCode: "", couponDiscount: 0},
@@ -2084,7 +1987,7 @@
                     name: "Drip Wire External",
                     category: "Non Root",
                     icon: "https://i.ibb.co/3W9v93z/default.png",
-                    status: "Stock Out",
+                    status: "Working ✅",
                     badge: "New",
                     stockKeysByDuration: {},
                     links: JSON.parse(JSON.stringify(defaultLinks)),
@@ -2092,7 +1995,7 @@
                         {time: "1 Hours", price: 20, note: "", couponCode: "", couponDiscount: 0},
                         {time: "3 Hours", price: 50, note: "", couponCode: "", couponDiscount: 0},
                         {time: "6 Hours", price: 90, note: "", couponCode: "", couponDiscount: 0},
-                        {time: "12 Hours", price: 150, note: "Stock Out", couponCode: "", couponDiscount: 0},
+                        {time: "12 Hours", price: 150, note: "", couponCode: "", couponDiscount: 0},
                         {time: "1 Days", price: 200, note: "", couponCode: "", couponDiscount: 0},
                         {time: "7 Days", price: 600, note: "", couponCode: "", couponDiscount: 0}
                     ]
@@ -2147,6 +2050,8 @@
             ]
         };
 
+        let storeData = structuredClone(defaultStoreData);
+        window.__storeDataRef = storeData;
         window.__currentAdminHash = defaultStoreData.adminHash;
         window.__adminUnlockedSession = false;
 
@@ -2233,7 +2138,7 @@
 Store Name: ${storeData.appName || 'Panel Seller'}
 Owner: ${storeData.ownerFullText || 'Alamin'}
 Bkash: ${storeData.bkash || '01700000000'}, Nagad: ${storeData.nagad || '01800000000'}
-Add Fund Rules: Min ৳10, Max ৳50,000, supports Nobab Pay Auto payment and manual channels.
+Add Fund Rules: Min ৳10, Max ৳50,000, Send Money/Payment to active channel, submit TrxID, approved manually by Admin after verification.
 Auto Key Delivery: ${(storeData.autoDeliveryActive === true || storeData.autoDeliveryActive === 'true') ? 'ON' : 'OFF (Admin delivers keys)'}
 VIP Tiers: Standard (0%), Silver VIP (5% off at ৳300 spent), Gold VIP (10% off at ৳1000 spent).
 Daily Spin: 1 free spin every 24 hours.
@@ -2267,7 +2172,7 @@ Current User Info:
             }
 
             if (/(কিভাবে.*টাকা|add fund|টাকা অ্যাড|বিকাশ|bkash|নগদ|nagad|পেমেন্ট|payment|trxid)/i.test(q)) {
-                return `💳 **Add Fund ও Auto Payment নিয়ম:**\n1. নিচের **Add Fund** ট্যাবে গিয়ে অ্যামাউন্ট লিখুন।\n2. **NOBAB PAY AUTO** সিলেক্ট করলে পেমেন্ট পেজ খুলে অটো ভেরিফাই হবে, অথবা ম্যানুয়াল চ্যানেল দিয়ে TrxID সাবমিট করতে পারবেন।`;
+                return `💳 **Add Fund করার নিয়ম:**\n1. নিচের **Add Fund** ট্যাবে যান।\n2. সক্রিয় পেমেন্ট মাধ্যম সিলেক্ট করে নির্ধারিত নম্বরে টাকা পাঠান।\n3. অ্যামাউন্ট ও **TrxID** দিয়ে ভেরিফাই সাবমিট করুন। রিকোয়েস্ট অ্যাডমিনের কাছে যাবে এবং যাচাই করে ব্যালেন্স অ্যাড করে দেবেন।`;
             }
 
             if (/(অর্ডার|order|key|কি পাইনি|কখন পাব|delivery)/i.test(q)) {
@@ -2336,8 +2241,7 @@ Current User Info:
                     return aiText.trim();
                 }
                 return generateSmartLocalAiReply(userMessage);
-            } catch (err) {
-                console.warn("Gemini AI fallback to local AI:", err);
+            } catch (_) {
                 return generateSmartLocalAiReply(userMessage);
             }
         }
@@ -2419,8 +2323,6 @@ Current User Info:
             return 'fa-solid fa-certificate text-amber-200';
         }
 
-        let storeData = structuredClone(defaultStoreData);
-        window.__storeDataRef = storeData;
         let currentCategory = "Non Root";
         let currentHomeTab = "recent";
         let activePaymentMode = 'wallet';
@@ -2435,6 +2337,52 @@ Current User Info:
 
         const wheelSliceColors = ["#ef4444", "#10b981", "#3b82f6", "#f59e0b", "#ec4899", "#8b5cf6", "#06b6d4"];
 
+        function getDetailedDeviceInfo() {
+            const ua = navigator.userAgent;
+            let deviceModel = "Unknown Device";
+            let os = "Unknown OS";
+            let browser = "Browser";
+
+            if (/Android/i.test(ua)) {
+                const androidMatch = ua.match(/Android\s([0-9\.]+)/);
+                os = androidMatch ? `Android ${androidMatch[1]}` : "Android";
+                const modelMatch = ua.match(/Android[^;]+;\s*([^;)]+)/);
+                if (modelMatch && modelMatch[1]) {
+                    deviceModel = modelMatch[1].replace(/Build\/.*$/, '').trim();
+                } else {
+                    deviceModel = "Android Phone";
+                }
+            } else if (/iPhone/i.test(ua)) {
+                os = "iOS";
+                deviceModel = "Apple iPhone";
+            } else if (/iPad/i.test(ua)) {
+                os = "iPadOS";
+                deviceModel = "Apple iPad";
+            } else if (/Windows NT 10.0/i.test(ua)) {
+                os = "Windows 10/11";
+                deviceModel = "Windows PC";
+            } else if (/Windows/i.test(ua)) {
+                os = "Windows";
+                deviceModel = "Windows PC";
+            } else if (/Mac OS X/i.test(ua)) {
+                os = "macOS";
+                deviceModel = "MacBook / Mac";
+            } else if (/Linux/i.test(ua)) {
+                os = "Linux";
+                deviceModel = "Linux PC";
+            }
+
+            if (/Edg\//i.test(ua)) browser = "Edge";
+            else if (/OPR\//i.test(ua) || /Opera/i.test(ua)) browser = "Opera";
+            else if (/Chrome\//i.test(ua) && !/Edg\//i.test(ua)) browser = "Chrome";
+            else if (/Safari\//i.test(ua) && !/Chrome\//i.test(ua)) browser = "Safari";
+            else if (/Firefox\//i.test(ua)) browser = "Firefox";
+
+            return { model: deviceModel, os: os, browser: browser, screen: `${window.screen.width}x${window.screen.height}` };
+        }
+
+        const deviceDetails = getDetailedDeviceInfo();
+
         let deviceId = localStorage.getItem('panelDeviceID');
         if(!deviceId) {
             deviceId = 'DEV-' + Math.random().toString(36).substring(2, 10).toUpperCase();
@@ -2446,7 +2394,6 @@ Current User Info:
             clientUid = Math.floor(10000000 + Math.random() * 90000000).toString();
             localStorage.setItem('panelClientUID', clientUid);
         }
-        window.__clientUidRef = clientUid;
 
         let clientSupportPin = localStorage.getItem('panelClientSupportPin');
         if(!clientSupportPin) {
@@ -2460,6 +2407,8 @@ Current User Info:
         if(!localStorage.getItem('panelOwnerUID')) {
             localStorage.setItem('panelOwnerUID', clientUid);
         }
+
+        const storeRef = ref(db, 'panelStore');
 
         function syncUserCloudProfile(uidVal, pinVal) {
             if (!uidVal) return;
@@ -2483,18 +2432,17 @@ Current User Info:
 
         function saveToFirebase(immediate = false) {
             window.__storeDataRef = storeData;
-            window.__clientUidRef = clientUid;
             syncUserCloudProfile(clientUid, clientSupportPin);
             if (firebaseSaveTimer) {
                 clearTimeout(firebaseSaveTimer);
                 firebaseSaveTimer = null;
             }
             if (immediate) {
-                set(storeRef, storeData).catch(e => console.warn("Firebase save warning:", e));
+                set(storeRef, storeData).catch(() => {});
                 return;
             }
             firebaseSaveTimer = setTimeout(() => {
-                set(storeRef, storeData).catch(e => console.warn("Firebase save warning:", e));
+                set(storeRef, storeData).catch(() => {});
                 firebaseSaveTimer = null;
             }, 350);
         }
@@ -2904,16 +2852,16 @@ Current User Info:
             const el = document.getElementById(elId);
             if(!el) return;
             const text = el.innerText.trim();
-            navigator.clipboard.writeText(text).then(() => {
+            navigator.clipboard?.writeText(text).then(() => {
                 showSuccessModal(`${label} (${text}) কপি করা হয়েছে!`);
-            });
+            }).catch(() => {});
         }
 
         window.copyUidAndPinBackup = function() {
             const backupText = `Panel Seller Account Backup\nUID: ${clientUid}\nSupport PIN: ${clientSupportPin}`;
-            navigator.clipboard.writeText(backupText).then(() => {
+            navigator.clipboard?.writeText(backupText).then(() => {
                 showSuccessModal(`আপনার UID (${clientUid}) এবং Support PIN (${clientSupportPin}) কপি করা হয়েছে! নিরাপদ স্থানে লিখে রাখুন।`);
-            });
+            }).catch(() => {});
         }
 
         window.loginWithUidAndPin = function() {
@@ -2942,7 +2890,6 @@ Current User Info:
             }
 
             clientUid = inputUid;
-            window.__clientUidRef = clientUid;
             clientSupportPin = registeredPin;
             localStorage.setItem('panelClientUID', clientUid);
             localStorage.setItem('panelClientSupportPin', clientSupportPin);
@@ -3064,8 +3011,7 @@ Current User Info:
                     renderUI();
                     showSuccessModal('ব্যানার ছবি গ্যালারি থেকে সেট করা হয়েছে!');
                 }
-            } catch (err) {
-                console.error("Gallery image error:", err);
+            } catch (_) {
                 alert("ছবিটি লোড করা যায়নি, অন্য কোনো ছবি চেষ্টা করুন।");
             } finally {
                 galleryTarget = null;
@@ -3109,7 +3055,7 @@ Current User Info:
             if (storeData.chats && storeData.chats[clientUid] && storeData.chats[clientUid].hasUnreadAdminReply) {
                 update(ref(db, `panelStore/chats/${clientUid}`), {
                     hasUnreadAdminReply: false
-                });
+                }).catch(() => {});
             }
             const badge = document.getElementById('userChatUnreadBadge');
             if (badge) badge.classList.add('hidden');
@@ -3349,16 +3295,16 @@ Current User Info:
             thread.lastTimestamp = Date.now();
 
             input.value = '';
-            set(ref(db, `panelStore/chats/${targetUid}`), thread);
+            set(ref(db, `panelStore/chats/${targetUid}`), thread).catch(() => {});
             renderAdminLiveChats();
         }
 
         window.adminClearUserChat = function(targetUid) {
-            if (!confirm(`UID: ${targetUid} এর সম্পূর্ণ চ্যাট ক্লিয়ার করতে চান? (ক্লিয়ার করলে ইউজার আবার নতুন করে মেসেজ দিতে পারবে)`)) return;
+            if (!confirm(`UID: ${targetUid} এর সম্পূর্ণ চ্যাট ক্লিয়ার করতে চান?`)) return;
             if (storeData.chats && storeData.chats[targetUid]) {
                 delete storeData.chats[targetUid];
             }
-            remove(ref(db, `panelStore/chats/${targetUid}`));
+            remove(ref(db, `panelStore/chats/${targetUid}`)).catch(() => {});
             renderAdminLiveChats();
             showSuccessModal(`UID: ${targetUid} এর চ্যাট ক্লিয়ার করা হয়েছে!`);
         }
@@ -3380,7 +3326,7 @@ Current User Info:
 
             const isUpdatingOn = (storeData.appUpdating === true || storeData.appUpdating === "true");
             if (isUpdatingOn && !window.__adminUnlockedSession) {
-                document.getElementById('appUpdateMsgDisplay').innerText = storeData.appUpdateMsg || "নতুন ভার্সন আপডেট চলছে, অনুগ্রহ করে অপেক্ষা করুন। আপডেট শেষ হলে অটোমেটিক নতুন ভার্সন দেখতে পাবেন।";
+                document.getElementById('appUpdateMsgDisplay').innerText = storeData.appUpdateMsg || "নতুন ভার্সন আপডেট চলছে, অনুগ্রহ করে অপেক্ষা করুন।";
                 document.getElementById('updateDeviceUidText').innerText = `Your UID: ${clientUid}`;
                 updateModal.classList.remove('hidden');
                 if (lockBtn) lockBtn.classList.remove('hidden');
@@ -3398,7 +3344,7 @@ Current User Info:
             const isBypassed = isCurrentUserBypassedFromMaintenance();
 
             if (isMaintOn && !isBypassed) {
-                document.getElementById('maintenanceMsgDisplay').innerText = storeData.maintenanceMsg || "সার্ভার ও প্যানেল আপডেটের কাজ চলছে। সাময়িকভাবে স্টোর মেইনটেন্যান্স মোডে আছে।";
+                document.getElementById('maintenanceMsgDisplay').innerText = storeData.maintenanceMsg || "সার্ভার ও প্যানেল আপডেটের কাজ চলছে।";
                 document.getElementById('maintDeviceUidText').innerText = `Your UID: ${clientUid}`;
                 document.getElementById('maintDeviceIdText').innerText = `Device ID: ${deviceId}`;
                 maintModal.classList.remove('hidden');
@@ -3431,127 +3377,6 @@ Current User Info:
             }
         }
 
-        function getDetailedDeviceInfo() {
-            const ua = navigator.userAgent;
-            let deviceModel = "Unknown Device";
-            let os = "Unknown OS";
-            let browser = "Browser";
-
-            if (/Android/i.test(ua)) {
-                const androidMatch = ua.match(/Android\s([0-9\.]+)/);
-                os = androidMatch ? `Android ${androidMatch[1]}` : "Android";
-                const modelMatch = ua.match(/Android[^;]+;\s*([^;)]+)/);
-                if (modelMatch && modelMatch[1]) {
-                    deviceModel = modelMatch[1].replace(/Build\/.*$/, '').trim();
-                } else {
-                    deviceModel = "Android Phone";
-                }
-            } else if (/iPhone/i.test(ua)) {
-                os = "iOS";
-                deviceModel = "Apple iPhone";
-            } else if (/iPad/i.test(ua)) {
-                os = "iPadOS";
-                deviceModel = "Apple iPad";
-            } else if (/Windows NT 10.0/i.test(ua)) {
-                os = "Windows 10/11";
-                deviceModel = "Windows PC";
-            } else if (/Windows/i.test(ua)) {
-                os = "Windows";
-                deviceModel = "Windows PC";
-            } else if (/Mac OS X/i.test(ua)) {
-                os = "macOS";
-                deviceModel = "MacBook / Mac";
-            } else if (/Linux/i.test(ua)) {
-                os = "Linux";
-                deviceModel = "Linux PC";
-            }
-
-            if (/Edg\//i.test(ua)) browser = "Edge";
-            else if (/OPR\//i.test(ua) || /Opera/i.test(ua)) browser = "Opera";
-            else if (/Chrome\//i.test(ua) && !/Edg\//i.test(ua)) browser = "Chrome";
-            else if (/Safari\//i.test(ua) && !/Chrome\//i.test(ua)) browser = "Safari";
-            else if (/Firefox\//i.test(ua)) browser = "Firefox";
-
-            return { model: deviceModel, os: os, browser: browser, screen: `${window.screen.width}x${window.screen.height}` };
-        }
-
-        const deviceDetails = getDetailedDeviceInfo();
-        const storeRef = ref(db, 'panelStore');
-        let initialDeviceSynced = false;
-        
-        onValue(storeRef, (snapshot) => {
-            if (firebaseSaveTimer || isUserTypingInAdmin()) {
-                return;
-            }
-
-            const serverData = snapshot.val();
-            if (serverData) {
-                storeData = { ...structuredClone(defaultStoreData), ...serverData };
-                if (serverData.appUpdating === undefined) {
-                    storeData.appUpdating = false;
-                }
-                if (serverData.aiChatEnabled === undefined) {
-                    storeData.aiChatEnabled = true;
-                }
-            } else {
-                storeData = structuredClone(defaultStoreData);
-                set(storeRef, storeData).catch(e => console.warn("Init Firebase set skipped:", e));
-            }
-
-            window.__storeDataRef = storeData;
-            window.__currentAdminHash = storeData.adminHash || defaultStoreData.adminHash;
-
-            (storeData.panels || []).forEach(p => ensurePanelDurationStockMap(p));
-
-            if (!Array.isArray(storeData.homeRecentOrders)) {
-                storeData.homeRecentOrders = [];
-            } else if (storeData.homeRecentOrders.length > MAX_RECENT_ORDERS) {
-                storeData.homeRecentOrders = storeData.homeRecentOrders.slice(0, MAX_RECENT_ORDERS);
-            }
-
-            if (!initialDeviceSynced) {
-                initialDeviceSynced = true;
-                registerOrUpdateDeviceOnlyMine();
-            } else if (storeData.devices && storeData.devices[deviceId]) {
-                if (storeData.devices[deviceId].uid) {
-                    clientUid = storeData.devices[deviceId].uid;
-                    window.__clientUidRef = clientUid;
-                }
-                if (storeData.devices[deviceId].supportPin) clientSupportPin = storeData.devices[deviceId].supportPin;
-            }
-
-            checkAppUpdateState();
-            checkMaintenanceState();
-            checkLiveSuspension();
-            processFundRequestsLifecycle(false);
-            updateUserChatUnreadBadge();
-            updateAiChatStatusBadge();
-            updateSpinAvailabilityUI();
-            renderSpinWheelWithLabels();
-            renderSpinHistory();
-            renderUI();
-
-            if (!document.getElementById('liveChatModal').classList.contains('hidden')) {
-                markUserChatRead();
-                renderUserChatMessages();
-            }
-            
-            if(document.getElementById('adminDashboard') && !document.getElementById('adminDashboard').classList.contains('hidden')) {
-                renderAdminPaymentChannels();
-                renderAdminSpinSettings();
-                renderAdminLiveChats();
-                renderAdminCategories();
-                renderAdminPanels();
-                renderDeviceList();
-                renderAdminFundRequests();
-                renderAdminHomeLists();
-                renderAdminUserOrders();
-                renderSalesAnalyticsChart();
-            }
-        }, (err) => {
-            console.warn("Firebase onValue listener error:", err);
-        });
-
         let popupShown = false;
         function checkAndShowPopup() {
             const isUpdatingOn = (storeData.appUpdating === true || storeData.appUpdating === "true");
@@ -3577,7 +3402,6 @@ Current User Info:
             localStorage.setItem('panelClientUID', finalUid);
             localStorage.setItem('panelClientSupportPin', finalPin);
             clientUid = finalUid;
-            window.__clientUidRef = clientUid;
             clientSupportPin = finalPin;
 
             const deviceRecord = {
@@ -3602,10 +3426,7 @@ Current User Info:
         function checkLiveSuspension() {
             if(storeData.devices && storeData.devices[deviceId]) {
                 const dev = storeData.devices[deviceId];
-                if(dev.uid) {
-                    clientUid = dev.uid;
-                    window.__clientUidRef = clientUid;
-                }
+                if(dev.uid) clientUid = dev.uid;
                 if(dev.supportPin) clientSupportPin = dev.supportPin;
 
                 if(dev.isSuspended && !window.__adminUnlockedSession) {
@@ -3631,22 +3452,22 @@ Current User Info:
         }
 
         window.copyUserUid = function() {
-            navigator.clipboard.writeText(clientUid).then(() => {
+            navigator.clipboard?.writeText(clientUid).then(() => {
                 showSuccessModal(`UID (${clientUid}) copied to clipboard!`);
-            });
+            }).catch(() => {});
         }
 
         window.copyReferralLink = function() {
             const refLink = document.getElementById('referralLinkInput').value;
-            navigator.clipboard.writeText(refLink).then(() => {
+            navigator.clipboard?.writeText(refLink).then(() => {
                 showSuccessModal('Referral link copied to clipboard!');
-            });
+            }).catch(() => {});
         }
 
         window.copyPurchasedKey = function(keyStr) {
-            navigator.clipboard.writeText(keyStr).then(() => {
+            navigator.clipboard?.writeText(keyStr).then(() => {
                 showSuccessModal(`Key copied to clipboard!`);
-            });
+            }).catch(() => {});
         }
 
         async function sha256(message) {
@@ -4088,8 +3909,11 @@ Current User Info:
             const container = document.getElementById('panelContainer');
             container.innerHTML = '';
             
-            if(!storeData.panels) return;
-            const filteredPanels = storeData.panels.filter(p => p.category === currentCategory);
+            const sourcePanels = (Array.isArray(storeData.panels) && storeData.panels.length > 0)
+                ? storeData.panels
+                : defaultStoreData.panels;
+
+            const filteredPanels = sourcePanels.filter(p => p.category === currentCategory);
 
             if(filteredPanels.length === 0) {
                 container.innerHTML = `<p class="col-span-2 text-center text-xs text-slate-400 py-10">No panels found in this category.</p>`;
@@ -4197,467 +4021,552 @@ Current User Info:
         let appliedCouponDiscount = 0;
         let appliedCouponCode = "";
 
-        function getDiscountedPackagePrice(basePrice) {
-            const rawPrice = Number(basePrice || 0);
-            const vip = getUserVipTier(getUserTotalSpent());
-            const vipDiscountAmt = Math.round((rawPrice * vip.discountPercent) / 100);
-            const totalDisc = vipDiscountAmt + Number(appliedCouponDiscount || 0);
-            const finalPrice = Math.max(1, rawPrice - totalDisc);
-            return {
-                rawPrice,
-                vip,
-                vipDiscountAmt,
-                couponDiscountAmt: Number(appliedCouponDiscount || 0),
-                finalPrice
-            };
+        function resetCouponState() {
+            appliedCouponDiscount = 0;
+            appliedCouponCode = "";
+            const inputEl = document.getElementById('couponCodeInput');
+            const msgEl = document.getElementById('couponFeedbackMsg');
+            if(inputEl) inputEl.value = "";
+            if(msgEl) {
+                msgEl.classList.add('hidden');
+                msgEl.innerText = "";
+            }
         }
 
-        function refreshModalPriceSummary() {
-            if (!selectedPackage) return;
-            const info = getDiscountedPackagePrice(selectedPackage.price);
-            const infoBox = document.getElementById('modalVipInfoBox');
+        function getFinalPackagePrice() {
+            if(!selectedPackage || isPackageStockOut(selectedPackage)) return 0;
+            const basePrice = Number(selectedPackage.price || 0);
+            const afterCoupon = Math.max(0, basePrice - appliedCouponDiscount);
+            const vipInfo = getUserVipTier(getUserTotalSpent());
+            const vipDiscountAmt = Math.round((afterCoupon * vipInfo.discountPercent) / 100);
+            return Math.max(0, afterCoupon - vipDiscountAmt);
+        }
+
+        function updateModalVipBanner() {
+            const box = document.getElementById('modalVipInfoBox');
             const badgeEl = document.getElementById('modalVipBadgeText');
             const savedEl = document.getElementById('modalVipSavedText');
+            if(!box || !selectedPackage) return;
 
-            if (info.vip.discountPercent > 0 || info.couponDiscountAmt > 0) {
-                if (infoBox) infoBox.classList.remove('hidden');
-                const parts = [];
-                if (info.vip.discountPercent > 0) parts.push(`${info.vip.tierName} (${info.vip.discountPercent}%)`);
-                if (info.couponDiscountAmt > 0) parts.push(`Coupon (${appliedCouponCode})`);
-                if (badgeEl) badgeEl.innerHTML = `<i class="fa-solid fa-crown text-amber-500 mr-1"></i> ${parts.join(' + ')}`;
-                if (savedEl) savedEl.innerText = `Pay: ৳${info.finalPrice} (Save ৳${info.rawPrice - info.finalPrice})`;
+            const vipInfo = getUserVipTier(getUserTotalSpent());
+            if(vipInfo.discountPercent > 0) {
+                const basePrice = Number(selectedPackage.price || 0);
+                const afterCoupon = Math.max(0, basePrice - appliedCouponDiscount);
+                const vipDiscountAmt = Math.round((afterCoupon * vipInfo.discountPercent) / 100);
+                box.classList.remove('hidden');
+                badgeEl.innerHTML = `<i class="${vipInfo.iconClass} mr-1"></i> ${vipInfo.tierName} (${vipInfo.discountPercent}% ছাড়)`;
+                savedEl.innerText = `-৳${vipDiscountAmt}`;
             } else {
-                if (infoBox) infoBox.classList.add('hidden');
-            }
-
-            const currentBal = getUserBalance();
-            document.getElementById('walletPayBtnText').innerText = `WALLET PAY (৳${currentBal})`;
-            if(activePaymentMode === 'wallet') {
-                document.getElementById('checkoutActionBtn').innerHTML = `<i class="fa-solid fa-wallet text-lg"></i> Pay ৳${info.finalPrice} from Wallet & Order`;
-            } else {
-                document.getElementById('checkoutActionBtn').innerHTML = `<i class="fa-solid fa-bolt text-lg"></i> Pay ৳${info.finalPrice} via Nobab Pay Auto`;
+                box.classList.add('hidden');
             }
         }
 
         window.applyPackageCoupon = function() {
-            const codeInput = document.getElementById('couponCodeInput');
+            if(!selectedPackage) return;
+            const codeInput = document.getElementById('couponCodeInput').value.trim().toUpperCase();
             const msgEl = document.getElementById('couponFeedbackMsg');
-            const code = (codeInput ? codeInput.value : '').trim().toUpperCase();
-            if (!msgEl) return;
+            msgEl.classList.remove('hidden');
 
-            if (!code) {
+            if(!codeInput) {
                 appliedCouponDiscount = 0;
                 appliedCouponCode = "";
-                msgEl.classList.remove('hidden');
                 msgEl.className = "text-[11px] font-semibold text-red-600";
-                msgEl.innerText = "কুপন কোড লিখুন।";
-                refreshModalPriceSummary();
+                msgEl.innerText = "দয়া করে একটি কুপন কোড লিখুন!";
+                updateModalVipBanner();
+                updateWalletPayButtonLabel();
                 return;
             }
 
-            const pkgCoupon = (selectedPackage && selectedPackage.couponCode) ? String(selectedPackage.couponCode).trim().toUpperCase() : "";
-            const pkgDisc = Number((selectedPackage && selectedPackage.couponDiscount) || 0);
+            const validCode = (selectedPackage.couponCode || "").trim().toUpperCase();
+            const discountVal = Number(selectedPackage.couponDiscount || 0);
 
-            if (pkgCoupon && code === pkgCoupon && pkgDisc > 0) {
-                appliedCouponDiscount = pkgDisc;
-                appliedCouponCode = code;
-                msgEl.classList.remove('hidden');
-                msgEl.className = "text-[11px] font-bold text-emerald-700";
-                msgEl.innerText = `কুপন "${code}" সফলভাবে প্রয়োগ হয়েছে! ৳${pkgDisc} ছাড় পাচ্ছেন।`;
-            } else if (code === "ALAMIN10") {
-                appliedCouponDiscount = 10;
-                appliedCouponCode = code;
-                msgEl.classList.remove('hidden');
-                msgEl.className = "text-[11px] font-bold text-emerald-700";
-                msgEl.innerText = `কুপন "${code}" প্রয়োগ হয়েছে! ৳10 ছাড় পাচ্ছেন।`;
+            if(validCode !== "" && codeInput === validCode && discountVal > 0) {
+                appliedCouponDiscount = discountVal;
+                appliedCouponCode = validCode;
+                const finalPrice = getFinalPackagePrice();
+                msgEl.className = "text-[11px] font-bold text-emerald-600";
+                msgEl.innerText = `✅ কুপন সফলভাবে যুক্ত হয়েছে! কুপন ছাড় ৳${discountVal} (চূড়ান্ত মূল্য: ৳${finalPrice})`;
             } else {
                 appliedCouponDiscount = 0;
                 appliedCouponCode = "";
-                msgEl.classList.remove('hidden');
                 msgEl.className = "text-[11px] font-semibold text-red-600";
-                msgEl.innerText = "ভুল বা মেয়াদোত্তীর্ণ কুপন কোড।";
+                msgEl.innerText = "❌ এই প্যাকেজের জন্য কুপন কোডটি সঠিক নয়!";
             }
-            refreshModalPriceSummary();
+            updateModalVipBanner();
+            updateWalletPayButtonLabel();
         }
 
         window.openPackageModal = function(id) {
             selectedPanel = storeData.panels.find(p => p.id === id);
             if(!selectedPanel) return;
 
-            if (isPanelStockOut(selectedPanel)) {
+            if(isPanelStockOut(selectedPanel)) {
                 window.handleStockOutPanelClick(id);
                 return;
             }
 
-            appliedCouponDiscount = 0;
-            appliedCouponCode = "";
-            const cInp = document.getElementById('couponCodeInput');
-            const cMsg = document.getElementById('couponFeedbackMsg');
-            if(cInp) cInp.value = "";
-            if(cMsg) cMsg.classList.add('hidden');
+            ensurePanelDurationStockMap(selectedPanel);
 
-            document.getElementById('modalTitle').innerText = selectedPanel.name;
             document.getElementById('modalIcon').src = selectedPanel.icon;
+            document.getElementById('modalTitle').innerText = selectedPanel.name;
             
-            const pkgList = document.getElementById('packageList');
-            pkgList.innerHTML = '';
-            selectedPackage = null;
-            
-            let firstAvailableIndex = -1;
-            (selectedPanel.packages || []).forEach((pkg, index) => {
-                const pkgOut = isPackageStockOut(pkg);
-                if (!pkgOut && firstAvailableIndex === -1) {
-                    firstAvailableIndex = index;
+            const list = document.getElementById('packageList');
+            list.innerHTML = '';
+
+            const availablePackages = (selectedPanel.packages || []).filter(pk => !isPackageStockOut(pk));
+            selectedPackage = availablePackages[0] || null;
+            resetCouponState();
+
+            (selectedPanel.packages || []).forEach((pkg, idx) => {
+                const isStockOut = isPackageStockOut(pkg);
+                const isSelected = !isStockOut && selectedPackage && pkg === selectedPackage;
+
+                let stockBadge = '';
+                if(isStockOut) {
+                    stockBadge = `<span class="stock-out-badge bg-gradient-to-r from-red-600 to-rose-700 text-white text-[9px] font-bold px-2 py-0.5 rounded-full inline-block mt-1 shadow-sm border border-red-400"><i class="fa-solid fa-box-open mr-0.5 text-red-200"></i> ${pkg.note}</span>`;
+                } else if(pkg.note && pkg.note.trim() !== '') {
+                    stockBadge = `<span class="bg-slate-100 text-slate-700 text-[9px] font-bold px-2 py-0.5 rounded-full inline-block mt-1">${escapeHtml(pkg.note)}</span>`;
                 }
 
-                let noteBadge = '';
-                if(pkg.note && pkg.note.trim() !== '') {
-                    const noteClass = pkgOut
-                        ? 'text-[10px] text-red-700 font-extrabold mt-1 bg-red-100 border border-red-300 px-2 py-0.5 rounded-full inline-block'
-                        : 'text-[10px] text-red-600 font-bold mt-1 bg-red-50 px-2 py-0.5 rounded-full inline-block';
-                    noteBadge = `<p class="${noteClass}">${pkg.note}</p>`;
-                }
+                const activeClasses = isStockOut
+                    ? "pkg-card is-stock-out p-3 rounded-2xl border border-red-300 text-center cursor-not-allowed flex flex-col justify-between items-center relative overflow-hidden"
+                    : (isSelected
+                        ? "pkg-card p-3 rounded-2xl border-2 border-[var(--theme-color)] text-center cursor-pointer transition flex flex-col justify-between items-center relative overflow-hidden shadow-md"
+                        : "pkg-card p-3 rounded-2xl border border-slate-200 hover:border-[var(--theme-color)] text-center cursor-pointer transition flex flex-col justify-between items-center relative overflow-hidden");
 
-                pkgList.innerHTML += `
-                    <div onclick="selectPkg(${index})" id="pkg-${index}" class="pkg-card ${pkgOut ? 'is-stock-out' : ''} p-3.5 rounded-2xl cursor-pointer text-center relative">
-                        <h4 class="font-bold text-xs text-slate-800">${pkg.time}</h4>
-                        <p class="font-black text-sm text-emerald-600 mt-1">৳${pkg.price}</p>
-                        ${noteBadge}
+                list.innerHTML += `
+                    <div onclick="selectPkg(${idx}, this)" class="${activeClasses}">
+                        <div class="w-full">
+                            <p class="font-bold text-xs text-slate-800">${pkg.time}</p>
+                            <p class="dynamic-theme-text font-black text-sm mt-1">৳${pkg.price}</p>
+                        </div>
+                        ${stockBadge}
                     </div>
                 `;
             });
 
-            if (firstAvailableIndex !== -1) {
-                selectPkg(firstAvailableIndex);
-            } else {
-                refreshModalPriceSummary();
-            }
-
             selectPaymentMethod('wallet');
+            updateModalVipBanner();
+            updateWalletPayButtonLabel();
             document.getElementById('packageModal').classList.remove('hidden');
         }
 
-        window.selectPkg = function(index) {
-            if (!selectedPanel || !selectedPanel.packages || !selectedPanel.packages[index]) return;
-            const targetPkg = selectedPanel.packages[index];
-            if (isPackageStockOut(targetPkg)) {
+        function updateWalletPayButtonLabel() {
+            const currentBal = getUserBalance();
+            const labelEl = document.getElementById('walletPayBtnText');
+            const actionBtn = document.getElementById('checkoutActionBtn');
+            const isPkgOut = !selectedPackage || isPackageStockOut(selectedPackage);
+            const finalPrice = getFinalPackagePrice();
+
+            if (labelEl) {
+                labelEl.innerText = `WALLET PAY (৳${currentBal})`;
+            }
+            if (actionBtn) {
+                if (activePaymentMode === 'wallet') {
+                    if (isPkgOut) {
+                        actionBtn.innerHTML = `<i class="fa-solid fa-box-open text-base"></i> Package Stock Out`;
+                    } else {
+                        actionBtn.innerHTML = `<i class="fa-solid fa-wallet text-base"></i> Pay ৳${finalPrice} from Wallet`;
+                    }
+                } else {
+                    actionBtn.innerHTML = `<i class="fa-solid fa-paper-plane text-base"></i> Confirm Instant Order (৳${finalPrice})`;
+                }
+            }
+        }
+
+        window.selectPkg = function(idx, el) {
+            if(!selectedPanel || !selectedPanel.packages[idx]) return;
+            const clickedPkg = selectedPanel.packages[idx];
+            if(isPackageStockOut(clickedPkg)) {
                 if (typeof window.playTapSound === 'function') {
                     window.playTapSound('stockout');
                 }
                 if (typeof window.showPaymentErrorToast === 'function') {
-                    window.showPaymentErrorToast(`${targetPkg.time} প্যাকেজটি Stock Out আছে!`);
+                    window.showPaymentErrorToast(`${clickedPkg.time} প্যাকেজটি বর্তমানে Stock Out আছে!`);
                 }
                 return;
             }
 
-            selectedPackage = targetPkg;
-            document.querySelectorAll('#packageList > div').forEach((el, idx) => {
-                const pItem = selectedPanel.packages[idx];
-                const isOut = isPackageStockOut(pItem);
-                el.classList.remove('border-2', 'border-[var(--theme-color)]', 'bg-indigo-50/30');
-                el.classList.add('border', isOut ? 'border-red-300' : 'border-slate-200');
+            selectedPackage = clickedPkg;
+            resetCouponState();
+            updateModalVipBanner();
+            updateWalletPayButtonLabel();
+            document.querySelectorAll('#packageList > div:not(.is-stock-out)').forEach(d => {
+                d.classList.remove('border-2', 'border-[var(--theme-color)]', 'shadow-md');
+                d.classList.add('border', 'border-slate-200');
             });
-
-            const activeCard = document.getElementById(`pkg-${index}`);
-            if (activeCard) {
-                activeCard.classList.remove('border', 'border-slate-200');
-                activeCard.classList.add('border-2', 'border-[var(--theme-color)]', 'bg-indigo-50/30');
-            }
-
-            refreshModalPriceSummary();
+            el.classList.remove('border', 'border-slate-200');
+            el.classList.add('border-2', 'border-[var(--theme-color)]', 'shadow-md');
         }
 
         window.selectPaymentMethod = function(mode) {
             activePaymentMode = mode;
-            const cardWallet = document.getElementById('payCard-wallet');
-            const cardInstant = document.getElementById('payCard-instant');
-            const instantDetails = document.getElementById('instantPayDetails');
+            const walletCard = document.getElementById('payCard-wallet');
+            const instantCard = document.getElementById('payCard-instant');
+            const detailsDiv = document.getElementById('instantPayDetails');
 
             if(mode === 'wallet') {
-                cardWallet.classList.add('border-2', 'border-red-500');
-                cardWallet.classList.remove('border', 'border-slate-200');
-                cardInstant.classList.remove('border-2', 'border-emerald-500');
-                cardInstant.classList.add('border', 'border-slate-200');
-                instantDetails.classList.add('hidden');
+                walletCard.classList.add('border-2', 'border-red-500');
+                walletCard.classList.remove('border', 'border-slate-200');
+                instantCard.classList.remove('border-2', 'border-red-500');
+                instantCard.classList.add('border', 'border-slate-200');
+                detailsDiv.classList.add('hidden');
             } else {
-                cardInstant.classList.add('border-2', 'border-emerald-500');
-                cardInstant.classList.remove('border', 'border-slate-200');
-                cardWallet.classList.remove('border-2', 'border-red-500');
-                cardWallet.classList.add('border', 'border-slate-200');
-                instantDetails.classList.remove('hidden');
+                instantCard.classList.add('border-2', 'border-red-500');
+                instantCard.classList.remove('border', 'border-slate-200');
+                walletCard.classList.remove('border-2', 'border-red-500');
+                walletCard.classList.add('border', 'border-slate-200');
+                detailsDiv.classList.remove('hidden');
             }
-            refreshModalPriceSummary();
+            updateWalletPayButtonLabel();
         }
 
         window.closeModal = function() { document.getElementById('packageModal').classList.add('hidden'); }
 
-        function consumeStockKeyForDuration(panel, durationLabel) {
-            const stockMap = ensurePanelDurationStockMap(panel);
-            const targetDur = String(durationLabel || '').trim();
-            if (targetDur && Array.isArray(stockMap[targetDur]) && stockMap[targetDur].length > 0) {
-                return stockMap[targetDur].shift();
-            }
-            return null;
-        }
-
         window.checkout = function() {
             if(!selectedPanel || !selectedPackage) {
-                alert("দয়া করে একটি প্যাকেজ সিলেক্ট করুন!");
+                alert("অনুগ্রহ করে একটি কার্যকর প্যাকেজ নির্বাচন করুন!");
                 return;
             }
-            if (isPanelStockOut(selectedPanel)) {
-                window.handleStockOutPanelClick(selectedPanel.id);
-                return;
-            }
-            if (isPackageStockOut(selectedPackage)) {
+
+            if(isPanelStockOut(selectedPanel) || isPackageStockOut(selectedPackage)) {
                 if (typeof window.playTapSound === 'function') {
                     window.playTapSound('stockout');
                 }
                 if (typeof window.showPaymentErrorToast === 'function') {
-                    window.showPaymentErrorToast(`${selectedPackage.time} প্যাকেজটি Stock Out আছে!`);
+                    window.showPaymentErrorToast("এই প্যাকেজটি বর্তমানে Stock Out আছে!");
                 }
                 return;
             }
 
-            const priceInfo = getDiscountedPackagePrice(selectedPackage.price);
-            const finalAmount = priceInfo.finalPrice;
+            const finalPrice = getFinalPackagePrice();
+            const isAutoDelivery = (storeData.autoDeliveryActive === true || storeData.autoDeliveryActive === "true");
+            const durationStockMap = ensurePanelDurationStockMap(selectedPanel);
+            const matchedDuration = selectedPackage.time || "";
+            const durationPool = Array.isArray(durationStockMap[matchedDuration]) ? durationStockMap[matchedDuration] : [];
+
             const orderCode = generateSixDigitOrderId();
             const createdAtTs = Date.now();
-            const formattedDate = formatCardDateTime(createdAtTs);
-            const buyerLabel = buildRecentBuyerLabel(clientUid);
-            const orderDetailsStr = `${selectedPanel.name} (${selectedPackage.time})`;
+            const createdAtStr = formatCardDateTime(createdAtTs);
+            const buyerDisplayLabel = buildRecentBuyerLabel(clientUid);
 
             if(activePaymentMode === 'wallet') {
                 const currentBal = getUserBalance();
-                if(currentBal < finalAmount) {
-                    alert("পর্যাপ্ত ব্যালেন্স নেই! অনুগ্রহ করে Add Fund করুন অথবা Nobab Pay Auto ব্যবহার করুন।");
+                if(currentBal < finalPrice) {
+                    alert(`আপনার অ্যাকাউন্ট ব্যালেন্স কম! প্রয়োজনীয় ব্যালেন্স: ৳${finalPrice} (আপনার আছে ৳${currentBal})। অনুগ্রহ করে Add Fund করুন।`);
                     return;
                 }
 
                 if(!storeData.userBalances) storeData.userBalances = {};
-                storeData.userBalances[clientUid] = currentBal - finalAmount;
+                storeData.userBalances[clientUid] = currentBal - finalPrice;
 
-                const isAutoOn = (storeData.autoDeliveryActive === true || storeData.autoDeliveryActive === "true");
-                let deliveredKey = null;
-                if (isAutoOn) {
-                    deliveredKey = consumeStockKeyForDuration(selectedPanel, selectedPackage.time);
-                }
+                if(!Array.isArray(storeData.orders)) storeData.orders = [];
+                if(!Array.isArray(storeData.keys)) storeData.keys = [];
 
-                const orderStatus = deliveredKey ? "Completed" : "Pending";
+                let deliveredKeyText = "";
+                let orderStatus = "Pending";
 
-                if(!storeData.orders) storeData.orders = [];
-                storeData.orders.unshift({
-                    id: orderCode,
-                    orderCode: orderCode,
-                    uid: clientUid,
-                    panel: selectedPanel.name,
-                    duration: selectedPackage.time,
-                    price: finalAmount,
-                    rawPrice: priceInfo.rawPrice,
-                    vipTier: priceInfo.vip.tierName,
-                    couponCode: appliedCouponCode || "",
-                    paymentMode: 'wallet',
-                    status: orderStatus,
-                    deliveredKey: deliveredKey || "",
-                    date: formattedDate,
-                    timestamp: createdAtTs
-                });
-
-                if (deliveredKey) {
-                    if(!storeData.keys) storeData.keys = [];
+                if(isAutoDelivery && durationPool.length > 0) {
+                    deliveredKeyText = durationPool.shift();
+                    orderStatus = "Completed";
                     storeData.keys.unshift({
-                        id: orderCode,
+                        id: Date.now(),
                         orderCode: orderCode,
                         uid: clientUid,
                         panel: selectedPanel.name,
-                        duration: selectedPackage.time,
-                        key: deliveredKey,
-                        date: formattedDate,
-                        timestamp: createdAtTs
+                        time: selectedPackage.time,
+                        key: deliveredKeyText,
+                        date: createdAtStr,
+                        timestamp: createdAtTs,
+                        mode: "wallet_auto"
                     });
-                    pushCompletedRecentOrder(buyerLabel, orderDetailsStr, `${finalAmount}৳`, clientUid);
+                    pushCompletedRecentOrder(
+                        buyerDisplayLabel,
+                        `${selectedPanel.name} ${selectedPackage.time}`,
+                        `${finalPrice}৳`,
+                        clientUid
+                    );
+                } else {
+                    if (!Array.isArray(storeData.homeRecentOrders)) storeData.homeRecentOrders = [];
+                    storeData.homeRecentOrders.unshift({
+                        name: buyerDisplayLabel,
+                        details: `${selectedPanel.name} ${selectedPackage.time}`,
+                        price: `${finalPrice}৳`,
+                        status: "Pending",
+                        uidTag: clientUid
+                    });
+                    if (storeData.homeRecentOrders.length > MAX_RECENT_ORDERS) {
+                        storeData.homeRecentOrders = storeData.homeRecentOrders.slice(0, MAX_RECENT_ORDERS);
+                    }
                 }
+
+                storeData.orders.unshift({
+                    id: Date.now(),
+                    orderCode: orderCode,
+                    uid: clientUid,
+                    panel: selectedPanel.name,
+                    time: selectedPackage.time,
+                    price: finalPrice,
+                    couponUsed: appliedCouponCode || "None",
+                    status: orderStatus,
+                    deliveredKey: deliveredKeyText,
+                    date: createdAtStr,
+                    timestamp: createdAtTs,
+                    paymentMode: 'wallet'
+                });
 
                 saveToFirebase(true);
                 updateAccountUI();
-                renderPanels();
                 renderHomeTabContent();
+                closeModal();
 
                 sendTelegramAlert(
-                    `🛒 <b>নতুন অর্ডার সম্পন্ন হয়েছে! (Wallet)</b>\n\n` +
-                    `🆔 <b>Order ID:</b> <code>${orderCode}</code>\n` +
+                    `🛒 <b>নতুন ওয়ালেট অর্ডার!</b>\n\n` +
+                    `🧾 <b>Order ID:</b> <code>${orderCode}</code>\n` +
                     `👤 <b>UID:</b> <code>${clientUid}</code>\n` +
-                    `📱 <b>ডিভাইস:</b> ${deviceDetails.model}\n` +
+                    `🔑 <b>Support PIN:</b> <code>${clientSupportPin}</code>\n` +
                     `🎮 <b>প্যানেল:</b> ${selectedPanel.name}\n` +
                     `⏱ <b>প্যাকেজ:</b> ${selectedPackage.time}\n` +
-                    `👑 <b>VIP:</b> ${priceInfo.vip.tierName} (${priceInfo.vip.discountPercent}%)\n` +
-                    `💵 <b>মূল্য:</b> ৳${finalAmount}\n` +
-                    `🔑 <b>Key Status:</b> ${deliveredKey ? `Auto Delivered (<code>${deliveredKey}</code>)` : 'Pending Admin Delivery'}\n` +
-                    `🕒 <b>সময়:</b> ${new Date().toLocaleString()}`
+                    `💰 <b>পরিশোধিত মূল্য:</b> ৳${finalPrice}\n` +
+                    `📦 <b>স্ট্যাটাস:</b> ${orderStatus}\n` +
+                    `🕒 <b>সময়:</b> ${createdAtStr}`
                 );
 
-                closeModal();
-                if (deliveredKey) {
-                    showSuccessModal(`অর্ডার সম্পন্ন (ID: ${orderCode})! Auto Delivery থেকে কি পাঠানো হয়েছে: ${deliveredKey}`);
+                if(orderStatus === "Completed") {
+                    showSuccessModal(`অর্ডার সফল! Order ID: #${orderCode} — আপনার Key ("${deliveredKeyText}") My Keys সেকশনে পাঠানো হয়েছে।`);
                 } else {
-                    showSuccessModal(`অর্ডার সম্পন্ন (ID: ${orderCode})! অ্যাডমিন আপনার কি পাঠিয়ে দেবেন।`);
+                    showSuccessModal(`অর্ডার সফল! Order ID: #${orderCode} — ৳${finalPrice} কেটে নেওয়া হয়েছে। অ্যাডমিন শীঘ্রই আপনার Key পাঠিয়ে দেবেন।`);
                 }
+                switchTab('order');
             } else {
-                const activeName = (storeData && storeData.profileName) || 'Customer';
+                const msg = `হ্যালো! আমি ${selectedPanel.name} (${selectedPackage.time}) কিনতে চাই। Order ID: #${orderCode}। মূল্য: ৳${finalPrice}। আমার UID: ${clientUid}।`;
+                window.open(`https://wa.me/${storeData.whatsapp}?text=${encodeURIComponent(msg)}`, '_blank');
                 closeModal();
-                window.startNobabAutoPayment({
-                    uid: clientUid,
-                    amount: finalAmount,
-                    fullName: activeName,
-                    purpose: 'buy_panel',
-                    panelId: selectedPanel.id,
-                    panelName: selectedPanel.name,
-                    duration: selectedPackage.time,
-                    couponCode: appliedCouponCode || "",
-                    couponDiscount: Number(priceInfo.vipDiscountAmt + priceInfo.couponDiscountAmt),
-                    submitBtnId: 'checkoutActionBtn'
-                });
             }
         }
 
-        window.submitAddFundRequest = function(verifiedTrxId = '') {
-            const amount = Number(document.getElementById('addAmountInput').value);
-            const trxId = String(verifiedTrxId || window.__submittedTrxId || '').trim().toUpperCase();
+        window.submitAddFundRequest = function(customTrxId = "") {
+            const amtInput = document.getElementById('addAmountInput');
+            const amt = Number(amtInput ? amtInput.value : 0);
+            const trxId = (customTrxId || window.__submittedTrxId || "").trim().toUpperCase();
 
-            if(!amount || isNaN(amount) || amount <= 0) {
-                alert("দয়া করে সঠিক টাকার পরিমাণ লিখুন!");
+            if(!amt || isNaN(amt) || amt < 10) {
+                if (typeof window.showPaymentErrorToast === 'function') {
+                    window.showPaymentErrorToast("সর্বনিম্ন ৳10 অ্যামাউন্ট লিখুন!");
+                }
                 return;
             }
-            if(amount < 10) {
-                alert("সর্বনিম্ন ৳10 অ্যাড করা যাবে!");
-                return;
-            }
-            if(!trxId) {
-                alert("দয়া করে সঠিক Transaction ID দিন!");
+            if(!trxId || trxId.length < 5) {
+                if (typeof window.showPaymentErrorToast === 'function') {
+                    window.showPaymentErrorToast("সঠিক Transaction ID দিন!");
+                }
                 return;
             }
 
-            if(!storeData.fundRequests) storeData.fundRequests = [];
+            if(!Array.isArray(storeData.fundRequests)) storeData.fundRequests = [];
             const nowTs = Date.now();
-            storeData.fundRequests.unshift({
-                id: 'FND-' + Math.floor(100000 + Math.random() * 900000),
+            const newReq = {
+                id: "FND-" + nowTs.toString().slice(-6) + "-" + Math.floor(10 + Math.random() * 89),
                 uid: clientUid,
-                deviceId: deviceId,
+                supportPin: clientSupportPin,
                 deviceModel: deviceDetails.model,
-                amount: amount,
+                amount: amt,
                 trxId: trxId,
-                status: 'Pending',
+                status: "Pending",
                 timestamp: nowTs,
                 date: new Date(nowTs).toLocaleString()
-            });
+            };
 
+            storeData.fundRequests.unshift(newReq);
             storeData.fundRequests = enforceMaxFiveFundRequests(storeData.fundRequests);
-            window.__submittedTrxId = '';
-
-            document.getElementById('addAmountInput').value = '';
-            document.querySelectorAll('#quickAmountChips .quick-amt-chip').forEach(chip => chip.classList.remove('active'));
+            window.__submittedTrxId = "";
 
             saveToFirebase(true);
             renderMyFundRequests();
             window.switchFundSubTab('history');
 
             sendTelegramAlert(
-                `💰 <b>নতুন Fund Request এসেছে!</b>\n\n` +
+                `💳 <b>নতুন Add Fund রিকোয়েস্ট!</b>\n\n` +
                 `👤 <b>UID:</b> <code>${clientUid}</code>\n` +
+                `🔑 <b>Support PIN:</b> <code>${clientSupportPin}</code>\n` +
                 `📱 <b>ডিভাইস:</b> ${deviceDetails.model}\n` +
-                `💵 <b>টাকার পরিমাণ:</b> ৳${amount}\n` +
-                `🧾 <b>Transaction ID:</b> <code>${trxId}</code>\n` +
-                `⏳ <b>মেয়াদ:</b> 5 মিনিট\n` +
-                `🕒 <b>সময়:</b> ${new Date(nowTs).toLocaleString()}`
+                `💰 <b>অ্যামাউন্ট:</b> ৳${amt}\n` +
+                `🔢 <b>TrxID:</b> <code>${trxId}</code>\n` +
+                `🕒 <b>সময়:</b> ${newReq.date}`
             );
 
-            showSuccessModal("আপনার Fund Request (৫ মিনিটের মেয়াদে) সাবমিট হয়েছে! অ্যাডমিন যাচাই করে ব্যালেন্স যুক্ত করে দেবেন।");
+            amtInput.value = '';
+            document.querySelectorAll('#quickAmountChips .quick-amt-chip').forEach(chip => chip.classList.remove('active'));
+            showSuccessModal("আপনার Add Fund রিকোয়েস্ট সাবমিট হয়েছে! অ্যাডমিন পেমেন্ট যাচাই করে ব্যালেন্স অ্যাড করে দেবেন।");
         }
 
         function renderMyFundRequests() {
-            processFundRequestsLifecycle(false);
-            const list = document.getElementById('myFundRequestsList');
-            if(!list) return;
+            const box = document.getElementById('myFundRequestsList');
+            if(!box) return;
+            const myReqs = (storeData.fundRequests || []).filter(r => r.uid === clientUid).slice(0, MAX_FUND_REQUESTS_DISPLAY);
 
-            const myReqs = enforceMaxFiveFundRequests((storeData.fundRequests || []).filter(r => r.uid === clientUid));
             if(myReqs.length === 0) {
-                list.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">No fund requests submitted.</p>`;
+                box.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No fund requests submitted.</p>`;
                 return;
             }
 
-            list.innerHTML = '';
-            myReqs.forEach(req => {
-                let statusBadge = `<span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full text-[10px] font-bold">Pending</span>`;
-                let timerSubHtml = '';
+            box.innerHTML = '';
+            myReqs.forEach(r => {
+                let badgeClass = "bg-amber-100 text-amber-800 border border-amber-300";
+                let statusText = r.status || "Pending";
+                if(statusText === "Approved") badgeClass = "bg-emerald-100 text-emerald-800 border border-emerald-300";
+                else if(statusText === "Rejected") badgeClass = "bg-red-100 text-red-700 border border-red-300";
+                else if(statusText === "Expired") badgeClass = "bg-slate-200 text-slate-700 border border-slate-300";
 
-                if(req.status === 'Approved') {
-                    statusBadge = `<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full text-[10px] font-bold">Approved</span>`;
-                } else if(req.status === 'Rejected') {
-                    statusBadge = `<span class="bg-red-100 text-red-700 px-2 py-0.5 rounded-full text-[10px] font-bold">Rejected</span>`;
-                } else if(req.status === 'Expired') {
-                    statusBadge = `<span class="bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full text-[10px] font-bold">Expired</span>`;
-                    timerSubHtml = `<p class="text-[10px] text-rose-600 font-bold mt-0.5">৫ মিনিট শেষ — কিছুক্ষণের মধ্যে মুছে যাবে</p>`;
-                } else {
-                    const remMs = getFundRemainingMs(req);
-                    timerSubHtml = `<p class="text-[10px] text-indigo-600 font-mono font-bold mt-0.5">বাকি সময়: ${formatMmSs(remMs)}</p>`;
-                }
+                const remMs = getFundRemainingMs(r);
+                const timerHtml = statusText === "Pending"
+                    ? `<span class="bg-red-50 text-red-600 border border-red-200 px-1.5 py-0.5 rounded font-mono text-[9px] font-extrabold ml-1">${formatMmSs(remMs)}</span>`
+                    : "";
 
-                list.innerHTML += `
-                    <div class="bg-slate-50 border border-slate-200 p-3 rounded-2xl flex justify-between items-center text-xs shadow-sm">
+                box.innerHTML += `
+                    <div class="bg-slate-50 border border-slate-200 p-3 rounded-2xl flex justify-between items-center text-xs">
                         <div>
-                            <p class="font-bold text-slate-800">Amount: <span class="text-emerald-600">৳${req.amount}</span></p>
-                            <p class="text-[11px] font-mono text-slate-600 mt-0.5">TrxID: <strong>${req.trxId}</strong></p>
-                            ${timerSubHtml}
-                            <p class="text-[10px] text-slate-400 mt-0.5">${req.date || ''}</p>
+                            <p class="font-bold text-slate-800">Amount: <span class="text-emerald-700 font-black">৳${r.amount}</span> • TrxID: <span class="font-mono font-bold text-slate-700">${escapeHtml(r.trxId)}</span></p>
+                            <p class="text-[10px] text-slate-400 mt-0.5">${escapeHtml(r.date || '')}</p>
                         </div>
-                        <div class="text-right">
-                            ${statusBadge}
+                        <div class="flex items-center">
+                            <span class="${badgeClass} text-[10px] font-bold px-2.5 py-1 rounded-full">${statusText}</span>
+                            ${timerHtml}
                         </div>
                     </div>
                 `;
             });
         }
 
+        function renderAdminFundRequests() {
+            const box = document.getElementById('adminFundRequestsList');
+            const badge = document.getElementById('pendingFundCount');
+            const filterSel = document.getElementById('adminFundFilterSelect');
+            if(!box) return;
+
+            const allReqs = storeData.fundRequests || [];
+            const pendingList = allReqs.filter(r => r.status === 'Pending');
+            if(badge) badge.innerText = `${pendingList.length} Pending`;
+
+            const filterMode = filterSel ? filterSel.value : 'Pending';
+            const displayList = filterMode === 'All'
+                ? allReqs
+                : allReqs.filter(r => (r.status || 'Pending') === filterMode);
+
+            if(displayList.length === 0) {
+                box.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No ${filterMode.toLowerCase()} fund requests.</p>`;
+                return;
+            }
+
+            box.innerHTML = '';
+            displayList.forEach(r => {
+                const isPending = (r.status || 'Pending') === 'Pending';
+                const remMs = getFundRemainingMs(r);
+                let statusPill = `<span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full">Pending (${formatMmSs(remMs)})</span>`;
+                if(r.status === 'Approved') statusPill = `<span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">Approved</span>`;
+                else if(r.status === 'Rejected') statusPill = `<span class="bg-red-100 text-red-700 text-[10px] font-bold px-2 py-0.5 rounded-full">Rejected</span>`;
+                else if(r.status === 'Expired') statusPill = `<span class="bg-slate-200 text-slate-700 text-[10px] font-bold px-2 py-0.5 rounded-full">Expired</span>`;
+
+                box.innerHTML += `
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-2 text-xs">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="bg-red-50 text-red-600 border border-red-200 px-2 py-0.5 rounded font-mono font-extrabold text-[10px]">UID: ${r.uid}</span>
+                                <span class="text-[10px] text-slate-400 ml-1">${r.deviceModel || ''}</span>
+                                <p class="font-bold text-slate-800 mt-1">Amount: <span class="text-emerald-700 font-black">৳${r.amount}</span> • TrxID: <span class="font-mono font-bold text-indigo-700">${escapeHtml(r.trxId)}</span></p>
+                                <p class="text-[10px] text-slate-400">${escapeHtml(r.date || '')}</p>
+                            </div>
+                            ${statusPill}
+                        </div>
+                        ${isPending ? `
+                            <div class="flex gap-2 pt-1">
+                                <button type="button" onclick="approveFundRequest('${r.id}')" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-1.5 rounded-lg text-[11px] font-bold cursor-pointer shadow-sm">
+                                    <i class="fa-solid fa-check mr-1"></i> Approve (+৳${r.amount})
+                                </button>
+                                <button type="button" onclick="rejectFundRequest('${r.id}')" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-lg text-[11px] font-bold cursor-pointer shadow-sm">
+                                    Reject
+                                </button>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            });
+        }
+
+        window.clearProcessedFundRequests = function() {
+            if(!Array.isArray(storeData.fundRequests)) return;
+            storeData.fundRequests = storeData.fundRequests.filter(r => (r.status || 'Pending') === 'Pending');
+            saveToFirebase(true);
+            renderAdminFundRequests();
+            renderMyFundRequests();
+            showSuccessModal("Processed / Expired fund requests cleared!");
+        }
+
+        window.approveFundRequest = function(reqId) {
+            const req = (storeData.fundRequests || []).find(r => r.id === reqId);
+            if(!req || req.status !== 'Pending') return;
+
+            req.status = 'Approved';
+            if(!storeData.userBalances) storeData.userBalances = {};
+            const targetUid = req.uid;
+            storeData.userBalances[targetUid] = Number(storeData.userBalances[targetUid] || 0) + Number(req.amount || 0);
+            if(storeData.users && storeData.users[targetUid]) {
+                storeData.users[targetUid].balance = Number(storeData.userBalances[targetUid]);
+            }
+
+            saveToFirebase(true);
+            renderAdminFundRequests();
+            renderMyFundRequests();
+            updateAccountUI();
+            showSuccessModal(`UID ${targetUid} এর অ্যাকাউন্টে ৳${req.amount} সফলভাবে যুক্ত হয়েছে!`);
+        }
+
+        window.rejectFundRequest = function(reqId) {
+            const req = (storeData.fundRequests || []).find(r => r.id === reqId);
+            if(!req || req.status !== 'Pending') return;
+            req.status = 'Rejected';
+            saveToFirebase(true);
+            renderAdminFundRequests();
+            renderMyFundRequests();
+            showSuccessModal(`Fund request (${req.trxId}) rejected.`);
+        }
+
         function renderOrders() {
             const container = document.getElementById('orderListContainer');
             const myOrders = (storeData.orders || []).filter(o => o.uid === clientUid);
-            
             if(myOrders.length === 0) {
                 container.innerHTML = `<p class="text-xs text-slate-400 text-center py-10">No orders placed yet.</p>`;
                 return;
             }
-            
+
             container.innerHTML = '';
             myOrders.forEach(order => {
-                const displayCode = order.orderCode || order.id;
-                const displayDate = order.date || formatCardDateTime(order.timestamp || Date.now());
-                const isCompleted = (order.status === 'Completed');
+                const isCompleted = order.status === 'Completed';
+                const statusBadge = isCompleted
+                    ? '<span class="bg-emerald-100 text-emerald-700 border border-emerald-200 px-2.5 py-0.5 rounded-full text-[10px] font-bold">Completed</span>'
+                    : '<span class="bg-amber-100 text-amber-800 border border-amber-200 px-2.5 py-0.5 rounded-full text-[10px] font-bold">Pending</span>';
 
-                const statusBadgeHtml = isCompleted
-                    ? `<span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full">Completed</span>`
-                    : `<span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full">Pending</span>`;
-
-                const keyBoxHtml = order.deliveredKey
-                    ? `<div class="mt-2.5 bg-emerald-50 border border-emerald-200 rounded-xl p-2 flex items-center justify-between gap-2">
-                        <code class="text-[11px] font-mono font-extrabold text-emerald-900 select-all break-all">${escapeHtml(order.deliveredKey)}</code>
-                        <button type="button" onclick="copyPurchasedKey('${String(order.deliveredKey).replace(/'/g, "\\'")}')" class="bg-emerald-600 text-white px-2.5 py-1 rounded-lg text-[10px] font-bold cursor-pointer shrink-0">Copy</button>
-                       </div>`
-                    : '';
+                const orderNumDisplay = order.orderCode || order.id;
 
                 container.innerHTML += `
-                    <div class="bg-white border border-slate-200 p-3.5 rounded-2xl text-xs shadow-sm">
-                        <div class="flex justify-between items-start gap-2">
+                    <div class="bg-white border border-slate-200 p-4 rounded-2xl space-y-2 shadow-sm">
+                        <div class="flex justify-between items-start">
                             <div>
-                                <p class="font-bold text-slate-800">${escapeHtml(order.panel)} (${escapeHtml(order.duration)})</p>
-                                <p class="text-[11px] font-mono font-bold text-indigo-700 mt-0.5">Order ID: #${escapeHtml(String(displayCode))}</p>
-                                <p class="text-[10px] text-slate-500 mt-0.5"><i class="fa-regular fa-clock mr-1"></i>${escapeHtml(displayDate)}</p>
+                                <span class="text-[10px] font-mono font-extrabold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">#${orderNumDisplay}</span>
+                                <h4 class="font-bold text-xs text-slate-800 mt-1">${escapeHtml(order.panel)} (${escapeHtml(order.time)})</h4>
+                                <p class="text-[10px] text-slate-400 mt-0.5">${escapeHtml(order.date || '')}</p>
                             </div>
                             <div class="text-right">
-                                <span class="font-bold text-emerald-600 block">৳${order.price}</span>
-                                <div class="mt-1">${statusBadgeHtml}</div>
+                                <span class="text-xs font-black text-slate-900 block mb-1">৳${order.price}</span>
+                                ${statusBadge}
                             </div>
                         </div>
-                        ${keyBoxHtml}
+                        ${order.deliveredKey ? `
+                            <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-2.5 flex items-center justify-between gap-2">
+                                <code class="text-xs font-mono font-bold text-emerald-800 select-all break-all">${escapeHtml(order.deliveredKey)}</code>
+                                <button onclick="copyPurchasedKey('${escapeHtml(order.deliveredKey).replace(/'/g, "\\'")}')" class="bg-emerald-600 text-white px-2.5 py-1 rounded-lg text-[10px] font-bold cursor-pointer shrink-0">Copy</button>
+                            </div>
+                        ` : ''}
                     </div>
                 `;
             });
@@ -4667,91 +4576,150 @@ Current User Info:
             const container = document.getElementById('keysContainer');
             const badge = document.getElementById('myKeysTotalBadge');
             const myKeys = (storeData.keys || []).filter(k => k.uid === clientUid);
-            if (badge) badge.innerText = `${myKeys.length} Key${myKeys.length !== 1 ? 's' : ''}`;
+            if(badge) badge.innerText = `${myKeys.length} Key${myKeys.length === 1 ? '' : 's'}`;
 
             if(myKeys.length === 0) {
                 container.innerHTML = `<p class="text-xs text-slate-400 text-center py-10">No keys delivered yet. After payment, Admin will send your key here.</p>`;
                 return;
             }
-            
+
             container.innerHTML = '';
-            const grpBtnName = (storeData.paidGroupBtnName && storeData.paidGroupBtnName.trim() !== '')
-                ? storeData.paidGroupBtnName.trim()
-                : "Join Paid User Group";
-            const grpLink = (storeData.paidGroupLink && storeData.paidGroupLink.trim() !== '')
-                ? storeData.paidGroupLink.trim()
-                : "";
-
             myKeys.forEach(k => {
-                const escapedKey = String(k.key || '').replace(/'/g, "\\'");
-                const displayOrderCode = k.orderCode || k.id || "N/A";
-                const displayDate = k.date || formatCardDateTime(k.timestamp || Date.now());
-
-                const paidGroupBtnHtml = grpLink
-                    ? `<a href="${escapeHtml(grpLink)}" target="_blank" rel="noopener noreferrer" class="mt-3 w-full bg-sky-600 hover:bg-sky-700 text-white py-2.5 px-3 rounded-xl text-xs font-extrabold flex items-center justify-center gap-2 transition shadow-md">
-                        <i class="fa-solid fa-paper-plane"></i>
-                        <span>${escapeHtml(grpBtnName)}</span>
-                       </a>`
-                    : '';
+                const timeBadge = k.time || "Active";
+                const dateDisplay = k.date || formatCardDateTime(k.timestamp || Date.now());
+                const orderCodeDisplay = k.orderCode || (k.id ? String(k.id).slice(-6) : "000000");
+                const safeKeyArg = String(k.key || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
 
                 container.innerHTML += `
-                    <div class="bg-white border border-slate-200 p-4 rounded-2xl shadow-md">
-                        <div class="flex justify-between items-start gap-2 mb-2">
+                    <div class="bg-white border border-slate-200 rounded-3xl p-4 space-y-3 shadow-md">
+                        <div class="flex items-start justify-between gap-2">
                             <div>
-                                <p class="font-extrabold text-sm text-slate-900">${escapeHtml(k.panel)}</p>
-                                <p class="text-[11px] font-bold text-slate-500 mt-0.5">${escapeHtml(k.duration)}</p>
+                                <h3 class="font-extrabold text-sm text-slate-900 leading-snug">${escapeHtml(k.panel)}</h3>
+                                <span class="inline-block mt-1 bg-indigo-50 text-indigo-700 border border-indigo-200 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold">
+                                    ${escapeHtml(timeBadge)}
+                                </span>
                             </div>
-                            <span class="bg-emerald-100 text-emerald-700 text-[10px] font-extrabold px-2.5 py-1 rounded-full">Delivered</span>
+                            <span class="bg-emerald-100 text-emerald-700 border border-emerald-200 px-3 py-1 rounded-full text-[10px] font-extrabold shrink-0">
+                                Active
+                            </span>
                         </div>
 
-                        <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl flex items-center justify-between gap-2">
-                            <code class="text-xs font-mono font-extrabold text-indigo-900 select-all break-all">${escapeHtml(k.key)}</code>
-                            <button type="button" onclick="copyPurchasedKey('${escapedKey}')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg text-[11px] font-bold cursor-pointer shrink-0 shadow-sm">
-                                Copy
-                            </button>
+                        <div class="border-t border-slate-100"></div>
+
+                        <div class="space-y-1.5">
+                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">LICENSE KEY</p>
+                            <div class="bg-slate-100 border border-slate-200 rounded-2xl px-3.5 py-2.5 flex items-center justify-between gap-2">
+                                <code class="text-xs font-mono font-black text-slate-900 select-all break-all">${escapeHtml(k.key)}</code>
+                                <button type="button" onclick="copyPurchasedKey('${safeKeyArg}')" title="Copy Key" class="text-slate-600 hover:text-indigo-600 p-1.5 rounded-lg hover:bg-white transition cursor-pointer shrink-0">
+                                    <i class="fa-regular fa-copy text-sm"></i>
+                                </button>
+                            </div>
                         </div>
 
-                        <div class="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] font-mono text-slate-500">
-                            <span>Order ID: <strong class="text-slate-700">#${escapeHtml(String(displayOrderCode))}</strong></span>
-                            <span>${escapeHtml(displayDate)}</span>
+                        <div class="flex items-center justify-between text-[11px] text-slate-500 pt-0.5 font-medium">
+                            <span>${escapeHtml(dateDisplay)}</span>
+                            <span class="font-mono font-bold text-slate-700">Order #${escapeHtml(orderCodeDisplay)}</span>
                         </div>
 
-                        ${paidGroupBtnHtml}
+                        <button type="button" onclick="openSupportWhatsapp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-2xl text-xs transition shadow-md cursor-pointer flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-headset"></i>
+                            <span>Need Help / Support</span>
+                        </button>
                     </div>
                 `;
             });
         }
 
-        window.verifyAdmin = async function() {
-            const inputPin = document.getElementById('adminPinInput').value;
-            const inputHash = await sha256(inputPin);
-            const activeHash = window.__currentAdminHash || storeData.adminHash || defaultStoreData.adminHash;
+        function renderSalesAnalyticsChart() {
+            const canvas = document.getElementById('salesAnalyticsChart');
+            if(!canvas || typeof Chart === 'undefined') return;
 
-            if(inputHash === activeHash) {
+            const orders = storeData.orders || [];
+            const dayLabels = [];
+            const dayTotals = [];
+
+            for (let i = 6; i >= 0; i--) {
+                const d = new Date();
+                d.setDate(d.getDate() - i);
+                const label = `${d.getDate()}/${d.getMonth() + 1}`;
+                dayLabels.push(label);
+
+                const daySum = orders
+                    .filter(o => {
+                        if (!o.timestamp) return false;
+                        const od = new Date(Number(o.timestamp));
+                        return od.getFullYear() === d.getFullYear() &&
+                               od.getMonth() === d.getMonth() &&
+                               od.getDate() === d.getDate();
+                    })
+                    .reduce((acc, item) => acc + Number(item.price || 0), 0);
+
+                dayTotals.push(daySum);
+            }
+
+            if(salesChartInstance) {
+                salesChartInstance.destroy();
+            }
+
+            salesChartInstance = new Chart(canvas.getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: dayLabels,
+                    datasets: [{
+                        label: 'Sales (৳)',
+                        data: dayTotals,
+                        backgroundColor: storeData.themeColor || '#4f46e5',
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, ticks: { font: { size: 10 } } },
+                        x: { ticks: { font: { size: 10 } } }
+                    }
+                }
+            });
+        }
+
+        window.verifyAdmin = async function() {
+            const pin = document.getElementById('adminPinInput').value;
+            const enteredHash = await sha256(pin);
+            const activeHash = storeData.adminHash || window.__currentAdminHash || defaultStoreData.adminHash;
+
+            if(enteredHash === activeHash) {
                 window.__adminUnlockedSession = true;
-                localStorage.setItem('panelOwnerDeviceID', deviceId);
-                localStorage.setItem('panelOwnerUID', clientUid);
                 closeAdminModal();
                 checkAppUpdateState();
                 checkMaintenanceState();
+                checkLiveSuspension();
                 openAdminDashboard();
             } else {
-                alert("ভুল Admin PIN! আবার চেষ্টা করুন।");
+                alert("Incorrect Admin PIN!");
             }
         }
 
         function openAdminDashboard() {
-            document.getElementById('adminDashboard').classList.remove('hidden');
-            
-            document.getElementById('editThemeColor').value = storeData.themeColor || "#4f46e5";
-            document.getElementById('editOwnerColor').value = storeData.ownerColor || "#ef4444";
-            document.getElementById('editOwnerName').value = storeData.ownerFullText || "Owner ALAMIN";
-            
-            document.getElementById('editBannerImg').value = storeData.bannerImg || "";
-            document.getElementById('editBannerLink').value = storeData.bannerLink || "";
-            document.getElementById('editPopupActive').value = (storeData.popupActive === true || storeData.popupActive === "true") ? "true" : "false";
-            document.getElementById('editPopupTitle').value = storeData.popupTitle || "";
-            document.getElementById('editPopupMsg').value = storeData.popupMsg || "";
+            renderAdminPaymentChannels();
+            renderAdminSpinSettings();
+            renderAdminLiveChats();
+            processFundRequestsLifecycle(false);
+            renderAdminFundRequests();
+            renderAdminCategories();
+
+            document.getElementById('editAiChatActive').value = (storeData.aiChatEnabled !== false && storeData.aiChatEnabled !== "false") ? "true" : "false";
+            document.getElementById('editAiApiKey').value = storeData.aiGeminiApiKey || "";
+            document.getElementById('editAppUpdatingActive').value = (storeData.appUpdating === true || storeData.appUpdating === "true") ? "true" : "false";
+            document.getElementById('editAppUpdateMsg').value = storeData.appUpdateMsg || "নতুন ভার্সন আপডেট চলছে, অনুগ্রহ করে অপেক্ষা করুন...";
+
+            document.getElementById('editMaintenanceActive').value = (storeData.maintenanceActive === true || storeData.maintenanceActive === "true") ? "true" : "false";
+            document.getElementById('editMaintenanceMsg').value = storeData.maintenanceMsg || "সার্ভার আপডেট চলছে, সাময়িকভাবে বন্ধ আছে।";
+            document.getElementById('editMaintenanceBypassIds').value = Array.isArray(storeData.maintenanceBypassIds) ? storeData.maintenanceBypassIds.join(", ") : "";
+            document.getElementById('currentMyIdsHint').innerText = `আপনার UID: ${clientUid} | Device: ${deviceId}`;
+
+            document.getElementById('editAutoDeliveryActive').value = (storeData.autoDeliveryActive === true || storeData.autoDeliveryActive === "true") ? "true" : "false";
 
             document.getElementById('editAppName').value = storeData.appName || "";
             document.getElementById('editAppSub').value = storeData.appSub || "";
@@ -4759,7 +4727,16 @@ Current User Info:
             document.getElementById('editProfileName').value = storeData.profileName || "";
             document.getElementById('editProfileBio').value = storeData.profileBio || "";
             document.getElementById('editFooterText').value = storeData.footerText || "";
+            document.getElementById('editOwnerName').value = storeData.ownerFullText || "Owner ALAMIN";
+            document.getElementById('editOwnerColor').value = storeData.ownerColor || "#ef4444";
+            document.getElementById('editThemeColor').value = storeData.themeColor || "#4f46e5";
+
+            document.getElementById('editBannerImg').value = storeData.bannerImg || "";
+            document.getElementById('editBannerLink').value = storeData.bannerLink || "";
             syncAdminImagePreviews();
+            document.getElementById('editPopupActive').value = (storeData.popupActive === true || storeData.popupActive === "true") ? "true" : "false";
+            document.getElementById('editPopupTitle').value = storeData.popupTitle || "";
+            document.getElementById('editPopupMsg').value = storeData.popupMsg || "";
 
             document.getElementById('editNotice').value = storeData.notice || "";
             document.getElementById('editWhatsapp').value = storeData.whatsapp || "";
@@ -4768,333 +4745,94 @@ Current User Info:
             document.getElementById('editBkash').value = storeData.bkash || "";
             document.getElementById('editNagad').value = storeData.nagad || "";
 
-            document.getElementById('editAiChatActive').value = (storeData.aiChatEnabled !== false && storeData.aiChatEnabled !== "false") ? "true" : "false";
-            document.getElementById('editAiApiKey').value = storeData.aiGeminiApiKey || "";
-
-            document.getElementById('editAppUpdatingActive').value = (storeData.appUpdating === true || storeData.appUpdating === "true") ? "true" : "false";
-            document.getElementById('editAppUpdateMsg').value = storeData.appUpdateMsg || "নতুন ভার্সন আপডেট চলছে, অনুগ্রহ করে অপেক্ষা করুন।";
-
-            document.getElementById('editMaintenanceActive').value = (storeData.maintenanceActive === true || storeData.maintenanceActive === "true") ? "true" : "false";
-            document.getElementById('editMaintenanceMsg').value = storeData.maintenanceMsg || "সার্ভার ও প্যানেল আপডেটের কাজ চলছে।";
-            document.getElementById('editMaintenanceBypassIds').value = Array.isArray(storeData.maintenanceBypassIds) ? storeData.maintenanceBypassIds.join(', ') : "";
-            const hintEl = document.getElementById('currentMyIdsHint');
-            if (hintEl) hintEl.innerText = `আপনার বর্তমান UID: ${clientUid} | Device: ${deviceId}`;
-
-            document.getElementById('editAutoDeliveryActive').value = (storeData.autoDeliveryActive === true || storeData.autoDeliveryActive === "true") ? "true" : "false";
-
-            renderAdminPaymentChannels();
-            renderAdminSpinSettings();
-            renderAdminLiveChats();
-            renderAdminCategories();
-            renderAdminPanels();
-            renderDeviceList();
-            renderAdminFundRequests();
             renderAdminHomeLists();
+            renderDevices();
             renderAdminUserOrders();
+            renderAdminPanels();
             renderSalesAnalyticsChart();
+            document.getElementById('adminDashboard').classList.remove('hidden');
         }
 
         window.closeAdminDashboard = function() {
-            window.__adminUnlockedSession = false;
             document.getElementById('adminDashboard').classList.add('hidden');
             checkAppUpdateState();
             checkMaintenanceState();
-            checkLiveSuspension();
-        }
-
-        window.saveGeneralSettings = function() {
-            storeData.themeColor = document.getElementById('editThemeColor').value;
-            storeData.ownerColor = document.getElementById('editOwnerColor').value;
-            storeData.ownerFullText = document.getElementById('editOwnerName').value.trim();
-            storeData.bannerImg = document.getElementById('editBannerImg').value.trim();
-            storeData.bannerLink = document.getElementById('editBannerLink').value.trim();
-            storeData.popupActive = document.getElementById('editPopupActive').value === "true";
-            storeData.popupTitle = document.getElementById('editPopupTitle').value;
-            storeData.popupMsg = document.getElementById('editPopupMsg').value;
-
-            storeData.appName = document.getElementById('editAppName').value;
-            storeData.appSub = document.getElementById('editAppSub').value;
-            storeData.logoUrl = document.getElementById('editLogoUrl').value;
-            storeData.profileName = document.getElementById('editProfileName').value;
-            storeData.profileBio = document.getElementById('editProfileBio').value;
-            storeData.footerText = document.getElementById('editFooterText').value;
-
-            storeData.notice = document.getElementById('editNotice').value;
-            storeData.whatsapp = document.getElementById('editWhatsapp').value;
-            storeData.paidGroupBtnName = document.getElementById('editPaidGroupBtnName').value.trim();
-            storeData.paidGroupLink = document.getElementById('editPaidGroupLink').value.trim();
-            storeData.bkash = document.getElementById('editBkash').value;
-            storeData.nagad = document.getElementById('editNagad').value;
-
-            const channels = window.getNormalizedPaymentChannels();
-            const bkCh = channels.find(c => c.id === 'bkash');
-            const ngCh = channels.find(c => c.id === 'nagad');
-            if (bkCh && storeData.bkash) bkCh.number = storeData.bkash;
-            if (ngCh && storeData.nagad) ngCh.number = storeData.nagad;
-            storeData.paymentChannels = channels;
-
-            storeData.aiChatEnabled = document.getElementById('editAiChatActive').value === "true";
-            storeData.aiGeminiApiKey = document.getElementById('editAiApiKey').value.trim();
-
-            storeData.appUpdating = document.getElementById('editAppUpdatingActive').value === "true";
-            storeData.appUpdateMsg = document.getElementById('editAppUpdateMsg').value.trim();
-
-            storeData.maintenanceActive = document.getElementById('editMaintenanceActive').value === "true";
-            storeData.maintenanceMsg = document.getElementById('editMaintenanceMsg').value.trim();
-            const rawBypass = document.getElementById('editMaintenanceBypassIds').value || "";
-            storeData.maintenanceBypassIds = rawBypass.split(',').map(s => s.trim()).filter(Boolean);
-
-            storeData.autoDeliveryActive = document.getElementById('editAutoDeliveryActive').value === "true";
-
-            if (storeData.dailySpin) {
-                storeData.dailySpin.enabled = document.getElementById('editDailySpinActive').value === "true";
-            }
-
-            popupShown = false;
-            saveToFirebase(true);
-            checkAppUpdateState();
-            checkMaintenanceState();
-            updateAiChatStatusBadge();
-            updateSpinAvailabilityUI();
-            renderUI();
-            showSuccessModal("সব সেটিংস সফলভাবে সেভ করা হয়েছে!");
-        }
-
-        window.updateAdminPin = async function() {
-            const newPin = document.getElementById('newAdminPin').value.trim();
-            if(!newPin) {
-                alert("নতুন PIN লিখুন!");
-                return;
-            }
-            const newHash = await sha256(newPin);
-            storeData.adminHash = newHash;
-            window.__currentAdminHash = newHash;
-            document.getElementById('newAdminPin').value = '';
-            saveToFirebase(true);
-            showSuccessModal("Admin PIN সফলভাবে আপডেট হয়েছে!");
         }
 
         window.modifyUserBalance = function(type) {
-            const uidInput = document.getElementById('adjBalanceUid');
-            const amtInput = document.getElementById('adjBalanceAmt');
-            const targetUid = uidInput ? uidInput.value.trim() : '';
-            const amount = Number(amtInput ? amtInput.value : 0);
+            const targetUid = document.getElementById('adjBalanceUid').value.trim();
+            const amt = Number(document.getElementById('adjBalanceAmt').value);
 
-            if(!targetUid) {
-                alert("দয়া করে ইউজারের 8-ডিজিট UID লিখুন!");
-                return;
-            }
-            if(!amount || isNaN(amount) || amount <= 0) {
-                alert("সঠিক টাকার পরিমাণ লিখুন!");
-                return;
-            }
+            if(!targetUid) { alert("Please enter an 8-digit User UID!"); return; }
+            if(isNaN(amt) || amt <= 0) { alert("Please enter a valid positive amount!"); return; }
 
             if(!storeData.userBalances) storeData.userBalances = {};
-            const currentBal = Number(storeData.userBalances[targetUid] || 0);
+            const currentVal = Number(storeData.userBalances[targetUid] || 0);
+            let newVal = currentVal;
 
             if(type === 'add') {
-                storeData.userBalances[targetUid] = currentBal + amount;
-                if (storeData.users && storeData.users[targetUid]) {
-                    storeData.users[targetUid].balance = storeData.userBalances[targetUid];
-                }
-                if (uidInput) uidInput.value = '';
-                if (amtInput) amtInput.value = '';
-                saveToFirebase(true);
-                updateAccountUI();
-                showSuccessModal(`UID: ${targetUid} এর ব্যালেন্সে ৳${amount} যোগ করা হয়েছে!`);
+                newVal = currentVal + amt;
             } else if(type === 'sub') {
-                if(currentBal < amount) {
-                    alert(`এই ইউজারের বর্তমান ব্যালেন্স মাত্র ৳${currentBal}, এত টাকা কাটা যাবে না!`);
-                    return;
-                }
-                storeData.userBalances[targetUid] = currentBal - amount;
-                if (storeData.users && storeData.users[targetUid]) {
-                    storeData.users[targetUid].balance = storeData.userBalances[targetUid];
-                }
-                if (uidInput) uidInput.value = '';
-                if (amtInput) amtInput.value = '';
-                saveToFirebase(true);
-                updateAccountUI();
-                showSuccessModal(`UID: ${targetUid} এর ব্যালেন্স থেকে ৳${amount} কাটা হয়েছে!`);
-            }
-        }
-
-        function renderAdminFundRequests() {
-            processFundRequestsLifecycle(false);
-            const list = document.getElementById('adminFundRequestsList');
-            const countBadge = document.getElementById('pendingFundCount');
-            const filterSel = document.getElementById('adminFundFilterSelect');
-            if(!list) return;
-
-            const allReqs = enforceMaxFiveFundRequests(storeData.fundRequests || []);
-            const pendingCount = allReqs.filter(r => r.status === 'Pending').length;
-            if(countBadge) countBadge.innerText = `${pendingCount} Pending`;
-
-            const filterVal = filterSel ? filterSel.value : 'Pending';
-            const filteredReqs = filterVal === 'All'
-                ? allReqs
-                : allReqs.filter(r => r.status === filterVal);
-
-            if(filteredReqs.length === 0) {
-                list.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No ${filterVal.toLowerCase()} fund requests.</p>`;
-                return;
+                newVal = Math.max(0, currentVal - amt);
             }
 
-            list.innerHTML = '';
-            filteredReqs.forEach((req) => {
-                const realIdx = allReqs.findIndex(item => item.id === req.id);
-                const isPending = req.status === 'Pending';
-                const remMs = getFundRemainingMs(req);
-
-                const statusTag = isPending
-                    ? `<span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded text-[9px] font-bold">Pending (${formatMmSs(remMs)})</span>`
-                    : req.status === 'Approved'
-                        ? `<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded text-[9px] font-bold">Approved</span>`
-                        : req.status === 'Rejected'
-                            ? `<span class="bg-red-100 text-red-700 px-2 py-0.5 rounded text-[9px] font-bold">Rejected</span>`
-                            : `<span class="bg-slate-200 text-slate-700 px-2 py-0.5 rounded text-[9px] font-bold">Expired</span>`;
-
-                list.innerHTML += `
-                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-2 text-xs">
-                        <div class="flex justify-between items-start gap-2">
-                            <div>
-                                <p class="font-bold text-slate-800">UID: <span class="font-mono text-red-600">${req.uid}</span> • <span class="text-emerald-700 font-black">৳${req.amount}</span></p>
-                                <p class="text-[11px] font-mono text-slate-700 mt-0.5">TrxID: <strong class="bg-white px-1.5 py-0.5 rounded border">${req.trxId}</strong></p>
-                                <p class="text-[10px] text-slate-400 mt-0.5">${req.deviceModel || 'Device'} • ${req.date || ''}</p>
-                            </div>
-                            ${statusTag}
-                        </div>
-                        <div class="flex gap-1.5 pt-1">
-                            ${isPending ? `
-                                <button type="button" onclick="approveFundRequest(${realIdx})" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-1.5 rounded-lg text-[11px] font-bold cursor-pointer">
-                                    <i class="fa-solid fa-check mr-1"></i> Approve (+৳${req.amount})
-                                </button>
-                                <button type="button" onclick="rejectFundRequest(${realIdx})" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-lg text-[11px] font-bold cursor-pointer">
-                                    Reject
-                                </button>
-                            ` : `
-                                <button type="button" onclick="deleteFundRequestItem(${realIdx})" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 py-1.5 rounded-lg text-[10px] font-bold cursor-pointer">
-                                    Delete Record
-                                </button>
-                            `}
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        window.clearProcessedFundRequests = function() {
-            if (!confirm("Pending ছাড়া বাকি (Approved/Rejected/Expired) ফান্ড রিকোয়েস্টগুলো মুছে ফেলতে চান?")) return;
-            storeData.fundRequests = (storeData.fundRequests || []).filter(r => r.status === 'Pending');
-            saveToFirebase(true);
-            renderAdminFundRequests();
-            renderMyFundRequests();
-            showSuccessModal("Processed fund requests cleared!");
-        }
-
-        window.deleteFundRequestItem = function(index) {
-            const list = enforceMaxFiveFundRequests(storeData.fundRequests || []);
-            if (!list[index]) return;
-            list.splice(index, 1);
-            storeData.fundRequests = list;
-            saveToFirebase(true);
-            renderAdminFundRequests();
-            renderMyFundRequests();
-        }
-
-        window.approveFundRequest = function(index) {
-            const list = enforceMaxFiveFundRequests(storeData.fundRequests || []);
-            const req = list[index];
-            if(!req) return;
-            if(req.status === 'Expired') {
-                alert("এই রিকোয়েস্টটির ৫ মিনিটের মেয়াদ শেষ হয়ে গেছে!");
-                renderAdminFundRequests();
-                return;
+            storeData.userBalances[targetUid] = newVal;
+            if(storeData.users && storeData.users[targetUid]) {
+                storeData.users[targetUid].balance = newVal;
             }
-            if(req.status !== 'Pending') {
-                alert("এই রিকোয়েস্টটি ইতিমধ্যে প্রসেস করা হয়েছে।");
-                return;
-            }
-
-            if(!storeData.userBalances) storeData.userBalances = {};
-            const targetUid = req.uid;
-            const addAmt = Number(req.amount || 0);
-            storeData.userBalances[targetUid] = Number(storeData.userBalances[targetUid] || 0) + addAmt;
-            if (storeData.users && storeData.users[targetUid]) {
-                storeData.users[targetUid].balance = storeData.userBalances[targetUid];
-            }
-
-            req.status = 'Approved';
-            storeData.fundRequests = list;
-
             saveToFirebase(true);
             updateAccountUI();
-            renderAdminFundRequests();
-            renderMyFundRequests();
-            showSuccessModal(`UID: ${targetUid} এর অ্যাকাউন্টে ৳${addAmt} যুক্ত হয়েছে!`);
-        }
-
-        window.rejectFundRequest = function(index) {
-            const list = enforceMaxFiveFundRequests(storeData.fundRequests || []);
-            const req = list[index];
-            if(!req) return;
-            req.status = 'Rejected';
-            storeData.fundRequests = list;
-            saveToFirebase(true);
-            renderAdminFundRequests();
-            renderMyFundRequests();
-            showSuccessModal(`Fund request Rejected!`);
+            document.getElementById('adjBalanceAmt').value = '';
+            showSuccessModal(`UID ${targetUid} এর ব্যালেন্স এখন ৳${newVal} হয়েছে।`);
         }
 
         function renderAdminUserOrders() {
-            const list = document.getElementById('adminUserOrdersList');
+            const container = document.getElementById('adminUserOrdersList');
             const badge = document.getElementById('pendingOrderCount');
             const filterSel = document.getElementById('adminOrderFilterSelect');
-            if(!list) return;
+            if(!container) return;
 
             const allOrders = storeData.orders || [];
             const pendingOrders = allOrders.filter(o => o.status !== 'Completed');
             if(badge) badge.innerText = `${pendingOrders.length} Pending`;
 
-            const filterVal = filterSel ? filterSel.value : 'Pending';
-            const targetList = filterVal === 'All'
+            const mode = filterSel ? filterSel.value : 'Pending';
+            const list = mode === 'All'
                 ? allOrders
-                : filterVal === 'Completed'
+                : (mode === 'Completed'
                     ? allOrders.filter(o => o.status === 'Completed')
-                    : pendingOrders;
+                    : pendingOrders);
 
-            if(targetList.length === 0) {
-                list.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No ${filterVal.toLowerCase()} orders.</p>`;
+            if(list.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No ${mode.toLowerCase()} orders found.</p>`;
                 return;
             }
 
-            list.innerHTML = '';
-            targetList.forEach((ord) => {
-                const realIdx = allOrders.findIndex(item => item.id === ord.id);
-                const isDone = ord.status === 'Completed';
-                const displayCode = ord.orderCode || ord.id;
-                const displayDate = ord.date || formatCardDateTime(ord.timestamp || Date.now());
+            container.innerHTML = '';
+            list.forEach((order) => {
+                const isCompleted = order.status === 'Completed';
+                const orderNumDisplay = order.orderCode || order.id;
 
-                list.innerHTML += `
-                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-2 text-xs">
-                        <div class="flex justify-between items-start gap-2">
+                container.innerHTML += `
+                    <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-2 text-xs">
+                        <div class="flex justify-between items-start">
                             <div>
-                                <p class="font-bold text-slate-800">${escapeHtml(ord.panel)} (${escapeHtml(ord.duration)})</p>
-                                <p class="text-[10px] font-mono text-indigo-700 font-bold">Order ID: #${escapeHtml(String(displayCode))}</p>
-                                <p class="text-[11px] font-mono text-slate-700 mt-0.5">UID: <strong class="text-red-600">${ord.uid}</strong> • <span class="text-emerald-700 font-bold">৳${ord.price}</span></p>
-                                <p class="text-[10px] text-slate-400">${escapeHtml(displayDate)}</p>
+                                <span class="bg-indigo-50 text-indigo-700 border border-indigo-200 px-1.5 py-0.5 rounded font-mono font-extrabold text-[10px]">#${orderNumDisplay}</span>
+                                <span class="bg-red-50 text-red-600 border border-red-200 px-2 py-0.5 rounded font-mono font-extrabold text-[10px] ml-1">UID: ${order.uid}</span>
+                                <p class="font-bold text-slate-800 mt-1">${escapeHtml(order.panel)} (${escapeHtml(order.time)}) - <span class="text-indigo-600">৳${order.price}</span></p>
+                                <p class="text-[10px] text-slate-400">${escapeHtml(order.date || '')}</p>
                             </div>
-                            <span class="${isDone ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'} px-2 py-0.5 rounded text-[9px] font-bold">${ord.status}</span>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${isCompleted ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-800'}">${order.status}</span>
                         </div>
-                        ${!isDone ? `
+                        
+                        ${!isCompleted ? `
                             <div class="flex gap-1.5 pt-1">
-                                <input type="text" id="orderKeyInput-${realIdx}" placeholder="Paste key for #${displayCode}" class="flex-1 bg-white border border-slate-300 px-2.5 py-1.5 rounded-lg text-xs font-mono">
-                                <button type="button" onclick="deliverKeyForOrder(${realIdx})" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-[11px] font-bold cursor-pointer">Send Key</button>
+                                <input type="text" id="keyInput-${order.id}" placeholder="Paste key here..." class="flex-1 bg-white border border-slate-300 px-2.5 py-1.5 rounded-lg text-xs font-mono font-bold text-emerald-700 outline-none focus:border-emerald-500">
+                                <button onclick="deliverOrderKey('${order.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer shadow-sm shrink-0">Send Key</button>
                             </div>
                         ` : `
-                            <div class="flex items-center justify-between gap-2 pt-1">
-                                <p class="text-[10px] font-mono text-emerald-800 bg-emerald-50 px-2 py-1 rounded border border-emerald-200 truncate">Key: ${escapeHtml(ord.deliveredKey || 'Delivered')}</p>
-                                <button type="button" onclick="deleteSingleOrder(${realIdx})" class="bg-red-100 hover:bg-red-200 text-red-700 px-2.5 py-1 rounded text-[10px] font-bold cursor-pointer shrink-0">Delete</button>
+                            <div class="bg-emerald-50/80 border border-emerald-200 px-2.5 py-1.5 rounded-lg text-[11px] font-mono text-emerald-800 break-all">
+                                Key: <strong>${escapeHtml(order.deliveredKey || 'Sent')}</strong>
                             </div>
                         `}
                     </div>
@@ -5102,233 +4840,186 @@ Current User Info:
             });
         }
 
-        window.deleteSingleOrder = function(index) {
-            if (!confirm("এই অর্ডার রেকর্ডটি ডিলিট করতে চান?")) return;
-            storeData.orders.splice(index, 1);
-            saveToFirebase(true);
-            renderAdminUserOrders();
-            renderOrders();
-            updateAccountUI();
-        }
-
         window.clearCompletedOrders = function() {
-            if (!confirm("সব Completed অর্ডার লিস্ট থেকে মুছে ফেলতে চান?")) return;
-            storeData.orders = (storeData.orders || []).filter(o => o.status !== 'Completed');
+            if(!Array.isArray(storeData.orders)) return;
+            storeData.orders = storeData.orders.filter(o => o.status !== 'Completed');
             saveToFirebase(true);
             renderAdminUserOrders();
             renderOrders();
-            updateAccountUI();
-            showSuccessModal("All completed orders cleared!");
+            showSuccessModal("Completed orders cleared from list!");
         }
 
-        window.deliverKeyForOrder = function(orderIndex) {
-            const ord = storeData.orders && storeData.orders[orderIndex];
-            if(!ord) return;
-            const keyInp = document.getElementById(`orderKeyInput-${orderIndex}`);
-            const keyVal = keyInp ? keyInp.value.trim() : '';
+        window.deliverOrderKey = function(orderId) {
+            const inputEl = document.getElementById(`keyInput-${orderId}`);
+            const keyVal = inputEl ? inputEl.value.trim() : '';
+
             if(!keyVal) {
-                alert("দয়া করে Key লিখুন!");
+                alert("দয়া করে একটি Key লিখুন বা পেস্ট করুন!");
                 return;
             }
 
-            const nowTs = Date.now();
-            const codeVal = ord.orderCode || ord.id || generateSixDigitOrderId();
-            const dateVal = formatCardDateTime(nowTs);
+            const orderObj = (storeData.orders || []).find(o => String(o.id) === String(orderId));
+            if(!orderObj) return;
 
-            ord.orderCode = codeVal;
-            ord.status = 'Completed';
-            ord.deliveredKey = keyVal;
-            ord.date = dateVal;
+            const deliveredAtTs = Date.now();
+            const deliveredAtStr = formatCardDateTime(deliveredAtTs);
+            const orderNumDisplay = orderObj.orderCode || orderObj.id;
 
-            if(!storeData.keys) storeData.keys = [];
+            orderObj.status = 'Completed';
+            orderObj.deliveredKey = keyVal;
+
+            if(!Array.isArray(storeData.keys)) storeData.keys = [];
             storeData.keys.unshift({
-                id: codeVal,
-                orderCode: codeVal,
-                uid: ord.uid,
-                panel: ord.panel,
-                duration: ord.duration,
+                id: Date.now(),
+                orderCode: orderNumDisplay,
+                uid: orderObj.uid,
+                panel: orderObj.panel,
+                time: orderObj.time,
                 key: keyVal,
-                date: dateVal,
-                timestamp: nowTs
+                date: deliveredAtStr,
+                timestamp: deliveredAtTs,
+                mode: "admin_panel"
             });
 
-            const buyerName = buildRecentBuyerLabel(ord.uid);
-            pushCompletedRecentOrder(buyerName, `${ord.panel} (${ord.duration})`, `${ord.price}৳`, ord.uid);
+            pushCompletedRecentOrder(
+                buildRecentBuyerLabel(orderObj.uid),
+                `${orderObj.panel} ${orderObj.time}`,
+                `${orderObj.price}৳`,
+                orderObj.uid
+            );
 
             saveToFirebase(true);
             renderAdminUserOrders();
+            renderAdminHomeLists();
+            renderHomeTabContent();
             renderOrders();
             renderKeys();
-            renderHomeTabContent();
-            renderAdminHomeLists();
-            showSuccessModal(`Order #${codeVal} এর জন্য Key পাঠানো হয়েছে!`);
+            showSuccessModal(`UID ${orderObj.uid} (Order #${orderNumDisplay}) এর কাছে Key সফলভাবে পাঠানো হয়েছে!`);
         }
 
         window.sendDirectKeyToUid = function() {
             const uidVal = document.getElementById('directKeyUid').value.trim();
-            const panelVal = document.getElementById('directKeyPanel').value.trim() || "Custom Panel";
-            const timeVal = document.getElementById('directKeyTime').value.trim() || "1 Hours";
-            const codeVal = document.getElementById('directKeyCode').value.trim();
+            const panelVal = document.getElementById('directKeyPanel').value.trim() || "Panel Key";
+            const timeVal = document.getElementById('directKeyTime').value.trim() || "Duration";
+            const keyVal = document.getElementById('directKeyCode').value.trim();
 
-            if(!uidVal || !codeVal) {
-                alert("দয়া করে User UID এবং Key উভয়ই লিখুন!");
-                return;
-            }
+            if(!uidVal) { alert("দয়া করে 8-ডিজিট User UID লিখুন!"); return; }
+            if(!keyVal) { alert("দয়া করে Key লিখুন!"); return; }
 
-            const nowTs = Date.now();
+            const deliveredAtTs = Date.now();
+            const deliveredAtStr = formatCardDateTime(deliveredAtTs);
             const orderCode = generateSixDigitOrderId();
-            const dateVal = formatCardDateTime(nowTs);
 
-            if(!storeData.keys) storeData.keys = [];
+            if(!Array.isArray(storeData.keys)) storeData.keys = [];
             storeData.keys.unshift({
-                id: orderCode,
+                id: Date.now(),
                 orderCode: orderCode,
                 uid: uidVal,
                 panel: panelVal,
-                duration: timeVal,
-                key: codeVal,
-                date: dateVal,
-                timestamp: nowTs
+                time: timeVal,
+                key: keyVal,
+                date: deliveredAtStr,
+                timestamp: deliveredAtTs,
+                mode: "direct_send"
             });
 
-            const buyerName = buildRecentBuyerLabel(uidVal);
-            pushCompletedRecentOrder(buyerName, `${panelVal} (${timeVal})`, `Sent`, uidVal);
+            pushCompletedRecentOrder(
+                buildRecentBuyerLabel(uidVal),
+                `${panelVal} ${timeVal}`,
+                `Key`,
+                uidVal
+            );
 
-            document.getElementById('directKeyCode').value = '';
             saveToFirebase(true);
-            renderKeys();
-            renderHomeTabContent();
             renderAdminHomeLists();
-            showSuccessModal(`UID: ${uidVal} (Order #${orderCode}) এর My Keys ট্যাবে Key পাঠানো হয়েছে!`);
-        }
-
-        function renderSalesAnalyticsChart() {
-            const canvas = document.getElementById('salesAnalyticsChart');
-            if(!canvas || typeof Chart === 'undefined') return;
-
-            const labels = [];
-            const orderCounts = [];
-            const revenues = [];
-
-            for(let i=6; i>=0; i--) {
-                const d = new Date();
-                d.setDate(d.getDate() - i);
-                const dayLabel = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-                labels.push(dayLabel);
-
-                const dayStart = new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
-                const dayEnd = dayStart + 86400000;
-
-                const dayOrders = (storeData.orders || []).filter(o => {
-                    const ts = Number(o.timestamp || 0);
-                    return ts >= dayStart && ts < dayEnd;
-                });
-
-                orderCounts.push(dayOrders.length);
-                revenues.push(dayOrders.reduce((s, o) => s + Number(o.price || 0), 0));
-            }
-
-            if(salesChartInstance) {
-                salesChartInstance.destroy();
-            }
-
-            const activeTheme = storeData.themeColor || "#4f46e5";
-            salesChartInstance = new Chart(canvas.getContext('2d'), {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [
-                        {
-                            label: 'Revenue (৳)',
-                            data: revenues,
-                            borderColor: activeTheme,
-                            backgroundColor: 'rgba(79, 70, 229, 0.12)',
-                            tension: 0.35,
-                            fill: true,
-                            borderWidth: 2
-                        },
-                        {
-                            label: 'Orders',
-                            data: orderCounts,
-                            borderColor: '#10b981',
-                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                            tension: 0.35,
-                            fill: false,
-                            borderWidth: 2
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { labels: { boxWidth: 10, font: { size: 10 } } } },
-                    scales: { x: { ticks: { font: { size: 9 } } }, y: { ticks: { font: { size: 9 } } } }
-                }
-            });
+            renderHomeTabContent();
+            renderKeys();
+            document.getElementById('directKeyCode').value = '';
+            showSuccessModal(`Key সরাসরি UID ${uidVal} (Order #${orderCode}) এর My Keys সেকশনে পাঠানো হয়েছে!`);
         }
 
         function renderAdminHomeLists() {
-            if (!Array.isArray(storeData.homeRecentOrders)) {
-                storeData.homeRecentOrders = [];
-            } else if (storeData.homeRecentOrders.length > MAX_RECENT_ORDERS) {
-                storeData.homeRecentOrders = storeData.homeRecentOrders.slice(0, MAX_RECENT_ORDERS);
-            }
-
-            const recBox = document.getElementById('adminRecentOrdersList');
-            if(recBox) {
-                recBox.innerHTML = '';
-                storeData.homeRecentOrders.forEach((item, idx) => {
-                    recBox.innerHTML += `
-                        <div class="bg-slate-50 p-2 rounded-xl border border-slate-200 space-y-1.5 text-xs">
-                            <div class="flex gap-1.5">
-                                <input type="text" value="${item.name || ''}" onchange="updateHomeListItem('recent', ${idx}, 'name', this.value)" placeholder="Buyer Name" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200 font-bold">
-                                <input type="text" value="${item.price || ''}" onchange="updateHomeListItem('recent', ${idx}, 'price', this.value)" placeholder="15৳" class="w-16 bg-white px-2 py-1 rounded border border-slate-200 font-bold text-emerald-600">
-                                <button onclick="deleteHomeListItem('recent', ${idx})" class="bg-red-100 text-red-600 px-2 rounded cursor-pointer"><i class="fa-solid fa-trash"></i></button>
-                            </div>
-                            <input type="text" value="${item.details || ''}" onchange="updateHomeListItem('recent', ${idx}, 'details', this.value)" placeholder="Panel & Duration details" class="w-full bg-white px-2 py-1 rounded border border-slate-200 text-[11px]">
+            const recentBox = document.getElementById('adminRecentOrdersList');
+            recentBox.innerHTML = '';
+            (storeData.homeRecentOrders || []).slice(0, MAX_RECENT_ORDERS).forEach((item, idx) => {
+                recentBox.innerHTML += `
+                    <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200 space-y-1.5 text-xs">
+                        <div class="flex gap-1.5">
+                            <input type="text" value="${escapeHtml(item.name)}" onchange="updateHomeListItem('recent', ${idx}, 'name', this.value)" class="w-1/2 bg-white px-2 py-1 rounded border border-slate-200 font-bold" placeholder="Buyer Name">
+                            <input type="text" value="${escapeHtml(item.price)}" onchange="updateHomeListItem('recent', ${idx}, 'price', this.value)" class="w-1/2 bg-white px-2 py-1 rounded border border-slate-200 font-bold text-emerald-600" placeholder="Price e.g. 15৳">
                         </div>
-                    `;
-                });
-            }
+                        <div class="flex gap-1.5 items-center">
+                            <input type="text" value="${escapeHtml(item.details)}" onchange="updateHomeListItem('recent', ${idx}, 'details', this.value)" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200 text-[11px]" placeholder="Panel & Duration">
+                            <button onclick="deleteHomeListItem('recent', ${idx})" class="bg-red-50 text-red-600 px-2 py-1 rounded border border-red-200 text-[10px] font-bold cursor-pointer"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+            });
 
             const topBox = document.getElementById('adminTopBuyersList');
-            if(topBox) {
-                topBox.innerHTML = '';
-                (storeData.homeTopBuyers || []).forEach((item, idx) => {
-                    topBox.innerHTML += `
-                        <div class="bg-slate-50 p-2 rounded-xl border border-slate-200 space-y-1.5 text-xs">
-                            <div class="flex gap-1.5">
-                                <input type="text" value="${item.name || ''}" onchange="updateHomeListItem('topbuyer', ${idx}, 'name', this.value)" placeholder="Buyer Name" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200 font-bold">
-                                <input type="text" value="${item.spent || ''}" onchange="updateHomeListItem('topbuyer', ${idx}, 'spent', this.value)" placeholder="195৳" class="w-16 bg-white px-2 py-1 rounded border border-slate-200 font-bold text-emerald-600">
-                                <button onclick="deleteHomeListItem('topbuyer', ${idx})" class="bg-red-100 text-red-600 px-2 rounded cursor-pointer"><i class="fa-solid fa-trash"></i></button>
-                            </div>
-                            <input type="text" value="${item.badge || ''}" onchange="updateHomeListItem('topbuyer', ${idx}, 'badge', this.value)" placeholder="Top Member • #1" class="w-full bg-white px-2 py-1 rounded border border-slate-200 text-[11px]">
+            topBox.innerHTML = '';
+            (storeData.homeTopBuyers || []).forEach((item, idx) => {
+                topBox.innerHTML += `
+                    <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200 space-y-1.5 text-xs">
+                        <div class="flex gap-1.5">
+                            <input type="text" value="${item.name}" onchange="updateHomeListItem('topbuyer', ${idx}, 'name', this.value)" class="w-1/2 bg-white px-2 py-1 rounded border border-slate-200 font-bold" placeholder="Buyer Name">
+                            <input type="text" value="${item.spent}" onchange="updateHomeListItem('topbuyer', ${idx}, 'spent', this.value)" class="w-1/2 bg-white px-2 py-1 rounded border border-slate-200 font-bold text-emerald-600" placeholder="Spent e.g. 195৳">
                         </div>
-                    `;
-                });
-            }
+                        <div class="flex gap-1.5 items-center">
+                            <input type="text" value="${item.badge}" onchange="updateHomeListItem('topbuyer', ${idx}, 'badge', this.value)" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200 text-[11px]" placeholder="Badge Text">
+                            <button onclick="deleteHomeListItem('topbuyer', ${idx})" class="bg-red-50 text-red-600 px-2 py-1 rounded border border-red-200 text-[10px] font-bold cursor-pointer"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+            });
 
             const feedBox = document.getElementById('adminFeedbacksList');
-            if(feedBox) {
-                feedBox.innerHTML = '';
-                (storeData.homeFeedbacks || []).forEach((item, idx) => {
-                    feedBox.innerHTML += `
-                        <div class="bg-slate-50 p-2 rounded-xl border border-slate-200 space-y-1.5 text-xs">
-                            <div class="flex gap-1.5">
-                                <input type="text" value="${item.name || ''}" onchange="updateHomeListItem('feedback', ${idx}, 'name', this.value)" placeholder="Customer Name" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200 font-bold">
-                                <input type="number" min="1" max="5" value="${item.stars || 5}" onchange="updateHomeListItem('feedback', ${idx}, 'stars', this.value)" class="w-12 bg-white px-2 py-1 rounded border border-slate-200 font-bold text-amber-500">
-                                <button onclick="deleteHomeListItem('feedback', ${idx})" class="bg-red-100 text-red-600 px-2 rounded cursor-pointer"><i class="fa-solid fa-trash"></i></button>
-                            </div>
-                            <input type="text" value="${item.comment || ''}" onchange="updateHomeListItem('feedback', ${idx}, 'comment', this.value)" placeholder="Feedback comment (optional)" class="w-full bg-white px-2 py-1 rounded border border-slate-200 text-[11px]">
+            feedBox.innerHTML = '';
+            (storeData.homeFeedbacks || []).forEach((item, idx) => {
+                feedBox.innerHTML += `
+                    <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200 space-y-1.5 text-xs">
+                        <div class="flex gap-1.5">
+                            <input type="text" value="${item.name}" onchange="updateHomeListItem('feedback', ${idx}, 'name', this.value)" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200 font-bold" placeholder="Reviewer Name">
+                            <input type="number" min="1" max="5" value="${item.stars || 5}" onchange="updateHomeListItem('feedback', ${idx}, 'stars', this.value)" class="w-14 bg-white px-2 py-1 rounded border border-slate-200 font-bold text-amber-500 text-center" title="Stars 1-5">
                         </div>
-                    `;
-                });
+                        <div class="flex gap-1.5 items-center">
+                            <input type="text" value="${item.comment || ''}" onchange="updateHomeListItem('feedback', ${idx}, 'comment', this.value)" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200 text-[11px]" placeholder="Comment text (optional)">
+                            <button onclick="deleteHomeListItem('feedback', ${idx})" class="bg-red-50 text-red-600 px-2 py-1 rounded border border-red-200 text-[10px] font-bold cursor-pointer"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        window.updateHomeListItem = function(type, idx, field, val) {
+            if(type === 'recent' && storeData.homeRecentOrders[idx]) {
+                storeData.homeRecentOrders[idx][field] = val;
+            } else if(type === 'topbuyer' && storeData.homeTopBuyers[idx]) {
+                storeData.homeTopBuyers[idx][field] = val;
+            } else if(type === 'feedback' && storeData.homeFeedbacks[idx]) {
+                storeData.homeFeedbacks[idx][field] = field === 'stars' ? Number(val) : val;
             }
+            saveToFirebase(false);
+            renderHomeTabContent();
+        }
+
+        window.deleteHomeListItem = function(type, idx) {
+            if(type === 'recent') storeData.homeRecentOrders.splice(idx, 1);
+            else if(type === 'topbuyer') storeData.homeTopBuyers.splice(idx, 1);
+            else if(type === 'feedback') storeData.homeFeedbacks.splice(idx, 1);
+            saveToFirebase(true);
+            renderAdminHomeLists();
+            renderHomeTabContent();
         }
 
         window.addAdminRecentOrder = function() {
             if(!Array.isArray(storeData.homeRecentOrders)) storeData.homeRecentOrders = [];
-            storeData.homeRecentOrders.unshift({ name: "New Buyer", details: "Panel 1 Hours", price: "20৳", status: "Completed" });
+            storeData.homeRecentOrders.unshift({
+                name: buildRecentBuyerLabel(clientUid),
+                details: "New Panel 1 Hours",
+                price: "20৳",
+                status: "Completed"
+            });
             if(storeData.homeRecentOrders.length > MAX_RECENT_ORDERS) {
                 storeData.homeRecentOrders = storeData.homeRecentOrders.slice(0, MAX_RECENT_ORDERS);
             }
@@ -5338,280 +5029,266 @@ Current User Info:
         }
 
         window.addAdminTopBuyer = function() {
-            if(!storeData.homeTopBuyers) storeData.homeTopBuyers = [];
-            storeData.homeTopBuyers.push({ name: "New Top Buyer", badge: "Top Member • #6", spent: "100৳", avatarBg: "bg-indigo-100 text-indigo-700" });
+            if(!Array.isArray(storeData.homeTopBuyers)) storeData.homeTopBuyers = [];
+            storeData.homeTopBuyers.push({ name: "New Buyer", badge: "Top Member • #New", spent: "100৳", avatarBg: "bg-indigo-100 text-indigo-700" });
             saveToFirebase(true);
             renderAdminHomeLists();
             renderHomeTabContent();
         }
 
         window.addAdminFeedback = function() {
-            if(!storeData.homeFeedbacks) storeData.homeFeedbacks = [];
-            storeData.homeFeedbacks.push({ name: "New Buyer", status: "Verified Buyer", stars: 5, comment: "Nice panel!" });
+            if(!Array.isArray(storeData.homeFeedbacks)) storeData.homeFeedbacks = [];
+            storeData.homeFeedbacks.push({ name: "New User", status: "Verified Buyer", stars: 5, comment: "Nice panel!" });
             saveToFirebase(true);
             renderAdminHomeLists();
             renderHomeTabContent();
         }
 
-        window.updateHomeListItem = function(type, index, field, val) {
-            if(type === 'recent' && storeData.homeRecentOrders[index]) {
-                storeData.homeRecentOrders[index][field] = val;
-            } else if(type === 'topbuyer' && storeData.homeTopBuyers[index]) {
-                storeData.homeTopBuyers[index][field] = val;
-            } else if(type === 'feedback' && storeData.homeFeedbacks[index]) {
-                storeData.homeFeedbacks[index][field] = field === 'stars' ? Number(val) : val;
+        window.saveGeneralSettings = function() {
+            storeData.aiChatEnabled = document.getElementById('editAiChatActive').value === "true";
+            storeData.aiGeminiApiKey = document.getElementById('editAiApiKey').value.trim();
+
+            storeData.appUpdating = document.getElementById('editAppUpdatingActive').value === "true";
+            storeData.appUpdateMsg = document.getElementById('editAppUpdateMsg').value.trim() || "নতুন ভার্সন আপডেট চলছে, অনুগ্রহ করে অপেক্ষা করুন...";
+
+            storeData.maintenanceActive = document.getElementById('editMaintenanceActive').value === "true";
+            storeData.maintenanceMsg = document.getElementById('editMaintenanceMsg').value.trim() || "সার্ভার আপডেট চলছে, সাময়িকভাবে বন্ধ আছে।";
+
+            const bypassRaw = document.getElementById('editMaintenanceBypassIds').value || "";
+            const parsedBypass = bypassRaw.split(",").map(s => s.trim()).filter(Boolean);
+            if (!parsedBypass.includes(clientUid)) parsedBypass.push(clientUid);
+            if (!parsedBypass.includes(deviceId)) parsedBypass.push(deviceId);
+            storeData.maintenanceBypassIds = Array.from(new Set(parsedBypass));
+
+            storeData.autoDeliveryActive = document.getElementById('editAutoDeliveryActive').value === "true";
+
+            if(storeData.dailySpin) {
+                storeData.dailySpin.enabled = document.getElementById('editDailySpinActive').value === "true";
             }
+
+            storeData.appName = document.getElementById('editAppName').value.trim() || "PANEL SELLER";
+            storeData.appSub = document.getElementById('editAppSub').value.trim() || "";
+            storeData.logoUrl = document.getElementById('editLogoUrl').value.trim() || "https://i.ibb.co/3W9v93z/default.png";
+            storeData.profileName = document.getElementById('editProfileName').value.trim() || "Ⱥʟᴀᴍɪﻦ";
+            storeData.profileBio = document.getElementById('editProfileBio').value.trim() || "";
+            storeData.footerText = document.getElementById('editFooterText').value.trim() || "Made by Alamin";
+            storeData.ownerFullText = document.getElementById('editOwnerName').value.trim() || "Owner ALAMIN";
+            storeData.ownerColor = document.getElementById('editOwnerColor').value || "#ef4444";
+            storeData.themeColor = document.getElementById('editThemeColor').value || "#4f46e5";
+
+            storeData.bannerImg = document.getElementById('editBannerImg').value.trim() || "https://i.ibb.co/2kQ4Q1L/1000015879.jpg";
+            storeData.bannerLink = document.getElementById('editBannerLink').value.trim() || "";
+            storeData.popupActive = document.getElementById('editPopupActive').value === "true";
+            storeData.popupTitle = document.getElementById('editPopupTitle').value.trim() || "Notice";
+            storeData.popupMsg = document.getElementById('editPopupMsg').value.trim() || "";
+
+            storeData.notice = document.getElementById('editNotice').value.trim();
+            storeData.whatsapp = document.getElementById('editWhatsapp').value.trim();
+            storeData.paidGroupBtnName = document.getElementById('editPaidGroupBtnName').value.trim() || "Join Paid User Group";
+            storeData.paidGroupLink = document.getElementById('editPaidGroupLink').value.trim();
+            storeData.bkash = document.getElementById('editBkash').value.trim();
+            storeData.nagad = document.getElementById('editNagad').value.trim();
+
+            const normalizedChannels = window.getNormalizedPaymentChannels();
+            const bkCh = normalizedChannels.find(c => c.id === 'bkash');
+            const ngCh = normalizedChannels.find(c => c.id === 'nagad');
+            if (bkCh && storeData.bkash) bkCh.number = storeData.bkash;
+            if (ngCh && storeData.nagad) ngCh.number = storeData.nagad;
+            storeData.paymentChannels = normalizedChannels;
+
             saveToFirebase(true);
-            renderHomeTabContent();
+            checkAppUpdateState();
+            checkMaintenanceState();
+            updateAiChatStatusBadge();
+            updateSpinAvailabilityUI();
+            renderUI();
+            renderSalesAnalyticsChart();
+            showSuccessModal("All settings saved & applied live!");
         }
 
-        window.deleteHomeListItem = function(type, index) {
-            if(type === 'recent') storeData.homeRecentOrders.splice(index, 1);
-            else if(type === 'topbuyer') storeData.homeTopBuyers.splice(index, 1);
-            else if(type === 'feedback') storeData.homeFeedbacks.splice(index, 1);
+        window.updateAdminPin = async function() {
+            const newPin = document.getElementById('newAdminPin').value.trim();
+            if(!newPin || newPin.length < 4) { alert("Please enter a PIN with at least 4 characters!"); return; }
+            const newHash = await sha256(newPin);
+            storeData.adminHash = newHash;
+            window.__currentAdminHash = newHash;
             saveToFirebase(true);
-            renderAdminHomeLists();
-            renderHomeTabContent();
+            document.getElementById('newAdminPin').value = '';
+            showSuccessModal("Admin PIN updated successfully!");
         }
 
-        function renderDeviceList() {
-            const container = document.getElementById('deviceListContainer');
+        function renderDevices() {
+            const activeContainer = document.getElementById('deviceListContainer');
             const suspContainer = document.getElementById('suspendedDeviceListContainer');
             const activeBadge = document.getElementById('activeDeviceCount');
             const suspBadge = document.getElementById('suspendedDeviceCount');
-            if(!container) return;
             
-            const devicesObj = storeData.devices || {};
-            const allDevices = Object.values(devicesObj);
-            const activeDevices = allDevices.filter(d => !d.isSuspended);
-            const suspendedDevices = allDevices.filter(d => d.isSuspended);
+            activeContainer.innerHTML = '';
+            suspContainer.innerHTML = '';
 
-            if(activeBadge) activeBadge.innerText = `${activeDevices.length} Active`;
-            if(suspBadge) suspBadge.innerText = `${suspendedDevices.length} Suspended`;
+            if(!storeData.devices) {
+                activeContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No active devices found.</p>`;
+                suspContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No suspended devices.</p>`;
+                activeBadge.innerText = "0 Devices";
+                suspBadge.innerText = "0 Suspended";
+                return;
+            }
 
-            if(activeDevices.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No active devices connected.</p>`;
+            const allDevs = Object.values(storeData.devices);
+            const activeList = allDevs.filter(d => !d.isSuspended);
+            const suspendedList = allDevs.filter(d => d.isSuspended);
+
+            activeBadge.innerText = `${activeList.length} Device${activeList.length !== 1 ? 's' : ''}`;
+            suspBadge.innerText = `${suspendedList.length} Suspended`;
+
+            if(activeList.length === 0) {
+                activeContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No active devices.</p>`;
             } else {
-                container.innerHTML = '';
-                activeDevices.forEach(dev => {
-                    const devId = dev.id;
-                    const uUid = dev.uid || "N/A";
-                    const uPin = dev.supportPin || "N/A";
-                    const uBal = (storeData.userBalances && storeData.userBalances[uUid]) || 0;
-                    
-                    container.innerHTML += `
-                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-2 text-xs shadow-sm">
-                            <div class="flex justify-between items-start gap-2">
-                                <div>
-                                    <div class="flex items-center gap-1.5 flex-wrap">
-                                        <span class="bg-red-50 text-red-600 border border-red-200 px-2 py-0.5 rounded font-mono font-extrabold text-[10px]">UID: ${uUid}</span>
-                                        <span class="bg-indigo-50 text-indigo-700 border border-indigo-200 px-2 py-0.5 rounded font-mono font-bold text-[10px]">PIN: ${uPin}</span>
-                                        <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded font-bold text-[10px]">Bal: ৳${uBal}</span>
-                                    </div>
-                                    <p class="font-bold text-slate-800 mt-1">${dev.model || 'Unknown Device'} <span class="text-[10px] text-slate-500 font-normal">(${dev.os || ''})</span></p>
-                                    <p class="text-[10px] text-slate-400">Active: ${dev.lastActive || 'Recently'}</p>
+                activeList.forEach(dev => {
+                    const isMe = dev.id === deviceId;
+                    activeContainer.innerHTML += `
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs flex justify-between items-center gap-2">
+                            <div class="space-y-0.5">
+                                <div class="flex items-center gap-1.5 flex-wrap">
+                                    <span class="bg-red-50 text-red-600 border border-red-200 px-1.5 py-0.5 rounded font-mono font-extrabold text-[10px]">UID: ${dev.uid || 'N/A'}</span>
+                                    <span class="text-[10px] font-mono text-indigo-700 font-bold">PIN: ${dev.supportPin || '----'}</span>
+                                    <span class="font-bold text-slate-800 text-[11px]">${dev.model || 'Device'}</span>
+                                    ${isMe ? '<span class="bg-emerald-100 text-emerald-700 text-[9px] px-1.5 py-0.5 rounded-full font-bold">You</span>' : ''}
                                 </div>
-                                <span class="bg-emerald-100 text-emerald-700 text-[9px] font-bold px-2 py-0.5 rounded-full">Active</span>
+                                <p class="text-[10px] text-slate-500">${dev.os || ''} • ${dev.browser || ''} • ${dev.lastActive || ''}</p>
                             </div>
-                            <div class="flex gap-1.5 pt-1 border-t border-slate-200/60">
-                                <button onclick="toggleSuspendDevice('${devId}', true)" class="flex-1 bg-red-600 hover:bg-red-700 text-white py-1.5 rounded-lg text-[10px] font-bold cursor-pointer">
-                                    <i class="fa-solid fa-ban mr-1"></i> Suspend
-                                </button>
-                                <button onclick="deleteDeviceRecord('${devId}')" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-3 py-1.5 rounded-lg text-[10px] font-bold cursor-pointer">
-                                    Delete
-                                </button>
-                            </div>
+                            <button onclick="toggleDeviceSuspend('${dev.id}', true)" class="bg-red-600 hover:bg-red-700 text-white px-2.5 py-1.5 rounded-lg text-[10px] font-bold cursor-pointer shrink-0">Suspend</button>
                         </div>
                     `;
                 });
             }
 
-            if(suspContainer) {
-                if(suspendedDevices.length === 0) {
-                    suspContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No suspended devices.</p>`;
-                } else {
-                    suspContainer.innerHTML = '';
-                    suspendedDevices.forEach(dev => {
-                        const devId = dev.id;
-                        const uUid = dev.uid || "N/A";
-                        const uPin = dev.supportPin || "N/A";
-                        const uBal = (storeData.userBalances && storeData.userBalances[uUid]) || 0;
-
-                        suspContainer.innerHTML += `
-                            <div class="bg-white p-3 rounded-xl border border-red-200 space-y-2 text-xs shadow-sm">
-                                <div class="flex justify-between items-start gap-2">
-                                    <div>
-                                        <div class="flex items-center gap-1.5 flex-wrap">
-                                            <span class="bg-red-100 text-red-700 border border-red-300 px-2 py-0.5 rounded font-mono font-extrabold text-[10px]">UID: ${uUid}</span>
-                                            <span class="bg-slate-100 text-slate-700 border border-slate-200 px-2 py-0.5 rounded font-mono font-bold text-[10px]">PIN: ${uPin}</span>
-                                            <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded font-bold text-[10px]">Bal: ৳${uBal}</span>
-                                        </div>
-                                        <p class="font-bold text-slate-800 mt-1">${dev.model || 'Unknown Device'} <span class="text-[10px] text-slate-500 font-normal">(${dev.os || ''})</span></p>
-                                    </div>
-                                    <span class="bg-red-100 text-red-700 text-[9px] font-bold px-2 py-0.5 rounded-full">Suspended</span>
+            if(suspendedList.length === 0) {
+                suspContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No suspended devices.</p>`;
+            } else {
+                suspendedList.forEach(dev => {
+                    suspContainer.innerHTML += `
+                        <div class="bg-white p-3 rounded-xl border border-red-200 text-xs flex justify-between items-center gap-2">
+                            <div class="space-y-0.5">
+                                <div class="flex items-center gap-1.5 flex-wrap">
+                                    <span class="bg-red-50 text-red-600 border border-red-200 px-1.5 py-0.5 rounded font-mono font-extrabold text-[10px]">UID: ${dev.uid || 'N/A'}</span>
+                                    <span class="text-[10px] font-mono text-slate-700 font-bold">PIN: ${dev.supportPin || '----'}</span>
+                                    <span class="font-bold text-slate-800 text-[11px]">${dev.model || 'Device'}</span>
                                 </div>
-                                <div class="flex gap-1.5 pt-1 border-t border-red-100">
-                                    <button onclick="toggleSuspendDevice('${devId}', false)" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-1.5 rounded-lg text-[10px] font-bold cursor-pointer">
-                                        <i class="fa-solid fa-rotate-left mr-1"></i> Unsuspend (Active)
-                                    </button>
-                                    <button onclick="deleteDeviceRecord('${devId}')" class="bg-red-100 hover:bg-red-200 text-red-700 px-3 py-1.5 rounded-lg text-[10px] font-bold cursor-pointer">
-                                        Delete
-                                    </button>
-                                </div>
+                                <p class="text-[10px] text-slate-400">${dev.id} • ${dev.lastActive || ''}</p>
                             </div>
-                        `;
-                    });
-                }
+                            <button onclick="toggleDeviceSuspend('${dev.id}', false)" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1.5 rounded-lg text-[10px] font-bold cursor-pointer shrink-0">Unsuspend</button>
+                        </div>
+                    `;
+                });
             }
         }
 
-        window.toggleSuspendDevice = function(devId, suspendStatus) {
-            if(!storeData.devices || !storeData.devices[devId]) return;
-            storeData.devices[devId].isSuspended = suspendStatus;
-            update(ref(db, 'panelStore/devices/' + devId), { isSuspended: suspendStatus }).then(() => {
-                renderDeviceList();
-                showSuccessModal(`Device status updated to ${suspendStatus ? 'Suspended' : 'Active'}!`);
-            });
-        }
-
-        window.deleteDeviceRecord = function(devId) {
-            if(!confirm("এই ডিভাইস রেকর্ডটি তালিকা থেকে মুছে ফেলতে চান?")) return;
-            if(storeData.devices && storeData.devices[devId]) {
-                delete storeData.devices[devId];
+        window.toggleDeviceSuspend = function(targetId, suspendState) {
+            if(targetId === deviceId && suspendState) {
+                if(!confirm("আপনি নিজের ডিভাইসটি সাসপেন্ড করতে চান?")) return;
             }
-            remove(ref(db, 'panelStore/devices/' + devId)).then(() => {
-                renderDeviceList();
-                showSuccessModal("Device record deleted!");
-            });
+            update(ref(db, 'panelStore/devices/' + targetId), { isSuspended: suspendState }).catch(() => {});
+            if(storeData.devices && storeData.devices[targetId]) {
+                storeData.devices[targetId].isSuspended = suspendState;
+            }
+            renderDevices();
+            checkLiveSuspension();
+            showSuccessModal(suspendState ? "Device suspended!" : "Device unsuspended!");
         }
 
         function renderAdminPanels() {
             const container = document.getElementById('adminPanelList');
             container.innerHTML = '';
-            const catList = (storeData.categories && storeData.categories.length > 0) ? storeData.categories : ["Non Root", "Root", "iPhone", "PC"];
 
-            storeData.panels.forEach((panel, pIndex) => {
-                const stockMap = ensurePanelDurationStockMap(panel);
-                const durations = getPanelDurationList(panel);
-                const activeDur = (panel._selectedStockDur && durations.includes(panel._selectedStockDur))
-                    ? panel._selectedStockDur
-                    : (durations[0] || "1 Hours");
-                panel._selectedStockDur = activeDur;
-
-                const currentDurStockArr = Array.isArray(stockMap[activeDur]) ? stockMap[activeDur] : [];
-
-                let catOptionsHtml = '';
-                catList.forEach(c => {
-                    catOptionsHtml += `<option value="${c}" ${panel.category === c ? 'selected' : ''}>${c}</option>`;
-                });
-
-                let durOptionsHtml = '';
-                durations.forEach(d => {
-                    const cLen = Array.isArray(stockMap[d]) ? stockMap[d].length : 0;
-                    durOptionsHtml += `<option value="${escapeHtml(d)}" ${d === activeDur ? 'selected' : ''}>${escapeHtml(d)} (${cLen} keys)</option>`;
-                });
+            storeData.panels.forEach((p, pIdx) => {
+                const durationStockMap = ensurePanelDurationStockMap(p);
+                const durations = getPanelDurationList(p);
 
                 let pkgsHtml = '';
-                (panel.packages || []).forEach((pkg, pkgIndex) => {
+                p.packages.forEach((pk, pkIdx) => {
+                    const durStockArr = Array.isArray(durationStockMap[pk.time]) ? durationStockMap[pk.time] : [];
                     pkgsHtml += `
-                        <div class="bg-slate-50 p-2 rounded-xl border border-slate-200 space-y-1.5 text-xs">
+                        <div class="bg-white p-2 rounded-xl border border-slate-200 space-y-1.5 text-xs">
                             <div class="flex gap-1.5 items-center">
-                                <input type="text" value="${pkg.time}" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'time', this.value)" class="w-24 bg-white px-2 py-1 rounded border border-slate-200 font-bold" placeholder="1 Hours">
-                                <input type="number" value="${pkg.price}" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'price', this.value)" class="w-16 bg-white px-2 py-1 rounded border border-slate-200 font-bold text-emerald-600" placeholder="Price">
-                                <input type="text" value="${pkg.note || ''}" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'note', this.value)" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200 text-red-600 font-semibold" placeholder="Stock Out / Note">
-                                <button onclick="deletePkg(${pIndex}, ${pkgIndex})" class="bg-red-100 text-red-600 px-2 py-1 rounded cursor-pointer"><i class="fa-solid fa-trash"></i></button>
+                                <input type="text" value="${escapeHtml(pk.time)}" onchange="updatePkgField(${pIdx}, ${pkIdx}, 'time', this.value)" class="w-20 bg-slate-50 px-1.5 py-1 rounded border border-slate-200 font-bold" placeholder="Time">
+                                <input type="number" value="${pk.price}" onchange="updatePkgField(${pIdx}, ${pkIdx}, 'price', this.value)" class="w-16 bg-slate-50 px-1.5 py-1 rounded border border-slate-200 font-bold text-indigo-600" placeholder="৳">
+                                <input type="text" value="${escapeHtml(pk.note || '')}" onchange="updatePkgField(${pIdx}, ${pkIdx}, 'note', this.value)" class="flex-1 bg-slate-50 px-1.5 py-1 rounded border border-slate-200 text-[10px]" placeholder="Note (e.g. Stock Out)">
+                                <button onclick="deletePkg(${pIdx}, ${pkIdx})" class="text-red-500 hover:text-red-700 px-1 cursor-pointer"><i class="fa-solid fa-trash text-[10px]"></i></button>
                             </div>
                             <div class="flex gap-1.5 items-center">
-                                <input type="text" value="${pkg.couponCode || ''}" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'couponCode', this.value)" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200 font-mono uppercase text-[11px]" placeholder="Coupon Code (e.g. VIP20)">
-                                <input type="number" value="${pkg.couponDiscount || 0}" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'couponDiscount', this.value)" class="w-20 bg-white px-2 py-1 rounded border border-slate-200 font-bold text-indigo-700 text-[11px]" placeholder="Off ৳">
+                                <input type="text" value="${escapeHtml(pk.couponCode || '')}" onchange="updatePkgField(${pIdx}, ${pkIdx}, 'couponCode', this.value)" class="w-1/2 bg-indigo-50/50 px-2 py-1 rounded border border-indigo-200 text-[10px] font-mono uppercase" placeholder="Coupon Code">
+                                <input type="number" value="${pk.couponDiscount || 0}" onchange="updatePkgField(${pIdx}, ${pkIdx}, 'couponDiscount', this.value)" class="w-1/2 bg-emerald-50/50 px-2 py-1 rounded border border-emerald-200 text-[10px] font-bold text-emerald-700" placeholder="Off ৳">
+                            </div>
+                            <div class="flex items-center justify-between bg-emerald-50/60 border border-emerald-200 px-2 py-1 rounded-lg text-[10px]">
+                                <span class="font-bold text-emerald-800"><i class="fa-solid fa-key mr-1"></i>${escapeHtml(pk.time)} Stock: <strong>${durStockArr.length}</strong> keys</span>
+                                <span class="text-slate-500 font-mono truncate max-w-[120px]">${durStockArr.length ? escapeHtml(durStockArr[0]) : 'Empty'}</span>
                             </div>
                         </div>
                     `;
                 });
 
                 let linksHtml = '';
-                (panel.links || []).forEach((lnk, lIdx) => {
+                (p.links || []).forEach((lnk, lIdx) => {
                     linksHtml += `
                         <div class="flex gap-1.5 items-center text-xs">
-                            <input type="text" value="${lnk.name}" onchange="updateLink(${pIndex}, ${lIdx}, 'name', this.value)" class="w-28 bg-slate-50 px-2 py-1 rounded border border-slate-200 font-semibold" placeholder="Link Name">
-                            <input type="text" value="${lnk.url}" onchange="updateLink(${pIndex}, ${lIdx}, 'url', this.value)" class="flex-1 bg-slate-50 px-2 py-1 rounded border border-slate-200 text-blue-600" placeholder="https://...">
+                            <input type="text" value="${escapeHtml(lnk.name || '')}" onchange="updateLinkField(${pIdx}, ${lIdx}, 'name', this.value)" class="w-28 bg-white px-2 py-1 rounded border border-slate-200 font-bold text-[10px]" placeholder="Link Name">
+                            <input type="text" value="${escapeHtml(lnk.url || '')}" onchange="updateLinkField(${pIdx}, ${lIdx}, 'url', this.value)" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200 text-[10px] font-mono" placeholder="https://...">
                         </div>
                     `;
                 });
 
-                let stockKeysListHtml = '';
-                if (currentDurStockArr.length > 0) {
-                    stockKeysListHtml = `<div class="flex flex-wrap gap-1 mt-1.5">` + currentDurStockArr.map((k, kIdx) => `
-                        <span class="bg-white border border-slate-300 px-2 py-0.5 rounded text-[10px] font-mono inline-flex items-center gap-1">
-                            ${escapeHtml(k)}
-                            <button type="button" onclick="deleteDurationStockKey(${pIndex}, '${activeDur.replace(/'/g, "\\'")}', ${kIdx})" class="text-red-500 cursor-pointer">×</button>
-                        </span>
-                    `).join('') + `</div>`;
-                } else {
-                    stockKeysListHtml = `<p class="text-[10px] text-slate-400 mt-1">এই "${escapeHtml(activeDur)}" ডিউরেশনে কোনো Stock Key নেই।</p>`;
-                }
+                let durationOptionsHtml = durations.map(d => `<option value="${escapeHtml(d)}">${escapeHtml(d)}</option>`).join('');
 
                 container.innerHTML += `
-                    <div class="bg-white p-3.5 rounded-2xl border border-slate-200 space-y-3 shadow-sm">
+                    <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-2.5">
                         <div class="flex justify-between items-center gap-2">
-                            <input type="text" value="${panel.name}" onchange="updatePanelField(${pIndex}, 'name', this.value)" class="flex-1 bg-slate-50 px-2.5 py-1.5 rounded-lg border border-slate-200 font-bold text-xs">
-                            <button onclick="deletePanel(${pIndex})" class="bg-red-50 text-red-600 border border-red-200 px-2.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer"><i class="fa-solid fa-trash"></i></button>
+                            <input type="text" value="${escapeHtml(p.name)}" onchange="updatePanelField(${pIdx}, 'name', this.value)" class="flex-1 bg-white px-2.5 py-1.5 rounded-lg border border-slate-200 font-bold text-xs text-slate-800">
+                            <button onclick="deletePanel(${pIdx})" class="bg-red-600 text-white px-2.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer"><i class="fa-solid fa-trash"></i></button>
                         </div>
 
-                        <div class="grid grid-cols-2 gap-2 text-xs">
-                            <div>
-                                <label class="text-[10px] text-slate-500 font-bold block">Category</label>
-                                <select onchange="updatePanelField(${pIndex}, 'category', this.value)" class="w-full bg-slate-50 border border-slate-200 p-1.5 rounded-lg font-semibold mt-0.5">
-                                    ${catOptionsHtml}
+                        <div class="grid grid-cols-3 gap-1.5 text-xs">
+                            <select onchange="updatePanelField(${pIdx}, 'category', this.value)" class="bg-white px-2 py-1 rounded border border-slate-200 font-bold">
+                                ${(storeData.categories || ["Non Root"]).map(c => `<option value="${escapeHtml(c)}" ${p.category === c ? 'selected' : ''}>${escapeHtml(c)}</option>`).join('')}
+                            </select>
+                            <input type="text" value="${escapeHtml(p.status || '')}" onchange="updatePanelField(${pIdx}, 'status', this.value)" class="bg-white px-2 py-1 rounded border border-slate-200 text-[10px] font-bold" placeholder="Status (e.g. Stock Out)">
+                            <input type="text" value="${escapeHtml(p.badge || '')}" onchange="updatePanelField(${pIdx}, 'badge', this.value)" class="bg-white px-2 py-1 rounded border border-slate-200 text-[10px] font-bold text-indigo-700" placeholder="Badge (Hot/VIP)">
+                        </div>
+
+                        <div>
+                            <label class="text-[10px] text-slate-500 font-semibold block">Panel Icon (URL অথবা গ্যালারি)</label>
+                            <div class="flex items-center gap-1.5 mt-0.5">
+                                <img src="${p.icon || 'https://i.ibb.co/3W9v93z/default.png'}" class="w-8 h-8 rounded-lg object-cover border border-slate-200 shrink-0 bg-white">
+                                <input type="text" value="${escapeHtml(p.icon || '')}" onchange="updatePanelField(${pIdx}, 'icon', this.value)" class="flex-1 min-w-0 bg-white px-2 py-1 rounded border border-slate-200 text-[10px] font-mono">
+                                <button type="button" onclick="pickPhotoFromGallery('panel', ${pIdx})" class="bg-indigo-50 hover:bg-indigo-100 dynamic-theme-text border border-indigo-200 px-2 py-1 rounded text-[10px] font-bold cursor-pointer shrink-0">
+                                    <i class="fa-solid fa-images"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="bg-emerald-50/70 p-2.5 rounded-xl border border-emerald-200 space-y-1.5 text-xs">
+                            <div class="flex items-center justify-between gap-1.5">
+                                <span class="text-[10px] font-extrabold text-emerald-800">Add Stock Keys by Duration</span>
+                                <select id="stockDurSelect-${pIdx}" class="bg-white border border-emerald-300 rounded px-2 py-0.5 text-[10px] font-bold text-emerald-900">
+                                    ${durationOptionsHtml || '<option value="1 Hours">1 Hours</option>'}
                                 </select>
                             </div>
-                            <div>
-                                <label class="text-[10px] text-slate-500 font-bold block">Status Badge</label>
-                                <input type="text" value="${panel.status || ''}" onchange="updatePanelField(${pIndex}, 'status', this.value)" class="w-full bg-slate-50 border border-slate-200 p-1.5 rounded-lg font-semibold mt-0.5" placeholder="Stock Out / Safe 🛡️">
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-2 text-xs">
-                            <div>
-                                <label class="text-[10px] text-slate-500 font-bold block">Top Promo Badge</label>
-                                <input type="text" value="${panel.badge || ''}" onchange="updatePanelField(${pIndex}, 'badge', this.value)" class="w-full bg-slate-50 border border-slate-200 p-1.5 rounded-lg font-semibold mt-0.5" placeholder="Hot Selling / VIP">
-                            </div>
-                            <div>
-                                <label class="text-[10px] text-slate-500 font-bold block">Panel Icon (URL / গ্যালারি)</label>
-                                <div class="flex items-center gap-1 mt-0.5">
-                                    <img src="${panel.icon || 'https://i.ibb.co/3W9v93z/default.png'}" class="w-7 h-7 rounded object-cover border border-slate-200 shrink-0 bg-white">
-                                    <input type="text" value="${panel.icon}" onchange="updatePanelField(${pIndex}, 'icon', this.value)" class="flex-1 min-w-0 bg-slate-50 border border-slate-200 p-1.5 rounded-lg text-[11px]" placeholder="https://...">
-                                    <button type="button" onclick="pickPhotoFromGallery('panel', ${pIndex})" title="Pick from Gallery" class="bg-indigo-50 hover:bg-indigo-100 dynamic-theme-text border border-indigo-200 px-2 py-1.5 rounded-lg text-[11px] font-bold cursor-pointer shrink-0">
-                                        <i class="fa-solid fa-images"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="bg-indigo-50/60 p-2.5 rounded-xl border border-indigo-200 space-y-1.5 text-xs">
-                            <div class="flex justify-between items-center gap-2">
-                                <span class="font-bold text-indigo-900 text-[11px]">Duration Auto-Stock (${currentDurStockArr.length})</span>
-                                <select onchange="changePanelStockDuration(${pIndex}, this.value)" class="bg-white border border-indigo-200 px-2 py-1 rounded-lg text-[11px] font-bold text-indigo-800">
-                                    ${durOptionsHtml}
-                                </select>
-                            </div>
-                            <div class="flex gap-1.5">
-                                <input type="text" id="newStockKey-${pIndex}" placeholder="${escapeHtml(activeDur)} এর জন্য Key(s) (কমা দিয়ে একাধিক)" class="flex-1 bg-white border border-slate-200 px-2 py-1 rounded-lg text-[11px] font-mono">
-                                <button type="button" onclick="addStockKeyToPanel(${pIndex})" class="bg-indigo-600 text-white px-2.5 py-1 rounded-lg text-[11px] font-bold cursor-pointer">+ Add</button>
-                            </div>
-                            ${stockKeysListHtml}
+                            <textarea id="bulkKeysInput-${pIdx}" rows="2" placeholder="সিলেক্ট করা ডিউরেশনের Keys লিখুন (প্রতি লাইনে ১টি করে)..." class="w-full bg-white border border-slate-200 rounded-lg p-2 text-[10px] font-mono outline-none focus:border-emerald-500"></textarea>
+                            <button onclick="addBulkStockKeys(${pIdx})" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-1.5 rounded-lg text-[10px] font-bold cursor-pointer">
+                                + Add Keys to Selected Duration
+                            </button>
                         </div>
 
                         <div class="space-y-1.5">
                             <div class="flex justify-between items-center">
-                                <span class="text-[11px] font-bold text-slate-600">Packages</span>
-                                <button onclick="addPkg(${pIndex})" class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer">+ Add Pkg</button>
+                                <span class="text-[10px] font-bold text-slate-600">Packages</span>
+                                <button onclick="addPkg(${pIdx})" class="bg-indigo-600 text-white px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer">+ Add Pkg</button>
                             </div>
                             ${pkgsHtml}
                         </div>
 
-                        <div class="space-y-1 border-t border-slate-100 pt-2">
-                            <span class="text-[11px] font-bold text-slate-600 block">APK & Setup Links</span>
+                        <div class="space-y-1 pt-1 border-t border-slate-200">
+                            <span class="text-[10px] font-bold text-slate-600 block">APK & Setup Links</span>
                             ${linksHtml}
                         </div>
                     </div>
@@ -5619,51 +5296,33 @@ Current User Info:
             });
         }
 
-        window.changePanelStockDuration = function(pIdx, durVal) {
-            if (!storeData.panels[pIdx]) return;
-            storeData.panels[pIdx]._selectedStockDur = durVal;
-            renderAdminPanels();
-        }
-
-        window.addStockKeyToPanel = function(pIdx) {
+        window.addBulkStockKeys = function(pIdx) {
             const panel = storeData.panels[pIdx];
             if(!panel) return;
-            const inp = document.getElementById(`newStockKey-${pIdx}`);
-            const raw = inp ? inp.value.trim() : '';
-            if(!raw) return;
+            const durationStockMap = ensurePanelDurationStockMap(panel);
+            const durSelect = document.getElementById(`stockDurSelect-${pIdx}`);
+            const chosenDur = (durSelect && durSelect.value) ? durSelect.value : ((panel.packages && panel.packages[0] && panel.packages[0].time) || "1 Hours");
 
-            const stockMap = ensurePanelDurationStockMap(panel);
-            const durations = getPanelDurationList(panel);
-            const targetDur = (panel._selectedStockDur && durations.includes(panel._selectedStockDur))
-                ? panel._selectedStockDur
-                : (durations[0] || "1 Hours");
-
-            if (!Array.isArray(stockMap[targetDur])) stockMap[targetDur] = [];
-
-            const parts = raw.split(',').map(s => s.trim()).filter(Boolean);
-            stockMap[targetDur].push(...parts);
-            panel._selectedStockDur = targetDur;
-            inp.value = '';
+            const ta = document.getElementById(`bulkKeysInput-${pIdx}`);
+            const raw = ta ? ta.value : '';
+            const lines = raw.split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+            if(lines.length === 0) {
+                alert("দয়া করে অন্তত ১টি Key লিখুন!");
+                return;
+            }
+            if(!Array.isArray(durationStockMap[chosenDur])) durationStockMap[chosenDur] = [];
+            durationStockMap[chosenDur].push(...lines);
+            ta.value = '';
             saveToFirebase(true);
             renderAdminPanels();
-            showSuccessModal(`"${targetDur}" ডিউরেশনে ${parts.length}টি কি (Key) স্টকে যোগ হয়েছে!`);
-        }
-
-        window.deleteDurationStockKey = function(pIdx, durLabel, kIdx) {
-            const panel = storeData.panels[pIdx];
-            if(!panel) return;
-            const stockMap = ensurePanelDurationStockMap(panel);
-            if (!Array.isArray(stockMap[durLabel])) return;
-            stockMap[durLabel].splice(kIdx, 1);
-            saveToFirebase(true);
-            renderAdminPanels();
+            showSuccessModal(`${lines.length}টি Key "${chosenDur}" স্টকে যুক্ত হয়েছে!`);
         }
 
         window.addNewPanelPrompt = function() {
             const name = prompt("Enter New Panel Name:");
             if(!name || !name.trim()) return;
-            const defaultCat = (storeData.categories && storeData.categories.length > 0) ? storeData.categories[0] : currentCategory;
             const newId = Date.now();
+            const defaultCat = (storeData.categories && storeData.categories[0]) ? storeData.categories[0] : "Non Root";
             storeData.panels.push({
                 id: newId,
                 name: name.trim(),
@@ -5671,22 +5330,21 @@ Current User Info:
                 icon: "https://i.ibb.co/3W9v93z/default.png",
                 status: "Working ✅",
                 badge: "New",
-                stockKeysByDuration: { "1 Hours": [], "3 Hours": [], "1 Days": [] },
+                stockKeysByDuration: { "1 Hours": [] },
                 links: JSON.parse(JSON.stringify(defaultLinks)),
                 packages: [
                     { time: "1 Hours", price: 20, note: "", couponCode: "", couponDiscount: 0 },
-                    { time: "3 Hours", price: 50, note: "", couponCode: "", couponDiscount: 0 },
                     { time: "1 Days", price: 150, note: "", couponCode: "", couponDiscount: 0 }
                 ]
             });
             saveToFirebase(true);
             renderAdminPanels();
             renderPanels();
-            showSuccessModal("New panel added successfully!");
+            showSuccessModal("New panel added!");
         }
 
         window.deletePanel = function(pIdx) {
-            if(!confirm("এই প্যানেলটি ডিলিট করতে চান?")) return;
+            if(!confirm("Delete this panel?")) return;
             storeData.panels.splice(pIdx, 1);
             saveToFirebase(true);
             renderAdminPanels();
@@ -5696,67 +5354,157 @@ Current User Info:
         window.updatePanelField = function(pIdx, field, val) {
             if(!storeData.panels[pIdx]) return;
             storeData.panels[pIdx][field] = val;
-            saveToFirebase(true);
+            saveToFirebase(false);
             renderPanels();
-            if(field === 'icon') renderAdminPanels();
         }
 
         window.addPkg = function(pIdx) {
             if(!storeData.panels[pIdx]) return;
-            if(!storeData.panels[pIdx].packages) storeData.panels[pIdx].packages = [];
-            storeData.panels[pIdx].packages.push({ time: "1 Days", price: 100, note: "", couponCode: "", couponDiscount: 0 });
+            const newTime = "3 Hours";
+            storeData.panels[pIdx].packages.push({ time: newTime, price: 40, note: "", couponCode: "", couponDiscount: 0 });
+            const map = ensurePanelDurationStockMap(storeData.panels[pIdx]);
+            if(!Array.isArray(map[newTime])) map[newTime] = [];
             saveToFirebase(true);
             renderAdminPanels();
         }
 
-        window.deletePkg = function(pIdx, pkgIdx) {
+        window.deletePkg = function(pIdx, pkIdx) {
             if(!storeData.panels[pIdx]) return;
-            storeData.panels[pIdx].packages.splice(pkgIdx, 1);
+            storeData.panels[pIdx].packages.splice(pkIdx, 1);
             saveToFirebase(true);
             renderAdminPanels();
         }
 
-        window.updatePkg = function(pIdx, pkgIdx, field, val) {
-            if(!storeData.panels[pIdx] || !storeData.panels[pIdx].packages[pkgIdx]) return;
-            const pkgItem = storeData.panels[pIdx].packages[pkgIdx];
-            if (field === 'price' || field === 'couponDiscount') {
-                pkgItem[field] = Number(val);
-            } else if (field === 'couponCode') {
-                pkgItem[field] = String(val || '').trim().toUpperCase();
+        window.updatePkgField = function(pIdx, pkIdx, field, val) {
+            if(!storeData.panels[pIdx] || !storeData.panels[pIdx].packages[pkIdx]) return;
+            const oldTime = storeData.panels[pIdx].packages[pkIdx].time;
+            if(field === 'price' || field === 'couponDiscount') {
+                storeData.panels[pIdx].packages[pkIdx][field] = Number(val) || 0;
+            } else if(field === 'couponCode') {
+                storeData.panels[pIdx].packages[pkIdx][field] = String(val).trim().toUpperCase();
             } else {
-                pkgItem[field] = val;
+                storeData.panels[pIdx].packages[pkIdx][field] = val;
             }
-            ensurePanelDurationStockMap(storeData.panels[pIdx]);
-            saveToFirebase(true);
-            if (field === 'time') {
-                renderAdminPanels();
+
+            if(field === 'time' && oldTime && oldTime !== val) {
+                const map = ensurePanelDurationStockMap(storeData.panels[pIdx]);
+                if(Array.isArray(map[oldTime])) {
+                    if(!Array.isArray(map[val])) map[val] = [];
+                    map[val].push(...map[oldTime]);
+                    delete map[oldTime];
+                }
             }
+
+            saveToFirebase(false);
         }
 
-        window.updateLink = function(pIdx, lIdx, field, val) {
+        window.updateLinkField = function(pIdx, lIdx, field, val) {
             if(!storeData.panels[pIdx] || !storeData.panels[pIdx].links[lIdx]) return;
             storeData.panels[pIdx].links[lIdx][field] = val;
-            saveToFirebase(true);
+            saveToFirebase(false);
         }
 
+        // শুরুতেই ডিফল্ট ডেটা দিয়ে UI রেন্ডার করে রাখা হচ্ছে
+        renderUI();
+        updateSpinAvailabilityUI();
+        renderSpinWheelWithLabels();
+
+        let initialDeviceSynced = false;
+
+        onValue(storeRef, (snapshot) => {
+            if (firebaseSaveTimer || isUserTypingInAdmin()) {
+                return;
+            }
+
+            const serverData = snapshot.val();
+            if (serverData) {
+                const mergedPanels = (Array.isArray(serverData.panels) && serverData.panels.length > 0)
+                    ? serverData.panels
+                    : structuredClone(defaultStoreData.panels);
+
+                storeData = {
+                    ...structuredClone(defaultStoreData),
+                    ...serverData,
+                    panels: mergedPanels
+                };
+
+                if (serverData.appUpdating === undefined) {
+                    storeData.appUpdating = false;
+                }
+                if (serverData.aiChatEnabled === undefined) {
+                    storeData.aiChatEnabled = true;
+                }
+            } else {
+                storeData = structuredClone(defaultStoreData);
+                set(storeRef, storeData).catch(() => {});
+            }
+
+            window.__storeDataRef = storeData;
+            window.__currentAdminHash = storeData.adminHash || defaultStoreData.adminHash;
+
+            (storeData.panels || []).forEach(p => ensurePanelDurationStockMap(p));
+
+            if (!Array.isArray(storeData.homeRecentOrders)) {
+                storeData.homeRecentOrders = [];
+            } else if (storeData.homeRecentOrders.length > MAX_RECENT_ORDERS) {
+                storeData.homeRecentOrders = storeData.homeRecentOrders.slice(0, MAX_RECENT_ORDERS);
+            }
+
+            if (!initialDeviceSynced) {
+                initialDeviceSynced = true;
+                registerOrUpdateDeviceOnlyMine();
+            } else if (storeData.devices && storeData.devices[deviceId]) {
+                if (storeData.devices[deviceId].uid) clientUid = storeData.devices[deviceId].uid;
+                if (storeData.devices[deviceId].supportPin) clientSupportPin = storeData.devices[deviceId].supportPin;
+            }
+
+            checkAppUpdateState();
+            checkMaintenanceState();
+            checkLiveSuspension();
+            processFundRequestsLifecycle(false);
+            updateUserChatUnreadBadge();
+            updateAiChatStatusBadge();
+            updateSpinAvailabilityUI();
+            renderSpinWheelWithLabels();
+            renderSpinHistory();
+            renderUI();
+
+            if (!document.getElementById('liveChatModal').classList.contains('hidden')) {
+                markUserChatRead();
+                renderUserChatMessages();
+            }
+
+            if (!document.getElementById('adminDashboard').classList.contains('hidden')) {
+                renderAdminPaymentChannels();
+                renderAdminSpinSettings();
+                renderAdminLiveChats();
+                renderAdminFundRequests();
+                renderAdminCategories();
+                renderDevices();
+                renderAdminUserOrders();
+                renderAdminPanels();
+                renderSalesAnalyticsChart();
+            }
+        }, () => {
+            // Firebase কানেকশনে সাময়িক সমস্যা হলেও লোকাল/ডিফল্ট UI চালু থাকবে
+            renderUI();
+        });
+
         setInterval(() => {
+            if (isUserTypingInAdmin()) return;
+
             const changed = processFundRequestsLifecycle(true);
             if (changed) {
                 renderMyFundRequests();
-                if (document.getElementById('adminDashboard') && !document.getElementById('adminDashboard').classList.contains('hidden')) {
+                if (!document.getElementById('adminDashboard').classList.contains('hidden')) {
                     renderAdminFundRequests();
                 }
-            } else if (document.getElementById('fundView') && !document.getElementById('fundView').classList.contains('hidden')) {
+            } else if (!document.getElementById('fundView').classList.contains('hidden')) {
                 renderMyFundRequests();
             }
+
             updateSpinAvailabilityUI();
         }, 1000);
-
-        registerOrUpdateDeviceOnlyMine();
-        renderUI();
-        switchTab('home');
-        switchHomeTab('recent');
-        updateSpinAvailabilityUI();
     </script>
 </body>
 </html>
