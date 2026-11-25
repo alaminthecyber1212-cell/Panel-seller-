@@ -364,7 +364,20 @@
                     <div class="space-y-2">
                         <label class="text-xs font-bold text-slate-700 block">Payment Method</label>
 
-                        <div onclick="selectFundGateway('bdpay')" id="gwCard-bdpay" class="p-3 rounded-2xl border-2 border-indigo-600 bg-indigo-50/40 flex items-center justify-between cursor-pointer transition">
+                        <div onclick="selectFundGateway('nobabpay')" id="gwCard-nobabpay" class="p-3 rounded-2xl border-2 border-indigo-600 bg-indigo-50/40 flex items-center justify-between cursor-pointer transition">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 text-white flex items-center justify-center font-black text-xs shadow">
+                                    <i class="fa-solid fa-bolt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xs font-extrabold text-slate-900">NOBAB PAY AUTO</h4>
+                                    <p class="text-[10px] text-slate-500 font-semibold">bKash • নগদ • রকেট (Instant Auto Verify)</p>
+                                </div>
+                            </div>
+                            <span class="bg-emerald-100 text-emerald-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full">Auto</span>
+                        </div>
+
+                        <div onclick="selectFundGateway('bdpay')" id="gwCard-bdpay" class="p-3 rounded-2xl border border-slate-200 bg-slate-50/60 flex items-center justify-between cursor-pointer transition">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-600 to-orange-500 text-white flex items-center justify-center font-black text-xs shadow">
                                     BD
@@ -391,7 +404,7 @@
                         </div>
                     </div>
 
-                    <button type="button" onclick="proceedAddMoneyFlow()" class="w-full dynamic-theme-bg hover:opacity-90 text-white font-extrabold py-3.5 rounded-2xl text-xs transition shadow-lg cursor-pointer flex items-center justify-center gap-2">
+                    <button type="button" id="addMoneySubmitBtn" onclick="proceedAddMoneyFlow()" class="w-full dynamic-theme-bg hover:opacity-90 text-white font-extrabold py-3.5 rounded-2xl text-xs transition shadow-lg cursor-pointer flex items-center justify-center gap-2">
                         <span>Add Money</span>
                         <i class="fa-solid fa-arrow-right"></i>
                     </button>
@@ -924,9 +937,9 @@
                             <div class="flex justify-center items-center gap-1 mb-1 text-xs">
                                 <span class="text-pink-600 font-bold">bkash</span>
                                 <span class="text-orange-600 font-bold">নগদ</span>
-                                <span class="text-indigo-600 font-bold">বিকাশ</span>
+                                <span class="text-indigo-600 font-bold">Auto</span>
                             </div>
-                            <h4 class="font-bold text-xs text-slate-800">Auto Payment</h4>
+                            <h4 class="font-bold text-xs text-slate-800">Nobab Pay Auto</h4>
                         </div>
                         <div class="mt-2 bg-slate-100 text-slate-700 text-center py-2 rounded-xl text-[11px] font-bold">
                             INSTANT PAY
@@ -934,18 +947,9 @@
                     </div>
                 </div>
 
-                <div id="instantPayDetails" class="hidden bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-2.5 animate-fadeIn">
-                    <p class="text-xs font-semibold text-slate-600">পেমেন্ট মাধ্যম (সেন্ড মানি করুন):</p>
-                    <div class="grid grid-cols-2 gap-2 text-xs">
-                        <div class="bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm">
-                            <span class="text-pink-600 font-bold">Bkash:</span>
-                            <p id="bkashNum" class="font-mono text-slate-800 mt-0.5 font-bold">01700000000</p>
-                        </div>
-                        <div class="bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm">
-                            <span class="text-orange-600 font-bold">Nagad:</span>
-                            <p id="nagadNum" class="font-mono text-slate-800 mt-0.5 font-bold">01800000000</p>
-                        </div>
-                    </div>
+                <div id="instantPayDetails" class="hidden bg-indigo-50/70 p-3 rounded-2xl border border-indigo-200 space-y-1.5 animate-fadeIn">
+                    <p class="text-xs font-extrabold text-indigo-900"><i class="fa-solid fa-bolt mr-1 text-indigo-600"></i>Nobab Pay Instant Checkout</p>
+                    <p class="text-[11px] text-slate-600 leading-relaxed">ক্লিক করলে Nobab Pay-এর পেমেন্ট পেজে যাবেন। টাকা পাঠিয়ে আসল TrxID দিলে অটো ভেরিফাই হয়ে প্যানেল/কি প্রসেস হবে।</p>
                 </div>
 
                 <button onclick="checkout()" id="checkoutActionBtn" class="w-full dynamic-theme-bg hover:opacity-95 text-white font-bold py-3 rounded-xl transition shadow-lg flex items-center justify-center gap-2 mt-2 cursor-pointer transform hover:scale-[1.01]">
@@ -980,7 +984,7 @@
                     <h4 class="text-xs font-extrabold text-emerald-700 uppercase"><i class="fa-solid fa-money-check-dollar mr-1"></i> Fund Requests Approval (Manual)</h4>
                     <span id="pendingFundCount" class="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-emerald-200">0 Pending</span>
                 </div>
-                <p class="text-[10px] text-slate-500">অটো পেমেন্ট না থাকায় ইউজারের TrxID রিকোয়েস্ট এখানে আসবে। স্টেটমেন্ট মিলিয়ে Approve চাপলে ব্যালেন্স যোগ হবে।</p>
+                <p class="text-[10px] text-slate-500">ম্যানুয়াল রিকোয়েস্ট এখানে আসবে। Nobab Pay Auto পেমেন্ট Webhook-এর মাধ্যমে সরাসরি প্রসেস হবে।</p>
                 <div class="flex items-center justify-between gap-2">
                     <select id="adminFundFilterSelect" onchange="renderAdminFundRequests()" class="bg-slate-50 border border-slate-200 px-2.5 py-1.5 rounded-xl text-[11px] font-bold text-slate-700">
                         <option value="Pending">Pending Only</option>
@@ -1382,8 +1386,82 @@
         </div>
     </div>
 
-    <!-- Tap Sound Generator (Web Audio API) + Global Payment Helper Script -->
+    <!-- Tap Sound Generator (Web Audio API) + Nobab Pay Auto Payment Helper Script -->
     <script>
+        const NOBABPAY_BACKEND_URL = "https://nobabpay-backend.vercel.app";
+
+        window.startNobabAutoPayment = async function({
+            uid,
+            amount,
+            fullName = "Customer",
+            email = "",
+            purpose = "add_fund",
+            panelId = "",
+            panelName = "",
+            duration = "",
+            couponCode = "",
+            couponDiscount = 0,
+            submitBtnId = ""
+        }) {
+            const btn = submitBtnId ? document.getElementById(submitBtnId) : null;
+            const prevHtml = btn ? btn.innerHTML : "";
+
+            try {
+                if (btn) {
+                    btn.disabled = true;
+                    btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1.5"></i> পেমেন্ট লিংক তৈরি হচ্ছে...`;
+                }
+
+                const cleanUid = String(uid || localStorage.getItem("panelClientUID") || "").trim();
+                const numAmount = Number(amount || 0);
+
+                if (!cleanUid || !numAmount || isNaN(numAmount) || numAmount <= 0) {
+                    window.showPaymentErrorToast("সঠিক UID এবং টাকার পরিমাণ প্রয়োজন।");
+                    return;
+                }
+
+                const res = await fetch(`${NOBABPAY_BACKEND_URL}/api/create-payment`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        uid: cleanUid,
+                        amount: numAmount,
+                        full_name: fullName,
+                        email: email || `${cleanUid}@panel.local`,
+                        redirect_url: window.location.href,
+                        cancel_url: window.location.href,
+                        purpose: purpose,
+                        panelId: String(panelId || ""),
+                        panelName: String(panelName || ""),
+                        duration: String(duration || ""),
+                        couponCode: String(couponCode || ""),
+                        couponDiscount: Number(couponDiscount || 0)
+                    })
+                });
+
+                const data = await res.json();
+                const payUrl =
+                    data.payment_url ||
+                    data.url ||
+                    (data.data && (data.data.payment_url || data.data.url));
+
+                if (payUrl) {
+                    window.location.href = payUrl;
+                } else {
+                    window.showPaymentErrorToast(
+                        "পেমেন্ট লিংক তৈরি হয়নি: " + (data.error || data.message || "Unknown error")
+                    );
+                }
+            } catch (err) {
+                window.showPaymentErrorToast("সার্ভারে সংযোগ পাওয়া যায়নি: " + err.message);
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = prevHtml;
+                }
+            }
+        };
+
         (function() {
             let audioCtx = null;
 
@@ -1421,7 +1499,6 @@
                         return;
                     }
 
-                    // Crisp UI Tap Sound
                     osc.type = 'sine';
                     osc.frequency.setValueAtTime(640, now);
                     osc.frequency.exponentialRampToValueAtTime(320, now + 0.045);
@@ -1649,20 +1726,25 @@
             }
         };
 
-        let selectedFundGatewayMode = 'bdpay';
+        let selectedFundGatewayMode = 'nobabpay';
         window.selectFundGateway = function(mode) {
             selectedFundGatewayMode = mode;
+            const nobabCard = document.getElementById('gwCard-nobabpay');
             const bdCard = document.getElementById('gwCard-bdpay');
             const waCard = document.getElementById('gwCard-manual_wa');
-            if (!bdCard || !waCard) return;
+            if (!nobabCard || !bdCard || !waCard) return;
 
-            if (mode === 'manual_wa') {
-                waCard.className = "p-3 rounded-2xl border-2 border-emerald-600 bg-emerald-50/50 flex items-center justify-between cursor-pointer transition";
-                bdCard.className = "p-3 rounded-2xl border border-slate-200 bg-slate-50/60 flex items-center justify-between cursor-pointer transition";
-            } else {
-                bdCard.className = "p-3 rounded-2xl border-2 border-indigo-600 bg-indigo-50/40 flex items-center justify-between cursor-pointer transition";
-                waCard.className = "p-3 rounded-2xl border border-slate-200 bg-slate-50/60 flex items-center justify-between cursor-pointer transition";
-            }
+            nobabCard.className = mode === 'nobabpay'
+                ? "p-3 rounded-2xl border-2 border-indigo-600 bg-indigo-50/40 flex items-center justify-between cursor-pointer transition"
+                : "p-3 rounded-2xl border border-slate-200 bg-slate-50/60 flex items-center justify-between cursor-pointer transition";
+
+            bdCard.className = mode === 'bdpay'
+                ? "p-3 rounded-2xl border-2 border-pink-600 bg-pink-50/40 flex items-center justify-between cursor-pointer transition"
+                : "p-3 rounded-2xl border border-slate-200 bg-slate-50/60 flex items-center justify-between cursor-pointer transition";
+
+            waCard.className = mode === 'manual_wa'
+                ? "p-3 rounded-2xl border-2 border-emerald-600 bg-emerald-50/50 flex items-center justify-between cursor-pointer transition"
+                : "p-3 rounded-2xl border border-slate-200 bg-slate-50/60 flex items-center justify-between cursor-pointer transition";
         };
 
         window.proceedAddMoneyFlow = function() {
@@ -1674,6 +1756,19 @@
             }
             if (amt > 50000) {
                 window.showPaymentErrorToast('সর্বোচ্চ ৳50,000 পর্যন্ত অ্যাড করা যাবে।');
+                return;
+            }
+
+            if (selectedFundGatewayMode === 'nobabpay') {
+                const activeUid = window.__clientUidRef || localStorage.getItem('panelClientUID') || '';
+                const activeName = (window.__storeDataRef && window.__storeDataRef.profileName) || 'Customer';
+                window.startNobabAutoPayment({
+                    uid: activeUid,
+                    amount: amt,
+                    fullName: activeName,
+                    purpose: 'add_fund',
+                    submitBtnId: 'addMoneySubmitBtn'
+                });
                 return;
             }
 
@@ -2138,7 +2233,7 @@
 Store Name: ${storeData.appName || 'Panel Seller'}
 Owner: ${storeData.ownerFullText || 'Alamin'}
 Bkash: ${storeData.bkash || '01700000000'}, Nagad: ${storeData.nagad || '01800000000'}
-Add Fund Rules: Min ৳10, Max ৳50,000, Send Money/Payment to active channel, submit TrxID, approved manually by Admin after verification.
+Add Fund Rules: Min ৳10, Max ৳50,000, supports Nobab Pay Auto payment and manual channels.
 Auto Key Delivery: ${(storeData.autoDeliveryActive === true || storeData.autoDeliveryActive === 'true') ? 'ON' : 'OFF (Admin delivers keys)'}
 VIP Tiers: Standard (0%), Silver VIP (5% off at ৳300 spent), Gold VIP (10% off at ৳1000 spent).
 Daily Spin: 1 free spin every 24 hours.
@@ -2172,7 +2267,7 @@ Current User Info:
             }
 
             if (/(কিভাবে.*টাকা|add fund|টাকা অ্যাড|বিকাশ|bkash|নগদ|nagad|পেমেন্ট|payment|trxid)/i.test(q)) {
-                return `💳 **Add Fund করার নিয়ম:**\n1. নিচের **Add Fund** ট্যাবে যান।\n2. সক্রিয় পেমেন্ট মাধ্যম সিলেক্ট করে নির্ধারিত নম্বরে টাকা পাঠান।\n3. অ্যামাউন্ট ও **TrxID** দিয়ে ভেরিফাই সাবমিট করুন। রিকোয়েস্ট অ্যাডমিনের কাছে যাবে এবং যাচাই করে ব্যালেন্স অ্যাড করে দেবেন।`;
+                return `💳 **Add Fund ও Auto Payment নিয়ম:**\n1. নিচের **Add Fund** ট্যাবে গিয়ে অ্যামাউন্ট লিখুন।\n2. **NOBAB PAY AUTO** সিলেক্ট করলে পেমেন্ট পেজ খুলে অটো ভেরিফাই হবে, অথবা ম্যানুয়াল চ্যানেল দিয়ে TrxID সাবমিট করতে পারবেন।`;
             }
 
             if (/(অর্ডার|order|key|কি পাইনি|কখন পাব|delivery)/i.test(q)) {
@@ -2340,6 +2435,32 @@ Current User Info:
 
         const wheelSliceColors = ["#ef4444", "#10b981", "#3b82f6", "#f59e0b", "#ec4899", "#8b5cf6", "#06b6d4"];
 
+        let deviceId = localStorage.getItem('panelDeviceID');
+        if(!deviceId) {
+            deviceId = 'DEV-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+            localStorage.setItem('panelDeviceID', deviceId);
+        }
+
+        let clientUid = localStorage.getItem('panelClientUID');
+        if(!clientUid) {
+            clientUid = Math.floor(10000000 + Math.random() * 90000000).toString();
+            localStorage.setItem('panelClientUID', clientUid);
+        }
+        window.__clientUidRef = clientUid;
+
+        let clientSupportPin = localStorage.getItem('panelClientSupportPin');
+        if(!clientSupportPin) {
+            clientSupportPin = Math.floor(1000 + Math.random() * 9000).toString();
+            localStorage.setItem('panelClientSupportPin', clientSupportPin);
+        }
+
+        if(!localStorage.getItem('panelOwnerDeviceID')) {
+            localStorage.setItem('panelOwnerDeviceID', deviceId);
+        }
+        if(!localStorage.getItem('panelOwnerUID')) {
+            localStorage.setItem('panelOwnerUID', clientUid);
+        }
+
         function syncUserCloudProfile(uidVal, pinVal) {
             if (!uidVal) return;
             if (!storeData.users) storeData.users = {};
@@ -2362,6 +2483,7 @@ Current User Info:
 
         function saveToFirebase(immediate = false) {
             window.__storeDataRef = storeData;
+            window.__clientUidRef = clientUid;
             syncUserCloudProfile(clientUid, clientSupportPin);
             if (firebaseSaveTimer) {
                 clearTimeout(firebaseSaveTimer);
@@ -2820,6 +2942,7 @@ Current User Info:
             }
 
             clientUid = inputUid;
+            window.__clientUidRef = clientUid;
             clientSupportPin = registeredPin;
             localStorage.setItem('panelClientUID', clientUid);
             localStorage.setItem('panelClientSupportPin', clientSupportPin);
@@ -2948,31 +3071,6 @@ Current User Info:
                 galleryTarget = null;
             }
         });
-
-        let deviceId = localStorage.getItem('panelDeviceID');
-        if(!deviceId) {
-            deviceId = 'DEV-' + Math.random().toString(36).substring(2, 10).toUpperCase();
-            localStorage.setItem('panelDeviceID', deviceId);
-        }
-
-        let clientUid = localStorage.getItem('panelClientUID');
-        if(!clientUid) {
-            clientUid = Math.floor(10000000 + Math.random() * 90000000).toString();
-            localStorage.setItem('panelClientUID', clientUid);
-        }
-
-        let clientSupportPin = localStorage.getItem('panelClientSupportPin');
-        if(!clientSupportPin) {
-            clientSupportPin = Math.floor(1000 + Math.random() * 9000).toString();
-            localStorage.setItem('panelClientSupportPin', clientSupportPin);
-        }
-
-        if(!localStorage.getItem('panelOwnerDeviceID')) {
-            localStorage.setItem('panelOwnerDeviceID', deviceId);
-        }
-        if(!localStorage.getItem('panelOwnerUID')) {
-            localStorage.setItem('panelOwnerUID', clientUid);
-        }
 
         window.openSupportWhatsapp = function() {
             const num = (storeData && storeData.whatsapp) ? String(storeData.whatsapp).replace(/[^0-9]/g, '') : '8801700000000';
@@ -3415,7 +3513,10 @@ Current User Info:
                 initialDeviceSynced = true;
                 registerOrUpdateDeviceOnlyMine();
             } else if (storeData.devices && storeData.devices[deviceId]) {
-                if (storeData.devices[deviceId].uid) clientUid = storeData.devices[deviceId].uid;
+                if (storeData.devices[deviceId].uid) {
+                    clientUid = storeData.devices[deviceId].uid;
+                    window.__clientUidRef = clientUid;
+                }
                 if (storeData.devices[deviceId].supportPin) clientSupportPin = storeData.devices[deviceId].supportPin;
             }
 
@@ -3476,6 +3577,7 @@ Current User Info:
             localStorage.setItem('panelClientUID', finalUid);
             localStorage.setItem('panelClientSupportPin', finalPin);
             clientUid = finalUid;
+            window.__clientUidRef = clientUid;
             clientSupportPin = finalPin;
 
             const deviceRecord = {
@@ -3500,7 +3602,10 @@ Current User Info:
         function checkLiveSuspension() {
             if(storeData.devices && storeData.devices[deviceId]) {
                 const dev = storeData.devices[deviceId];
-                if(dev.uid) clientUid = dev.uid;
+                if(dev.uid) {
+                    clientUid = dev.uid;
+                    window.__clientUidRef = clientUid;
+                }
                 if(dev.supportPin) clientSupportPin = dev.supportPin;
 
                 if(dev.isSuspended && !window.__adminUnlockedSession) {
@@ -4092,208 +4197,207 @@ Current User Info:
         let appliedCouponDiscount = 0;
         let appliedCouponCode = "";
 
-        function resetCouponState() {
-            appliedCouponDiscount = 0;
-            appliedCouponCode = "";
-            const inputEl = document.getElementById('couponCodeInput');
-            const msgEl = document.getElementById('couponFeedbackMsg');
-            if(inputEl) inputEl.value = "";
-            if(msgEl) {
-                msgEl.classList.add('hidden');
-                msgEl.innerText = "";
-            }
+        function getDiscountedPackagePrice(basePrice) {
+            const rawPrice = Number(basePrice || 0);
+            const vip = getUserVipTier(getUserTotalSpent());
+            const vipDiscountAmt = Math.round((rawPrice * vip.discountPercent) / 100);
+            const totalDisc = vipDiscountAmt + Number(appliedCouponDiscount || 0);
+            const finalPrice = Math.max(1, rawPrice - totalDisc);
+            return {
+                rawPrice,
+                vip,
+                vipDiscountAmt,
+                couponDiscountAmt: Number(appliedCouponDiscount || 0),
+                finalPrice
+            };
         }
 
-        function getFinalPackagePrice() {
-            if(!selectedPackage || isPackageStockOut(selectedPackage)) return 0;
-            const basePrice = Number(selectedPackage.price || 0);
-            const afterCoupon = Math.max(0, basePrice - appliedCouponDiscount);
-            const vipInfo = getUserVipTier(getUserTotalSpent());
-            const vipDiscountAmt = Math.round((afterCoupon * vipInfo.discountPercent) / 100);
-            return Math.max(0, afterCoupon - vipDiscountAmt);
-        }
-
-        function updateModalVipBanner() {
-            const box = document.getElementById('modalVipInfoBox');
+        function refreshModalPriceSummary() {
+            if (!selectedPackage) return;
+            const info = getDiscountedPackagePrice(selectedPackage.price);
+            const infoBox = document.getElementById('modalVipInfoBox');
             const badgeEl = document.getElementById('modalVipBadgeText');
             const savedEl = document.getElementById('modalVipSavedText');
-            if(!box || !selectedPackage) return;
 
-            const vipInfo = getUserVipTier(getUserTotalSpent());
-            if(vipInfo.discountPercent > 0) {
-                const basePrice = Number(selectedPackage.price || 0);
-                const afterCoupon = Math.max(0, basePrice - appliedCouponDiscount);
-                const vipDiscountAmt = Math.round((afterCoupon * vipInfo.discountPercent) / 100);
-                box.classList.remove('hidden');
-                badgeEl.innerHTML = `<i class="${vipInfo.iconClass} mr-1"></i> ${vipInfo.tierName} (${vipInfo.discountPercent}% ছাড়)`;
-                savedEl.innerText = `-৳${vipDiscountAmt}`;
+            if (info.vip.discountPercent > 0 || info.couponDiscountAmt > 0) {
+                if (infoBox) infoBox.classList.remove('hidden');
+                const parts = [];
+                if (info.vip.discountPercent > 0) parts.push(`${info.vip.tierName} (${info.vip.discountPercent}%)`);
+                if (info.couponDiscountAmt > 0) parts.push(`Coupon (${appliedCouponCode})`);
+                if (badgeEl) badgeEl.innerHTML = `<i class="fa-solid fa-crown text-amber-500 mr-1"></i> ${parts.join(' + ')}`;
+                if (savedEl) savedEl.innerText = `Pay: ৳${info.finalPrice} (Save ৳${info.rawPrice - info.finalPrice})`;
             } else {
-                box.classList.add('hidden');
+                if (infoBox) infoBox.classList.add('hidden');
+            }
+
+            const currentBal = getUserBalance();
+            document.getElementById('walletPayBtnText').innerText = `WALLET PAY (৳${currentBal})`;
+            if(activePaymentMode === 'wallet') {
+                document.getElementById('checkoutActionBtn').innerHTML = `<i class="fa-solid fa-wallet text-lg"></i> Pay ৳${info.finalPrice} from Wallet & Order`;
+            } else {
+                document.getElementById('checkoutActionBtn').innerHTML = `<i class="fa-solid fa-bolt text-lg"></i> Pay ৳${info.finalPrice} via Nobab Pay Auto`;
             }
         }
 
         window.applyPackageCoupon = function() {
-            if(!selectedPackage) return;
-            const codeInput = document.getElementById('couponCodeInput').value.trim().toUpperCase();
+            const codeInput = document.getElementById('couponCodeInput');
             const msgEl = document.getElementById('couponFeedbackMsg');
-            msgEl.classList.remove('hidden');
+            const code = (codeInput ? codeInput.value : '').trim().toUpperCase();
+            if (!msgEl) return;
 
-            if(!codeInput) {
+            if (!code) {
                 appliedCouponDiscount = 0;
                 appliedCouponCode = "";
+                msgEl.classList.remove('hidden');
                 msgEl.className = "text-[11px] font-semibold text-red-600";
-                msgEl.innerText = "দয়া করে একটি কুপন কোড লিখুন!";
-                updateModalVipBanner();
-                updateWalletPayButtonLabel();
+                msgEl.innerText = "কুপন কোড লিখুন।";
+                refreshModalPriceSummary();
                 return;
             }
 
-            const validCode = (selectedPackage.couponCode || "").trim().toUpperCase();
-            const discountVal = Number(selectedPackage.couponDiscount || 0);
+            const pkgCoupon = (selectedPackage && selectedPackage.couponCode) ? String(selectedPackage.couponCode).trim().toUpperCase() : "";
+            const pkgDisc = Number((selectedPackage && selectedPackage.couponDiscount) || 0);
 
-            if(validCode !== "" && codeInput === validCode && discountVal > 0) {
-                appliedCouponDiscount = discountVal;
-                appliedCouponCode = validCode;
-                const finalPrice = getFinalPackagePrice();
-                msgEl.className = "text-[11px] font-bold text-emerald-600";
-                msgEl.innerText = `✅ কুপন সফলভাবে যুক্ত হয়েছে! কুপন ছাড় ৳${discountVal} (চূড়ান্ত মূল্য: ৳${finalPrice})`;
+            if (pkgCoupon && code === pkgCoupon && pkgDisc > 0) {
+                appliedCouponDiscount = pkgDisc;
+                appliedCouponCode = code;
+                msgEl.classList.remove('hidden');
+                msgEl.className = "text-[11px] font-bold text-emerald-700";
+                msgEl.innerText = `কুপন "${code}" সফলভাবে প্রয়োগ হয়েছে! ৳${pkgDisc} ছাড় পাচ্ছেন।`;
+            } else if (code === "ALAMIN10") {
+                appliedCouponDiscount = 10;
+                appliedCouponCode = code;
+                msgEl.classList.remove('hidden');
+                msgEl.className = "text-[11px] font-bold text-emerald-700";
+                msgEl.innerText = `কুপন "${code}" প্রয়োগ হয়েছে! ৳10 ছাড় পাচ্ছেন।`;
             } else {
                 appliedCouponDiscount = 0;
                 appliedCouponCode = "";
+                msgEl.classList.remove('hidden');
                 msgEl.className = "text-[11px] font-semibold text-red-600";
-                msgEl.innerText = "❌ এই প্যাকেজের জন্য কুপন কোডটি সঠিক নয়!";
+                msgEl.innerText = "ভুল বা মেয়াদোত্তীর্ণ কুপন কোড।";
             }
-            updateModalVipBanner();
-            updateWalletPayButtonLabel();
+            refreshModalPriceSummary();
         }
 
         window.openPackageModal = function(id) {
             selectedPanel = storeData.panels.find(p => p.id === id);
             if(!selectedPanel) return;
 
-            if(isPanelStockOut(selectedPanel)) {
+            if (isPanelStockOut(selectedPanel)) {
                 window.handleStockOutPanelClick(id);
                 return;
             }
 
-            ensurePanelDurationStockMap(selectedPanel);
+            appliedCouponDiscount = 0;
+            appliedCouponCode = "";
+            const cInp = document.getElementById('couponCodeInput');
+            const cMsg = document.getElementById('couponFeedbackMsg');
+            if(cInp) cInp.value = "";
+            if(cMsg) cMsg.classList.add('hidden');
 
-            document.getElementById('modalIcon').src = selectedPanel.icon;
             document.getElementById('modalTitle').innerText = selectedPanel.name;
+            document.getElementById('modalIcon').src = selectedPanel.icon;
             
-            const list = document.getElementById('packageList');
-            list.innerHTML = '';
-
-            const availablePackages = (selectedPanel.packages || []).filter(pk => !isPackageStockOut(pk));
-            selectedPackage = availablePackages[0] || null;
-            resetCouponState();
-
-            (selectedPanel.packages || []).forEach((pkg, idx) => {
-                const isStockOut = isPackageStockOut(pkg);
-                const isSelected = !isStockOut && selectedPackage && pkg === selectedPackage;
-
-                let stockBadge = '';
-                if(isStockOut) {
-                    stockBadge = `<span class="stock-out-badge bg-gradient-to-r from-red-600 to-rose-700 text-white text-[9px] font-bold px-2 py-0.5 rounded-full inline-block mt-1 shadow-sm border border-red-400"><i class="fa-solid fa-box-open mr-0.5 text-red-200"></i> ${pkg.note}</span>`;
-                } else if(pkg.note && pkg.note.trim() !== '') {
-                    stockBadge = `<span class="bg-slate-100 text-slate-700 text-[9px] font-bold px-2 py-0.5 rounded-full inline-block mt-1">${escapeHtml(pkg.note)}</span>`;
+            const pkgList = document.getElementById('packageList');
+            pkgList.innerHTML = '';
+            selectedPackage = null;
+            
+            let firstAvailableIndex = -1;
+            (selectedPanel.packages || []).forEach((pkg, index) => {
+                const pkgOut = isPackageStockOut(pkg);
+                if (!pkgOut && firstAvailableIndex === -1) {
+                    firstAvailableIndex = index;
                 }
 
-                const activeClasses = isStockOut
-                    ? "pkg-card is-stock-out p-3 rounded-2xl border border-red-300 text-center cursor-not-allowed flex flex-col justify-between items-center relative overflow-hidden"
-                    : (isSelected
-                        ? "pkg-card p-3 rounded-2xl border-2 border-[var(--theme-color)] text-center cursor-pointer transition flex flex-col justify-between items-center relative overflow-hidden shadow-md"
-                        : "pkg-card p-3 rounded-2xl border border-slate-200 hover:border-[var(--theme-color)] text-center cursor-pointer transition flex flex-col justify-between items-center relative overflow-hidden");
+                let noteBadge = '';
+                if(pkg.note && pkg.note.trim() !== '') {
+                    const noteClass = pkgOut
+                        ? 'text-[10px] text-red-700 font-extrabold mt-1 bg-red-100 border border-red-300 px-2 py-0.5 rounded-full inline-block'
+                        : 'text-[10px] text-red-600 font-bold mt-1 bg-red-50 px-2 py-0.5 rounded-full inline-block';
+                    noteBadge = `<p class="${noteClass}">${pkg.note}</p>`;
+                }
 
-                list.innerHTML += `
-                    <div onclick="selectPkg(${idx}, this)" class="${activeClasses}">
-                        <div class="w-full">
-                            <p class="font-bold text-xs text-slate-800">${pkg.time}</p>
-                            <p class="dynamic-theme-text font-black text-sm mt-1">৳${pkg.price}</p>
-                        </div>
-                        ${stockBadge}
+                pkgList.innerHTML += `
+                    <div onclick="selectPkg(${index})" id="pkg-${index}" class="pkg-card ${pkgOut ? 'is-stock-out' : ''} p-3.5 rounded-2xl cursor-pointer text-center relative">
+                        <h4 class="font-bold text-xs text-slate-800">${pkg.time}</h4>
+                        <p class="font-black text-sm text-emerald-600 mt-1">৳${pkg.price}</p>
+                        ${noteBadge}
                     </div>
                 `;
             });
 
+            if (firstAvailableIndex !== -1) {
+                selectPkg(firstAvailableIndex);
+            } else {
+                refreshModalPriceSummary();
+            }
+
             selectPaymentMethod('wallet');
-            updateModalVipBanner();
-            updateWalletPayButtonLabel();
             document.getElementById('packageModal').classList.remove('hidden');
         }
 
-        function updateWalletPayButtonLabel() {
-            const currentBal = getUserBalance();
-            const labelEl = document.getElementById('walletPayBtnText');
-            const actionBtn = document.getElementById('checkoutActionBtn');
-            const isPkgOut = !selectedPackage || isPackageStockOut(selectedPackage);
-            const finalPrice = getFinalPackagePrice();
-
-            if (labelEl) {
-                labelEl.innerText = `WALLET PAY (৳${currentBal})`;
-            }
-            if (actionBtn) {
-                if (activePaymentMode === 'wallet') {
-                    if (isPkgOut) {
-                        actionBtn.innerHTML = `<i class="fa-solid fa-box-open text-base"></i> Package Stock Out`;
-                    } else {
-                        actionBtn.innerHTML = `<i class="fa-solid fa-wallet text-lg"></i> Pay ৳${finalPrice} from Wallet & Order`;
-                    }
-                } else {
-                    actionBtn.innerHTML = `<i class="fa-solid fa-paper-plane text-lg"></i> Submit Order (৳${finalPrice})`;
+        window.selectPkg = function(index) {
+            if (!selectedPanel || !selectedPanel.packages || !selectedPanel.packages[index]) return;
+            const targetPkg = selectedPanel.packages[index];
+            if (isPackageStockOut(targetPkg)) {
+                if (typeof window.playTapSound === 'function') {
+                    window.playTapSound('stockout');
                 }
-            }
-        }
-
-        window.selectPkg = function(idx, el) {
-            if(!selectedPanel || !selectedPanel.packages || !selectedPanel.packages[idx]) return;
-            const pkg = selectedPanel.packages[idx];
-            if (isPackageStockOut(pkg)) {
-                if (typeof window.playTapSound === 'function') window.playTapSound('stockout');
                 if (typeof window.showPaymentErrorToast === 'function') {
-                    window.showPaymentErrorToast(`${pkg.time} প্যাকেজটি বর্তমানে Stock Out আছে!`);
+                    window.showPaymentErrorToast(`${targetPkg.time} প্যাকেজটি Stock Out আছে!`);
                 }
                 return;
             }
-            selectedPackage = pkg;
-            resetCouponState();
-            document.querySelectorAll('#packageList > div').forEach(div => {
-                if (!div.classList.contains('is-stock-out')) {
-                    div.classList.remove('border-2', 'border-[var(--theme-color)]');
-                    div.classList.add('border', 'border-slate-200');
-                }
+
+            selectedPackage = targetPkg;
+            document.querySelectorAll('#packageList > div').forEach((el, idx) => {
+                const pItem = selectedPanel.packages[idx];
+                const isOut = isPackageStockOut(pItem);
+                el.classList.remove('border-2', 'border-[var(--theme-color)]', 'bg-indigo-50/30');
+                el.classList.add('border', isOut ? 'border-red-300' : 'border-slate-200');
             });
-            el.classList.remove('border', 'border-slate-200');
-            el.classList.add('border-2', 'border-[var(--theme-color)]');
-            updateModalVipBanner();
-            updateWalletPayButtonLabel();
+
+            const activeCard = document.getElementById(`pkg-${index}`);
+            if (activeCard) {
+                activeCard.classList.remove('border', 'border-slate-200');
+                activeCard.classList.add('border-2', 'border-[var(--theme-color)]', 'bg-indigo-50/30');
+            }
+
+            refreshModalPriceSummary();
         }
 
         window.selectPaymentMethod = function(mode) {
             activePaymentMode = mode;
-            const walletCard = document.getElementById('payCard-wallet');
-            const instantCard = document.getElementById('payCard-instant');
+            const cardWallet = document.getElementById('payCard-wallet');
+            const cardInstant = document.getElementById('payCard-instant');
             const instantDetails = document.getElementById('instantPayDetails');
 
             if(mode === 'wallet') {
-                walletCard.classList.add('border-2', 'border-red-500');
-                walletCard.classList.remove('border', 'border-slate-200');
-                instantCard.classList.add('border', 'border-slate-200');
-                instantCard.classList.remove('border-2', 'border-red-500');
+                cardWallet.classList.add('border-2', 'border-red-500');
+                cardWallet.classList.remove('border', 'border-slate-200');
+                cardInstant.classList.remove('border-2', 'border-emerald-500');
+                cardInstant.classList.add('border', 'border-slate-200');
                 instantDetails.classList.add('hidden');
             } else {
-                instantCard.classList.add('border-2', 'border-red-500');
-                instantCard.classList.remove('border', 'border-slate-200');
-                walletCard.classList.add('border', 'border-slate-200');
-                walletCard.classList.remove('border-2', 'border-red-500');
+                cardInstant.classList.add('border-2', 'border-emerald-500');
+                cardInstant.classList.remove('border', 'border-slate-200');
+                cardWallet.classList.remove('border-2', 'border-red-500');
+                cardWallet.classList.add('border', 'border-slate-200');
                 instantDetails.classList.remove('hidden');
             }
-            updateWalletPayButtonLabel();
+            refreshModalPriceSummary();
         }
 
-        window.closeModal = function() {
-            document.getElementById('packageModal').classList.add('hidden');
-            resetCouponState();
+        window.closeModal = function() { document.getElementById('packageModal').classList.add('hidden'); }
+
+        function consumeStockKeyForDuration(panel, durationLabel) {
+            const stockMap = ensurePanelDurationStockMap(panel);
+            const targetDur = String(durationLabel || '').trim();
+            if (targetDur && Array.isArray(stockMap[targetDur]) && stockMap[targetDur].length > 0) {
+                return stockMap[targetDur].shift();
+            }
+            return null;
         }
 
         window.checkout = function() {
@@ -4301,319 +4405,259 @@ Current User Info:
                 alert("দয়া করে একটি প্যাকেজ সিলেক্ট করুন!");
                 return;
             }
-
-            if (isPanelStockOut(selectedPanel) || isPackageStockOut(selectedPackage)) {
-                if (typeof window.playTapSound === 'function') window.playTapSound('stockout');
+            if (isPanelStockOut(selectedPanel)) {
+                window.handleStockOutPanelClick(selectedPanel.id);
+                return;
+            }
+            if (isPackageStockOut(selectedPackage)) {
+                if (typeof window.playTapSound === 'function') {
+                    window.playTapSound('stockout');
+                }
                 if (typeof window.showPaymentErrorToast === 'function') {
-                    window.showPaymentErrorToast('এই প্যাকেজটি বর্তমানে Stock Out আছে, অর্ডার করা যাবে না।');
-                } else {
-                    alert("এই প্যাকেজটি বর্তমানে Stock Out আছে, অর্ডার করা যাবে না।");
+                    window.showPaymentErrorToast(`${selectedPackage.time} প্যাকেজটি Stock Out আছে!`);
                 }
                 return;
             }
 
-            const finalPrice = getFinalPackagePrice();
-            const currentBal = getUserBalance();
+            const priceInfo = getDiscountedPackagePrice(selectedPackage.price);
+            const finalAmount = priceInfo.finalPrice;
             const orderCode = generateSixDigitOrderId();
-            const orderTs = Date.now();
-            const orderDateStr = formatCardDateTime(orderTs);
-
-            const stockMap = ensurePanelDurationStockMap(selectedPanel);
-            const pkgTimeKey = selectedPackage.time;
-            const durationQueue = Array.isArray(stockMap[pkgTimeKey]) ? stockMap[pkgTimeKey] : [];
-            const isAutoOn = (storeData.autoDeliveryActive === true || storeData.autoDeliveryActive === "true");
-            const hasAutoStockKey = isAutoOn && durationQueue.length > 0;
-            const initialStatus = hasAutoStockKey ? "Completed" : "Pending";
+            const createdAtTs = Date.now();
+            const formattedDate = formatCardDateTime(createdAtTs);
+            const buyerLabel = buildRecentBuyerLabel(clientUid);
+            const orderDetailsStr = `${selectedPanel.name} (${selectedPackage.time})`;
 
             if(activePaymentMode === 'wallet') {
-                if(currentBal < finalPrice) {
-                    alert(`আপনার অ্যাকাউন্ট ব্যালেন্স কম! (প্রয়োজন: ৳${finalPrice}, আছে: ৳${currentBal})। Add Fund করুন।`);
+                const currentBal = getUserBalance();
+                if(currentBal < finalAmount) {
+                    alert("পর্যাপ্ত ব্যালেন্স নেই! অনুগ্রহ করে Add Fund করুন অথবা Nobab Pay Auto ব্যবহার করুন।");
                     return;
                 }
 
                 if(!storeData.userBalances) storeData.userBalances = {};
-                storeData.userBalances[clientUid] = currentBal - finalPrice;
+                storeData.userBalances[clientUid] = currentBal - finalAmount;
 
-                if(!storeData.orders) storeData.orders = [];
-                const newOrderObj = {
-                    id: orderCode,
-                    orderCode: orderCode,
-                    uid: clientUid,
-                    supportPin: clientSupportPin,
-                    name: selectedPanel.name,
-                    time: selectedPackage.time,
-                    price: finalPrice,
-                    originalPrice: Number(selectedPackage.price || 0),
-                    couponUsed: appliedCouponCode || null,
-                    couponDiscount: appliedCouponDiscount || 0,
-                    paymentMode: 'wallet',
-                    status: initialStatus,
-                    timestamp: orderTs,
-                    date: orderDateStr
-                };
-                storeData.orders.unshift(newOrderObj);
-
-                if (hasAutoStockKey) {
-                    const deliveredKeyStr = durationQueue.shift();
-                    stockMap[pkgTimeKey] = durationQueue;
-                    if(!storeData.keys) storeData.keys = [];
-                    storeData.keys.unshift({
-                        uid: clientUid,
-                        orderCode: orderCode,
-                        panelName: selectedPanel.name,
-                        time: selectedPackage.time,
-                        key: deliveredKeyStr,
-                        date: orderDateStr
-                    });
-
-                    const buyerLabel = buildRecentBuyerLabel(clientUid);
-                    pushCompletedRecentOrder(buyerLabel, `${selectedPanel.name} ${selectedPackage.time}`, `${finalPrice}৳`, clientUid);
-
-                    saveToFirebase(true);
-                    updateAccountUI();
-                    renderOrders();
-                    renderKeys();
-                    renderHomeTabContent();
-                    closeModal();
-                    showSuccessModal(`অটো ডেলিভারি সফল! (${pkgTimeKey} স্টক থেকে) আপনার Key (Order #${orderCode}) "My Keys" ট্যাবে পাঠানো হয়েছে।`);
-                } else {
-                    saveToFirebase(true);
-                    updateAccountUI();
-                    renderOrders();
-                    closeModal();
-                    showSuccessModal(`অর্ডার #${orderCode} সম্পন্ন হয়েছে! ৳${finalPrice} ব্যালেন্স থেকে কাটা হয়েছে। কি (Key) আসলে My Keys ট্যাবে দেখতে পাবেন।`);
+                const isAutoOn = (storeData.autoDeliveryActive === true || storeData.autoDeliveryActive === "true");
+                let deliveredKey = null;
+                if (isAutoOn) {
+                    deliveredKey = consumeStockKeyForDuration(selectedPanel, selectedPackage.time);
                 }
 
-                sendTelegramAlert(
-                    `🛒 <b>নতুন ওয়ালেট অর্ডার!</b>\n\n` +
-                    `🧾 <b>Order ID:</b> <code>#${orderCode}</code>\n` +
-                    `👤 <b>UID:</b> <code>${clientUid}</code>\n` +
-                    `🎮 <b>প্যানেল:</b> ${selectedPanel.name}\n` +
-                    `⏳ <b>প্যাকেজ:</b> ${selectedPackage.time}\n` +
-                    `💰 <b>মূল্য:</b> ৳${finalPrice}\n` +
-                    `📦 <b>স্ট্যাটাস:</b> ${initialStatus}\n` +
-                    `🕒 <b>সময়:</b> ${orderDateStr}`
-                );
-
-            } else {
-                const trxId = prompt(`পেমেন্ট নিশ্চিত করতে Transaction ID (TrxID) লিখুন (৳${finalPrice} এর জন্য):`);
-                if(!trxId || trxId.trim() === '') {
-                    alert("Transaction ID ছাড়া অর্ডার করা যাবে না!");
-                    return;
-                }
+                const orderStatus = deliveredKey ? "Completed" : "Pending";
 
                 if(!storeData.orders) storeData.orders = [];
                 storeData.orders.unshift({
                     id: orderCode,
                     orderCode: orderCode,
                     uid: clientUid,
-                    supportPin: clientSupportPin,
-                    name: selectedPanel.name,
-                    time: selectedPackage.time,
-                    price: finalPrice,
-                    originalPrice: Number(selectedPackage.price || 0),
-                    couponUsed: appliedCouponCode || null,
-                    couponDiscount: appliedCouponDiscount || 0,
-                    paymentMode: 'instant',
-                    trxId: trxId.trim().toUpperCase(),
-                    status: initialStatus,
-                    timestamp: orderTs,
-                    date: orderDateStr
+                    panel: selectedPanel.name,
+                    duration: selectedPackage.time,
+                    price: finalAmount,
+                    rawPrice: priceInfo.rawPrice,
+                    vipTier: priceInfo.vip.tierName,
+                    couponCode: appliedCouponCode || "",
+                    paymentMode: 'wallet',
+                    status: orderStatus,
+                    deliveredKey: deliveredKey || "",
+                    date: formattedDate,
+                    timestamp: createdAtTs
                 });
 
-                if (hasAutoStockKey) {
-                    const deliveredKeyStr = durationQueue.shift();
-                    stockMap[pkgTimeKey] = durationQueue;
+                if (deliveredKey) {
                     if(!storeData.keys) storeData.keys = [];
                     storeData.keys.unshift({
-                        uid: clientUid,
+                        id: orderCode,
                         orderCode: orderCode,
-                        panelName: selectedPanel.name,
-                        time: selectedPackage.time,
-                        key: deliveredKeyStr,
-                        date: orderDateStr
+                        uid: clientUid,
+                        panel: selectedPanel.name,
+                        duration: selectedPackage.time,
+                        key: deliveredKey,
+                        date: formattedDate,
+                        timestamp: createdAtTs
                     });
-
-                    const buyerLabel = buildRecentBuyerLabel(clientUid);
-                    pushCompletedRecentOrder(buyerLabel, `${selectedPanel.name} ${selectedPackage.time}`, `${finalPrice}৳`, clientUid);
+                    pushCompletedRecentOrder(buyerLabel, orderDetailsStr, `${finalAmount}৳`, clientUid);
                 }
 
                 saveToFirebase(true);
-                renderOrders();
-                renderKeys();
+                updateAccountUI();
+                renderPanels();
                 renderHomeTabContent();
-                closeModal();
-                showSuccessModal(`অর্ডার #${orderCode} জমা হয়েছে! অ্যাডমিন আপনার TrxID যাচাই করে কি (Key) পাঠিয়ে দেবেন।`);
 
                 sendTelegramAlert(
-                    `💳 <b>নতুন Instant পেমেন্ট অর্ডার!</b>\n\n` +
-                    `🧾 <b>Order ID:</b> <code>#${orderCode}</code>\n` +
+                    `🛒 <b>নতুন অর্ডার সম্পন্ন হয়েছে! (Wallet)</b>\n\n` +
+                    `🆔 <b>Order ID:</b> <code>${orderCode}</code>\n` +
                     `👤 <b>UID:</b> <code>${clientUid}</code>\n` +
+                    `📱 <b>ডিভাইস:</b> ${deviceDetails.model}\n` +
                     `🎮 <b>প্যানেল:</b> ${selectedPanel.name}\n` +
-                    `⏳ <b>প্যাকেজ:</b> ${selectedPackage.time}\n` +
-                    `💰 <b>মূল্য:</b> ৳${finalPrice}\n` +
-                    `🧾 <b>TrxID:</b> <code>${trxId.trim().toUpperCase()}</code>\n` +
-                    `🕒 <b>সময়:</b> ${orderDateStr}`
+                    `⏱ <b>প্যাকেজ:</b> ${selectedPackage.time}\n` +
+                    `👑 <b>VIP:</b> ${priceInfo.vip.tierName} (${priceInfo.vip.discountPercent}%)\n` +
+                    `💵 <b>মূল্য:</b> ৳${finalAmount}\n` +
+                    `🔑 <b>Key Status:</b> ${deliveredKey ? `Auto Delivered (<code>${deliveredKey}</code>)` : 'Pending Admin Delivery'}\n` +
+                    `🕒 <b>সময়:</b> ${new Date().toLocaleString()}`
                 );
+
+                closeModal();
+                if (deliveredKey) {
+                    showSuccessModal(`অর্ডার সম্পন্ন (ID: ${orderCode})! Auto Delivery থেকে কি পাঠানো হয়েছে: ${deliveredKey}`);
+                } else {
+                    showSuccessModal(`অর্ডার সম্পন্ন (ID: ${orderCode})! অ্যাডমিন আপনার কি পাঠিয়ে দেবেন।`);
+                }
+            } else {
+                const activeName = (storeData && storeData.profileName) || 'Customer';
+                closeModal();
+                window.startNobabAutoPayment({
+                    uid: clientUid,
+                    amount: finalAmount,
+                    fullName: activeName,
+                    purpose: 'buy_panel',
+                    panelId: selectedPanel.id,
+                    panelName: selectedPanel.name,
+                    duration: selectedPackage.time,
+                    couponCode: appliedCouponCode || "",
+                    couponDiscount: Number(priceInfo.vipDiscountAmt + priceInfo.couponDiscountAmt),
+                    submitBtnId: 'checkoutActionBtn'
+                });
             }
         }
 
-        window.submitAddFundRequest = function(verifiedTrxCode = null) {
-            const amtInput = document.getElementById('addAmountInput');
-            const amount = Number(amtInput ? amtInput.value : 0);
+        window.submitAddFundRequest = function(verifiedTrxId = '') {
+            const amount = Number(document.getElementById('addAmountInput').value);
+            const trxId = String(verifiedTrxId || window.__submittedTrxId || '').trim().toUpperCase();
 
-            if(!amount || isNaN(amount) || amount < 10) {
-                if (typeof window.showPaymentErrorToast === 'function') {
-                    window.showPaymentErrorToast('সর্বনিম্ন ৳10 অ্যামাউন্ট লিখুন!');
-                } else {
-                    alert("সর্বনিম্ন ৳10 অ্যামাউন্ট লিখুন!");
-                }
+            if(!amount || isNaN(amount) || amount <= 0) {
+                alert("দয়া করে সঠিক টাকার পরিমাণ লিখুন!");
                 return;
             }
-            if(amount > 50000) {
-                if (typeof window.showPaymentErrorToast === 'function') {
-                    window.showPaymentErrorToast('সর্বোচ্চ ৳50,000 পর্যন্ত অ্যাড করা যাবে!');
-                } else {
-                    alert("সর্বোচ্চ ৳50,000 পর্যন্ত অ্যাড করা যাবে!");
-                }
+            if(amount < 10) {
+                alert("সর্বনিম্ন ৳10 অ্যাড করা যাবে!");
+                return;
+            }
+            if(!trxId) {
+                alert("দয়া করে সঠিক Transaction ID দিন!");
                 return;
             }
 
-            let trx = verifiedTrxCode || window.__submittedTrxId || '';
-            if (!trx) {
-                trx = prompt("টাকা পাঠানোর পর Transaction ID (TrxID) লিখুন:");
-            }
-            if(!trx || String(trx).trim() === '') {
-                if (typeof window.showPaymentErrorToast === 'function') {
-                    window.showPaymentErrorToast('Transaction ID ছাড়া রিকোয়েস্ট পাঠানো যাবে না!');
-                }
-                return;
-            }
-
-            const cleanTrx = String(trx).trim().toUpperCase();
-            window.__submittedTrxId = '';
-
-            if(!Array.isArray(storeData.fundRequests)) storeData.fundRequests = [];
+            if(!storeData.fundRequests) storeData.fundRequests = [];
             const nowTs = Date.now();
-            const reqId = 'FND-' + Math.floor(100000 + Math.random() * 900000);
-
             storeData.fundRequests.unshift({
-                id: reqId,
+                id: 'FND-' + Math.floor(100000 + Math.random() * 900000),
                 uid: clientUid,
-                supportPin: clientSupportPin,
+                deviceId: deviceId,
                 deviceModel: deviceDetails.model,
                 amount: amount,
-                trxId: cleanTrx,
+                trxId: trxId,
                 status: 'Pending',
                 timestamp: nowTs,
                 date: new Date(nowTs).toLocaleString()
             });
 
             storeData.fundRequests = enforceMaxFiveFundRequests(storeData.fundRequests);
+            window.__submittedTrxId = '';
+
+            document.getElementById('addAmountInput').value = '';
+            document.querySelectorAll('#quickAmountChips .quick-amt-chip').forEach(chip => chip.classList.remove('active'));
 
             saveToFirebase(true);
             renderMyFundRequests();
-            if(amtInput) amtInput.value = '';
-            document.querySelectorAll('#quickAmountChips .quick-amt-chip').forEach(c => c.classList.remove('active'));
-            startFundTimer();
+            window.switchFundSubTab('history');
 
             sendTelegramAlert(
-                `💰 <b>নতুন Add Fund রিকোয়েস্ট!</b>\n\n` +
-                `🆔 <b>Req ID:</b> <code>${reqId}</code>\n` +
+                `💰 <b>নতুন Fund Request এসেছে!</b>\n\n` +
                 `👤 <b>UID:</b> <code>${clientUid}</code>\n` +
-                `🔑 <b>Support PIN:</b> <code>${clientSupportPin}</code>\n` +
                 `📱 <b>ডিভাইস:</b> ${deviceDetails.model}\n` +
-                `💵 <b>অ্যামাউন্ট:</b> ৳${amount}\n` +
-                `🧾 <b>TrxID:</b> <code>${cleanTrx}</code>\n` +
-                `⏳ <b>মেয়াদ:</b> ৫ মিনিট\n` +
+                `💵 <b>টাকার পরিমাণ:</b> ৳${amount}\n` +
+                `🧾 <b>Transaction ID:</b> <code>${trxId}</code>\n` +
+                `⏳ <b>মেয়াদ:</b> 5 মিনিট\n` +
                 `🕒 <b>সময়:</b> ${new Date(nowTs).toLocaleString()}`
             );
 
-            showSuccessModal(`৳${amount} অ্যাড ফান্ড রিকোয়েস্ট (৫ মিনিট মেয়াদসহ) অ্যাডমিনের কাছে পাঠানো হয়েছে! যাচাই শেষে ব্যালেন্স যুক্ত হবে।`);
+            showSuccessModal("আপনার Fund Request (৫ মিনিটের মেয়াদে) সাবমিট হয়েছে! অ্যাডমিন যাচাই করে ব্যালেন্স যুক্ত করে দেবেন।");
         }
 
         function renderMyFundRequests() {
             processFundRequestsLifecycle(false);
-            const container = document.getElementById('myFundRequestsList');
-            if(!container) return;
+            const list = document.getElementById('myFundRequestsList');
+            if(!list) return;
 
-            const myReqs = (storeData.fundRequests || []).filter(r => r.uid === clientUid).slice(0, MAX_FUND_REQUESTS_DISPLAY);
+            const myReqs = enforceMaxFiveFundRequests((storeData.fundRequests || []).filter(r => r.uid === clientUid));
             if(myReqs.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">No fund requests submitted.</p>`;
+                list.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">No fund requests submitted.</p>`;
                 return;
             }
 
-            container.innerHTML = '';
-            myReqs.forEach(r => {
-                let badgeClass = "bg-amber-100 text-amber-700";
-                let statusLabel = r.status;
-                if(r.status === 'Approved') {
-                    badgeClass = "bg-emerald-100 text-emerald-700";
-                    statusLabel = "Approved";
-                } else if(r.status === 'Rejected') {
-                    badgeClass = "bg-rose-100 text-rose-700";
-                    statusLabel = "Rejected";
-                } else if(r.status === 'Expired') {
-                    badgeClass = "bg-slate-200 text-slate-600";
-                    statusLabel = "Expired (5m)";
+            list.innerHTML = '';
+            myReqs.forEach(req => {
+                let statusBadge = `<span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full text-[10px] font-bold">Pending</span>`;
+                let timerSubHtml = '';
+
+                if(req.status === 'Approved') {
+                    statusBadge = `<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full text-[10px] font-bold">Approved</span>`;
+                } else if(req.status === 'Rejected') {
+                    statusBadge = `<span class="bg-red-100 text-red-700 px-2 py-0.5 rounded-full text-[10px] font-bold">Rejected</span>`;
+                } else if(req.status === 'Expired') {
+                    statusBadge = `<span class="bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full text-[10px] font-bold">Expired</span>`;
+                    timerSubHtml = `<p class="text-[10px] text-rose-600 font-bold mt-0.5">৫ মিনিট শেষ — কিছুক্ষণের মধ্যে মুছে যাবে</p>`;
                 } else {
-                    const rem = formatMmSs(getFundRemainingMs(r));
-                    statusLabel = `Pending (${rem})`;
+                    const remMs = getFundRemainingMs(req);
+                    timerSubHtml = `<p class="text-[10px] text-indigo-600 font-mono font-bold mt-0.5">বাকি সময়: ${formatMmSs(remMs)}</p>`;
                 }
 
-                container.innerHTML += `
-                    <div class="bg-slate-50 border border-slate-200 p-3 rounded-2xl flex justify-between items-center text-xs">
+                list.innerHTML += `
+                    <div class="bg-slate-50 border border-slate-200 p-3 rounded-2xl flex justify-between items-center text-xs shadow-sm">
                         <div>
-                            <p class="font-bold text-slate-800">Amount: <span class="dynamic-theme-text">৳${r.amount}</span> • <span class="font-mono text-[11px] bg-white px-1.5 py-0.5 rounded border border-slate-200">${escapeHtml(r.trxId)}</span></p>
-                            <p class="text-[10px] text-slate-400 mt-0.5">${escapeHtml(r.date || '')}</p>
+                            <p class="font-bold text-slate-800">Amount: <span class="text-emerald-600">৳${req.amount}</span></p>
+                            <p class="text-[11px] font-mono text-slate-600 mt-0.5">TrxID: <strong>${req.trxId}</strong></p>
+                            ${timerSubHtml}
+                            <p class="text-[10px] text-slate-400 mt-0.5">${req.date || ''}</p>
                         </div>
-                        <span class="${badgeClass} text-[10px] font-bold px-2.5 py-1 rounded-full shrink-0">${statusLabel}</span>
+                        <div class="text-right">
+                            ${statusBadge}
+                        </div>
                     </div>
                 `;
             });
         }
 
-        setInterval(() => {
-            const changed = processFundRequestsLifecycle(true);
-            const fundViewOpen = document.getElementById('fundView') && !document.getElementById('fundView').classList.contains('hidden');
-            const adminOpen = document.getElementById('adminDashboard') && !document.getElementById('adminDashboard').classList.contains('hidden');
-            if (changed || fundViewOpen) {
-                renderMyFundRequests();
-            }
-            if (changed || adminOpen) {
-                renderAdminFundRequests();
-            }
-            updateSpinAvailabilityUI();
-        }, 1000);
-
         function renderOrders() {
             const container = document.getElementById('orderListContainer');
             const myOrders = (storeData.orders || []).filter(o => o.uid === clientUid);
+            
             if(myOrders.length === 0) {
                 container.innerHTML = `<p class="text-xs text-slate-400 text-center py-10">No orders placed yet.</p>`;
                 return;
             }
+            
             container.innerHTML = '';
             myOrders.forEach(order => {
-                const isComp = order.status === 'Completed';
-                const oCode = order.orderCode || order.id || '000000';
-                const oDate = order.date || formatCardDateTime(order.timestamp || Date.now());
-                const modeLabel = order.paymentMode === 'instant' ? 'Instant Pay' : 'Wallet';
-                const statusBadge = isComp
-                    ? `<span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-extrabold px-2.5 py-1 rounded-full">✓ Completed</span>`
-                    : `<span class="bg-amber-50 text-amber-700 border border-amber-200 text-[10px] font-extrabold px-2.5 py-1 rounded-full">⏳ Pending</span>`;
+                const displayCode = order.orderCode || order.id;
+                const displayDate = order.date || formatCardDateTime(order.timestamp || Date.now());
+                const isCompleted = (order.status === 'Completed');
+
+                const statusBadgeHtml = isCompleted
+                    ? `<span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full">Completed</span>`
+                    : `<span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full">Pending</span>`;
+
+                const keyBoxHtml = order.deliveredKey
+                    ? `<div class="mt-2.5 bg-emerald-50 border border-emerald-200 rounded-xl p-2 flex items-center justify-between gap-2">
+                        <code class="text-[11px] font-mono font-extrabold text-emerald-900 select-all break-all">${escapeHtml(order.deliveredKey)}</code>
+                        <button type="button" onclick="copyPurchasedKey('${String(order.deliveredKey).replace(/'/g, "\\'")}')" class="bg-emerald-600 text-white px-2.5 py-1 rounded-lg text-[10px] font-bold cursor-pointer shrink-0">Copy</button>
+                       </div>`
+                    : '';
 
                 container.innerHTML += `
-                    <div class="bg-white border border-slate-200 p-3.5 rounded-2xl flex justify-between items-center shadow-sm gap-2">
-                        <div class="min-w-0">
-                            <div class="flex items-center gap-1.5 flex-wrap">
-                                <span class="bg-indigo-50 text-indigo-700 border border-indigo-200 px-2 py-0.5 rounded font-mono font-extrabold text-[10px]">#${escapeHtml(oCode)}</span>
-                                <h4 class="font-extrabold text-xs text-slate-800 truncate">${escapeHtml(order.name)}</h4>
+                    <div class="bg-white border border-slate-200 p-3.5 rounded-2xl text-xs shadow-sm">
+                        <div class="flex justify-between items-start gap-2">
+                            <div>
+                                <p class="font-bold text-slate-800">${escapeHtml(order.panel)} (${escapeHtml(order.duration)})</p>
+                                <p class="text-[11px] font-mono font-bold text-indigo-700 mt-0.5">Order ID: #${escapeHtml(String(displayCode))}</p>
+                                <p class="text-[10px] text-slate-500 mt-0.5"><i class="fa-regular fa-clock mr-1"></i>${escapeHtml(displayDate)}</p>
                             </div>
-                            <p class="text-[11px] text-slate-500 mt-1 font-semibold">${escapeHtml(order.time)} • <span class="font-bold text-slate-800">৳${order.price}</span> <span class="text-[10px] text-slate-400">(${modeLabel})</span></p>
-                            <p class="text-[10px] text-slate-400 font-mono mt-0.5">${escapeHtml(oDate)}</p>
+                            <div class="text-right">
+                                <span class="font-bold text-emerald-600 block">৳${order.price}</span>
+                                <div class="mt-1">${statusBadgeHtml}</div>
+                            </div>
                         </div>
-                        <div class="shrink-0">${statusBadge}</div>
+                        ${keyBoxHtml}
                     </div>
                 `;
             });
@@ -4621,74 +4665,78 @@ Current User Info:
 
         function renderKeys() {
             const container = document.getElementById('keysContainer');
-            const badgeEl = document.getElementById('myKeysTotalBadge');
+            const badge = document.getElementById('myKeysTotalBadge');
             const myKeys = (storeData.keys || []).filter(k => k.uid === clientUid);
-            if (badgeEl) badgeEl.innerText = `${myKeys.length} Key${myKeys.length === 1 ? '' : 's'}`;
+            if (badge) badge.innerText = `${myKeys.length} Key${myKeys.length !== 1 ? 's' : ''}`;
 
             if(myKeys.length === 0) {
                 container.innerHTML = `<p class="text-xs text-slate-400 text-center py-10">No keys delivered yet. After payment, Admin will send your key here.</p>`;
                 return;
             }
+            
             container.innerHTML = '';
-            myKeys.forEach((k, idx) => {
-                const safeKeyStr = String(k.key || '').replace(/'/g, "\\'");
-                const keyOrderId = k.orderCode || String(100000 + ((idx * 7919) % 899999));
-                const keyDate = k.date || formatCardDateTime(k.timestamp || Date.now());
-                const keyDuration = k.time || 'Standard';
+            const grpBtnName = (storeData.paidGroupBtnName && storeData.paidGroupBtnName.trim() !== '')
+                ? storeData.paidGroupBtnName.trim()
+                : "Join Paid User Group";
+            const grpLink = (storeData.paidGroupLink && storeData.paidGroupLink.trim() !== '')
+                ? storeData.paidGroupLink.trim()
+                : "";
+
+            myKeys.forEach(k => {
+                const escapedKey = String(k.key || '').replace(/'/g, "\\'");
+                const displayOrderCode = k.orderCode || k.id || "N/A";
+                const displayDate = k.date || formatCardDateTime(k.timestamp || Date.now());
+
+                const paidGroupBtnHtml = grpLink
+                    ? `<a href="${escapeHtml(grpLink)}" target="_blank" rel="noopener noreferrer" class="mt-3 w-full bg-sky-600 hover:bg-sky-700 text-white py-2.5 px-3 rounded-xl text-xs font-extrabold flex items-center justify-center gap-2 transition shadow-md">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span>${escapeHtml(grpBtnName)}</span>
+                       </a>`
+                    : '';
 
                 container.innerHTML += `
-                    <div class="bg-white border-2 border-indigo-200 rounded-3xl p-4 shadow-md space-y-3">
-                        <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
-                            <span class="bg-indigo-600 text-white font-mono font-black text-xs px-3 py-1 rounded-xl shadow-sm">Order #${escapeHtml(keyOrderId)}</span>
-                            <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-extrabold px-2.5 py-1 rounded-full">✓ Delivered</span>
+                    <div class="bg-white border border-slate-200 p-4 rounded-2xl shadow-md">
+                        <div class="flex justify-between items-start gap-2 mb-2">
+                            <div>
+                                <p class="font-extrabold text-sm text-slate-900">${escapeHtml(k.panel)}</p>
+                                <p class="text-[11px] font-bold text-slate-500 mt-0.5">${escapeHtml(k.duration)}</p>
+                            </div>
+                            <span class="bg-emerald-100 text-emerald-700 text-[10px] font-extrabold px-2.5 py-1 rounded-full">Delivered</span>
                         </div>
 
-                        <div class="space-y-1 text-xs">
-                            <div class="flex items-center justify-between gap-2">
-                                <span class="text-slate-500 font-semibold">Panel:</span>
-                                <span class="font-extrabold text-slate-900 text-right">${escapeHtml(k.panelName)}</span>
-                            </div>
-                            <div class="flex items-center justify-between gap-2">
-                                <span class="text-slate-500 font-semibold">Duration:</span>
-                                <span class="font-bold text-indigo-700">${escapeHtml(keyDuration)}</span>
-                            </div>
-                            <div class="flex items-center justify-between gap-2">
-                                <span class="text-slate-500 font-semibold">Date:</span>
-                                <span class="font-mono text-[11px] font-semibold text-slate-600">${escapeHtml(keyDate)}</span>
-                            </div>
-                        </div>
-
-                        <div class="bg-slate-900 text-emerald-400 p-3 rounded-2xl flex items-center justify-between gap-2 border border-slate-800 shadow-inner">
-                            <div class="min-w-0">
-                                <span class="text-[9px] uppercase tracking-wider text-slate-400 font-bold block">Access Key</span>
-                                <span class="font-mono text-xs font-extrabold break-all select-all text-emerald-300">${escapeHtml(k.key)}</span>
-                            </div>
-                            <button type="button" onclick="copyPurchasedKey('${safeKeyStr}')" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-extrabold text-[11px] px-3 py-2 rounded-xl transition cursor-pointer shadow shrink-0 flex items-center gap-1">
-                                <i class="fa-regular fa-copy"></i> Copy
+                        <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl flex items-center justify-between gap-2">
+                            <code class="text-xs font-mono font-extrabold text-indigo-900 select-all break-all">${escapeHtml(k.key)}</code>
+                            <button type="button" onclick="copyPurchasedKey('${escapedKey}')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg text-[11px] font-bold cursor-pointer shrink-0 shadow-sm">
+                                Copy
                             </button>
                         </div>
+
+                        <div class="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] font-mono text-slate-500">
+                            <span>Order ID: <strong class="text-slate-700">#${escapeHtml(String(displayOrderCode))}</strong></span>
+                            <span>${escapeHtml(displayDate)}</span>
+                        </div>
+
+                        ${paidGroupBtnHtml}
                     </div>
                 `;
             });
         }
 
-        // ==================== ADMIN LOGIN & DASHBOARD ====================
         window.verifyAdmin = async function() {
-            const pinInput = document.getElementById('adminPinInput').value;
-            if(!pinInput) return;
+            const inputPin = document.getElementById('adminPinInput').value;
+            const inputHash = await sha256(inputPin);
+            const activeHash = window.__currentAdminHash || storeData.adminHash || defaultStoreData.adminHash;
 
-            const inputHash = await sha256(pinInput);
-            const activeAdminHash = window.__currentAdminHash || (storeData && storeData.adminHash) || defaultStoreData.adminHash;
-
-            if(inputHash === activeAdminHash || pinInput === "admin123") {
+            if(inputHash === activeHash) {
                 window.__adminUnlockedSession = true;
+                localStorage.setItem('panelOwnerDeviceID', deviceId);
+                localStorage.setItem('panelOwnerUID', clientUid);
                 closeAdminModal();
                 checkAppUpdateState();
                 checkMaintenanceState();
-                checkLiveSuspension();
                 openAdminDashboard();
             } else {
-                alert("Incorrect Admin PIN!");
+                alert("ভুল Admin PIN! আবার চেষ্টা করুন।");
             }
         }
 
@@ -4711,6 +4759,8 @@ Current User Info:
             document.getElementById('editProfileName').value = storeData.profileName || "";
             document.getElementById('editProfileBio').value = storeData.profileBio || "";
             document.getElementById('editFooterText').value = storeData.footerText || "";
+            syncAdminImagePreviews();
+
             document.getElementById('editNotice').value = storeData.notice || "";
             document.getElementById('editWhatsapp').value = storeData.whatsapp || "";
             document.getElementById('editPaidGroupBtnName').value = storeData.paidGroupBtnName || "Join Paid User Group";
@@ -4725,13 +4775,13 @@ Current User Info:
             document.getElementById('editAppUpdateMsg').value = storeData.appUpdateMsg || "নতুন ভার্সন আপডেট চলছে, অনুগ্রহ করে অপেক্ষা করুন।";
 
             document.getElementById('editMaintenanceActive').value = (storeData.maintenanceActive === true || storeData.maintenanceActive === "true") ? "true" : "false";
-            document.getElementById('editMaintenanceMsg').value = storeData.maintenanceMsg || "সার্ভার ও প্যানেল আপডেটের কাজ চলছে, সাময়িকভাবে বন্ধ আছে।";
+            document.getElementById('editMaintenanceMsg').value = storeData.maintenanceMsg || "সার্ভার ও প্যানেল আপডেটের কাজ চলছে।";
             document.getElementById('editMaintenanceBypassIds').value = Array.isArray(storeData.maintenanceBypassIds) ? storeData.maintenanceBypassIds.join(', ') : "";
-            document.getElementById('currentMyIdsHint').innerText = `আপনার বর্তমান UID: ${clientUid} | Device ID: ${deviceId}`;
+            const hintEl = document.getElementById('currentMyIdsHint');
+            if (hintEl) hintEl.innerText = `আপনার বর্তমান UID: ${clientUid} | Device: ${deviceId}`;
 
             document.getElementById('editAutoDeliveryActive').value = (storeData.autoDeliveryActive === true || storeData.autoDeliveryActive === "true") ? "true" : "false";
 
-            syncAdminImagePreviews();
             renderAdminPaymentChannels();
             renderAdminSpinSettings();
             renderAdminLiveChats();
@@ -4745,6 +4795,7 @@ Current User Info:
         }
 
         window.closeAdminDashboard = function() {
+            window.__adminUnlockedSession = false;
             document.getElementById('adminDashboard').classList.add('hidden');
             checkAppUpdateState();
             checkMaintenanceState();
@@ -4752,515 +4803,533 @@ Current User Info:
         }
 
         window.saveGeneralSettings = function() {
-            const logoInputVal = document.getElementById('editLogoUrl').value.trim();
-            const bannerInputVal = document.getElementById('editBannerImg').value.trim();
-
             storeData.themeColor = document.getElementById('editThemeColor').value;
             storeData.ownerColor = document.getElementById('editOwnerColor').value;
-            storeData.ownerFullText = document.getElementById('editOwnerName').value.trim() || "Owner ALAMIN";
-            
-            storeData.bannerImg = bannerInputVal || "https://i.ibb.co/2kQ4Q1L/1000015879.jpg";
+            storeData.ownerFullText = document.getElementById('editOwnerName').value.trim();
+            storeData.bannerImg = document.getElementById('editBannerImg').value.trim();
             storeData.bannerLink = document.getElementById('editBannerLink').value.trim();
-            storeData.popupActive = document.getElementById('editPopupActive').value === 'true';
-            storeData.popupTitle = document.getElementById('editPopupTitle').value.trim();
-            storeData.popupMsg = document.getElementById('editPopupMsg').value.trim();
+            storeData.popupActive = document.getElementById('editPopupActive').value === "true";
+            storeData.popupTitle = document.getElementById('editPopupTitle').value;
+            storeData.popupMsg = document.getElementById('editPopupMsg').value;
 
-            storeData.appName = document.getElementById('editAppName').value.trim() || "PANEL SELLER";
-            storeData.appSub = document.getElementById('editAppSub').value.trim();
-            storeData.logoUrl = logoInputVal || "https://i.ibb.co/3W9v93z/default.png";
-            storeData.profileName = document.getElementById('editProfileName').value.trim() || "Ⱥʟᴀᴍɪﻦ";
-            storeData.profileBio = document.getElementById('editProfileBio').value.trim();
-            storeData.footerText = document.getElementById('editFooterText').value.trim();
-            storeData.notice = document.getElementById('editNotice').value.trim();
-            storeData.whatsapp = document.getElementById('editWhatsapp').value.trim();
-            storeData.paidGroupBtnName = document.getElementById('editPaidGroupBtnName').value.trim() || "Join Paid User Group";
+            storeData.appName = document.getElementById('editAppName').value;
+            storeData.appSub = document.getElementById('editAppSub').value;
+            storeData.logoUrl = document.getElementById('editLogoUrl').value;
+            storeData.profileName = document.getElementById('editProfileName').value;
+            storeData.profileBio = document.getElementById('editProfileBio').value;
+            storeData.footerText = document.getElementById('editFooterText').value;
+
+            storeData.notice = document.getElementById('editNotice').value;
+            storeData.whatsapp = document.getElementById('editWhatsapp').value;
+            storeData.paidGroupBtnName = document.getElementById('editPaidGroupBtnName').value.trim();
             storeData.paidGroupLink = document.getElementById('editPaidGroupLink').value.trim();
-            storeData.bkash = document.getElementById('editBkash').value.trim();
-            storeData.nagad = document.getElementById('editNagad').value.trim();
+            storeData.bkash = document.getElementById('editBkash').value;
+            storeData.nagad = document.getElementById('editNagad').value;
 
-            const syncedChannels = window.getNormalizedPaymentChannels().map(ch => {
-                if (ch.id === 'bkash' && storeData.bkash) return { ...ch, number: storeData.bkash };
-                if (ch.id === 'nagad' && storeData.nagad) return { ...ch, number: storeData.nagad };
-                return ch;
-            });
-            storeData.paymentChannels = syncedChannels;
+            const channels = window.getNormalizedPaymentChannels();
+            const bkCh = channels.find(c => c.id === 'bkash');
+            const ngCh = channels.find(c => c.id === 'nagad');
+            if (bkCh && storeData.bkash) bkCh.number = storeData.bkash;
+            if (ngCh && storeData.nagad) ngCh.number = storeData.nagad;
+            storeData.paymentChannels = channels;
 
-            storeData.aiChatEnabled = document.getElementById('editAiChatActive').value === 'true';
+            storeData.aiChatEnabled = document.getElementById('editAiChatActive').value === "true";
             storeData.aiGeminiApiKey = document.getElementById('editAiApiKey').value.trim();
 
-            storeData.appUpdating = document.getElementById('editAppUpdatingActive').value === 'true';
-            storeData.appUpdateMsg = document.getElementById('editAppUpdateMsg').value.trim() || "নতুন ভার্সন আপডেট চলছে, অনুগ্রহ করে অপেক্ষা করুন।";
+            storeData.appUpdating = document.getElementById('editAppUpdatingActive').value === "true";
+            storeData.appUpdateMsg = document.getElementById('editAppUpdateMsg').value.trim();
 
-            storeData.maintenanceActive = document.getElementById('editMaintenanceActive').value === 'true';
-            storeData.maintenanceMsg = document.getElementById('editMaintenanceMsg').value.trim() || "সার্ভার ও প্যানেল আপডেটের কাজ চলছে, সাময়িকভাবে বন্ধ আছে।";
-
+            storeData.maintenanceActive = document.getElementById('editMaintenanceActive').value === "true";
+            storeData.maintenanceMsg = document.getElementById('editMaintenanceMsg').value.trim();
             const rawBypass = document.getElementById('editMaintenanceBypassIds').value || "";
-            storeData.maintenanceBypassIds = rawBypass
-                .split(',')
-                .map(s => s.trim())
-                .filter(Boolean);
+            storeData.maintenanceBypassIds = rawBypass.split(',').map(s => s.trim()).filter(Boolean);
 
-            storeData.autoDeliveryActive = document.getElementById('editAutoDeliveryActive').value === 'true';
+            storeData.autoDeliveryActive = document.getElementById('editAutoDeliveryActive').value === "true";
 
-            if (!storeData.dailySpin) storeData.dailySpin = structuredClone(defaultSpinConfig);
-            storeData.dailySpin.enabled = document.getElementById('editDailySpinActive').value === 'true';
+            if (storeData.dailySpin) {
+                storeData.dailySpin.enabled = document.getElementById('editDailySpinActive').value === "true";
+            }
 
-            syncAdminImagePreviews();
+            popupShown = false;
             saveToFirebase(true);
-            renderUI();
-            updateAiChatStatusBadge();
-            updateSpinAvailabilityUI();
             checkAppUpdateState();
             checkMaintenanceState();
-            showSuccessModal('সব সেটিংস সফলভাবে সেভ ও লাইভ হয়েছে!');
+            updateAiChatStatusBadge();
+            updateSpinAvailabilityUI();
+            renderUI();
+            showSuccessModal("সব সেটিংস সফলভাবে সেভ করা হয়েছে!");
         }
 
         window.updateAdminPin = async function() {
             const newPin = document.getElementById('newAdminPin').value.trim();
-            if(!newPin || newPin.length < 4) {
-                alert("দয়া করে অন্তত ৪ ডিজিটের নতুন Admin PIN দিন!");
+            if(!newPin) {
+                alert("নতুন PIN লিখুন!");
                 return;
             }
-            const hashed = await sha256(newPin);
-            storeData.adminHash = hashed;
-            window.__currentAdminHash = hashed;
+            const newHash = await sha256(newPin);
+            storeData.adminHash = newHash;
+            window.__currentAdminHash = newHash;
             document.getElementById('newAdminPin').value = '';
             saveToFirebase(true);
-            showSuccessModal('নতুন Admin PIN সফলভাবে আপডেট হয়েছে!');
+            showSuccessModal("Admin PIN সফলভাবে আপডেট হয়েছে!");
         }
 
-        // ==================== ADMIN FUND APPROVAL & LIFECYCLE ====================
+        window.modifyUserBalance = function(type) {
+            const uidInput = document.getElementById('adjBalanceUid');
+            const amtInput = document.getElementById('adjBalanceAmt');
+            const targetUid = uidInput ? uidInput.value.trim() : '';
+            const amount = Number(amtInput ? amtInput.value : 0);
+
+            if(!targetUid) {
+                alert("দয়া করে ইউজারের 8-ডিজিট UID লিখুন!");
+                return;
+            }
+            if(!amount || isNaN(amount) || amount <= 0) {
+                alert("সঠিক টাকার পরিমাণ লিখুন!");
+                return;
+            }
+
+            if(!storeData.userBalances) storeData.userBalances = {};
+            const currentBal = Number(storeData.userBalances[targetUid] || 0);
+
+            if(type === 'add') {
+                storeData.userBalances[targetUid] = currentBal + amount;
+                if (storeData.users && storeData.users[targetUid]) {
+                    storeData.users[targetUid].balance = storeData.userBalances[targetUid];
+                }
+                if (uidInput) uidInput.value = '';
+                if (amtInput) amtInput.value = '';
+                saveToFirebase(true);
+                updateAccountUI();
+                showSuccessModal(`UID: ${targetUid} এর ব্যালেন্সে ৳${amount} যোগ করা হয়েছে!`);
+            } else if(type === 'sub') {
+                if(currentBal < amount) {
+                    alert(`এই ইউজারের বর্তমান ব্যালেন্স মাত্র ৳${currentBal}, এত টাকা কাটা যাবে না!`);
+                    return;
+                }
+                storeData.userBalances[targetUid] = currentBal - amount;
+                if (storeData.users && storeData.users[targetUid]) {
+                    storeData.users[targetUid].balance = storeData.userBalances[targetUid];
+                }
+                if (uidInput) uidInput.value = '';
+                if (amtInput) amtInput.value = '';
+                saveToFirebase(true);
+                updateAccountUI();
+                showSuccessModal(`UID: ${targetUid} এর ব্যালেন্স থেকে ৳${amount} কাটা হয়েছে!`);
+            }
+        }
+
         function renderAdminFundRequests() {
             processFundRequestsLifecycle(false);
-            const container = document.getElementById('adminFundRequestsList');
-            const badge = document.getElementById('pendingFundCount');
+            const list = document.getElementById('adminFundRequestsList');
+            const countBadge = document.getElementById('pendingFundCount');
             const filterSel = document.getElementById('adminFundFilterSelect');
-            if(!container) return;
+            if(!list) return;
 
-            const allReqs = storeData.fundRequests || [];
-            const pendingList = allReqs.filter(r => r.status === 'Pending');
-            if(badge) badge.innerText = `${pendingList.length} Pending`;
+            const allReqs = enforceMaxFiveFundRequests(storeData.fundRequests || []);
+            const pendingCount = allReqs.filter(r => r.status === 'Pending').length;
+            if(countBadge) countBadge.innerText = `${pendingCount} Pending`;
 
             const filterVal = filterSel ? filterSel.value : 'Pending';
-            const displayList = filterVal === 'All'
+            const filteredReqs = filterVal === 'All'
                 ? allReqs
                 : allReqs.filter(r => r.status === filterVal);
 
-            if(displayList.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No ${filterVal.toLowerCase()} fund requests.</p>`;
+            if(filteredReqs.length === 0) {
+                list.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No ${filterVal.toLowerCase()} fund requests.</p>`;
                 return;
             }
 
-            container.innerHTML = '';
-            displayList.forEach(req => {
+            list.innerHTML = '';
+            filteredReqs.forEach((req) => {
+                const realIdx = allReqs.findIndex(item => item.id === req.id);
                 const isPending = req.status === 'Pending';
-                const isApproved = req.status === 'Approved';
-                const isExpired = req.status === 'Expired';
-                const remText = isPending ? formatMmSs(getFundRemainingMs(req)) : '';
+                const remMs = getFundRemainingMs(req);
 
-                let statusChip = `<span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full text-[10px] font-bold">Pending (${remText})</span>`;
-                if (isApproved) statusChip = `<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full text-[10px] font-bold">✓ Approved</span>`;
-                else if (req.status === 'Rejected') statusChip = `<span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded-full text-[10px] font-bold">✕ Rejected</span>`;
-                else if (isExpired) statusChip = `<span class="bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full text-[10px] font-bold">⌛ Expired</span>`;
+                const statusTag = isPending
+                    ? `<span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded text-[9px] font-bold">Pending (${formatMmSs(remMs)})</span>`
+                    : req.status === 'Approved'
+                        ? `<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded text-[9px] font-bold">Approved</span>`
+                        : req.status === 'Rejected'
+                            ? `<span class="bg-red-100 text-red-700 px-2 py-0.5 rounded text-[9px] font-bold">Rejected</span>`
+                            : `<span class="bg-slate-200 text-slate-700 px-2 py-0.5 rounded text-[9px] font-bold">Expired</span>`;
 
-                container.innerHTML += `
-                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 flex flex-col gap-2 text-xs">
-                        <div class="flex justify-between items-center gap-2">
+                list.innerHTML += `
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-2 text-xs">
+                        <div class="flex justify-between items-start gap-2">
                             <div>
-                                <span class="bg-red-50 text-red-600 border border-red-200 px-2 py-0.5 rounded font-mono font-extrabold text-[10px]">UID: ${req.uid}</span>
-                                <span class="font-bold text-slate-800 ml-1">৳${req.amount}</span>
+                                <p class="font-bold text-slate-800">UID: <span class="font-mono text-red-600">${req.uid}</span> • <span class="text-emerald-700 font-black">৳${req.amount}</span></p>
+                                <p class="text-[11px] font-mono text-slate-700 mt-0.5">TrxID: <strong class="bg-white px-1.5 py-0.5 rounded border">${req.trxId}</strong></p>
+                                <p class="text-[10px] text-slate-400 mt-0.5">${req.deviceModel || 'Device'} • ${req.date || ''}</p>
                             </div>
-                            ${statusChip}
+                            ${statusTag}
                         </div>
-                        <div class="text-[11px] text-slate-600 font-mono bg-white p-1.5 rounded border border-slate-100">
-                            TrxID: <strong class="text-slate-900 select-all">${escapeHtml(req.trxId)}</strong>
+                        <div class="flex gap-1.5 pt-1">
+                            ${isPending ? `
+                                <button type="button" onclick="approveFundRequest(${realIdx})" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-1.5 rounded-lg text-[11px] font-bold cursor-pointer">
+                                    <i class="fa-solid fa-check mr-1"></i> Approve (+৳${req.amount})
+                                </button>
+                                <button type="button" onclick="rejectFundRequest(${realIdx})" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-lg text-[11px] font-bold cursor-pointer">
+                                    Reject
+                                </button>
+                            ` : `
+                                <button type="button" onclick="deleteFundRequestItem(${realIdx})" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 py-1.5 rounded-lg text-[10px] font-bold cursor-pointer">
+                                    Delete Record
+                                </button>
+                            `}
                         </div>
-                        <div class="flex justify-between items-center text-[10px] text-slate-400">
-                            <span>${escapeHtml(req.deviceModel || '')} • ${escapeHtml(req.date || '')}</span>
-                            <button type="button" onclick="deleteSingleFundRequest('${req.id}')" class="text-red-500 hover:text-red-700 font-bold cursor-pointer">Delete</button>
-                        </div>
-                        ${isPending ? `
-                        <div class="grid grid-cols-2 gap-2 pt-1">
-                            <button type="button" onclick="approveFundRequest('${req.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white py-1.5 rounded-lg text-xs font-bold cursor-pointer shadow-sm">
-                                <i class="fa-solid fa-check mr-1"></i> Approve (+৳${req.amount})
-                            </button>
-                            <button type="button" onclick="rejectFundRequest('${req.id}')" class="bg-red-600 hover:bg-red-700 text-white py-1.5 rounded-lg text-xs font-bold cursor-pointer shadow-sm">
-                                <i class="fa-solid fa-xmark mr-1"></i> Reject
-                            </button>
-                        </div>` : ''}
                     </div>
                 `;
             });
         }
 
-        window.approveFundRequest = function(reqId) {
-            processFundRequestsLifecycle(false);
-            const req = (storeData.fundRequests || []).find(r => r.id === reqId);
+        window.clearProcessedFundRequests = function() {
+            if (!confirm("Pending ছাড়া বাকি (Approved/Rejected/Expired) ফান্ড রিকোয়েস্টগুলো মুছে ফেলতে চান?")) return;
+            storeData.fundRequests = (storeData.fundRequests || []).filter(r => r.status === 'Pending');
+            saveToFirebase(true);
+            renderAdminFundRequests();
+            renderMyFundRequests();
+            showSuccessModal("Processed fund requests cleared!");
+        }
+
+        window.deleteFundRequestItem = function(index) {
+            const list = enforceMaxFiveFundRequests(storeData.fundRequests || []);
+            if (!list[index]) return;
+            list.splice(index, 1);
+            storeData.fundRequests = list;
+            saveToFirebase(true);
+            renderAdminFundRequests();
+            renderMyFundRequests();
+        }
+
+        window.approveFundRequest = function(index) {
+            const list = enforceMaxFiveFundRequests(storeData.fundRequests || []);
+            const req = list[index];
             if(!req) return;
-            if(req.status !== 'Pending') {
-                alert(`এই রিকোয়েস্টটির স্ট্যাটাস ইতিমধ্যে "${req.status}" হয়ে গেছে!`);
+            if(req.status === 'Expired') {
+                alert("এই রিকোয়েস্টটির ৫ মিনিটের মেয়াদ শেষ হয়ে গেছে!");
                 renderAdminFundRequests();
                 return;
+            }
+            if(req.status !== 'Pending') {
+                alert("এই রিকোয়েস্টটি ইতিমধ্যে প্রসেস করা হয়েছে।");
+                return;
+            }
+
+            if(!storeData.userBalances) storeData.userBalances = {};
+            const targetUid = req.uid;
+            const addAmt = Number(req.amount || 0);
+            storeData.userBalances[targetUid] = Number(storeData.userBalances[targetUid] || 0) + addAmt;
+            if (storeData.users && storeData.users[targetUid]) {
+                storeData.users[targetUid].balance = storeData.userBalances[targetUid];
             }
 
             req.status = 'Approved';
-            if(!storeData.userBalances) storeData.userBalances = {};
-            const amt = Number(req.amount || 0);
-            storeData.userBalances[req.uid] = Number(storeData.userBalances[req.uid] || 0) + amt;
+            storeData.fundRequests = list;
 
             saveToFirebase(true);
             updateAccountUI();
-            renderMyFundRequests();
             renderAdminFundRequests();
-            renderDeviceList();
-            showSuccessModal(`UID ${req.uid} এর অ্যাকাউন্টে ৳${amt} সফলভাবে অ্যাড হয়েছে!`);
+            renderMyFundRequests();
+            showSuccessModal(`UID: ${targetUid} এর অ্যাকাউন্টে ৳${addAmt} যুক্ত হয়েছে!`);
         }
 
-        window.rejectFundRequest = function(reqId) {
-            processFundRequestsLifecycle(false);
-            const req = (storeData.fundRequests || []).find(r => r.id === reqId);
+        window.rejectFundRequest = function(index) {
+            const list = enforceMaxFiveFundRequests(storeData.fundRequests || []);
+            const req = list[index];
             if(!req) return;
-            if(req.status !== 'Pending') {
-                alert(`এই রিকোয়েস্টটির স্ট্যাটাস ইতিমধ্যে "${req.status}" হয়ে গেছে!`);
-                renderAdminFundRequests();
-                return;
-            }
             req.status = 'Rejected';
+            storeData.fundRequests = list;
             saveToFirebase(true);
-            renderMyFundRequests();
             renderAdminFundRequests();
-            showSuccessModal(`Fund request (${req.id}) rejected.`);
-        }
-
-        window.deleteSingleFundRequest = function(reqId) {
-            storeData.fundRequests = (storeData.fundRequests || []).filter(r => r.id !== reqId);
-            saveToFirebase(true);
             renderMyFundRequests();
-            renderAdminFundRequests();
+            showSuccessModal(`Fund request Rejected!`);
         }
 
-        window.clearProcessedFundRequests = function() {
-            if(!confirm("Pending ছাড়া বাকি (Approved / Rejected / Expired) সব ফান্ড রিকোয়েস্ট মুছে ফেলতে চান?")) return;
-            storeData.fundRequests = (storeData.fundRequests || []).filter(r => r.status === 'Pending');
-            saveToFirebase(true);
-            renderMyFundRequests();
-            renderAdminFundRequests();
-            showSuccessModal("Processed / Expired fund requests cleared!");
-        }
-
-        window.modifyUserBalance = function(action) {
-            const uidVal = (document.getElementById('adjBalanceUid').value || '').trim();
-            const amtVal = Number(document.getElementById('adjBalanceAmt').value || 0);
-
-            if(!uidVal || !amtVal || amtVal <= 0) {
-                alert("সঠিক User UID এবং পজিটিভ Amount লিখুন!");
-                return;
-            }
-
-            if(!storeData.userBalances) storeData.userBalances = {};
-            const prevBal = Number(storeData.userBalances[uidVal] || 0);
-            const nextBal = action === 'add' ? (prevBal + amtVal) : Math.max(0, prevBal - amtVal);
-            storeData.userBalances[uidVal] = nextBal;
-
-            document.getElementById('adjBalanceAmt').value = '';
-            saveToFirebase(true);
-            updateAccountUI();
-            renderDeviceList();
-            showSuccessModal(`UID ${uidVal} এর নতুন ব্যালেন্স এখন ৳${nextBal}`);
-        }
-
-        // ==================== ADMIN ORDER & KEY DELIVERY ====================
         function renderAdminUserOrders() {
-            const container = document.getElementById('adminUserOrdersList');
+            const list = document.getElementById('adminUserOrdersList');
             const badge = document.getElementById('pendingOrderCount');
             const filterSel = document.getElementById('adminOrderFilterSelect');
-            if(!container) return;
+            if(!list) return;
 
             const allOrders = storeData.orders || [];
             const pendingOrders = allOrders.filter(o => o.status !== 'Completed');
             if(badge) badge.innerText = `${pendingOrders.length} Pending`;
 
-            const filterMode = filterSel ? filterSel.value : 'Pending';
-            const filteredList = filterMode === 'All'
+            const filterVal = filterSel ? filterSel.value : 'Pending';
+            const targetList = filterVal === 'All'
                 ? allOrders
-                : (filterMode === 'Completed' ? allOrders.filter(o => o.status === 'Completed') : pendingOrders);
+                : filterVal === 'Completed'
+                    ? allOrders.filter(o => o.status === 'Completed')
+                    : pendingOrders;
 
-            if(filteredList.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No ${filterMode.toLowerCase()} orders found.</p>`;
+            if(targetList.length === 0) {
+                list.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No ${filterVal.toLowerCase()} orders.</p>`;
                 return;
             }
 
-            container.innerHTML = '';
-            filteredList.forEach(o => {
-                const isDone = o.status === 'Completed';
-                const safeId = String(o.id).replace(/'/g, "\\'");
-                const safeUid = String(o.uid || '').replace(/'/g, "\\'");
-                const safeName = String(o.name || '').replace(/'/g, "\\'");
-                const safeTime = String(o.time || '').replace(/'/g, "\\'");
-                const safeCode = String(o.orderCode || o.id || '').replace(/'/g, "\\'");
+            list.innerHTML = '';
+            targetList.forEach((ord) => {
+                const realIdx = allOrders.findIndex(item => item.id === ord.id);
+                const isDone = ord.status === 'Completed';
+                const displayCode = ord.orderCode || ord.id;
+                const displayDate = ord.date || formatCardDateTime(ord.timestamp || Date.now());
 
-                container.innerHTML += `
+                list.innerHTML += `
                     <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-2 text-xs">
-                        <div class="flex justify-between items-center gap-2">
+                        <div class="flex justify-between items-start gap-2">
                             <div>
-                                <span class="bg-indigo-100 text-indigo-800 px-1.5 py-0.5 rounded font-mono font-extrabold text-[10px]">#${escapeHtml(safeCode)}</span>
-                                <span class="bg-red-50 text-red-600 border border-red-200 px-2 py-0.5 rounded font-mono font-extrabold text-[10px] ml-1">UID: ${o.uid}</span>
-                                <span class="font-bold text-slate-800 ml-1">${escapeHtml(o.name)} (${escapeHtml(o.time)})</span>
+                                <p class="font-bold text-slate-800">${escapeHtml(ord.panel)} (${escapeHtml(ord.duration)})</p>
+                                <p class="text-[10px] font-mono text-indigo-700 font-bold">Order ID: #${escapeHtml(String(displayCode))}</p>
+                                <p class="text-[11px] font-mono text-slate-700 mt-0.5">UID: <strong class="text-red-600">${ord.uid}</strong> • <span class="text-emerald-700 font-bold">৳${ord.price}</span></p>
+                                <p class="text-[10px] text-slate-400">${escapeHtml(displayDate)}</p>
                             </div>
-                            <span class="${isDone ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-800'} text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0">${o.status}</span>
-                        </div>
-                        <div class="text-[11px] text-slate-600 flex justify-between items-center">
-                            <span>Price: <strong class="text-slate-900">৳${o.price}</strong> • Mode: <strong>${o.paymentMode}</strong>${o.trxId ? ` • Trx: <span class="font-mono">${escapeHtml(o.trxId)}</span>` : ''}</span>
-                            <button type="button" onclick="deleteSingleAdminOrder('${safeId}')" class="text-red-500 hover:text-red-700 text-[10px] font-bold cursor-pointer">Delete</button>
+                            <span class="${isDone ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'} px-2 py-0.5 rounded text-[9px] font-bold">${ord.status}</span>
                         </div>
                         ${!isDone ? `
-                        <div class="flex gap-1.5 pt-1">
-                            <input type="text" id="orderKeyInp-${o.id}" placeholder="Paste key for this order..." class="flex-1 bg-white border border-slate-300 px-2.5 py-1.5 rounded-lg text-xs font-mono">
-                            <button type="button" onclick="deliverKeyForOrder('${safeId}', '${safeUid}', '${safeName}', '${safeTime}', '${safeCode}')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer shrink-0">
-                                Send Key
-                            </button>
-                        </div>` : ''}
+                            <div class="flex gap-1.5 pt-1">
+                                <input type="text" id="orderKeyInput-${realIdx}" placeholder="Paste key for #${displayCode}" class="flex-1 bg-white border border-slate-300 px-2.5 py-1.5 rounded-lg text-xs font-mono">
+                                <button type="button" onclick="deliverKeyForOrder(${realIdx})" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-[11px] font-bold cursor-pointer">Send Key</button>
+                            </div>
+                        ` : `
+                            <div class="flex items-center justify-between gap-2 pt-1">
+                                <p class="text-[10px] font-mono text-emerald-800 bg-emerald-50 px-2 py-1 rounded border border-emerald-200 truncate">Key: ${escapeHtml(ord.deliveredKey || 'Delivered')}</p>
+                                <button type="button" onclick="deleteSingleOrder(${realIdx})" class="bg-red-100 hover:bg-red-200 text-red-700 px-2.5 py-1 rounded text-[10px] font-bold cursor-pointer shrink-0">Delete</button>
+                            </div>
+                        `}
                     </div>
                 `;
             });
         }
 
-        window.deleteSingleAdminOrder = function(orderId) {
-            storeData.orders = (storeData.orders || []).filter(o => String(o.id) !== String(orderId));
+        window.deleteSingleOrder = function(index) {
+            if (!confirm("এই অর্ডার রেকর্ডটি ডিলিট করতে চান?")) return;
+            storeData.orders.splice(index, 1);
             saveToFirebase(true);
-            renderOrders();
             renderAdminUserOrders();
+            renderOrders();
+            updateAccountUI();
         }
 
         window.clearCompletedOrders = function() {
-            if(!confirm("সব Completed অর্ডার লিস্ট থেকে মুছে ফেলতে চান?")) return;
+            if (!confirm("সব Completed অর্ডার লিস্ট থেকে মুছে ফেলতে চান?")) return;
             storeData.orders = (storeData.orders || []).filter(o => o.status !== 'Completed');
             saveToFirebase(true);
-            renderOrders();
             renderAdminUserOrders();
-            showSuccessModal("Completed orders cleared!");
+            renderOrders();
+            updateAccountUI();
+            showSuccessModal("All completed orders cleared!");
         }
 
-        window.deliverKeyForOrder = function(orderId, targetUid, panelName, timeText, orderCodeStr = "") {
-            const inp = document.getElementById(`orderKeyInp-${orderId}`);
-            const keyVal = inp ? inp.value.trim() : '';
+        window.deliverKeyForOrder = function(orderIndex) {
+            const ord = storeData.orders && storeData.orders[orderIndex];
+            if(!ord) return;
+            const keyInp = document.getElementById(`orderKeyInput-${orderIndex}`);
+            const keyVal = keyInp ? keyInp.value.trim() : '';
             if(!keyVal) {
-                alert("দয়া করে Key লিখুন বা পেস্ট করুন!");
+                alert("দয়া করে Key লিখুন!");
                 return;
             }
 
-            const targetOrder = (storeData.orders || []).find(o => String(o.id) === String(orderId));
-            const finalOrderCode = orderCodeStr || (targetOrder && (targetOrder.orderCode || targetOrder.id)) || generateSixDigitOrderId();
-            const keyDateStr = formatCardDateTime(Date.now());
+            const nowTs = Date.now();
+            const codeVal = ord.orderCode || ord.id || generateSixDigitOrderId();
+            const dateVal = formatCardDateTime(nowTs);
+
+            ord.orderCode = codeVal;
+            ord.status = 'Completed';
+            ord.deliveredKey = keyVal;
+            ord.date = dateVal;
 
             if(!storeData.keys) storeData.keys = [];
             storeData.keys.unshift({
-                uid: targetUid,
-                orderCode: finalOrderCode,
-                panelName: panelName,
-                time: timeText,
+                id: codeVal,
+                orderCode: codeVal,
+                uid: ord.uid,
+                panel: ord.panel,
+                duration: ord.duration,
                 key: keyVal,
-                date: keyDateStr
+                date: dateVal,
+                timestamp: nowTs
             });
 
-            if(targetOrder) {
-                targetOrder.status = 'Completed';
-                if (!targetOrder.orderCode) targetOrder.orderCode = finalOrderCode;
-            }
-
-            const buyerLabel = buildRecentBuyerLabel(targetUid);
-            const priceLabel = targetOrder && targetOrder.price !== undefined ? `${targetOrder.price}৳` : "";
-            pushCompletedRecentOrder(buyerLabel, `${panelName} ${timeText}`, priceLabel, targetUid);
+            const buyerName = buildRecentBuyerLabel(ord.uid);
+            pushCompletedRecentOrder(buyerName, `${ord.panel} (${ord.duration})`, `${ord.price}৳`, ord.uid);
 
             saveToFirebase(true);
-            renderKeys();
-            renderOrders();
             renderAdminUserOrders();
+            renderOrders();
+            renderKeys();
             renderHomeTabContent();
             renderAdminHomeLists();
-            showSuccessModal(`UID ${targetUid} (Order #${finalOrderCode}) এর My Keys ট্যাবে Key পাঠানো হয়েছে!`);
+            showSuccessModal(`Order #${codeVal} এর জন্য Key পাঠানো হয়েছে!`);
         }
 
         window.sendDirectKeyToUid = function() {
-            const targetUid = (document.getElementById('directKeyUid').value || '').trim();
-            const panelName = (document.getElementById('directKeyPanel').value || '').trim() || 'Panel Key';
-            const timeText = (document.getElementById('directKeyTime').value || '').trim() || '1 Day';
-            const keyCode = (document.getElementById('directKeyCode').value || '').trim();
+            const uidVal = document.getElementById('directKeyUid').value.trim();
+            const panelVal = document.getElementById('directKeyPanel').value.trim() || "Custom Panel";
+            const timeVal = document.getElementById('directKeyTime').value.trim() || "1 Hours";
+            const codeVal = document.getElementById('directKeyCode').value.trim();
 
-            if(!targetUid || !keyCode) {
-                alert("User UID এবং Key Code অবশ্যই দিন!");
+            if(!uidVal || !codeVal) {
+                alert("দয়া করে User UID এবং Key উভয়ই লিখুন!");
                 return;
             }
 
+            const nowTs = Date.now();
             const orderCode = generateSixDigitOrderId();
-            const keyDateStr = formatCardDateTime(Date.now());
+            const dateVal = formatCardDateTime(nowTs);
 
             if(!storeData.keys) storeData.keys = [];
             storeData.keys.unshift({
-                uid: targetUid,
-                orderCode: orderCode,
-                panelName: panelName,
-                time: timeText,
-                key: keyCode,
-                date: keyDateStr
-            });
-
-            if(!storeData.orders) storeData.orders = [];
-            storeData.orders.unshift({
                 id: orderCode,
                 orderCode: orderCode,
-                uid: targetUid,
-                name: panelName,
-                time: timeText,
-                price: 0,
-                paymentMode: 'admin_direct',
-                status: 'Completed',
-                date: keyDateStr
+                uid: uidVal,
+                panel: panelVal,
+                duration: timeVal,
+                key: codeVal,
+                date: dateVal,
+                timestamp: nowTs
             });
 
-            const buyerLabel = buildRecentBuyerLabel(targetUid);
-            pushCompletedRecentOrder(buyerLabel, `${panelName} ${timeText}`, "", targetUid);
+            const buyerName = buildRecentBuyerLabel(uidVal);
+            pushCompletedRecentOrder(buyerName, `${panelVal} (${timeVal})`, `Sent`, uidVal);
 
             document.getElementById('directKeyCode').value = '';
             saveToFirebase(true);
             renderKeys();
-            renderOrders();
-            renderAdminUserOrders();
             renderHomeTabContent();
             renderAdminHomeLists();
-            showSuccessModal(`Direct Key (Order #${orderCode}) সফলভাবে UID ${targetUid} এর My Keys ট্যাবে পাঠানো হয়েছে!`);
+            showSuccessModal(`UID: ${uidVal} (Order #${orderCode}) এর My Keys ট্যাবে Key পাঠানো হয়েছে!`);
         }
 
         function renderSalesAnalyticsChart() {
             const canvas = document.getElementById('salesAnalyticsChart');
             if(!canvas || typeof Chart === 'undefined') return;
 
-            const orders = storeData.orders || [];
-            const dayLabels = ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Today"];
-            const dayRevenue = [0, 0, 0, 0, 0, 0, 0];
-            const dayCount = [0, 0, 0, 0, 0, 0, 0];
+            const labels = [];
+            const orderCounts = [];
+            const revenues = [];
 
-            const now = Date.now();
-            const oneDayMs = 24 * 60 * 60 * 1000;
+            for(let i=6; i>=0; i--) {
+                const d = new Date();
+                d.setDate(d.getDate() - i);
+                const dayLabel = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                labels.push(dayLabel);
 
-            orders.forEach(o => {
-                const amt = Number(o.price || 0);
-                const ts = o.timestamp ? Number(o.timestamp) : (now - Math.random() * 6 * oneDayMs);
-                const diffDays = Math.floor((now - ts) / oneDayMs);
-                const bucketIdx = Math.max(0, Math.min(6, 6 - diffDays));
-                dayRevenue[bucketIdx] += amt;
-                dayCount[bucketIdx] += 1;
-            });
+                const dayStart = new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+                const dayEnd = dayStart + 86400000;
+
+                const dayOrders = (storeData.orders || []).filter(o => {
+                    const ts = Number(o.timestamp || 0);
+                    return ts >= dayStart && ts < dayEnd;
+                });
+
+                orderCounts.push(dayOrders.length);
+                revenues.push(dayOrders.reduce((s, o) => s + Number(o.price || 0), 0));
+            }
 
             if(salesChartInstance) {
                 salesChartInstance.destroy();
             }
 
-            const themeHex = storeData.themeColor || "#4f46e5";
-
+            const activeTheme = storeData.themeColor || "#4f46e5";
             salesChartInstance = new Chart(canvas.getContext('2d'), {
                 type: 'line',
                 data: {
-                    labels: dayLabels,
+                    labels: labels,
                     datasets: [
                         {
                             label: 'Revenue (৳)',
-                            data: dayRevenue,
-                            borderColor: themeHex,
-                            backgroundColor: themeHex + '22',
-                            borderWidth: 2.5,
+                            data: revenues,
+                            borderColor: activeTheme,
+                            backgroundColor: 'rgba(79, 70, 229, 0.12)',
                             tension: 0.35,
                             fill: true,
-                            pointRadius: 3
+                            borderWidth: 2
                         },
                         {
                             label: 'Orders',
-                            data: dayCount,
+                            data: orderCounts,
                             borderColor: '#10b981',
-                            backgroundColor: '#10b98122',
-                            borderWidth: 2,
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
                             tension: 0.35,
                             fill: false,
-                            pointRadius: 3
+                            borderWidth: 2
                         }
                     ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            labels: { boxWidth: 10, font: { size: 10 } }
-                        }
-                    },
-                    scales: {
-                        x: { ticks: { font: { size: 9 } } },
-                        y: { beginAtZero: true, ticks: { font: { size: 9 } } }
-                    }
+                    plugins: { legend: { labels: { boxWidth: 10, font: { size: 10 } } } },
+                    scales: { x: { ticks: { font: { size: 9 } } }, y: { ticks: { font: { size: 9 } } } }
                 }
             });
         }
 
-        // ==================== ADMIN HOME LISTS MANAGEMENT ====================
         function renderAdminHomeLists() {
-            const recentList = (storeData.homeRecentOrders || []).slice(0, MAX_RECENT_ORDERS);
-            storeData.homeRecentOrders = recentList;
+            if (!Array.isArray(storeData.homeRecentOrders)) {
+                storeData.homeRecentOrders = [];
+            } else if (storeData.homeRecentOrders.length > MAX_RECENT_ORDERS) {
+                storeData.homeRecentOrders = storeData.homeRecentOrders.slice(0, MAX_RECENT_ORDERS);
+            }
 
             const recBox = document.getElementById('adminRecentOrdersList');
-            recBox.innerHTML = '';
-            recentList.forEach((item, idx) => {
-                recBox.innerHTML += `
-                    <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200 space-y-1.5 text-xs">
-                        <div class="flex gap-1.5">
-                            <input type="text" value="${escapeHtml(item.name || '')}" onchange="updateHomeList('recent', ${idx}, 'name', this.value)" placeholder="Buyer Name" class="w-1/2 bg-white px-2 py-1 rounded border border-slate-200 font-bold">
-                            <input type="text" value="${escapeHtml(item.price || '')}" onchange="updateHomeList('recent', ${idx}, 'price', this.value)" placeholder="15৳" class="w-1/4 bg-white px-2 py-1 rounded border border-slate-200 font-bold text-emerald-600">
-                            <button onclick="deleteHomeList('recent', ${idx})" class="w-1/4 bg-red-100 text-red-600 rounded font-bold text-[10px] cursor-pointer">Del</button>
+            if(recBox) {
+                recBox.innerHTML = '';
+                storeData.homeRecentOrders.forEach((item, idx) => {
+                    recBox.innerHTML += `
+                        <div class="bg-slate-50 p-2 rounded-xl border border-slate-200 space-y-1.5 text-xs">
+                            <div class="flex gap-1.5">
+                                <input type="text" value="${item.name || ''}" onchange="updateHomeListItem('recent', ${idx}, 'name', this.value)" placeholder="Buyer Name" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200 font-bold">
+                                <input type="text" value="${item.price || ''}" onchange="updateHomeListItem('recent', ${idx}, 'price', this.value)" placeholder="15৳" class="w-16 bg-white px-2 py-1 rounded border border-slate-200 font-bold text-emerald-600">
+                                <button onclick="deleteHomeListItem('recent', ${idx})" class="bg-red-100 text-red-600 px-2 rounded cursor-pointer"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                            <input type="text" value="${item.details || ''}" onchange="updateHomeListItem('recent', ${idx}, 'details', this.value)" placeholder="Panel & Duration details" class="w-full bg-white px-2 py-1 rounded border border-slate-200 text-[11px]">
                         </div>
-                        <input type="text" value="${escapeHtml(item.details || '')}" onchange="updateHomeList('recent', ${idx}, 'details', this.value)" placeholder="Panel & Duration" class="w-full bg-white px-2 py-1 rounded border border-slate-200 text-[11px]">
-                    </div>
-                `;
-            });
+                    `;
+                });
+            }
 
             const topBox = document.getElementById('adminTopBuyersList');
-            topBox.innerHTML = '';
-            (storeData.homeTopBuyers || []).forEach((item, idx) => {
-                topBox.innerHTML += `
-                    <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200 space-y-1.5 text-xs">
-                        <div class="flex gap-1.5">
-                            <input type="text" value="${item.name || ''}" onchange="updateHomeList('top', ${idx}, 'name', this.value)" placeholder="Buyer Name" class="w-1/2 bg-white px-2 py-1 rounded border border-slate-200 font-bold">
-                            <input type="text" value="${item.spent || ''}" onchange="updateHomeList('top', ${idx}, 'spent', this.value)" placeholder="195৳" class="w-1/4 bg-white px-2 py-1 rounded border border-slate-200 font-bold text-emerald-600">
-                            <button onclick="deleteHomeList('top', ${idx})" class="w-1/4 bg-red-100 text-red-600 rounded font-bold text-[10px] cursor-pointer">Del</button>
+            if(topBox) {
+                topBox.innerHTML = '';
+                (storeData.homeTopBuyers || []).forEach((item, idx) => {
+                    topBox.innerHTML += `
+                        <div class="bg-slate-50 p-2 rounded-xl border border-slate-200 space-y-1.5 text-xs">
+                            <div class="flex gap-1.5">
+                                <input type="text" value="${item.name || ''}" onchange="updateHomeListItem('topbuyer', ${idx}, 'name', this.value)" placeholder="Buyer Name" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200 font-bold">
+                                <input type="text" value="${item.spent || ''}" onchange="updateHomeListItem('topbuyer', ${idx}, 'spent', this.value)" placeholder="195৳" class="w-16 bg-white px-2 py-1 rounded border border-slate-200 font-bold text-emerald-600">
+                                <button onclick="deleteHomeListItem('topbuyer', ${idx})" class="bg-red-100 text-red-600 px-2 rounded cursor-pointer"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                            <input type="text" value="${item.badge || ''}" onchange="updateHomeListItem('topbuyer', ${idx}, 'badge', this.value)" placeholder="Top Member • #1" class="w-full bg-white px-2 py-1 rounded border border-slate-200 text-[11px]">
                         </div>
-                        <input type="text" value="${item.badge || ''}" onchange="updateHomeList('top', ${idx}, 'badge', this.value)" placeholder="Top Member • #1" class="w-full bg-white px-2 py-1 rounded border border-slate-200 text-[11px]">
-                    </div>
-                `;
-            });
+                    `;
+                });
+            }
 
             const feedBox = document.getElementById('adminFeedbacksList');
-            feedBox.innerHTML = '';
-            (storeData.homeFeedbacks || []).forEach((item, idx) => {
-                feedBox.innerHTML += `
-                    <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200 space-y-1.5 text-xs">
-                        <div class="flex gap-1.5">
-                            <input type="text" value="${item.name || ''}" onchange="updateHomeList('feed', ${idx}, 'name', this.value)" placeholder="Name" class="w-1/2 bg-white px-2 py-1 rounded border border-slate-200 font-bold">
-                            <input type="number" min="1" max="5" value="${item.stars || 5}" onchange="updateHomeList('feed', ${idx}, 'stars', this.value)" class="w-1/4 bg-white px-2 py-1 rounded border border-slate-200 font-bold text-amber-500">
-                            <button onclick="deleteHomeList('feed', ${idx})" class="w-1/4 bg-red-100 text-red-600 rounded font-bold text-[10px] cursor-pointer">Del</button>
+            if(feedBox) {
+                feedBox.innerHTML = '';
+                (storeData.homeFeedbacks || []).forEach((item, idx) => {
+                    feedBox.innerHTML += `
+                        <div class="bg-slate-50 p-2 rounded-xl border border-slate-200 space-y-1.5 text-xs">
+                            <div class="flex gap-1.5">
+                                <input type="text" value="${item.name || ''}" onchange="updateHomeListItem('feedback', ${idx}, 'name', this.value)" placeholder="Customer Name" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200 font-bold">
+                                <input type="number" min="1" max="5" value="${item.stars || 5}" onchange="updateHomeListItem('feedback', ${idx}, 'stars', this.value)" class="w-12 bg-white px-2 py-1 rounded border border-slate-200 font-bold text-amber-500">
+                                <button onclick="deleteHomeListItem('feedback', ${idx})" class="bg-red-100 text-red-600 px-2 rounded cursor-pointer"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                            <input type="text" value="${item.comment || ''}" onchange="updateHomeListItem('feedback', ${idx}, 'comment', this.value)" placeholder="Feedback comment (optional)" class="w-full bg-white px-2 py-1 rounded border border-slate-200 text-[11px]">
                         </div>
-                        <input type="text" value="${item.comment || ''}" onchange="updateHomeList('feed', ${idx}, 'comment', this.value)" placeholder="Comment (optional)" class="w-full bg-white px-2 py-1 rounded border border-slate-200 text-[11px]">
-                    </div>
-                `;
-            });
+                    `;
+                });
+            }
         }
 
         window.addAdminRecentOrder = function() {
             if(!Array.isArray(storeData.homeRecentOrders)) storeData.homeRecentOrders = [];
-            storeData.homeRecentOrders.unshift({
-                name: "New Buyer",
-                details: "Panel 1 Hours",
-                price: "20৳",
-                status: "Completed"
-            });
-            if (storeData.homeRecentOrders.length > MAX_RECENT_ORDERS) {
+            storeData.homeRecentOrders.unshift({ name: "New Buyer", details: "Panel 1 Hours", price: "20৳", status: "Completed" });
+            if(storeData.homeRecentOrders.length > MAX_RECENT_ORDERS) {
                 storeData.homeRecentOrders = storeData.homeRecentOrders.slice(0, MAX_RECENT_ORDERS);
             }
             saveToFirebase(true);
@@ -5270,7 +5339,7 @@ Current User Info:
 
         window.addAdminTopBuyer = function() {
             if(!storeData.homeTopBuyers) storeData.homeTopBuyers = [];
-            storeData.homeTopBuyers.push({ name: "New Top Buyer", badge: "Top Member • #New", spent: "100৳", avatarBg: "bg-indigo-100 text-indigo-700" });
+            storeData.homeTopBuyers.push({ name: "New Top Buyer", badge: "Top Member • #6", spent: "100৳", avatarBg: "bg-indigo-100 text-indigo-700" });
             saveToFirebase(true);
             renderAdminHomeLists();
             renderHomeTabContent();
@@ -5278,76 +5347,79 @@ Current User Info:
 
         window.addAdminFeedback = function() {
             if(!storeData.homeFeedbacks) storeData.homeFeedbacks = [];
-            storeData.homeFeedbacks.push({ name: "New Reviewer", status: "Verified Buyer", stars: 5, comment: "Nice panel!" });
+            storeData.homeFeedbacks.push({ name: "New Buyer", status: "Verified Buyer", stars: 5, comment: "Nice panel!" });
             saveToFirebase(true);
             renderAdminHomeLists();
             renderHomeTabContent();
         }
 
-        window.updateHomeList = function(type, idx, field, val) {
-            if(type === 'recent') storeData.homeRecentOrders[idx][field] = val;
-            else if(type === 'top') storeData.homeTopBuyers[idx][field] = val;
-            else if(type === 'feed') storeData.homeFeedbacks[idx][field] = field === 'stars' ? Number(val) : val;
-            saveToFirebase(false);
+        window.updateHomeListItem = function(type, index, field, val) {
+            if(type === 'recent' && storeData.homeRecentOrders[index]) {
+                storeData.homeRecentOrders[index][field] = val;
+            } else if(type === 'topbuyer' && storeData.homeTopBuyers[index]) {
+                storeData.homeTopBuyers[index][field] = val;
+            } else if(type === 'feedback' && storeData.homeFeedbacks[index]) {
+                storeData.homeFeedbacks[index][field] = field === 'stars' ? Number(val) : val;
+            }
+            saveToFirebase(true);
             renderHomeTabContent();
         }
 
-        window.deleteHomeList = function(type, idx) {
-            if(type === 'recent') storeData.homeRecentOrders.splice(idx, 1);
-            else if(type === 'top') storeData.homeTopBuyers.splice(idx, 1);
-            else if(type === 'feed') storeData.homeFeedbacks.splice(idx, 1);
+        window.deleteHomeListItem = function(type, index) {
+            if(type === 'recent') storeData.homeRecentOrders.splice(index, 1);
+            else if(type === 'topbuyer') storeData.homeTopBuyers.splice(index, 1);
+            else if(type === 'feedback') storeData.homeFeedbacks.splice(index, 1);
             saveToFirebase(true);
             renderAdminHomeLists();
             renderHomeTabContent();
         }
 
-        // ==================== ADMIN DEVICE LIST & SUSPEND ====================
         function renderDeviceList() {
             const container = document.getElementById('deviceListContainer');
             const suspContainer = document.getElementById('suspendedDeviceListContainer');
-            const countBadge = document.getElementById('activeDeviceCount');
+            const activeBadge = document.getElementById('activeDeviceCount');
             const suspBadge = document.getElementById('suspendedDeviceCount');
             if(!container) return;
-
+            
             const devicesObj = storeData.devices || {};
-            const allDevs = Object.values(devicesObj);
-            const activeDevs = allDevs.filter(d => !d.isSuspended);
-            const suspendedDevs = allDevs.filter(d => d.isSuspended);
+            const allDevices = Object.values(devicesObj);
+            const activeDevices = allDevices.filter(d => !d.isSuspended);
+            const suspendedDevices = allDevices.filter(d => d.isSuspended);
 
-            if(countBadge) countBadge.innerText = `${activeDevs.length} Active`;
-            if(suspBadge) suspBadge.innerText = `${suspendedDevs.length} Suspended`;
+            if(activeBadge) activeBadge.innerText = `${activeDevices.length} Active`;
+            if(suspBadge) suspBadge.innerText = `${suspendedDevices.length} Suspended`;
 
-            container.innerHTML = '';
-            if(activeDevs.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No active devices found.</p>`;
+            if(activeDevices.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No active devices connected.</p>`;
             } else {
-                activeDevs.forEach(dev => {
-                    const devUid = dev.uid || "00000000";
-                    const devPin = dev.supportPin || "----";
-                    const devBal = Number((storeData.userBalances && storeData.userBalances[devUid]) || 0);
-                    const safeDevId = String(dev.id).replace(/'/g, "\\'");
-
+                container.innerHTML = '';
+                activeDevices.forEach(dev => {
+                    const devId = dev.id;
+                    const uUid = dev.uid || "N/A";
+                    const uPin = dev.supportPin || "N/A";
+                    const uBal = (storeData.userBalances && storeData.userBalances[uUid]) || 0;
+                    
                     container.innerHTML += `
-                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 flex flex-col gap-2 text-xs">
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-2 text-xs shadow-sm">
                             <div class="flex justify-between items-start gap-2">
                                 <div>
                                     <div class="flex items-center gap-1.5 flex-wrap">
-                                        <span class="bg-red-50 text-red-600 border border-red-200 px-2 py-0.5 rounded font-mono font-extrabold text-[10px]">UID: ${devUid}</span>
-                                        <span class="bg-indigo-50 text-indigo-700 border border-indigo-200 px-1.5 py-0.5 rounded font-mono font-bold text-[10px]">PIN: ${devPin}</span>
-                                        <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-1.5 py-0.5 rounded font-bold text-[10px]">Bal: ৳${devBal}</span>
+                                        <span class="bg-red-50 text-red-600 border border-red-200 px-2 py-0.5 rounded font-mono font-extrabold text-[10px]">UID: ${uUid}</span>
+                                        <span class="bg-indigo-50 text-indigo-700 border border-indigo-200 px-2 py-0.5 rounded font-mono font-bold text-[10px]">PIN: ${uPin}</span>
+                                        <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded font-bold text-[10px]">Bal: ৳${uBal}</span>
                                     </div>
-                                    <p class="font-bold text-slate-800 mt-1">${dev.model || 'Unknown Device'} <span class="text-[10px] font-normal text-slate-500">(${dev.os || ''})</span></p>
-                                    <p class="text-[10px] text-slate-400 font-mono">ID: ${dev.id}</p>
-                                    <p class="text-[10px] text-slate-400">Active: ${dev.lastActive || ''}</p>
+                                    <p class="font-bold text-slate-800 mt-1">${dev.model || 'Unknown Device'} <span class="text-[10px] text-slate-500 font-normal">(${dev.os || ''})</span></p>
+                                    <p class="text-[10px] text-slate-400">Active: ${dev.lastActive || 'Recently'}</p>
                                 </div>
-                                <div class="flex flex-col gap-1 shrink-0">
-                                    <button onclick="toggleSuspendDevice('${safeDevId}', true)" class="bg-red-600 hover:bg-red-700 text-white px-2.5 py-1.5 rounded-lg text-[10px] font-bold cursor-pointer">
-                                        Suspend
-                                    </button>
-                                    <button onclick="removeDeviceRecord('${safeDevId}')" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-2.5 py-1 rounded-lg text-[9px] font-bold cursor-pointer">
-                                        Remove
-                                    </button>
-                                </div>
+                                <span class="bg-emerald-100 text-emerald-700 text-[9px] font-bold px-2 py-0.5 rounded-full">Active</span>
+                            </div>
+                            <div class="flex gap-1.5 pt-1 border-t border-slate-200/60">
+                                <button onclick="toggleSuspendDevice('${devId}', true)" class="flex-1 bg-red-600 hover:bg-red-700 text-white py-1.5 rounded-lg text-[10px] font-bold cursor-pointer">
+                                    <i class="fa-solid fa-ban mr-1"></i> Suspend
+                                </button>
+                                <button onclick="deleteDeviceRecord('${devId}')" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-3 py-1.5 rounded-lg text-[10px] font-bold cursor-pointer">
+                                    Delete
+                                </button>
                             </div>
                         </div>
                     `;
@@ -5355,31 +5427,34 @@ Current User Info:
             }
 
             if(suspContainer) {
-                suspContainer.innerHTML = '';
-                if(suspendedDevs.length === 0) {
+                if(suspendedDevices.length === 0) {
                     suspContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No suspended devices.</p>`;
                 } else {
-                    suspendedDevs.forEach(dev => {
-                        const devUid = dev.uid || "00000000";
-                        const devPin = dev.supportPin || "----";
-                        const safeDevId = String(dev.id).replace(/'/g, "\\'");
+                    suspContainer.innerHTML = '';
+                    suspendedDevices.forEach(dev => {
+                        const devId = dev.id;
+                        const uUid = dev.uid || "N/A";
+                        const uPin = dev.supportPin || "N/A";
+                        const uBal = (storeData.userBalances && storeData.userBalances[uUid]) || 0;
 
                         suspContainer.innerHTML += `
-                            <div class="bg-white p-3 rounded-xl border border-red-200 flex justify-between items-center gap-2 text-xs shadow-sm">
-                                <div>
-                                    <div class="flex items-center gap-1.5 flex-wrap">
-                                        <span class="bg-red-600 text-white px-2 py-0.5 rounded font-mono font-extrabold text-[10px]">UID: ${devUid}</span>
-                                        <span class="bg-slate-100 text-slate-700 border border-slate-200 px-1.5 py-0.5 rounded font-mono font-bold text-[10px]">PIN: ${devPin}</span>
-                                        <span class="bg-red-100 text-red-700 px-1.5 py-0.5 rounded text-[9px] font-bold">SUSPENDED</span>
+                            <div class="bg-white p-3 rounded-xl border border-red-200 space-y-2 text-xs shadow-sm">
+                                <div class="flex justify-between items-start gap-2">
+                                    <div>
+                                        <div class="flex items-center gap-1.5 flex-wrap">
+                                            <span class="bg-red-100 text-red-700 border border-red-300 px-2 py-0.5 rounded font-mono font-extrabold text-[10px]">UID: ${uUid}</span>
+                                            <span class="bg-slate-100 text-slate-700 border border-slate-200 px-2 py-0.5 rounded font-mono font-bold text-[10px]">PIN: ${uPin}</span>
+                                            <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded font-bold text-[10px]">Bal: ৳${uBal}</span>
+                                        </div>
+                                        <p class="font-bold text-slate-800 mt-1">${dev.model || 'Unknown Device'} <span class="text-[10px] text-slate-500 font-normal">(${dev.os || ''})</span></p>
                                     </div>
-                                    <p class="font-bold text-slate-800 mt-1">${dev.model || 'Unknown Device'}</p>
-                                    <p class="text-[10px] text-slate-400 font-mono">ID: ${dev.id}</p>
+                                    <span class="bg-red-100 text-red-700 text-[9px] font-bold px-2 py-0.5 rounded-full">Suspended</span>
                                 </div>
-                                <div class="flex flex-col gap-1 shrink-0">
-                                    <button onclick="toggleSuspendDevice('${safeDevId}', false)" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-[10px] font-bold cursor-pointer shadow-sm">
-                                        Unsuspend
+                                <div class="flex gap-1.5 pt-1 border-t border-red-100">
+                                    <button onclick="toggleSuspendDevice('${devId}', false)" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-1.5 rounded-lg text-[10px] font-bold cursor-pointer">
+                                        <i class="fa-solid fa-rotate-left mr-1"></i> Unsuspend (Active)
                                     </button>
-                                    <button onclick="removeDeviceRecord('${safeDevId}')" class="bg-red-50 hover:bg-red-100 text-red-600 px-3 py-1 rounded-lg text-[9px] font-bold cursor-pointer">
+                                    <button onclick="deleteDeviceRecord('${devId}')" class="bg-red-100 hover:bg-red-200 text-red-700 px-3 py-1.5 rounded-lg text-[10px] font-bold cursor-pointer">
                                         Delete
                                     </button>
                                 </div>
@@ -5390,63 +5465,65 @@ Current User Info:
             }
         }
 
-        window.toggleSuspendDevice = function(targetDevId, suspendStatus) {
-            if(!storeData.devices || !storeData.devices[targetDevId]) return;
-            storeData.devices[targetDevId].isSuspended = suspendStatus;
-            update(ref(db, `panelStore/devices/${targetDevId}`), { isSuspended: suspendStatus });
-            renderDeviceList();
-            showSuccessModal(`Device ${targetDevId} has been ${suspendStatus ? 'SUSPENDED' : 'UNSUSPENDED'}.`);
+        window.toggleSuspendDevice = function(devId, suspendStatus) {
+            if(!storeData.devices || !storeData.devices[devId]) return;
+            storeData.devices[devId].isSuspended = suspendStatus;
+            update(ref(db, 'panelStore/devices/' + devId), { isSuspended: suspendStatus }).then(() => {
+                renderDeviceList();
+                showSuccessModal(`Device status updated to ${suspendStatus ? 'Suspended' : 'Active'}!`);
+            });
         }
 
-        window.removeDeviceRecord = function(targetDevId) {
-            if(!confirm(`Are you sure you want to remove device ${targetDevId}?`)) return;
-            if(storeData.devices && storeData.devices[targetDevId]) {
-                delete storeData.devices[targetDevId];
+        window.deleteDeviceRecord = function(devId) {
+            if(!confirm("এই ডিভাইস রেকর্ডটি তালিকা থেকে মুছে ফেলতে চান?")) return;
+            if(storeData.devices && storeData.devices[devId]) {
+                delete storeData.devices[devId];
             }
-            remove(ref(db, `panelStore/devices/${targetDevId}`));
-            renderDeviceList();
+            remove(ref(db, 'panelStore/devices/' + devId)).then(() => {
+                renderDeviceList();
+                showSuccessModal("Device record deleted!");
+            });
         }
 
-        // ==================== ADMIN PANELS, DURATION STOCK & BADGES ====================
         function renderAdminPanels() {
             const container = document.getElementById('adminPanelList');
             container.innerHTML = '';
+            const catList = (storeData.categories && storeData.categories.length > 0) ? storeData.categories : ["Non Root", "Root", "iPhone", "PC"];
 
-            const catOptionsHtml = (storeData.categories || ["Non Root", "Root", "iPhone", "PC"])
-                .map(c => `<option value="${escapeHtml(c)}" ${c === (storeData.panels[0]?.category) ? '' : ''}>${escapeHtml(c)}</option>`)
-                .join('');
-
-            (storeData.panels || []).forEach((panel, pIdx) => {
-                ensurePanelDurationStockMap(panel);
+            storeData.panels.forEach((panel, pIndex) => {
+                const stockMap = ensurePanelDurationStockMap(panel);
                 const durations = getPanelDurationList(panel);
-                const stockMap = panel.stockKeysByDuration;
+                const activeDur = (panel._selectedStockDur && durations.includes(panel._selectedStockDur))
+                    ? panel._selectedStockDur
+                    : (durations[0] || "1 Hours");
+                panel._selectedStockDur = activeDur;
 
-                const panelCatSelectHtml = (storeData.categories || ["Non Root", "Root", "iPhone", "PC"])
-                    .map(c => `<option value="${escapeHtml(c)}" ${panel.category === c ? 'selected' : ''}>${escapeHtml(c)}</option>`)
-                    .join('');
+                const currentDurStockArr = Array.isArray(stockMap[activeDur]) ? stockMap[activeDur] : [];
+
+                let catOptionsHtml = '';
+                catList.forEach(c => {
+                    catOptionsHtml += `<option value="${c}" ${panel.category === c ? 'selected' : ''}>${c}</option>`;
+                });
+
+                let durOptionsHtml = '';
+                durations.forEach(d => {
+                    const cLen = Array.isArray(stockMap[d]) ? stockMap[d].length : 0;
+                    durOptionsHtml += `<option value="${escapeHtml(d)}" ${d === activeDur ? 'selected' : ''}>${escapeHtml(d)} (${cLen} keys)</option>`;
+                });
 
                 let pkgsHtml = '';
-                (panel.packages || []).forEach((pkg, pkgIdx) => {
-                    const durKeys = Array.isArray(stockMap[pkg.time]) ? stockMap[pkg.time] : [];
-                    const currentNote = (pkg.note || '').toLowerCase();
-                    const isPkgOut = currentNote.includes('stock out') || currentNote.includes('stockout') || currentNote === 'out of stock';
-
+                (panel.packages || []).forEach((pkg, pkgIndex) => {
                     pkgsHtml += `
-                        <div class="bg-white p-2 rounded-lg border border-slate-200 space-y-1.5 text-xs mb-1.5">
+                        <div class="bg-slate-50 p-2 rounded-xl border border-slate-200 space-y-1.5 text-xs">
                             <div class="flex gap-1.5 items-center">
-                                <input type="text" value="${escapeHtml(pkg.time)}" onchange="updatePkg(${pIdx}, ${pkgIdx}, 'time', this.value)" class="w-24 bg-slate-50 px-2 py-1 rounded border border-slate-200 font-bold" placeholder="1 Hours">
-                                <input type="number" value="${pkg.price}" onchange="updatePkg(${pIdx}, ${pkgIdx}, 'price', this.value)" class="w-16 bg-slate-50 px-2 py-1 rounded border border-slate-200 font-bold" placeholder="৳">
-                                <button type="button" onclick="togglePkgStockOut(${pIdx}, ${pkgIdx})" class="px-2 py-1 rounded text-[10px] font-extrabold border cursor-pointer ${isPkgOut ? 'bg-rose-600 text-white border-rose-700' : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-rose-50 hover:text-rose-700'}">
-                                    ${isPkgOut ? 'Stock Out' : 'In Stock'}
-                                </button>
-                                <input type="text" value="${escapeHtml(pkg.note || '')}" onchange="updatePkg(${pIdx}, ${pkgIdx}, 'note', this.value)" class="flex-1 bg-slate-50 px-2 py-1 rounded border border-slate-200 text-[10px]" placeholder="Note">
-                                <button type="button" onclick="deletePkg(${pIdx}, ${pkgIdx})" class="text-red-500 hover:text-red-700 px-1.5 cursor-pointer font-bold">✕</button>
+                                <input type="text" value="${pkg.time}" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'time', this.value)" class="w-24 bg-white px-2 py-1 rounded border border-slate-200 font-bold" placeholder="1 Hours">
+                                <input type="number" value="${pkg.price}" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'price', this.value)" class="w-16 bg-white px-2 py-1 rounded border border-slate-200 font-bold text-emerald-600" placeholder="Price">
+                                <input type="text" value="${pkg.note || ''}" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'note', this.value)" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200 text-red-600 font-semibold" placeholder="Stock Out / Note">
+                                <button onclick="deletePkg(${pIndex}, ${pkgIndex})" class="bg-red-100 text-red-600 px-2 py-1 rounded cursor-pointer"><i class="fa-solid fa-trash"></i></button>
                             </div>
-                            <div class="flex gap-1.5 items-center bg-indigo-50/60 p-1.5 rounded-lg border border-indigo-100">
-                                <span class="text-[10px] font-bold text-indigo-700"><i class="fa-solid fa-ticket"></i></span>
-                                <input type="text" value="${escapeHtml(pkg.couponCode || '')}" onchange="updatePkg(${pIdx}, ${pkgIdx}, 'couponCode', this.value)" class="w-24 bg-white px-2 py-0.5 rounded border border-indigo-200 font-mono font-bold text-[10px] uppercase" placeholder="Coupon Code">
-                                <input type="number" value="${pkg.couponDiscount || 0}" onchange="updatePkg(${pIdx}, ${pkgIdx}, 'couponDiscount', this.value)" class="w-16 bg-white px-2 py-0.5 rounded border border-indigo-200 font-bold text-[10px]" placeholder="Off ৳">
-                                <span class="text-[9px] text-slate-500 font-semibold ml-auto">Stock: <strong class="text-emerald-700">${durKeys.length}</strong></span>
+                            <div class="flex gap-1.5 items-center">
+                                <input type="text" value="${pkg.couponCode || ''}" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'couponCode', this.value)" class="flex-1 bg-white px-2 py-1 rounded border border-slate-200 font-mono uppercase text-[11px]" placeholder="Coupon Code (e.g. VIP20)">
+                                <input type="number" value="${pkg.couponDiscount || 0}" onchange="updatePkg(${pIndex}, ${pkgIndex}, 'couponDiscount', this.value)" class="w-20 bg-white px-2 py-1 rounded border border-slate-200 font-bold text-indigo-700 text-[11px]" placeholder="Off ৳">
                             </div>
                         </div>
                     `;
@@ -5455,86 +5532,86 @@ Current User Info:
                 let linksHtml = '';
                 (panel.links || []).forEach((lnk, lIdx) => {
                     linksHtml += `
-                        <div class="flex gap-1.5 items-center mb-1.5 text-xs">
-                            <input type="text" value="${escapeHtml(lnk.name || '')}" onchange="updatePanelLink(${pIdx}, ${lIdx}, 'name', this.value)" class="w-1/3 bg-white px-2 py-1 rounded border border-slate-200 font-semibold text-[11px]" placeholder="Label">
-                            <input type="text" value="${escapeHtml(lnk.url || '')}" onchange="updatePanelLink(${pIdx}, ${lIdx}, 'url', this.value)" class="w-2/3 bg-white px-2 py-1 rounded border border-slate-200 text-[11px]" placeholder="https://...">
+                        <div class="flex gap-1.5 items-center text-xs">
+                            <input type="text" value="${lnk.name}" onchange="updateLink(${pIndex}, ${lIdx}, 'name', this.value)" class="w-28 bg-slate-50 px-2 py-1 rounded border border-slate-200 font-semibold" placeholder="Link Name">
+                            <input type="text" value="${lnk.url}" onchange="updateLink(${pIndex}, ${lIdx}, 'url', this.value)" class="flex-1 bg-slate-50 px-2 py-1 rounded border border-slate-200 text-blue-600" placeholder="https://...">
                         </div>
                     `;
                 });
 
-                const durationSelectOpts = durations.map(d => `<option value="${escapeHtml(d)}">${escapeHtml(d)} (${(stockMap[d] || []).length})</option>`).join('');
-                const firstDur = durations[0] || "1 Hours";
-                const firstDurKeys = Array.isArray(stockMap[firstDur]) ? stockMap[firstDur] : [];
-
-                const panelOut = isPanelStockOut(panel);
+                let stockKeysListHtml = '';
+                if (currentDurStockArr.length > 0) {
+                    stockKeysListHtml = `<div class="flex flex-wrap gap-1 mt-1.5">` + currentDurStockArr.map((k, kIdx) => `
+                        <span class="bg-white border border-slate-300 px-2 py-0.5 rounded text-[10px] font-mono inline-flex items-center gap-1">
+                            ${escapeHtml(k)}
+                            <button type="button" onclick="deleteDurationStockKey(${pIndex}, '${activeDur.replace(/'/g, "\\'")}', ${kIdx})" class="text-red-500 cursor-pointer">×</button>
+                        </span>
+                    `).join('') + `</div>`;
+                } else {
+                    stockKeysListHtml = `<p class="text-[10px] text-slate-400 mt-1">এই "${escapeHtml(activeDur)}" ডিউরেশনে কোনো Stock Key নেই।</p>`;
+                }
 
                 container.innerHTML += `
-                    <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-3">
+                    <div class="bg-white p-3.5 rounded-2xl border border-slate-200 space-y-3 shadow-sm">
                         <div class="flex justify-between items-center gap-2">
-                            <div class="flex items-center gap-2 flex-1 min-w-0">
-                                <img src="${panel.icon}" class="w-8 h-8 rounded-lg object-cover border border-slate-200 shrink-0">
-                                <input type="text" value="${escapeHtml(panel.name)}" onchange="updatePanelField(${pIdx}, 'name', this.value)" class="font-bold text-xs text-slate-800 bg-white px-2 py-1 rounded border border-slate-200 flex-1 min-w-0">
-                            </div>
-                            <button type="button" onclick="togglePanelStockOut(${pIdx})" class="px-2.5 py-1 rounded-lg text-[10px] font-extrabold border cursor-pointer shrink-0 ${panelOut ? 'bg-rose-600 text-white border-rose-700' : 'bg-emerald-100 text-emerald-800 border-emerald-300 hover:bg-rose-100 hover:text-rose-700'}">
-                                ${panelOut ? 'Stock Out' : 'In Stock'}
-                            </button>
-                            <button type="button" onclick="deletePanel(${pIdx})" class="text-red-500 hover:text-red-700 text-xs font-bold px-2 cursor-pointer shrink-0">Delete</button>
+                            <input type="text" value="${panel.name}" onchange="updatePanelField(${pIndex}, 'name', this.value)" class="flex-1 bg-slate-50 px-2.5 py-1.5 rounded-lg border border-slate-200 font-bold text-xs">
+                            <button onclick="deletePanel(${pIndex})" class="bg-red-50 text-red-600 border border-red-200 px-2.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer"><i class="fa-solid fa-trash"></i></button>
                         </div>
 
-                        <div class="grid grid-cols-2 gap-1.5 text-xs">
+                        <div class="grid grid-cols-2 gap-2 text-xs">
                             <div>
                                 <label class="text-[10px] text-slate-500 font-bold block">Category</label>
-                                <select onchange="updatePanelField(${pIdx}, 'category', this.value)" class="w-full bg-white p-1.5 rounded border border-slate-200 text-xs font-bold">
-                                    ${panelCatSelectHtml}
+                                <select onchange="updatePanelField(${pIndex}, 'category', this.value)" class="w-full bg-slate-50 border border-slate-200 p-1.5 rounded-lg font-semibold mt-0.5">
+                                    ${catOptionsHtml}
                                 </select>
                             </div>
                             <div>
-                                <label class="text-[10px] text-slate-500 font-bold block">Promo Badge</label>
-                                <input type="text" value="${escapeHtml(panel.badge || '')}" onchange="updatePanelField(${pIdx}, 'badge', this.value)" placeholder="Hot Selling / VIP" class="w-full bg-white p-1.5 rounded border border-slate-200 text-xs font-bold text-indigo-700">
+                                <label class="text-[10px] text-slate-500 font-bold block">Status Badge</label>
+                                <input type="text" value="${panel.status || ''}" onchange="updatePanelField(${pIndex}, 'status', this.value)" class="w-full bg-slate-50 border border-slate-200 p-1.5 rounded-lg font-semibold mt-0.5" placeholder="Stock Out / Safe 🛡️">
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-2 gap-1.5 text-xs">
+                        <div class="grid grid-cols-2 gap-2 text-xs">
                             <div>
-                                <label class="text-[10px] text-slate-500 font-bold block">Panel Icon (URL বা গ্যালারি)</label>
+                                <label class="text-[10px] text-slate-500 font-bold block">Top Promo Badge</label>
+                                <input type="text" value="${panel.badge || ''}" onchange="updatePanelField(${pIndex}, 'badge', this.value)" class="w-full bg-slate-50 border border-slate-200 p-1.5 rounded-lg font-semibold mt-0.5" placeholder="Hot Selling / VIP">
+                            </div>
+                            <div>
+                                <label class="text-[10px] text-slate-500 font-bold block">Panel Icon (URL / গ্যালারি)</label>
                                 <div class="flex items-center gap-1 mt-0.5">
-                                    <input type="text" value="${escapeHtml(panel.icon)}" onchange="updatePanelField(${pIdx}, 'icon', this.value)" class="w-full min-w-0 bg-white p-1.5 rounded border border-slate-200 text-[11px]">
-                                    <button type="button" onclick="pickPhotoFromGallery('panel', ${pIdx})" class="bg-indigo-50 hover:bg-indigo-100 dynamic-theme-text border border-indigo-200 px-2 py-1.5 rounded text-[11px] font-bold cursor-pointer shrink-0" title="Gallery">
+                                    <img src="${panel.icon || 'https://i.ibb.co/3W9v93z/default.png'}" class="w-7 h-7 rounded object-cover border border-slate-200 shrink-0 bg-white">
+                                    <input type="text" value="${panel.icon}" onchange="updatePanelField(${pIndex}, 'icon', this.value)" class="flex-1 min-w-0 bg-slate-50 border border-slate-200 p-1.5 rounded-lg text-[11px]" placeholder="https://...">
+                                    <button type="button" onclick="pickPhotoFromGallery('panel', ${pIndex})" title="Pick from Gallery" class="bg-indigo-50 hover:bg-indigo-100 dynamic-theme-text border border-indigo-200 px-2 py-1.5 rounded-lg text-[11px] font-bold cursor-pointer shrink-0">
                                         <i class="fa-solid fa-images"></i>
                                     </button>
                                 </div>
                             </div>
-                            <div>
-                                <label class="text-[10px] text-slate-500 font-bold block">Status Label</label>
-                                <input type="text" value="${escapeHtml(panel.status || '')}" onchange="updatePanelField(${pIdx}, 'status', this.value)" placeholder="Stock Out / Maintenance" class="w-full bg-white p-1.5 rounded border border-slate-200 text-[11px] mt-0.5">
-                            </div>
                         </div>
 
-                        <div class="border-t border-slate-200 pt-2">
-                            <div class="flex justify-between items-center mb-1.5">
-                                <span class="text-[10px] font-bold text-slate-600 uppercase">Packages, Stock Out & Coupons</span>
-                                <button type="button" onclick="addPkg(${pIdx})" class="bg-indigo-600 text-white px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer">+ Add Pkg</button>
+                        <div class="bg-indigo-50/60 p-2.5 rounded-xl border border-indigo-200 space-y-1.5 text-xs">
+                            <div class="flex justify-between items-center gap-2">
+                                <span class="font-bold text-indigo-900 text-[11px]">Duration Auto-Stock (${currentDurStockArr.length})</span>
+                                <select onchange="changePanelStockDuration(${pIndex}, this.value)" class="bg-white border border-indigo-200 px-2 py-1 rounded-lg text-[11px] font-bold text-indigo-800">
+                                    ${durOptionsHtml}
+                                </select>
+                            </div>
+                            <div class="flex gap-1.5">
+                                <input type="text" id="newStockKey-${pIndex}" placeholder="${escapeHtml(activeDur)} এর জন্য Key(s) (কমা দিয়ে একাধিক)" class="flex-1 bg-white border border-slate-200 px-2 py-1 rounded-lg text-[11px] font-mono">
+                                <button type="button" onclick="addStockKeyToPanel(${pIndex})" class="bg-indigo-600 text-white px-2.5 py-1 rounded-lg text-[11px] font-bold cursor-pointer">+ Add</button>
+                            </div>
+                            ${stockKeysListHtml}
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[11px] font-bold text-slate-600">Packages</span>
+                                <button onclick="addPkg(${pIndex})" class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer">+ Add Pkg</button>
                             </div>
                             ${pkgsHtml}
                         </div>
 
-                        <div class="border-t border-emerald-200 pt-2 bg-emerald-50/40 p-2 rounded-xl space-y-2">
-                            <div class="flex justify-between items-center gap-2">
-                                <span class="text-[10px] font-extrabold text-emerald-800 uppercase">
-                                    <i class="fa-solid fa-key mr-1"></i> Duration Auto Stock Keys
-                                </span>
-                                <select id="stockDurSelect-${pIdx}" onchange="refreshAdminDurationStockView(${pIdx})" class="bg-white border border-emerald-300 px-2 py-1 rounded text-[11px] font-bold text-slate-800">
-                                    ${durationSelectOpts}
-                                </select>
-                            </div>
-                            <textarea id="durationStockBulkInput-${pIdx}" rows="3" placeholder="এই ডিউরেশনের কি গুলো এক লাইনে ১টি করে দিন..." class="w-full bg-white border border-slate-200 p-2 rounded-lg text-[11px] font-mono">${firstDurKeys.join('\n')}</textarea>
-                            <button type="button" onclick="saveDurationStockKeys(${pIdx})" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-1.5 rounded-lg text-[11px] font-bold cursor-pointer">
-                                Save Selected Duration Stock
-                            </button>
-                        </div>
-
-                        <div class="border-t border-slate-200 pt-2">
-                            <span class="text-[10px] font-bold text-slate-600 uppercase block mb-1.5">APK & Setup Links (6 Slots)</span>
+                        <div class="space-y-1 border-t border-slate-100 pt-2">
+                            <span class="text-[11px] font-bold text-slate-600 block">APK & Setup Links</span>
                             ${linksHtml}
                         </div>
                     </div>
@@ -5542,142 +5619,144 @@ Current User Info:
             });
         }
 
-        window.togglePanelStockOut = function(pIdx) {
-            const panel = storeData.panels[pIdx];
-            if (!panel) return;
-            if (isPanelStockOut(panel)) {
-                panel.status = "Working ✅";
-            } else {
-                panel.status = "Stock Out";
-            }
-            saveToFirebase(true);
-            renderAdminPanels();
-            renderPanels();
-        }
-
-        window.togglePkgStockOut = function(pIdx, pkgIdx) {
-            const pkg = storeData.panels?.[pIdx]?.packages?.[pkgIdx];
-            if (!pkg) return;
-            if (isPackageStockOut(pkg)) {
-                pkg.note = "";
-            } else {
-                pkg.note = "Stock Out";
-            }
-            saveToFirebase(true);
+        window.changePanelStockDuration = function(pIdx, durVal) {
+            if (!storeData.panels[pIdx]) return;
+            storeData.panels[pIdx]._selectedStockDur = durVal;
             renderAdminPanels();
         }
 
-        window.refreshAdminDurationStockView = function(pIdx) {
+        window.addStockKeyToPanel = function(pIdx) {
             const panel = storeData.panels[pIdx];
-            if (!panel) return;
-            const map = ensurePanelDurationStockMap(panel);
-            const sel = document.getElementById(`stockDurSelect-${pIdx}`);
-            const ta = document.getElementById(`durationStockBulkInput-${pIdx}`);
-            if (!sel || !ta) return;
-            const chosenDur = sel.value;
-            const list = Array.isArray(map[chosenDur]) ? map[chosenDur] : [];
-            ta.value = list.join('\n');
-        }
+            if(!panel) return;
+            const inp = document.getElementById(`newStockKey-${pIdx}`);
+            const raw = inp ? inp.value.trim() : '';
+            if(!raw) return;
 
-        window.saveDurationStockKeys = function(pIdx) {
-            const panel = storeData.panels[pIdx];
-            if (!panel) return;
-            const map = ensurePanelDurationStockMap(panel);
-            const sel = document.getElementById(`stockDurSelect-${pIdx}`);
-            const ta = document.getElementById(`durationStockBulkInput-${pIdx}`);
-            const chosenDur = sel ? sel.value : "1 Hours";
-            const rawLines = ta ? ta.value : "";
-            const parsedKeys = rawLines.split('\n').map(k => k.trim()).filter(Boolean);
-            map[chosenDur] = parsedKeys;
+            const stockMap = ensurePanelDurationStockMap(panel);
+            const durations = getPanelDurationList(panel);
+            const targetDur = (panel._selectedStockDur && durations.includes(panel._selectedStockDur))
+                ? panel._selectedStockDur
+                : (durations[0] || "1 Hours");
+
+            if (!Array.isArray(stockMap[targetDur])) stockMap[targetDur] = [];
+
+            const parts = raw.split(',').map(s => s.trim()).filter(Boolean);
+            stockMap[targetDur].push(...parts);
+            panel._selectedStockDur = targetDur;
+            inp.value = '';
             saveToFirebase(true);
             renderAdminPanels();
-            showSuccessModal(`${panel.name} (${chosenDur}) এর ${parsedKeys.length}টি কি স্টকে সেভ হয়েছে!`);
+            showSuccessModal(`"${targetDur}" ডিউরেশনে ${parts.length}টি কি (Key) স্টকে যোগ হয়েছে!`);
+        }
+
+        window.deleteDurationStockKey = function(pIdx, durLabel, kIdx) {
+            const panel = storeData.panels[pIdx];
+            if(!panel) return;
+            const stockMap = ensurePanelDurationStockMap(panel);
+            if (!Array.isArray(stockMap[durLabel])) return;
+            stockMap[durLabel].splice(kIdx, 1);
+            saveToFirebase(true);
+            renderAdminPanels();
         }
 
         window.addNewPanelPrompt = function() {
             const name = prompt("Enter New Panel Name:");
-            if(!name || name.trim() === '') return;
-            const cat = prompt(`Enter Category (${(storeData.categories || ["Non Root"]).join(", ")}):`, currentCategory || "Non Root");
-            const validCat = (storeData.categories && storeData.categories.includes(cat)) ? cat : ((storeData.categories && storeData.categories[0]) || "Non Root");
+            if(!name || !name.trim()) return;
+            const defaultCat = (storeData.categories && storeData.categories.length > 0) ? storeData.categories[0] : currentCategory;
             const newId = Date.now();
             storeData.panels.push({
                 id: newId,
                 name: name.trim(),
-                category: validCat,
+                category: defaultCat,
                 icon: "https://i.ibb.co/3W9v93z/default.png",
                 status: "Working ✅",
                 badge: "New",
                 stockKeysByDuration: { "1 Hours": [], "3 Hours": [], "1 Days": [] },
                 links: JSON.parse(JSON.stringify(defaultLinks)),
                 packages: [
-                    {time: "1 Hours", price: 20, note: "", couponCode: "", couponDiscount: 0},
-                    {time: "3 Hours", price: 50, note: "", couponCode: "", couponDiscount: 0},
-                    {time: "1 Days", price: 180, note: "", couponCode: "", couponDiscount: 0}
+                    { time: "1 Hours", price: 20, note: "", couponCode: "", couponDiscount: 0 },
+                    { time: "3 Hours", price: 50, note: "", couponCode: "", couponDiscount: 0 },
+                    { time: "1 Days", price: 150, note: "", couponCode: "", couponDiscount: 0 }
                 ]
             });
             saveToFirebase(true);
             renderAdminPanels();
             renderPanels();
-            showSuccessModal(`"${name.trim()}" প্যানেল যুক্ত হয়েছে!`);
-        }
-
-        window.updatePanelField = function(pIdx, field, val) {
-            if(!storeData.panels[pIdx]) return;
-            storeData.panels[pIdx][field] = val;
-            saveToFirebase(false);
-            renderPanels();
-            if(field === 'icon') renderAdminPanels();
+            showSuccessModal("New panel added successfully!");
         }
 
         window.deletePanel = function(pIdx) {
-            if(!confirm("Delete this panel?")) return;
+            if(!confirm("এই প্যানেলটি ডিলিট করতে চান?")) return;
             storeData.panels.splice(pIdx, 1);
             saveToFirebase(true);
             renderAdminPanels();
             renderPanels();
         }
 
+        window.updatePanelField = function(pIdx, field, val) {
+            if(!storeData.panels[pIdx]) return;
+            storeData.panels[pIdx][field] = val;
+            saveToFirebase(true);
+            renderPanels();
+            if(field === 'icon') renderAdminPanels();
+        }
+
         window.addPkg = function(pIdx) {
+            if(!storeData.panels[pIdx]) return;
             if(!storeData.panels[pIdx].packages) storeData.panels[pIdx].packages = [];
-            const newPkgTime = "12 Hours";
-            storeData.panels[pIdx].packages.push({time: newPkgTime, price: 100, note: "", couponCode: "", couponDiscount: 0});
-            const map = ensurePanelDurationStockMap(storeData.panels[pIdx]);
-            if(!Array.isArray(map[newPkgTime])) map[newPkgTime] = [];
+            storeData.panels[pIdx].packages.push({ time: "1 Days", price: 100, note: "", couponCode: "", couponDiscount: 0 });
             saveToFirebase(true);
             renderAdminPanels();
         }
 
-        window.updatePkg = function(pIdx, pkgIdx, field, val) {
-            const pkg = storeData.panels[pIdx].packages[pkgIdx];
-            if(!pkg) return;
-            if(field === 'price' || field === 'couponDiscount') {
-                pkg[field] = Number(val) || 0;
-            } else if(field === 'couponCode') {
-                pkg[field] = String(val || '').trim().toUpperCase();
-            } else {
-                const oldVal = pkg[field];
-                pkg[field] = val;
-                if(field === 'time' && oldVal && oldVal !== val) {
-                    const map = ensurePanelDurationStockMap(storeData.panels[pIdx]);
-                    if(!Array.isArray(map[val])) {
-                        map[val] = Array.isArray(map[oldVal]) ? [...map[oldVal]] : [];
-                    }
-                }
-            }
-            saveToFirebase(false);
-        }
-
         window.deletePkg = function(pIdx, pkgIdx) {
+            if(!storeData.panels[pIdx]) return;
             storeData.panels[pIdx].packages.splice(pkgIdx, 1);
             saveToFirebase(true);
             renderAdminPanels();
         }
 
-        window.updatePanelLink = function(pIdx, lIdx, field, val) {
-            if(!storeData.panels[pIdx].links) storeData.panels[pIdx].links = JSON.parse(JSON.stringify(defaultLinks));
-            storeData.panels[pIdx].links[lIdx][field] = val;
-            saveToFirebase(false);
+        window.updatePkg = function(pIdx, pkgIdx, field, val) {
+            if(!storeData.panels[pIdx] || !storeData.panels[pIdx].packages[pkgIdx]) return;
+            const pkgItem = storeData.panels[pIdx].packages[pkgIdx];
+            if (field === 'price' || field === 'couponDiscount') {
+                pkgItem[field] = Number(val);
+            } else if (field === 'couponCode') {
+                pkgItem[field] = String(val || '').trim().toUpperCase();
+            } else {
+                pkgItem[field] = val;
+            }
+            ensurePanelDurationStockMap(storeData.panels[pIdx]);
+            saveToFirebase(true);
+            if (field === 'time') {
+                renderAdminPanels();
+            }
         }
+
+        window.updateLink = function(pIdx, lIdx, field, val) {
+            if(!storeData.panels[pIdx] || !storeData.panels[pIdx].links[lIdx]) return;
+            storeData.panels[pIdx].links[lIdx][field] = val;
+            saveToFirebase(true);
+        }
+
+        setInterval(() => {
+            const changed = processFundRequestsLifecycle(true);
+            if (changed) {
+                renderMyFundRequests();
+                if (document.getElementById('adminDashboard') && !document.getElementById('adminDashboard').classList.contains('hidden')) {
+                    renderAdminFundRequests();
+                }
+            } else if (document.getElementById('fundView') && !document.getElementById('fundView').classList.contains('hidden')) {
+                renderMyFundRequests();
+            }
+            updateSpinAvailabilityUI();
+        }, 1000);
+
+        registerOrUpdateDeviceOnlyMine();
+        renderUI();
+        switchTab('home');
+        switchHomeTab('recent');
+        updateSpinAvailabilityUI();
     </script>
 </body>
 </html>
